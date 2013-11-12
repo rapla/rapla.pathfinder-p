@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  When updating your version of GWT, you should also update this DTD reference,
+  so that your app can take advantage of the latest GWT module capabilities.
+-->
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.5.1//EN"
+  "http://google-web-toolkit.googlecode.com/svn/tags/2.5.1/distro-source/core/src/gwt-module.dtd">
+<module rename-to='Test_gwt_app'>
+  <!-- Inherit the core Web Toolkit stuff.                        -->
+  <inherits name="com.google.gwt.xml.XML" />
+  <inherits name='com.google.gwt.user.User'/>
+  <inherits name="com.google.gwt.http.HTTP"/>
+  <inherits name='com.google.gwt.logging.Logging'/>
+  <!-- Inherit the default GWT style sheet.  You can change       -->
+  <!-- the theme of your GWT application by uncommenting          -->
+  <!-- any one of the following lines.                            -->
+  <inherits name='com.google.gwt.user.theme.clean.Clean'/>
+  <inherits name='org.rapla.Rapla_main_module'/>
+  <!-- <inherits name='com.google.gwt.user.theme.standard.Standard'/> -->
+  <!-- <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> -->
+  <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
+
+  <!-- Other module inherits                                      -->
+
+  <!-- Specify the app entry point class.                         -->
+  <entry-point class='org.rapla.client.Test_gwt'/>
+
+  <!-- Specify the paths for translatable code                    -->
+  <source path='client'/>
+  <source path='components/util'/>
+  <source path='entities'/>
+  <source path='entities/configuration'/>
+  <source path='entities/configuration/internal'/>
+  <source path='entities/domain'/>
+  <source path='entities/domain/internal'/>
+  <source path='entities/dynamictype'/>
+  <source path='entities/dynamictype/internal'/>
+  <source path='entities/internal'/>
+  <source path='entities/storage'/>
+  <source path='entities/storage/internal'/>
+  <source path='components/xmlbundle'/>
+  <source path='components/xmlbundle/impl'/> 
+  <source path='framework'/>
+  <source path='framework/logger'/>
+  <source path='facade'/>
+  <source path='facade/internal'/>
+  <source path='shared'/>
+  <source path='storage/dbrm'/> 
+  <source path='storage/impl'/> 
+  <source path='storage/xml'/> 
+  <source path='storage'/> 
+  <source path='' includes="ConnectInfo.java"/> 
+  <source path='' includes="AppointmentFormaterImpl.java"/> 
+  <super-source path='jre'/> 
+  <set-property name="user.agent" value="gecko1_8" />
+  
+  <!-- English language, independent of country -->
+  <extend-property name="locale" values="en"/>
+</module>
