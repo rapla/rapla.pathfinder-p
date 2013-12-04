@@ -1,7 +1,6 @@
 package org.rapla.client;
 
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -101,10 +100,15 @@ public class GWTConnector implements Connector {
         }
     }
 
+    private String encode(String string)
+    {
+    	String result = com.google.gwt.http.client.URL.encode(string);
+    	return result;
+    }
 	
     private void addParams(Appendable writer, Map<String,String> args ) throws IOException
     {
-    	writer.append( "v="+URLEncoder.encode(clientVersion,"utf-8"));
+    	writer.append( "v="+encode(clientVersion));
         for (Iterator<String> it = args.keySet().iterator();it.hasNext();)
         {
         	writer.append( "&");
@@ -115,7 +119,7 @@ public class GWTConnector implements Connector {
                 writer.append( pair);
                 if ( value != null)
                 {
-                	writer.append("="+ URLEncoder.encode(value,"utf-8"));
+                	writer.append("="+ encode(value));
                 }
             }
            

@@ -25,7 +25,6 @@ public class GWTPlugin implements PluginDescriptor<ClientServiceContainer>
 {
     public static final boolean ENABLE_BY_DEFAULT = true;
   
-
     /**
      * @throws RaplaContextException 
      * @see org.rapla.framework.PluginDescriptor#provideServices(org.rapla.framework.general.Container)
