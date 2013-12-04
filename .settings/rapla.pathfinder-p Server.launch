@@ -7,6 +7,6 @@
 <listEntry value="1"/>
 </listAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.rapla.bootstrap.RaplaServerLoader"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="rapla.gwt-p"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="rapla.pathfinder-p"/>
 <stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:rapla}"/>
 </launchConfiguration>

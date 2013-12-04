@@ -10,12 +10,12 @@
  | program with every library, which license fulfills the Open Source       |
  | Definition as published by the Open Source Initiative (OSI).             |
  *--------------------------------------------------------------------------*/
-package org.rapla.plugin.gwt.server;
+package org.rapla.plugin.pathfinder.server;
 import org.rapla.framework.Configuration;
 import org.rapla.framework.PluginDescriptor;
 import org.rapla.framework.RaplaContextException;
 import org.rapla.framework.logger.Logger;
-import org.rapla.plugin.gwt.GWTPlugin;
+import org.rapla.plugin.pathfinder.PathfinderPlugin;
 import org.rapla.server.RaplaServerExtensionPoints;
 import org.rapla.server.ServerServiceContainer;
 
@@ -26,24 +26,18 @@ import org.rapla.server.ServerServiceContainer;
 
 public class GWTServerPlugin implements PluginDescriptor<ServerServiceContainer>
 {
-    Logger logger;
     
     public GWTServerPlugin(Logger logger) {
-        this.logger = logger;
     }
    
-    public Logger getLogger() {
-        return logger;
-    }
-
     /**
      * @throws RaplaContextException 
      * @see org.rapla.framework.PluginDescriptor
      */
     public void provideServices(ServerServiceContainer container, Configuration config) throws RaplaContextException {
-        if ( !config.getAttributeAsBoolean("enabled", GWTPlugin.ENABLE_BY_DEFAULT) )
+        if ( !config.getAttributeAsBoolean("enabled", PathfinderPlugin.ENABLE_BY_DEFAULT) )
         	return;
-        container.addContainerProvidedComponent( RaplaServerExtensionPoints.HTML_MAIN_MENU_EXTENSION_POINT, GWTMenuEntry.class);
+        container.addContainerProvidedComponent( RaplaServerExtensionPoints.HTML_MAIN_MENU_EXTENSION_POINT, PathfinderMenuEntry.class);
     }
 
 }

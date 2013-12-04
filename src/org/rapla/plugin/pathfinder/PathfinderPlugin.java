@@ -10,7 +10,7 @@
  | program with every library, which license fulfills the Open Source       |
  | Definition as published by the Open Source Initiative (OSI).             |
  *--------------------------------------------------------------------------*/
-package org.rapla.plugin.gwt;
+package org.rapla.plugin.pathfinder;
 import org.rapla.client.ClientServiceContainer;
 import org.rapla.framework.Configuration;
 import org.rapla.framework.PluginDescriptor;
@@ -21,7 +21,7 @@ import org.rapla.framework.RaplaContextException;
    to the rapla-system.
  */
 
-public class GWTPlugin implements PluginDescriptor<ClientServiceContainer>
+public class PathfinderPlugin implements PluginDescriptor<ClientServiceContainer>
 {
     public static final boolean ENABLE_BY_DEFAULT = true;
   

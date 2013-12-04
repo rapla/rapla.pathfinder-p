@@ -1,21 +1,21 @@
-package org.rapla.plugin.gwt.server;
+package org.rapla.plugin.pathfinder.server;
 
 import org.rapla.framework.RaplaContext;
 import org.rapla.servletpages.DefaultHTMLMenuEntry;
 
-public class GWTMenuEntry extends DefaultHTMLMenuEntry 
+public class PathfinderMenuEntry extends DefaultHTMLMenuEntry 
 {
-	public GWTMenuEntry(RaplaContext context) {
+	public PathfinderMenuEntry(RaplaContext context) {
 		super(context);
 	}
 		
 	@Override
 	public String getName() {
-		return "HTML-Client";
+		return "Pathfinder-Client";
 	}
 	@Override
 	public String getLinkName() {
-		return "Test_gwt.html";
+		return "pathfinder.html";
 	}
 		
 }
