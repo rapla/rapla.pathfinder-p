@@ -1,4 +1,4 @@
-package com.pathfinder.view;
+package com.pathfinder.view.components;
 
 public interface TreeStructureSpec {
 
