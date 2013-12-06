@@ -1,20 +1,23 @@
 package com.pathfinder.view.layout;
 
-import com.pathfinder.view.components.FreeRoomView;
+import com.pathfinder.view.components.Detail;
 import com.pathfinder.view.components.MenuBar;
-import com.pathfinder.view.components.TimeDate;
-import com.pathfinder.view.layout.MainLayoutSpec;
 import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * Defines the main layout of the stele navigation
+ * 
+ * @author alexh
+ * 
+ */
 public class MainLayout extends CustomComponent implements MainLayoutSpec {
-	private TimeDate timeDate = new TimeDate();
-	private FreeRoomView freeRoomView = new FreeRoomView();
-	private SearchGroup searchField = new SearchGroup();
-	private MenuBar menuBar = new MenuBar();
+	private final InfoPanel infoPanel = new InfoPanel();
+	private final Detail detail = new Detail();
+	private final SearchPanel searchPanel = new SearchPanel();
+	private final MenuBar menuBar = new MenuBar();
 
-	private VerticalLayout layout = new VerticalLayout();
+	private final VerticalLayout layout = new VerticalLayout();
 
 	public MainLayout() {
 		this.buildLayout();
@@ -23,13 +26,42 @@ public class MainLayout extends CustomComponent implements MainLayoutSpec {
 
 	@Override
 	public void buildLayout() {
-		
-		HorizontalLayout horizontalLayout = new HorizontalLayout();
-		horizontalLayout.addComponent(timeDate);
-		horizontalLayout.addComponent(freeRoomView);
-		this.layout.addComponent(horizontalLayout);
-		this.layout.addComponent(searchField);
+		this.layout.addComponent(infoPanel);
+		this.layout.addComponent(detail);
+		// Should not be shown at startup
+		this.hideDetail();
+		this.layout.addComponent(searchPanel);
 		this.layout.addComponent(menuBar);
+	}
+
+	@Override
+	public void hideInfoPanel() {
+		this.infoPanel.setVisible(false);
+	}
+
+	@Override
+	public void showInfoPanel() {
+		this.infoPanel.setVisible(true);
+	}
+
+	@Override
+	public void hideDetail() {
+		this.detail.setVisible(false);
+	}
+
+	@Override
+	public void showDetail() {
+		this.detail.setVisible(true);
+	}
+
+	@Override
+	public void hideSearchPanel() {
+		this.searchPanel.setVisible(false);
+	}
+
+	@Override
+	public void showSearchPanel() {
+		this.searchPanel.setVisible(true);
 	}
 
 	@Override

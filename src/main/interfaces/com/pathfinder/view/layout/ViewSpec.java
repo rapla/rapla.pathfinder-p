@@ -1,8 +1,7 @@
 package com.pathfinder.view.layout;
 
-public interface SearchGroupSpec {
+public interface ViewSpec {
 	void buildLayout();
 	void destroyLayout();
-	void show();
-	void hide();
+
 }

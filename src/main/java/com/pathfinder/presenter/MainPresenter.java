@@ -4,20 +4,15 @@ import com.pathfinder.view.layout.MainLayout;
 import com.vaadin.ui.CustomComponent;
 
 /**
+ * To see something when you build the project
  * 
  * @author alexh
  * 
- *         To see something when you build the project
  */
 public class MainPresenter {
-	private MainLayout mainLayout = null;
+	private final MainLayout mainLayout = new MainLayout();
 
 	public MainPresenter() {
-		this.buildTheMainLayout();
-	}
-
-	private void buildTheMainLayout() {
-		mainLayout = new MainLayout();
 	}
 
 	public CustomComponent getMainLayoutView() {

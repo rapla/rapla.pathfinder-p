@@ -1,14 +1,11 @@
 package com.pathfinder.view.layout;
 
-import com.pathfinder.view.components.FreeRoomView;
 import com.pathfinder.view.components.SearchField;
-import com.pathfinder.view.components.TimeDate;
 import com.pathfinder.view.components.TreeStructure;
-import com.pathfinder.view.layout.SearchGroupSpec;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.VerticalLayout;
 
-public class SearchGroup extends CustomComponent implements SearchGroupSpec{
+public class SearchPanel extends CustomComponent implements ViewSpec{
 
 	private TreeStructure treeStructure = new TreeStructure();
 //	private Keyboard keyboard = new Keyboard();
@@ -16,7 +13,7 @@ public class SearchGroup extends CustomComponent implements SearchGroupSpec{
 
 	private VerticalLayout layout = new VerticalLayout();
 
-	public SearchGroup() {
+	public SearchPanel() {
 		this.buildLayout();
 		this.setCompositionRoot(layout);
 	}

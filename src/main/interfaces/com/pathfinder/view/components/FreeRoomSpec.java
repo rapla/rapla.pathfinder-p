@@ -1,5 +1,5 @@
 package com.pathfinder.view.components;
 
-public interface FreeRoomViewSpec {
+public interface FreeRoomSpec {
 
 }
