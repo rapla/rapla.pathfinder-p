@@ -1,14 +1,17 @@
 package com.pathfinder.view;
 
 import com.pathfinder.view.components.FreeRoomView;
+import com.pathfinder.view.components.MenuBar;
 import com.pathfinder.view.components.TimeDate;
 import com.vaadin.ui.CustomComponent;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
 public class MainLayout extends CustomComponent implements MainLayoutSpec {
 	private TimeDate timeDate = new TimeDate();
 	private FreeRoomView freeRoomView = new FreeRoomView();
 	private SearchGroup searchField = new SearchGroup();
+	private MenuBar menuBar = new MenuBar();
 
 	private VerticalLayout layout = new VerticalLayout();
 
@@ -19,9 +22,13 @@ public class MainLayout extends CustomComponent implements MainLayoutSpec {
 
 	@Override
 	public void buildLayout() {
-		this.layout.addComponent(timeDate);
-		this.layout.addComponent(freeRoomView);
+		
+		HorizontalLayout horizontalLayout = new HorizontalLayout();
+		horizontalLayout.addComponent(timeDate);
+		horizontalLayout.addComponent(freeRoomView);
+		this.layout.addComponent(horizontalLayout);
 		this.layout.addComponent(searchField);
+		this.layout.addComponent(menuBar);
 	}
 
 	@Override
