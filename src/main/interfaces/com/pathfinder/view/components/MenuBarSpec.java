@@ -1,5 +1,11 @@
 package com.pathfinder.view.components;
 
-public interface MenuBarSpec {
+/**
+ * MenuBarSpec
+ * 
+ * @author alexh
+ * 
+ */
+public interface MenuBarSpec extends ComponentSpec {
 
 }

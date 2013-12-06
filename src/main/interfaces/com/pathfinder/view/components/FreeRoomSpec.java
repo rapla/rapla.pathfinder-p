@@ -1,5 +1,11 @@
 package com.pathfinder.view.components;
 
-public interface FreeRoomSpec {
+/**
+ * FreeRoomSpec
+ * 
+ * @author alexh
+ * 
+ */
+public interface FreeRoomSpec extends ComponentSpec {
 
 }

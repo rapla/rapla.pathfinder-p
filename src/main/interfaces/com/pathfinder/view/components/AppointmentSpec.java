@@ -1,5 +1,10 @@
 package com.pathfinder.view.components;
 
-public interface AppointmentSpec {
-
+/**
+ * AppointmentSpec
+ * 
+ * @author alexh
+ *
+ */
+public interface AppointmentSpec extends ComponentSpec {
 }

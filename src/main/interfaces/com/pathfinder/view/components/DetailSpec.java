@@ -1,5 +1,10 @@
 package com.pathfinder.view.components;
 
-public interface DetailSpec {
-
+/**
+ * DetailSpec
+ * 
+ * @author alexh
+ *
+ */
+public interface DetailSpec extends ComponentSpec {
 }

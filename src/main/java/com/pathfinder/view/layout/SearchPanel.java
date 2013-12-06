@@ -5,7 +5,7 @@ import com.pathfinder.view.components.TreeStructure;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.VerticalLayout;
 
-public class SearchPanel extends CustomComponent implements ViewSpec{
+public class SearchPanel extends CustomComponent implements SearchPanelSpec {
 
 	private TreeStructure treeStructure = new TreeStructure();
 //	private Keyboard keyboard = new Keyboard();
@@ -29,17 +29,4 @@ public class SearchPanel extends CustomComponent implements ViewSpec{
 	public void destroyLayout() {
 		layout.removeAllComponents();
 	}
-
-	@Override
-	public void show() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void hide() {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

@@ -1,5 +1,11 @@
 package com.pathfinder.view.components;
 
-public interface TreeStructureSpec {
+/**
+ * TreeStructureSpec
+ * 
+ * @author alexh
+ * 
+ */
+public interface TreeStructureSpec extends ComponentSpec {
 
 }

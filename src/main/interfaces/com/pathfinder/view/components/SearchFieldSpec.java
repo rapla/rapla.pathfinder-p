@@ -1,5 +1,11 @@
 package com.pathfinder.view.components;
 
-public interface SearchFieldSpec {
+/**
+ * SearchFieldSpec
+ * 
+ * @author alexh
+ * 
+ */
+public interface SearchFieldSpec extends ComponentSpec {
 
 }

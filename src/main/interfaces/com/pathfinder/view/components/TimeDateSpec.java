@@ -1,5 +1,11 @@
 package com.pathfinder.view.components;
 
-public interface TimeDateSpec {
-
+/**
+ * TimeDateSpec
+ * 
+ * @author alexh
+ *
+ */
+public interface TimeDateSpec extends ComponentSpec {
+	void refreshTimeAndDate();
 }
