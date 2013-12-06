@@ -1,8 +1,9 @@
-package com.pathfinder.view;
+package com.pathfinder.view.layout;
 
 import com.pathfinder.view.components.FreeRoomView;
 import com.pathfinder.view.components.MenuBar;
 import com.pathfinder.view.components.TimeDate;
+import com.pathfinder.view.layout.MainLayoutSpec;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;

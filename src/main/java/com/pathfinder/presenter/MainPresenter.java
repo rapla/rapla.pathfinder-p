@@ -1,6 +1,6 @@
 package com.pathfinder.presenter;
 
-import com.pathfinder.view.MainLayout;
+import com.pathfinder.view.layout.MainLayout;
 import com.vaadin.ui.CustomComponent;
 
 /**

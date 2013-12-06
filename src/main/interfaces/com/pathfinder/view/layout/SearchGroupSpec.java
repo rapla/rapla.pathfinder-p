@@ -1,4 +1,4 @@
-package com.pathfinder.view;
+package com.pathfinder.view.layout;
 
 public interface SearchGroupSpec {
 	void buildLayout();

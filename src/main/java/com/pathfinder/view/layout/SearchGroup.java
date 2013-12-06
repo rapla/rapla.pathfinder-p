@@ -1,9 +1,10 @@
-package com.pathfinder.view;
+package com.pathfinder.view.layout;
 
 import com.pathfinder.view.components.FreeRoomView;
 import com.pathfinder.view.components.SearchField;
 import com.pathfinder.view.components.TimeDate;
 import com.pathfinder.view.components.TreeStructure;
+import com.pathfinder.view.layout.SearchGroupSpec;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.VerticalLayout;
 
