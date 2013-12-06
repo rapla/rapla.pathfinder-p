@@ -10,6 +10,7 @@ import com.vaadin.ui.VerticalLayout;
 public class SearchGroup extends CustomComponent implements SearchGroupSpec{
 
 	private TreeStructure treeStructure = new TreeStructure();
+//	private Keyboard keyboard = new Keyboard();
 	private SearchField searchField = new SearchField();
 
 	private VerticalLayout layout = new VerticalLayout();
@@ -22,6 +23,7 @@ public class SearchGroup extends CustomComponent implements SearchGroupSpec{
 	@Override
 	public void buildLayout() {
 		this.layout.addComponent(treeStructure);
+//		this.layout.addComponent(keyboard);
 		this.layout.addComponent(searchField);
 	}
 
