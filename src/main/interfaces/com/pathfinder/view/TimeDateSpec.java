@@ -1,5 +1,5 @@
 package com.pathfinder.view;
 
-public interface DetailsSpec {
+public interface TimeDateSpec {
 
 }
