@@ -1,20 +1,35 @@
 package com.pathfinder.model;
 
 public class RoomPojo {
-	public static final String PROPERTY_XXX = "xxx";
+	public static final String PROPERTY_ID = "id";
+	public static final String PROPERTY_NAME = "name";
+	public static final String PROPERTY_LINK = "link";
 	
-	private String xxx = "";
-	
-	public RoomPojo()
-	{
-		
+	private String id = "";
+	private String name = "";
+	private String link = "";
+
+	public String getId() {
+		return id;
 	}
 
-	public String getXxx() {
-		return xxx;
+	public void setId(String id) {
+		this.id = id;
 	}
 
-	public void setXxx(String xxx) {
-		this.xxx = xxx;
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
 	}
 }
