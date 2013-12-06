@@ -2,6 +2,7 @@ package com.pathfinder;
 
 import javax.servlet.annotation.WebServlet;
 
+import com.pathfinder.presenter.MainPresenter;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinRequest;
@@ -19,7 +20,7 @@ public class PathfinderUI extends UI {
 
 	@Override
 	protected void init(VaadinRequest request) {
-		// setContent(new Presenter().getMainView());
+		setContent(new MainPresenter().getMainLayoutView());
 	}
 
 }
