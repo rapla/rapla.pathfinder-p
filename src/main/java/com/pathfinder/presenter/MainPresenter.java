@@ -13,7 +13,8 @@ import com.vaadin.ui.CustomComponent;
  * @author alexh
  * 
  */
-public class MainPresenter implements MainLayoutViewListenerSpec, ComponentSpec {
+public class MainPresenter implements MainLayoutViewListenerSpec,
+		MainPresenterSpec {
 	private final InfoPanelPresenter infoPanelPresenter = new InfoPanelPresenter();
 	private final DetailContainerPresenter detailContainerPresenter = new DetailContainerPresenter();
 	private final SearchPanelPresenter searchPanelPresenter = new SearchPanelPresenter();
