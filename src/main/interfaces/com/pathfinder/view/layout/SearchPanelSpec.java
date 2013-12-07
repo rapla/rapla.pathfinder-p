@@ -1,5 +1,7 @@
 package com.pathfinder.view.layout;
 
+import com.pathfinder.view.listener.SearchPanelViewListenerSpec;
+
 /**
  * SearchPanelSpec
  * 
@@ -7,4 +9,5 @@ package com.pathfinder.view.layout;
  * 
  */
 public interface SearchPanelSpec extends ViewSpec {
+	void addSearchPanelViewListener(SearchPanelViewListenerSpec listener);
 }

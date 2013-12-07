@@ -1,7 +1,12 @@
 package com.pathfinder.view.layout;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
 import com.pathfinder.view.components.FreeRoom;
 import com.pathfinder.view.components.TimeDate;
+import com.pathfinder.view.listener.InfoPanelViewListenerSpec;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 
@@ -10,6 +15,8 @@ public class InfoPanel extends CustomComponent implements InfoPanelSpec {
 	private final FreeRoom freeRoom = new FreeRoom();
 
 	private final HorizontalLayout horizontalLayout = new HorizontalLayout();
+
+	private List<InfoPanelViewListenerSpec> listener = new ArrayList<InfoPanelViewListenerSpec>();
 
 	public InfoPanel() {
 		this.buildLayout();
@@ -29,4 +36,23 @@ public class InfoPanel extends CustomComponent implements InfoPanelSpec {
 	public void destroyLayout() {
 		horizontalLayout.removeAllComponents();
 	}
+
+	@Override
+	public void addInfoPanelViewListener(InfoPanelViewListenerSpec listener) {
+		this.listener.add(listener);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pathfinder.view.layout.TranslatabelSpec#updateTranslations(java.util
+	 * .Locale)
+	 */
+	@Override
+	public void updateTranslations(Locale locale) {
+		timeDate.updateTranslations(locale);
+		freeRoom.updateTranslations(locale);
+	}
+
 }

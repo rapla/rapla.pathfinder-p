@@ -1,5 +1,7 @@
 package com.pathfinder.view.components;
 
+import com.pathfinder.view.listener.TreeStructureViewListenerSpec;
+
 /**
  * TreeStructureSpec
  * 
@@ -7,5 +9,5 @@ package com.pathfinder.view.components;
  * 
  */
 public interface TreeStructureSpec extends ComponentSpec {
-
+	void addTreeStructureSpecListener(TreeStructureViewListenerSpec listener);
 }
