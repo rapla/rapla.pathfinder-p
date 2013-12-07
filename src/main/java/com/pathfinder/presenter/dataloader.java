@@ -7,7 +7,7 @@ import java.util.List;
 
 import com.google.gson.Gson;
 import com.pathfinder.model.DataModel;
-import com.pathfinder.model.RoomPojo;
+import com.pathfinder.model.RoomModel;
 
 @Deprecated
 public class dataloader {
@@ -25,7 +25,7 @@ public class dataloader {
 
 			DataModel data = gson.fromJson(br, DataModel.class);
 
-			List<RoomPojo> rooms = data.getAllRooms();
+			List<RoomModel> rooms = data.getAllRooms();
 
 			System.out.println(rooms);
 

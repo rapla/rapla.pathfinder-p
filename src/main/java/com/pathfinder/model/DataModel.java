@@ -4,13 +4,13 @@ import java.util.List;
 
 
 public class DataModel {
-	private List<RoomPojo> allRooms;
+	private List<RoomModel> allRooms;
 
-	public List<RoomPojo> getAllRooms() {
+	public List<RoomModel> getAllRooms() {
 		return allRooms;
 	}
 
-	public void setAllRooms(List<RoomPojo> allRooms) {
+	public void setAllRooms(List<RoomModel> allRooms) {
 		this.allRooms = allRooms;
 	}
 }

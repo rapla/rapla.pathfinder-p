@@ -1,6 +1,6 @@
 package com.pathfinder.model;
 
-public class RoomPojo {
+public class RoomModel {
 	public static final String PROPERTY_ID = "id";
 	public static final String PROPERTY_NAME = "name";
 	public static final String PROPERTY_LINK = "link";

@@ -1,11 +1,11 @@
 package com.pathfinder.model;
 
-public class CoursePojo {
+public class CourseModel {
 	public static final String PROPERTY_XXX = "xxx";
 	
 	private String xxx = "";
 	
-	public CoursePojo()
+	public CourseModel()
 	{
 		
 	}
