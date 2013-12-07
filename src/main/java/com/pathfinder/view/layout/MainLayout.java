@@ -1,6 +1,6 @@
 package com.pathfinder.view.layout;
 
-import com.pathfinder.view.components.Detail;
+import com.pathfinder.view.components.DetailContainer;
 import com.pathfinder.view.components.MenuBar;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.VerticalLayout;
@@ -13,7 +13,7 @@ import com.vaadin.ui.VerticalLayout;
  */
 public class MainLayout extends CustomComponent implements MainLayoutSpec {
 	private final InfoPanel infoPanel = new InfoPanel();
-	private final Detail detail = new Detail();
+	private final DetailContainer detailContainer = new DetailContainer();
 	private final SearchPanel searchPanel = new SearchPanel();
 	private final MenuBar menuBar = new MenuBar();
 
@@ -27,9 +27,9 @@ public class MainLayout extends CustomComponent implements MainLayoutSpec {
 	@Override
 	public void buildLayout() {
 		this.layout.addComponent(infoPanel);
-		this.layout.addComponent(detail);
+		this.layout.addComponent(detailContainer);
 		// Should not be shown at startup
-		this.hideDetail();
+		this.hideDetailContainer();
 		this.layout.addComponent(searchPanel);
 		this.layout.addComponent(menuBar);
 	}
@@ -45,13 +45,13 @@ public class MainLayout extends CustomComponent implements MainLayoutSpec {
 	}
 
 	@Override
-	public void hideDetail() {
-		this.detail.setVisible(false);
+	public void hideDetailContainer() {
+		this.detailContainer.setVisible(false);
 	}
 
 	@Override
-	public void showDetail() {
-		this.detail.setVisible(true);
+	public void showDetailContainer() {
+		this.detailContainer.setVisible(true);
 	}
 
 	@Override

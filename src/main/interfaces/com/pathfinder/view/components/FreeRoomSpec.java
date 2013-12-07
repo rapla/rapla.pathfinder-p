@@ -7,5 +7,7 @@ package com.pathfinder.view.components;
  * 
  */
 public interface FreeRoomSpec extends ComponentSpec {
+	void buildLayout();
 
+	void refreshFreeRooms();
 }

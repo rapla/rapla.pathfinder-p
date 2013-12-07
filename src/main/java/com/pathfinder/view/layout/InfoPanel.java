@@ -20,6 +20,9 @@ public class InfoPanel extends CustomComponent implements InfoPanelSpec {
 	public void buildLayout() {
 		horizontalLayout.addComponent(timeDate);
 		horizontalLayout.addComponent(freeRoom);
+		horizontalLayout.setExpandRatio(timeDate, 0.5f);
+		horizontalLayout.setExpandRatio(freeRoom, 0.5f);
+		horizontalLayout.setSizeFull();
 	}
 
 	@Override
