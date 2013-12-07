@@ -8,38 +8,38 @@ import org.junit.Test;
 import com.pathfinder.model.KeyboardModel;
 import com.pathfinder.view.components.Keyboard;
 
-public class KeyboardPresenterTest {
+public class SearchPanelPresenterTest {
 	KeyboardModel keyboardModel;
 	Keyboard keyboard;
-	KeyboardPresenter keyboardPresenter;
+	SearchPanelPresenter searchPanelPresenter;
 
 	@Before
 	public void setUp() {
 		keyboardModel = new KeyboardModel();
 		keyboard = new Keyboard();
-		keyboardPresenter = new KeyboardPresenter(keyboardModel, keyboard);
+		searchPanelPresenter = new SearchPanelPresenter();
 	}
 
 	@Test
 	public void addKeyboardKeyToSearchStringTest() {
-		keyboardPresenter.buttonClick("I");
-		keyboardPresenter.buttonClick("K");
+		searchPanelPresenter.buttonClick("I");
+		searchPanelPresenter.buttonClick("K");
 		assertEquals("IK", keyboardModel.getSearchString());
 	}
 
 	@Test
 	public void deleteKeyboardKeyFromSearchStringTest() {
-		keyboardPresenter.buttonClick("I");
-		keyboardPresenter.buttonClick("K");
-		keyboardPresenter.buttonClick("DELETE");
+		searchPanelPresenter.buttonClick("I");
+		searchPanelPresenter.buttonClick("K");
+		searchPanelPresenter.buttonClick("DELETE");
 		assertEquals("I", keyboardModel.getSearchString());
 	}
 
 	@Test
 	public void clearSearchStringTest() {
-		keyboardPresenter.buttonClick("I");
-		keyboardPresenter.buttonClick("K");
-		keyboardPresenter.clearSearchString();
+		searchPanelPresenter.buttonClick("I");
+		searchPanelPresenter.buttonClick("K");
+		searchPanelPresenter.clearSearchString();
 		assertEquals("", keyboardModel.getSearchString());
 	}
 

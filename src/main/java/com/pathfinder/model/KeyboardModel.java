@@ -6,6 +6,8 @@
 package com.pathfinder.model;
 
 public class KeyboardModel {
+	
+	public final String PROPERTY_SEARCHSTRING = "searchString";
 
 	private String searchString = "";
 

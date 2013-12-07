@@ -8,13 +8,16 @@ import com.vaadin.ui.VerticalLayout;
 
 public class SearchPanel extends CustomComponent implements SearchPanelSpec {
 
-	private TreeStructure treeStructure = new TreeStructure();
-	private Keyboard keyboard = new Keyboard();
-	private SearchField searchField = new SearchField();
+	private TreeStructure treeStructure = null;
+	private Keyboard keyboardView = null;
+	private SearchField searchField = null;
 
 	private VerticalLayout layout = new VerticalLayout();
 
-	public SearchPanel() {
+	public SearchPanel(TreeStructure treeStructure, Keyboard keyboardView, SearchField searchField) {
+		this.treeStructure  = treeStructure;
+		this.keyboardView = keyboardView;
+		this.searchField = searchField;
 		this.buildLayout();
 		this.setCompositionRoot(layout);
 	}
@@ -22,7 +25,7 @@ public class SearchPanel extends CustomComponent implements SearchPanelSpec {
 	@Override
 	public void buildLayout() {
 		this.layout.addComponent(treeStructure);
-		this.layout.addComponent(keyboard);
+		this.layout.addComponent(keyboardView);
 		this.layout.addComponent(searchField);
 	}
 

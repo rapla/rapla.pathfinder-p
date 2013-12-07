@@ -9,10 +9,10 @@ import com.pathfinder.view.components.Keyboard;
 import de.vksi.c4j.ClassInvariant;
 import de.vksi.c4j.Target;
 
-public class KeyboardPresenterContract extends KeyboardPresenter {
+public class KeyboardPresenterContract implements KeyboardPresenterSpec {
 
 	@Target
-	private KeyboardPresenter target;
+	private SearchPanelPresenter target;
 
 	@ClassInvariant
 	public void classInvariant() {
@@ -20,17 +20,6 @@ public class KeyboardPresenterContract extends KeyboardPresenter {
 	}
 
 	public KeyboardPresenterContract(KeyboardModel model, Keyboard view) {
-		super(model, view);
-		if (preCondition()) {
-			// TODO: write preconditions if required
-		}
-		if (postCondition()) {
-			// TODO: write postconditions if required
-		}
-	}
-
-	@Override
-	public void buttonClick(String key) {
 		if (preCondition()) {
 			// TODO: write preconditions if required
 		}

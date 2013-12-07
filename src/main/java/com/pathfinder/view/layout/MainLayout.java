@@ -12,14 +12,19 @@ import com.vaadin.ui.VerticalLayout;
  * 
  */
 public class MainLayout extends CustomComponent implements MainLayoutSpec {
-	private final InfoPanel infoPanel = new InfoPanel();
-	private final DetailContainer detailContainer = new DetailContainer();
-	private final SearchPanel searchPanel = new SearchPanel();
-	private final MenuBar menuBar = new MenuBar();
+	private InfoPanel infoPanel = null;
+	private DetailContainer detailContainer = null;
+	private SearchPanel searchPanel = null;
+	private MenuBar menuBar = null;
 
 	private final VerticalLayout layout = new VerticalLayout();
 
-	public MainLayout() {
+	public MainLayout(InfoPanel infoPanel, DetailContainer detailContainer, SearchPanel searchPanel, MenuBar menuBar) {
+		this.infoPanel = infoPanel;
+		this.detailContainer = detailContainer;
+		this.searchPanel = searchPanel;
+		this.menuBar = menuBar;
+		
 		this.buildLayout();
 		this.setCompositionRoot(layout);
 	}

@@ -6,12 +6,15 @@ import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 
 public class InfoPanel extends CustomComponent implements InfoPanelSpec {
-	private final TimeDate timeDate = new TimeDate();
-	private final FreeRoom freeRoom = new FreeRoom();
+	private TimeDate timeDate = null;
+	private FreeRoom freeRoom = null;
 
 	private final HorizontalLayout horizontalLayout = new HorizontalLayout();
 
-	public InfoPanel() {
+	public InfoPanel(TimeDate timeDate, FreeRoom freeRoom) {
+		this.timeDate = timeDate;
+		this.freeRoom = freeRoom;
+		
 		this.buildLayout();
 		this.setCompositionRoot(horizontalLayout);
 	}

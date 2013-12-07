@@ -10,7 +10,11 @@ import com.vaadin.ui.CustomComponent;
  * 
  */
 public class MainPresenter {
-	private final MainLayout mainLayout = new MainLayout();
+	private final InfoPanelPresenter infoPanelPresenter = new InfoPanelPresenter();
+	private final DetailContainerPresenter detailContainerPresenter = new DetailContainerPresenter();
+	private final SearchPanelPresenter searchPanelPresenter = new SearchPanelPresenter();
+	private final MenuBarPresenter menuBarPresenter = new MenuBarPresenter();
+	private final MainLayout mainLayout = new MainLayout(infoPanelPresenter.getInfoPanel(), detailContainerPresenter.getDetailContainer(), searchPanelPresenter.getSearchPanel(), menuBarPresenter.getMenuBar());
 
 	public MainPresenter() {
 	}
