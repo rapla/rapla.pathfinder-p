@@ -31,10 +31,10 @@ public class Keyboard extends CustomComponent implements KeyboardSpec,
 				"8", "9", "0", };
 
 		String[] secondRow = new String[] { "Q", "W", "E", "R", "T", "Z", "U",
-				"I", "O", "P", "�" };
+				"I", "O", "P", "Ü" };
 
 		String[] thirdRow = new String[] { "A", "S", "D", "F", "G", "H", "J",
-				"K", "L", "�", "�" };
+				"K", "L", "Ö", "Ä" };
 
 		String[] fourthRow = new String[] { "Y", "X", "C", "V", "B", "N", "M" };
 
