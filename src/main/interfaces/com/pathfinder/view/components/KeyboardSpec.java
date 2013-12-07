@@ -1,11 +1,7 @@
 package com.pathfinder.view.components;
 
+import com.pathfinder.view.listener.KeyboardViewListenerSpec;
+
 public interface KeyboardSpec extends ComponentSpec {
-
-	interface KeyboardViewListener {
-		void buttonClick(String key);
-	}
-
-	void addListener(KeyboardViewListener listener);
-
+	void addListener(KeyboardViewListenerSpec listener);
 }

@@ -8,15 +8,15 @@ package com.pathfinder.presenter;
 
 import com.pathfinder.model.KeyboardModel;
 import com.pathfinder.view.components.Keyboard;
-import com.pathfinder.view.components.KeyboardSpec;
 import com.pathfinder.view.components.SearchField;
 import com.pathfinder.view.components.TreeStructure;
 import com.pathfinder.view.layout.SearchPanel;
+import com.pathfinder.view.listener.KeyboardViewListenerSpec;
 
 import de.vksi.c4j.ContractReference;
 
 @ContractReference(KeyboardPresenterContract.class)
-public class SearchPanelPresenter implements KeyboardSpec.KeyboardViewListener,
+public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 		SearchPanelPresenterSpec {
 
 	KeyboardModel keyboard = new KeyboardModel();

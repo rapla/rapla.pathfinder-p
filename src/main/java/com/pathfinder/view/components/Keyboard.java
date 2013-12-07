@@ -13,6 +13,7 @@ import java.util.Locale;
 
 import com.pathfinder.translation.TranslationKeys;
 import com.pathfinder.translation.Translator;
+import com.pathfinder.view.listener.KeyboardViewListenerSpec;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -79,9 +80,9 @@ public class Keyboard extends CustomComponent implements KeyboardSpec,
 	}
 
 	/* Only the presenter registers one listener... */
-	List<KeyboardViewListener> listeners = new ArrayList<KeyboardViewListener>();
+	List<KeyboardViewListenerSpec> listeners = new ArrayList<KeyboardViewListenerSpec>();
 
-	public void addListener(KeyboardViewListener listener) {
+	public void addListener(KeyboardViewListenerSpec listener) {
 		listeners.add(listener);
 	}
 
@@ -91,7 +92,7 @@ public class Keyboard extends CustomComponent implements KeyboardSpec,
 	 */
 	@Override
 	public void buttonClick(ClickEvent event) {
-		for (KeyboardViewListener listener : listeners)
+		for (KeyboardViewListenerSpec listener : listeners)
 			listener.buttonClick(event.getButton().getCaption().toString());
 	}
 
