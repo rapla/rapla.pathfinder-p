@@ -1,5 +1,7 @@
 package com.pathfinder.view.components;
 
+import com.pathfinder.view.listener.MenuBarViewListenerSpec;
+
 /**
  * MenuBarSpec
  * 
@@ -7,5 +9,5 @@ package com.pathfinder.view.components;
  * 
  */
 public interface MenuBarSpec extends ComponentSpec {
-
+	void addMenuBarListener(MenuBarViewListenerSpec listener);
 }

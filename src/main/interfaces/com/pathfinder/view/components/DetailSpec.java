@@ -1,5 +1,7 @@
 package com.pathfinder.view.components;
 
+import com.pathfinder.view.listener.DetailViewListenerSpec;
+
 /**
  * DetailSpec
  * 
@@ -8,4 +10,6 @@ package com.pathfinder.view.components;
  */
 public interface DetailSpec extends ComponentSpec {
 	void refreshDetails();
+
+	void addDetailListener(DetailViewListenerSpec listener);
 }

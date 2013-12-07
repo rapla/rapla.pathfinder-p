@@ -1,8 +1,15 @@
 package com.pathfinder.view.layout;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
 import com.pathfinder.view.components.DetailContainer;
 import com.pathfinder.view.components.MenuBar;
+import com.pathfinder.view.listener.MainLayoutViewListenerSpec;
+import com.pathfinder.view.listener.MenuBarViewListenerSpec;
 import com.vaadin.ui.CustomComponent;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -11,13 +18,17 @@ import com.vaadin.ui.VerticalLayout;
  * @author alexh
  * 
  */
-public class MainLayout extends CustomComponent implements MainLayoutSpec {
+public class MainLayout extends CustomComponent implements MainLayoutSpec,
+		MenuBarViewListenerSpec, TranslatabelSpec {
 	private InfoPanel infoPanel = null;
 	private DetailContainer detailContainer = null;
 	private SearchPanel searchPanel = null;
 	private MenuBar menuBar = null;
+	private static final Locale DEFAULT_LANGUAGE = Locale.GERMAN;
 
 	private final VerticalLayout layout = new VerticalLayout();
+
+	private List<MainLayoutViewListenerSpec> listener = new ArrayList<MainLayoutViewListenerSpec>();
 
 	public MainLayout(InfoPanel infoPanel, DetailContainer detailContainer, SearchPanel searchPanel, MenuBar menuBar) {
 		this.infoPanel = infoPanel;
@@ -25,6 +36,7 @@ public class MainLayout extends CustomComponent implements MainLayoutSpec {
 		this.searchPanel = searchPanel;
 		this.menuBar = menuBar;
 		
+		UI.getCurrent().setLocale(DEFAULT_LANGUAGE);
 		this.buildLayout();
 		this.setCompositionRoot(layout);
 	}
@@ -37,6 +49,7 @@ public class MainLayout extends CustomComponent implements MainLayoutSpec {
 		this.hideDetailContainer();
 		this.layout.addComponent(searchPanel);
 		this.layout.addComponent(menuBar);
+		menuBar.addMenuBarListener(this);
 	}
 
 	@Override
@@ -72,5 +85,25 @@ public class MainLayout extends CustomComponent implements MainLayoutSpec {
 	@Override
 	public void destroyLayout() {
 		layout.removeAllComponents();
+	}
+
+	@Override
+	public void addMainLayoutViewListener(MainLayoutViewListenerSpec listener) {
+		this.listener.add(listener);
+	}
+
+	@Override
+	public void languageChanged(Locale locale) {
+		for (MainLayoutViewListenerSpec mlListener : listener) {
+			mlListener.languageChanged(locale);
+		}
+	}
+
+	@Override
+	public void updateTranslations(Locale locale) {
+		infoPanel.updateTranslations(locale);
+		detailContainer.updateTranslations(locale);
+		searchPanel.updateTranslations(locale);
+		menuBar.updateTranslations(locale);
 	}
 }

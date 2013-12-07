@@ -1,5 +1,7 @@
 package com.pathfinder.view.components;
 
+import com.pathfinder.view.listener.SearchFieldViewListenerSpec;
+
 /**
  * SearchFieldSpec
  * 
@@ -7,5 +9,5 @@ package com.pathfinder.view.components;
  * 
  */
 public interface SearchFieldSpec extends ComponentSpec {
-
+	void addSearchFieldListener(SearchFieldViewListenerSpec listener);
 }

@@ -9,7 +9,10 @@ package com.pathfinder.view.components;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
+import com.pathfinder.translation.TranslationKeys;
+import com.pathfinder.translation.Translator;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -19,6 +22,10 @@ import com.vaadin.ui.GridLayout;
 @SuppressWarnings("serial")
 public class Keyboard extends CustomComponent implements KeyboardSpec,
 		ClickListener {
+
+	private Button deleteButton;
+	private Button spaceButton;
+	private Translator translator = Translator.getInstance();
 
 	public Keyboard() {
 
@@ -60,8 +67,12 @@ public class Keyboard extends CustomComponent implements KeyboardSpec,
 			layout.addComponent(new Button(caption, this), i, 3);
 		}
 
-		layout.addComponent(new Button("DELETE", this), 0, 4);
-		layout.addComponent(new Button("SPACE", this), 1, 4);
+		deleteButton = new Button(translator.translate(TranslationKeys.DELETE)
+				.toUpperCase(), this);
+		spaceButton = new Button(translator.translate(TranslationKeys.SPACE)
+				.toUpperCase(), this);
+		layout.addComponent(deleteButton, 0, 4);
+		layout.addComponent(spaceButton, 1, 4);
 
 		setCompositionRoot(layout);
 
@@ -82,6 +93,14 @@ public class Keyboard extends CustomComponent implements KeyboardSpec,
 	public void buttonClick(ClickEvent event) {
 		for (KeyboardViewListener listener : listeners)
 			listener.buttonClick(event.getButton().getCaption().toString());
+	}
+
+	@Override
+	public void updateTranslations(Locale locale) {
+		deleteButton.setCaption(translator.translate(TranslationKeys.DELETE)
+				.toUpperCase());
+		spaceButton.setCaption(translator.translate(TranslationKeys.SPACE)
+				.toUpperCase());
 	}
 
 }
