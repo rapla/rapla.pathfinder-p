@@ -17,7 +17,6 @@ public class TimeDate extends Label implements TimeDateSpec {
 	public void refreshTimeAndDate() {
 		DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 		// TODO Automatisch Sommer/Winterzeit?
-		// TODO Timer der die Uhrzeit aktualisiert
 		formatter.setTimeZone(TimeZone.getTimeZone("GMT+1:00"));
 		this.setValue(formatter.format(new Date()) + "Uhr");
 	}
