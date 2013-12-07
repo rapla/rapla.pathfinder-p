@@ -1,7 +1,7 @@
 /**
  * This is the presenter from the Keyboard. 
  * 
- * @author Myracle
+ * @author Myracle, Alex
  */
 
 package com.pathfinder.presenter;
