@@ -21,8 +21,9 @@ public class SearchPanel extends CustomComponent implements SearchPanelSpec {
 
 	private List<SearchPanelViewListenerSpec> listener = new ArrayList<SearchPanelViewListenerSpec>();
 
-	public SearchPanel(TreeStructure treeStructure, Keyboard keyboardView, SearchField searchField) {
-		this.treeStructure  = treeStructure;
+	public SearchPanel(TreeStructure treeStructure, Keyboard keyboardView,
+			SearchField searchField) {
+		this.treeStructure = treeStructure;
 		this.keyboardView = keyboardView;
 		this.searchField = searchField;
 		this.buildLayout();
@@ -49,7 +50,7 @@ public class SearchPanel extends CustomComponent implements SearchPanelSpec {
 	@Override
 	public void updateTranslations(Locale locale) {
 		treeStructure.updateTranslations(locale);
-		keyboard.updateTranslations(locale);
+		keyboardView.updateTranslations(locale);
 		searchField.updateTranslations(locale);
 	}
 
