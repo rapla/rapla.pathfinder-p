@@ -1,3 +1,8 @@
+/**
+ * Model for the SearchString
+ * @author Myracle
+ */
+
 package com.pathfinder.model;
 
 public class KeyboardModel {
