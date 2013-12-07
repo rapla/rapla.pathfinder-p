@@ -1,10 +1,10 @@
 package com.pathfinder.view.components;
 
-import com.pathfinder.model.RoomPojo;
+import com.pathfinder.model.RoomModel;
 
 public interface DetailContainerSpec extends ComponentSpec {
-	void addRoomDetails(Class<RoomPojo> clazz);
-	void addPersonDetails(Class<RoomPojo> clazz);
-	void addCourseDetails(Class<RoomPojo> clazz);
-	void addPoiDetails(Class<RoomPojo> clazz);
+	void addRoomDetails(Class<RoomModel> clazz);
+	void addPersonDetails(Class<RoomModel> clazz);
+	void addCourseDetails(Class<RoomModel> clazz);
+	void addPoiDetails(Class<RoomModel> clazz);
 }

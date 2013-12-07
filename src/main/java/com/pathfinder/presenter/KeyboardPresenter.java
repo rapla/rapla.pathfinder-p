@@ -7,20 +7,20 @@
 package com.pathfinder.presenter;
 
 import com.pathfinder.model.KeyboardModel;
-import com.pathfinder.view.components.KeyboardView;
-import com.pathfinder.view.components.KeyboardViewSpec;
+import com.pathfinder.view.components.Keyboard;
+import com.pathfinder.view.components.KeyboardSpec;
 
 import de.vksi.c4j.ContractReference;
 
 @ContractReference(KeyboardPresenterContract.class)
 public class KeyboardPresenter implements
-		KeyboardViewSpec.KeyboardViewListener, KeyboardPresenterSpec {
+		KeyboardSpec.KeyboardViewListener, KeyboardPresenterSpec {
 
 	KeyboardModel model;
-	KeyboardView view;
+	Keyboard view;
 	String searchString;
 
-	public KeyboardPresenter(KeyboardModel model, KeyboardView view) {
+	public KeyboardPresenter(KeyboardModel model, Keyboard view) {
 		this.model = model;
 		this.view = view;
 

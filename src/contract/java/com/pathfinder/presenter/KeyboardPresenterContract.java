@@ -4,7 +4,7 @@ import static de.vksi.c4j.Condition.postCondition;
 import static de.vksi.c4j.Condition.preCondition;
 
 import com.pathfinder.model.KeyboardModel;
-import com.pathfinder.view.components.KeyboardView;
+import com.pathfinder.view.components.Keyboard;
 
 import de.vksi.c4j.ClassInvariant;
 import de.vksi.c4j.Target;
@@ -19,7 +19,7 @@ public class KeyboardPresenterContract extends KeyboardPresenter {
 		// TODO: write invariants if required
 	}
 
-	public KeyboardPresenterContract(KeyboardModel model, KeyboardView view) {
+	public KeyboardPresenterContract(KeyboardModel model, Keyboard view) {
 		super(model, view);
 		if (preCondition()) {
 			// TODO: write preconditions if required

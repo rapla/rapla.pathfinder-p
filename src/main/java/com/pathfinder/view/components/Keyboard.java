@@ -17,10 +17,10 @@ import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.GridLayout;
 
 @SuppressWarnings("serial")
-public class KeyboardView extends CustomComponent implements KeyboardViewSpec,
+public class Keyboard extends CustomComponent implements KeyboardSpec,
 		ClickListener {
 
-	public KeyboardView() {
+	public Keyboard() {
 
 		String caption;
 		GridLayout layout = new GridLayout(11, 5);
@@ -31,10 +31,10 @@ public class KeyboardView extends CustomComponent implements KeyboardViewSpec,
 				"8", "9", "0", };
 
 		String[] secondRow = new String[] { "Q", "W", "E", "R", "T", "Z", "U",
-				"I", "O", "P", "Ü" };
+				"I", "O", "P", "ï¿½" };
 
 		String[] thirdRow = new String[] { "A", "S", "D", "F", "G", "H", "J",
-				"K", "L", "Ö", "Ä" };
+				"K", "L", "ï¿½", "ï¿½" };
 
 		String[] fourthRow = new String[] { "Y", "X", "C", "V", "B", "N", "M" };
 

@@ -1,6 +1,6 @@
 package com.pathfinder.view.components;
 
-public interface KeyboardViewSpec {
+public interface KeyboardSpec {
 
 	interface KeyboardViewListener {
 		void buttonClick(String key);

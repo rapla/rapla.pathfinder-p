@@ -1,5 +1,6 @@
 package com.pathfinder.view.layout;
 
+import com.pathfinder.view.components.Keyboard;
 import com.pathfinder.view.components.SearchField;
 import com.pathfinder.view.components.TreeStructure;
 import com.vaadin.ui.CustomComponent;
@@ -8,7 +9,7 @@ import com.vaadin.ui.VerticalLayout;
 public class SearchPanel extends CustomComponent implements SearchPanelSpec {
 
 	private TreeStructure treeStructure = new TreeStructure();
-//	private Keyboard keyboard = new Keyboard();
+	private Keyboard keyboard = new Keyboard();
 	private SearchField searchField = new SearchField();
 
 	private VerticalLayout layout = new VerticalLayout();
@@ -21,7 +22,7 @@ public class SearchPanel extends CustomComponent implements SearchPanelSpec {
 	@Override
 	public void buildLayout() {
 		this.layout.addComponent(treeStructure);
-//		this.layout.addComponent(keyboard);
+		this.layout.addComponent(keyboard);
 		this.layout.addComponent(searchField);
 	}
 
