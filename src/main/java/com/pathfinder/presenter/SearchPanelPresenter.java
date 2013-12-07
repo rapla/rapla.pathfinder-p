@@ -26,7 +26,8 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 	private final SearchField searchField = new SearchField();
 	private final SearchPanel searchPanel = new SearchPanel(treeStructure,
 			keyboardView, searchField);
-	private final BeanFieldGroup<KeyboardModel> binder = new BeanFieldGroup<KeyboardModel>(KeyboardModel.class);
+	private final BeanFieldGroup<KeyboardModel> binder = new BeanFieldGroup<KeyboardModel>(
+			KeyboardModel.class);
 
 	private String searchString;
 
@@ -39,11 +40,16 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 	@Override
 	public void buttonClick(String key) {
 		// TODO Use Id´s instead of descriptions or values
-		if (!key.equals("LÖSCHEN")) {
-			addKeybordKeyToSearchString(key);
+		if (key.equals("LÖSCHEN")) {
+			deleteKeyFromSearchString();
+			System.out.println(keyboard.getSearchString());
+		}
+		// TODO Use Id´s instead of descriptions or values
+		else if (key.equals("LEERTASTE")) {
+			addKeybordKeyToSearchString(" ");
 			System.out.println(keyboard.getSearchString());
 		} else {
-			deleteKeyFromSearchString();
+			addKeybordKeyToSearchString(key);
 			System.out.println(keyboard.getSearchString());
 		}
 	}
@@ -70,10 +76,9 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 		keyboard.setSearchString("");
 		this.refreshItemDataSource();
 	}
-	
-	private void refreshItemDataSource()
-	{
-		binder.setItemDataSource(keyboard);
+
+	private void refreshItemDataSource() {
+		this.binder.setItemDataSource(keyboard);
 	}
 
 	public SearchPanel getSearchPanel() {
