@@ -17,7 +17,7 @@ import de.vksi.c4j.ContractReference;
 
 @ContractReference(KeyboardPresenterContract.class)
 public class SearchPanelPresenter implements KeyboardSpec.KeyboardViewListener,
-		KeyboardPresenterSpec {
+		SearchPanelPresenterSpec {
 
 	KeyboardModel keyboard = new KeyboardModel();
 	private final TreeStructure treeStructure = new TreeStructure();

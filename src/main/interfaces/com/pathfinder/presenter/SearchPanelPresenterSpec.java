@@ -1,6 +1,6 @@
 package com.pathfinder.presenter;
 
-public interface KeyboardPresenterSpec {
+public interface SearchPanelPresenterSpec {
 
 	void addKeybordKeyToSearchString(String key);
 

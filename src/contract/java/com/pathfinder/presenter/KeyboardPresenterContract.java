@@ -9,7 +9,7 @@ import com.pathfinder.view.components.Keyboard;
 import de.vksi.c4j.ClassInvariant;
 import de.vksi.c4j.Target;
 
-public class KeyboardPresenterContract implements KeyboardPresenterSpec {
+public class KeyboardPresenterContract implements SearchPanelPresenterSpec {
 
 	@Target
 	private SearchPanelPresenter target;
