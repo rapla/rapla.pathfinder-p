@@ -13,6 +13,7 @@ import java.util.Locale;
 
 import com.pathfinder.translation.TranslationKeys;
 import com.pathfinder.translation.Translator;
+import com.pathfinder.translation.TranslatorSpec;
 import com.pathfinder.view.listener.KeyboardViewListenerSpec;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -26,7 +27,7 @@ public class Keyboard extends CustomComponent implements KeyboardSpec,
 
 	private Button deleteButton;
 	private Button spaceButton;
-	private Translator translator = Translator.getInstance();
+	private TranslatorSpec translator = Translator.getInstance();
 
 	public Keyboard() {
 

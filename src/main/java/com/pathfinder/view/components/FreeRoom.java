@@ -6,13 +6,14 @@ import java.util.Locale;
 
 import com.pathfinder.translation.TranslationKeys;
 import com.pathfinder.translation.Translator;
+import com.pathfinder.translation.TranslatorSpec;
 import com.pathfinder.view.listener.FreeRoomViewListenerSpec;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 public class FreeRoom extends CustomComponent implements FreeRoomSpec {
-	private Translator translator = Translator.getInstance();
+	private TranslatorSpec translator = Translator.getInstance();
 	private final Label description = new Label();
 
 	private final VerticalLayout verticalLayoutOuter = new VerticalLayout();

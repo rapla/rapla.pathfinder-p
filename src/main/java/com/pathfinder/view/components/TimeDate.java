@@ -10,13 +10,14 @@ import java.util.TimeZone;
 
 import com.pathfinder.translation.TranslationKeys;
 import com.pathfinder.translation.Translator;
+import com.pathfinder.translation.TranslatorSpec;
 import com.pathfinder.view.listener.TimeDateViewListenerSpec;
 import com.vaadin.ui.Label;
 
 public class TimeDate extends Label implements TimeDateSpec {
 
 	private List<TimeDateViewListenerSpec> listener = new ArrayList<TimeDateViewListenerSpec>();
-	private Translator translator = Translator.getInstance();
+	private TranslatorSpec translator = Translator.getInstance();
 
 	public TimeDate() {
 		this.refreshTimeAndDate();

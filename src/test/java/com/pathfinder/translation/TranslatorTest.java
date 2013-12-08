@@ -6,6 +6,7 @@ package com.pathfinder.translation;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Locale;
+import java.util.MissingResourceException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +17,7 @@ import org.junit.Test;
  */
 public class TranslatorTest {
 
-	private Translator translator;
+	private TranslatorSpec translator;
 
 	@Before
 	public void initialize() {
@@ -40,7 +41,34 @@ public class TranslatorTest {
 	}
 
 	@Test
-	public void translateNotSupportedLanguageTest() {
+	public void translateTestForCurrentLocale() {
+		String translation = translator.translate(TranslationKeys.ROOM);
 
+		assertEquals("Raum", translation);
+
+		translation = translator.translate(TranslationKeys.PERSON);
+		assertEquals("Person", translation);
+	}
+
+	@Test
+	public void getDefaultLocaleTest() {
+		assertEquals(Locale.GERMAN, translator.getDefaultLocale());
+	}
+
+	@Test
+	public void translateNotSupportedLanguageTest() {
+		String translation = translator.translate(TranslationKeys.COURSE,
+				Locale.CHINESE);
+		assertEquals("", translation);
+	}
+
+	@Test(expected = MissingResourceException.class)
+	public void tranlateMissingKey() {
+		translator.translate(TranslationKeys.INVALID_KEY);
+	}
+
+	@Test(expected = MissingResourceException.class)
+	public void tranlateMissingKeyWhenLocaleSpecified() {
+		translator.translate(TranslationKeys.INVALID_KEY, Locale.ENGLISH);
 	}
 }

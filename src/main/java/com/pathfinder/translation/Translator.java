@@ -11,15 +11,24 @@ import java.util.ResourceBundle;
 import com.vaadin.ui.UI;
 
 /**
+ * Utility class for translating; translations are kept in
+ * translations_xx.properties File where xx is the ISO-presentation of a locale:
+ * e.g. de for German
+ * 
  * @author tim
  * 
  */
-public class Translator {
+public class Translator implements TranslatorSpec {
+
+	/**
+	 * Default locale
+	 */
+	private static final Locale DEFAULT_LOCALE = Locale.GERMAN;
 
 	/**
 	 * Single instance of this class
 	 */
-	private static Translator instance;
+	private static TranslatorSpec instance;
 
 	/**
 	 * Prefix of all filenames which contain translation pairs
@@ -31,6 +40,10 @@ public class Translator {
 	 */
 	private Map<String, ResourceBundle> bundles = new HashMap<String, ResourceBundle>();
 
+	/**
+	 * Private constructor; when singleton is instantiated, all the resource
+	 * bundles will be loaded once
+	 */
 	private Translator() {
 		bundles.put(Locale.GERMAN.getLanguage(), ResourceBundle.getBundle(
 				TRANSLATION_FILE_PREFIX, Locale.GERMAN));
@@ -43,22 +56,17 @@ public class Translator {
 	 * 
 	 * @return single instance
 	 */
-	public static Translator getInstance() {
+	public static TranslatorSpec getInstance() {
 		if (instance == null) {
 			instance = new Translator();
 		}
 		return instance;
 	}
 
-	/**
-	 * Looks up translation for specified key and specified locale
-	 * 
-	 * @param key
-	 *            Key for looking up translations
-	 * @param locale
-	 *            Target language
-	 * @return translation or empty String, if language not supported
+	/* (non-Javadoc)
+	 * @see com.pathfinder.translation.TranslatorSpec#translate(com.pathfinder.translation.TranslationKeys, java.util.Locale)
 	 */
+	@Override
 	public String translate(TranslationKeys key, Locale locale) {
 		String translation = "";
 		ResourceBundle bundle = bundles.get(locale.getLanguage());
@@ -68,8 +76,26 @@ public class Translator {
 		return translation;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.pathfinder.translation.TranslatorSpec#translate(com.pathfinder.translation.TranslationKeys)
+	 */
+	@Override
 	public String translate(TranslationKeys key) {
-		return translate(key, UI.getCurrent().getLocale());
+		Locale locale;
+		if (UI.getCurrent() != null) {
+			locale = UI.getCurrent().getLocale();
+		} else {
+			locale = DEFAULT_LOCALE;
+		}
+		return translate(key, locale);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.pathfinder.translation.TranslatorSpec#getDefaultLocale()
+	 */
+	@Override
+	public Locale getDefaultLocale() {
+		return DEFAULT_LOCALE;
 	}
 
 }

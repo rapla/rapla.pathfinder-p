@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import com.pathfinder.translation.Translator;
 import com.pathfinder.view.components.DetailContainer;
 import com.pathfinder.view.components.MenuBar;
 import com.pathfinder.view.listener.MainLayoutViewListenerSpec;
@@ -24,19 +25,19 @@ public class MainLayout extends CustomComponent implements MainLayoutSpec,
 	private DetailContainer detailContainer = null;
 	private SearchPanel searchPanel = null;
 	private MenuBar menuBar = null;
-	private static final Locale DEFAULT_LANGUAGE = Locale.GERMAN;
 
 	private final VerticalLayout layout = new VerticalLayout();
 
 	private List<MainLayoutViewListenerSpec> listener = new ArrayList<MainLayoutViewListenerSpec>();
 
-	public MainLayout(InfoPanel infoPanel, DetailContainer detailContainer, SearchPanel searchPanel, MenuBar menuBar) {
+	public MainLayout(InfoPanel infoPanel, DetailContainer detailContainer,
+			SearchPanel searchPanel, MenuBar menuBar) {
 		this.infoPanel = infoPanel;
 		this.detailContainer = detailContainer;
 		this.searchPanel = searchPanel;
 		this.menuBar = menuBar;
-		
-		UI.getCurrent().setLocale(DEFAULT_LANGUAGE);
+
+		UI.getCurrent().setLocale(Translator.getInstance().getDefaultLocale());
 		this.buildLayout();
 		this.setCompositionRoot(layout);
 	}

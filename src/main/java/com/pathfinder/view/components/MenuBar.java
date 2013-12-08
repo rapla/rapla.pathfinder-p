@@ -6,6 +6,7 @@ import java.util.Locale;
 
 import com.pathfinder.translation.TranslationKeys;
 import com.pathfinder.translation.Translator;
+import com.pathfinder.translation.TranslatorSpec;
 import com.pathfinder.view.listener.MenuBarViewListenerSpec;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -19,7 +20,7 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	private HorizontalLayout mainLayout;
 	private Button germanButton;
 	private Button englishButton;
-	private Translator translator = Translator.getInstance();
+	private TranslatorSpec translator = Translator.getInstance();
 
 	private List<MenuBarViewListenerSpec> listener = new ArrayList<MenuBarViewListenerSpec>();
 

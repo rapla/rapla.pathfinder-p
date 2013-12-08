@@ -8,6 +8,7 @@ import org.apache.commons.lang.StringUtils;
 
 import com.pathfinder.translation.TranslationKeys;
 import com.pathfinder.translation.Translator;
+import com.pathfinder.translation.TranslatorSpec;
 import com.pathfinder.view.listener.AppointmentViewListenerSpec;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.ui.BrowserFrame;
@@ -18,7 +19,7 @@ public class Appointment extends BrowserFrame implements AppointmentSpec {
 
 	private String appointmentUrl = null;
 	private List<AppointmentViewListenerSpec> listener = new ArrayList<AppointmentViewListenerSpec>();
-	private Translator translator = Translator.getInstance();
+	private TranslatorSpec translator = Translator.getInstance();
 
 	public Appointment() {
 		this.setAlternateText(translator
