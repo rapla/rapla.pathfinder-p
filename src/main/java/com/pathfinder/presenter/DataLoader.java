@@ -9,13 +9,16 @@ import java.net.URL;
 import com.google.gson.Gson;
 import com.pathfinder.model.DataModel;
 
-public class DataLoaderPresenter {
+public class DataLoader implements DataLoaderSpec {
 	private BufferedReader br;
-	private Gson gson = new Gson();
+	private final Gson gson = new Gson();
 	private DataModel data;
 
-	public void LoadRooms() {
-
+	/* (non-Javadoc)
+	 * @see com.pathfinder.presenter.DataLoaderSpec#loadRooms()
+	 */
+	@Override
+	public void loadRooms() {
 		try {
 			br = new BufferedReader(
 					new InputStreamReader(
@@ -26,7 +29,6 @@ public class DataLoaderPresenter {
 			System.out.println("Error loading URL (Rooms)");
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -37,7 +39,11 @@ public class DataLoaderPresenter {
 		}
 	}
 
-	public void LoadCourses() {
+	/* (non-Javadoc)
+	 * @see com.pathfinder.presenter.DataLoaderSpec#loadCourses()
+	 */
+	@Override
+	public void loadCourses() {
 		try {
 			br = new BufferedReader(
 					new InputStreamReader(
@@ -48,7 +54,6 @@ public class DataLoaderPresenter {
 			System.out.println("Error loading URL (Courses)");
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -57,10 +62,13 @@ public class DataLoaderPresenter {
 			DataModel.setAllCourses(data.getResult());
 			System.out.println("All Courses are loaded");
 		}
-
 	}
 
-	public void LoadPersons() {
+	/* (non-Javadoc)
+	 * @see com.pathfinder.presenter.DataLoaderSpec#loadPersons()
+	 */
+	@Override
+	public void loadPersons() {
 		try {
 			br = new BufferedReader(
 					new InputStreamReader(
@@ -71,7 +79,6 @@ public class DataLoaderPresenter {
 			System.out.println("Error loading URL (Persons)");
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -82,4 +89,8 @@ public class DataLoaderPresenter {
 		}
 	}
 
+	@Override
+	public void loadPois() {
+		// TODO Auto-generated method stub
+	}
 }
