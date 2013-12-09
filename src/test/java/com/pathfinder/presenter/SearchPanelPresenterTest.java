@@ -6,11 +6,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.pathfinder.model.KeyboardModel;
-import com.pathfinder.view.components.Keyboard;
+import com.pathfinder.view.components.KeyboardView;
 
 public class SearchPanelPresenterTest {
 	KeyboardModel keyboardModel;
-	Keyboard keyboard;
+	KeyboardView keyboard;
 	SearchPanelPresenter searchPanelPresenter;
 
 	@Before
