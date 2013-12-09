@@ -51,7 +51,7 @@ public class TranslatorTest {
 
 	@Test
 	public void getDefaultLocaleTest() {
-		assertEquals(Locale.GERMAN, translator.getDefaultLocale());
+		assertEquals(Locale.GERMAN, translator.getFallbackLocale());
 	}
 
 	@Test
@@ -59,6 +59,12 @@ public class TranslatorTest {
 		String translation = translator.translate(TranslationKeys.COURSE,
 				Locale.CHINESE);
 		assertEquals("", translation);
+	}
+
+	@Test
+	public void localeSupportedTest() {
+		assertEquals(false, translator.isLocaleSupported(Locale.CHINESE));
+		assertEquals(true, translator.isLocaleSupported(Locale.ENGLISH));
 	}
 
 	@Test(expected = AssertionError.class)

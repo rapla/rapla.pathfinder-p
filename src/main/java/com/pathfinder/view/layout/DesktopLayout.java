@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import com.pathfinder.translation.Translator;
 import com.pathfinder.view.TranslatabelSpec;
 import com.pathfinder.view.components.DetailContainer;
 import com.pathfinder.view.components.MenuBar;
@@ -13,7 +12,6 @@ import com.pathfinder.view.container.SearchPanel;
 import com.pathfinder.view.listener.MainLayoutViewListenerSpec;
 import com.pathfinder.view.listener.MenuBarViewListenerSpec;
 import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -22,8 +20,8 @@ import com.vaadin.ui.VerticalLayout;
  * @author alexh
  * 
  */
-public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec,
-		MenuBarViewListenerSpec, TranslatabelSpec {
+public class DesktopLayout extends CustomComponent implements
+		DesktopLayoutSpec, MenuBarViewListenerSpec, TranslatabelSpec {
 	private InfoPanel infoPanel = null;
 	private DetailContainer detailContainer = null;
 	private SearchPanel searchPanel = null;
@@ -40,7 +38,6 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec,
 		this.searchPanel = searchPanel;
 		this.menuBar = menuBar;
 
-		UI.getCurrent().setLocale(Translator.getInstance().getDefaultLocale());
 		this.buildLayout();
 		this.setCompositionRoot(layout);
 	}

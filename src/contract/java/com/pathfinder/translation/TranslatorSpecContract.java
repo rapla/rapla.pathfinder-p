@@ -70,7 +70,7 @@ public class TranslatorSpecContract implements TranslatorSpec {
 						.getLocale())) : "if locale specified in UI, result must equal the translation for that locale";
 			} else {
 				assert result.equals(target.translate(key,
-						target.getDefaultLocale())) : "if locale not specified in UI, result must equal the translation for the default locale";
+						target.getFallbackLocale())) : "if locale not specified in UI, result must equal the translation for the default locale";
 			}
 		}
 		return ignored();
@@ -82,11 +82,23 @@ public class TranslatorSpecContract implements TranslatorSpec {
 	 * @see com.pathfinder.translation.TranslatorSpec#getDefaultLocale()
 	 */
 	@Override
-	public Locale getDefaultLocale() {
+	public Locale getFallbackLocale() {
 		if (postCondition()) {
 			Locale result = Condition.result();
 			assert result != null : "result not null";
 		}
+		return ignored();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pathfinder.translation.TranslatorSpec#isLocaleSupported(java.util
+	 * .Locale)
+	 */
+	@Override
+	public boolean isLocaleSupported(Locale locale) {
 		return ignored();
 	}
 

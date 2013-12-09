@@ -27,7 +27,7 @@ public interface TranslatorSpec {
 	 * @return translation or empty String, if language not supported
 	 */
 	@Pure
-	public abstract String translate(TranslationKeys key, Locale locale);
+	String translate(TranslationKeys key, Locale locale);
 
 	/**
 	 * Looks up translation for specified key; uses current locale of UI. If UI
@@ -38,15 +38,26 @@ public interface TranslatorSpec {
 	 * @return translation or empty String, if language not supported
 	 */
 	@Pure
-	public abstract String translate(TranslationKeys key);
+	String translate(TranslationKeys key);
 
 	/**
-	 * Returns hard coded default locale; notice: the default locale will not be
-	 * updated during runtime
+	 * Returns hard coded fallback locale; notice: the fallback locale will not
+	 * be updated during runtime
 	 * 
 	 * @return hard coded default locale
 	 */
 	@Pure
-	public abstract Locale getDefaultLocale();
+	Locale getFallbackLocale();
+
+	/**
+	 * Checks, if specified locale is among the list of supported locales
+	 * 
+	 * @param locale
+	 *            locale to be tested
+	 * @return true, if locale is supported, false, if not or if given locale is
+	 *         null
+	 */
+	@Pure
+	boolean isLocaleSupported(Locale locale);
 
 }

@@ -21,9 +21,9 @@ import com.vaadin.ui.UI;
 public class Translator implements TranslatorSpec {
 
 	/**
-	 * Default locale
+	 * Locale which will be taken, if no other locale specified
 	 */
-	private static final Locale DEFAULT_LOCALE = Locale.GERMAN;
+	private static final Locale FALLBACK_LOCALE = Locale.GERMAN;
 
 	/**
 	 * Single instance of this class
@@ -63,8 +63,11 @@ public class Translator implements TranslatorSpec {
 		return instance;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pathfinder.translation.TranslatorSpec#translate(com.pathfinder.translation.TranslationKeys, java.util.Locale)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pathfinder.translation.TranslatorSpec#translate(com.pathfinder.
+	 * translation.TranslationKeys, java.util.Locale)
 	 */
 	@Override
 	public String translate(TranslationKeys key, Locale locale) {
@@ -76,8 +79,11 @@ public class Translator implements TranslatorSpec {
 		return translation;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pathfinder.translation.TranslatorSpec#translate(com.pathfinder.translation.TranslationKeys)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pathfinder.translation.TranslatorSpec#translate(com.pathfinder.
+	 * translation.TranslationKeys)
 	 */
 	@Override
 	public String translate(TranslationKeys key) {
@@ -85,17 +91,32 @@ public class Translator implements TranslatorSpec {
 		if (UI.getCurrent() != null) {
 			locale = UI.getCurrent().getLocale();
 		} else {
-			locale = DEFAULT_LOCALE;
+			// UI not yet instantiated (e.g. when testing)
+			locale = FALLBACK_LOCALE;
 		}
 		return translate(key, locale);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.pathfinder.translation.TranslatorSpec#getDefaultLocale()
 	 */
 	@Override
-	public Locale getDefaultLocale() {
-		return DEFAULT_LOCALE;
+	public Locale getFallbackLocale() {
+		return FALLBACK_LOCALE;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pathfinder.translation.TranslatorSpec#isLocaleSupported(java.util
+	 * .Locale)
+	 */
+	@Override
+	public boolean isLocaleSupported(Locale locale) {
+		return locale != null && bundles.containsKey(locale.getLanguage());
 	}
 
 }

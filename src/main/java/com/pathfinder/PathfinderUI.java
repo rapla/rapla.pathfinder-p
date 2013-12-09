@@ -1,8 +1,12 @@
 package com.pathfinder;
 
 import javax.servlet.annotation.WebServlet;
+//import org.apache.logging.log4j.LogManager;
+//import org.apache.logging.log4j.Logger;
+import javax.servlet.http.HttpServletRequest;
 
 import com.pathfinder.presenter.MainPresenter;
+import com.pathfinder.translation.Translator;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.external.org.slf4j.Logger;
@@ -13,11 +17,6 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.server.VaadinServletRequest;
 import com.vaadin.server.WebBrowser;
 import com.vaadin.ui.UI;
-
-//import org.apache.logging.log4j.LogManager;
-//import org.apache.logging.log4j.Logger;
-import javax.servlet.http.HttpServletRequest;
-
 
 @SuppressWarnings("serial")
 @Theme("rapla_pathfinder_p")
@@ -34,30 +33,41 @@ public class PathfinderUI extends UI {
 
 	@Override
 	protected void init(VaadinRequest request) {
-		// TODO setLocale with request.getLocale()
+
+		// Setting locale of UI as locale of request, if locale supported by
+		// translator and not null; otherwise use fallback locale
+		if (request.getLocale() != null
+				&& Translator.getInstance().isLocaleSupported(
+						request.getLocale())) {
+			setLocale(request.getLocale());
+		} else {
+			setLocale(Translator.getInstance().getFallbackLocale());
+		}
+
 		/* Method 1 */
 		Page.getCurrent().getBrowserWindowWidth();
 
 		/* Method 2 */
 		WebBrowser browser = getPage().getWebBrowser();
-		
-		
-//		if (browser.getScreenWidth() > 1024 && browser.getScreenHeight() > 768) {
-//			// TODO
-//		} else {
-//			// TODO
-//		}
 
+		// if (browser.getScreenWidth() > 1024 && browser.getScreenHeight() >
+		// 768) {
+		// // TODO
+		// } else {
+		// // TODO
+		// }
 
 		/* Method 3 */
 		if (request instanceof VaadinServletRequest) {
-		    HttpServletRequest httpRequest = ((VaadinServletRequest)request).getHttpServletRequest();
-		    String userAgent = httpRequest.getHeader("User-Agent").toLowerCase();
+			HttpServletRequest httpRequest = ((VaadinServletRequest) request)
+					.getHttpServletRequest();
+			String userAgent = httpRequest.getHeader("User-Agent")
+					.toLowerCase();
 
-		    // TODO: Check user agent for all tablet matching keywords
-		    if (userAgent.contains("ipad")) { 
-		        //...
-		    }
+			// TODO: Check user agent for all tablet matching keywords
+			if (userAgent.contains("ipad")) {
+				// ...
+			}
 
 		}
 
