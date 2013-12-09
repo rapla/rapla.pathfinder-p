@@ -1,5 +1,6 @@
 package com.pathfinder.view.layout;
 
+import com.pathfinder.view.ViewSpec;
 import com.pathfinder.view.listener.MainLayoutViewListenerSpec;
 
 /**

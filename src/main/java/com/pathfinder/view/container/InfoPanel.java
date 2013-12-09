@@ -1,4 +1,4 @@
-package com.pathfinder.view.layout;
+package com.pathfinder.view.container;
 
 import java.util.ArrayList;
 import java.util.List;

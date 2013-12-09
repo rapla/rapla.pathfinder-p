@@ -2,7 +2,7 @@ package com.pathfinder.presenter;
 
 import com.pathfinder.view.components.FreeRoom;
 import com.pathfinder.view.components.TimeDate;
-import com.pathfinder.view.layout.InfoPanel;
+import com.pathfinder.view.container.InfoPanel;
 
 public class InfoPanelPresenter implements InfoPanelPresenterSpec {
 	private final TimeDate timeDate = new TimeDate();
