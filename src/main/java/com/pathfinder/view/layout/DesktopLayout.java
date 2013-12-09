@@ -22,7 +22,7 @@ import com.vaadin.ui.VerticalLayout;
  * @author alexh
  * 
  */
-public class MainLayout extends CustomComponent implements MainLayoutSpec,
+public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec,
 		MenuBarViewListenerSpec, TranslatabelSpec {
 	private InfoPanel infoPanel = null;
 	private DetailContainer detailContainer = null;
@@ -33,7 +33,7 @@ public class MainLayout extends CustomComponent implements MainLayoutSpec,
 
 	private List<MainLayoutViewListenerSpec> listener = new ArrayList<MainLayoutViewListenerSpec>();
 
-	public MainLayout(InfoPanel infoPanel, DetailContainer detailContainer,
+	public DesktopLayout(InfoPanel infoPanel, DetailContainer detailContainer,
 			SearchPanel searchPanel, MenuBar menuBar) {
 		this.infoPanel = infoPanel;
 		this.detailContainer = detailContainer;

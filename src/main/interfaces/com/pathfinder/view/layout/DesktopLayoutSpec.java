@@ -9,7 +9,7 @@ import com.pathfinder.view.listener.MainLayoutViewListenerSpec;
  * @author alexh
  * 
  */
-public interface MainLayoutSpec extends ViewSpec {
+public interface DesktopLayoutSpec extends ViewSpec {
 	void hideInfoPanel();
 
 	void showInfoPanel();
