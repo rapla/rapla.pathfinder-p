@@ -2,7 +2,7 @@ package com.pathfinder.presenter;
 
 import java.util.Locale;
 
-import com.pathfinder.view.layout.MainLayout;
+import com.pathfinder.view.layout.DesktopLayout;
 import com.pathfinder.view.listener.MainLayoutViewListenerSpec;
 import com.vaadin.ui.CustomComponent;
 
@@ -18,22 +18,22 @@ public class MainPresenter implements MainLayoutViewListenerSpec,
 	private final DetailContainerPresenter detailContainerPresenter = new DetailContainerPresenter();
 	private final SearchPanelPresenter searchPanelPresenter = new SearchPanelPresenter();
 	private final MenuBarPresenter menuBarPresenter = new MenuBarPresenter();
-	private final MainLayout mainLayout = new MainLayout(
+	private final DesktopLayout desktopLayout = new DesktopLayout(
 			infoPanelPresenter.getInfoPanel(),
 			detailContainerPresenter.getDetailContainer(),
 			searchPanelPresenter.getSearchPanel(),
 			menuBarPresenter.getMenuBar());
 
 	public MainPresenter() {
-		mainLayout.addMainLayoutViewListener(this);
+		desktopLayout.addMainLayoutViewListener(this);
 	}
 
 	public CustomComponent getMainLayoutView() {
-		return mainLayout;
+		return desktopLayout;
 	}
 
 	@Override
 	public void languageChanged(Locale locale) {
-		mainLayout.updateTranslations(locale);
+		desktopLayout.updateTranslations(locale);
 	}
 }

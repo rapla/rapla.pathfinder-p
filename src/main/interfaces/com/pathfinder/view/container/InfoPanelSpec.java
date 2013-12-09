@@ -1,5 +1,6 @@
-package com.pathfinder.view.layout;
+package com.pathfinder.view.container;
 
+import com.pathfinder.view.ViewSpec;
 import com.pathfinder.view.listener.InfoPanelViewListenerSpec;
 
 /**

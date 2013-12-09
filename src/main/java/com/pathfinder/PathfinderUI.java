@@ -2,12 +2,15 @@ package com.pathfinder;
 
 import javax.servlet.annotation.WebServlet;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+//import org.apache.logging.log4j.LogManager;
+//import org.apache.logging.log4j.Logger;
+
 
 import com.pathfinder.presenter.MainPresenter;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
+import com.vaadin.external.org.slf4j.Logger;
+import com.vaadin.external.org.slf4j.LoggerFactory;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
@@ -16,7 +19,9 @@ import com.vaadin.ui.UI;
 @Theme("rapla_pathfinder_p")
 public class PathfinderUI extends UI {
 
-	Logger logger = LogManager.getLogger(PathfinderUI.class.getName());
+	//Logger logger = LogManager.getLogger(PathfinderUI.class.getName());
+	
+	private Logger log = LoggerFactory.getLogger(getClass());
 	
 	@WebServlet(value = "/*", asyncSupported = true)
 	@VaadinServletConfiguration(productionMode = false, ui = PathfinderUI.class)
@@ -26,7 +31,8 @@ public class PathfinderUI extends UI {
 	@Override
 	protected void init(VaadinRequest request) {
 		setContent(new MainPresenter().getMainLayoutView());
-		logger.trace("Application initialized");
+		//logger.trace("Application initialized");
+		log.debug("Log");
 	}
 
 }

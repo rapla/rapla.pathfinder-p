@@ -10,7 +10,7 @@ import com.pathfinder.model.KeyboardModel;
 import com.pathfinder.view.components.Keyboard;
 import com.pathfinder.view.components.SearchField;
 import com.pathfinder.view.components.TreeStructure;
-import com.pathfinder.view.layout.SearchPanel;
+import com.pathfinder.view.container.SearchPanel;
 import com.pathfinder.view.listener.KeyboardViewListenerSpec;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 

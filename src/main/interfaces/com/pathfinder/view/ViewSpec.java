@@ -1,4 +1,5 @@
-package com.pathfinder.view.layout;
+package com.pathfinder.view;
+
 
 /**
  * ViewSpec - Defines methods for all layout classes

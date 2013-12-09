@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.pathfinder.view.layout;
+package com.pathfinder.view;
 
 import java.util.Locale;
 
