@@ -30,6 +30,7 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 			KeyboardModel.class);
 
 	private String searchString;
+	private int changePosCounter;
 
 	public SearchPanelPresenter() {
 		this.keyboardView.addListener(this);
@@ -41,19 +42,34 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 	public void buttonClick(String key) {
 		if (key.equals("DELETE")) {
 			deleteKeyFromSearchString();
-			System.out.println(keyboard.getSearchString());
 		} else if (key.equals("SPACE")) {
 			addKeybordKeyToSearchString(" ");
-			System.out.println(keyboard.getSearchString());
+		} else if (key.equals("<")) {
+			setChangePosCounter(getChangePosCounter() - 1);
+		} else if (key.equals(">")) {
+			if (getChangePosCounter() < 0) {
+				setChangePosCounter(getChangePosCounter() + 1);
+			}
 		} else {
 			addKeybordKeyToSearchString(key);
-			System.out.println(keyboard.getSearchString());
+
 		}
 	}
 
 	public void addKeybordKeyToSearchString(String key) {
+		changePosCounter = getChangePosCounter();
 		searchString = keyboard.getSearchString();
-		searchString += key;
+		if (changePosCounter < 0) {
+			int positonCounter = searchString.length() + changePosCounter;
+
+			searchString = searchString.substring(0, positonCounter)
+					+ key
+					+ searchString.substring(positonCounter,
+							searchString.length());
+		} else {
+			searchString += key;
+		}
+
 		keyboard.setSearchString(searchString);
 		this.refreshItemDataSource();
 	}
@@ -88,5 +104,13 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 
 	public Keyboard getKeyboard() {
 		return this.keyboardView;
+	}
+
+	public int getChangePosCounter() {
+		return changePosCounter;
+	}
+
+	public void setChangePosCounter(int changePosCounter) {
+		this.changePosCounter = changePosCounter;
 	}
 }
