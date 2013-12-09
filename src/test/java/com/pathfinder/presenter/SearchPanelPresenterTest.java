@@ -15,9 +15,10 @@ public class SearchPanelPresenterTest {
 
 	@Before
 	public void setUp() {
-		keyboardModel = new KeyboardModel();
-		keyboard = new Keyboard();
 		searchPanelPresenter = new SearchPanelPresenter();
+		keyboardModel = searchPanelPresenter.getKeyboardModel();
+		keyboard = searchPanelPresenter.getKeyboard();
+
 	}
 
 	@Test

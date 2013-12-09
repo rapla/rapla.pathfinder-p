@@ -39,13 +39,10 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 
 	@Override
 	public void buttonClick(String key) {
-		// TODO Use Id´s instead of descriptions or values
-		if (key.equals("LÖSCHEN")) {
+		if (key.equals("DELETE")) {
 			deleteKeyFromSearchString();
 			System.out.println(keyboard.getSearchString());
-		}
-		// TODO Use Id´s instead of descriptions or values
-		else if (key.equals("LEERTASTE")) {
+		} else if (key.equals("SPACE")) {
 			addKeybordKeyToSearchString(" ");
 			System.out.println(keyboard.getSearchString());
 		} else {
@@ -83,5 +80,13 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 
 	public SearchPanel getSearchPanel() {
 		return this.searchPanel;
+	}
+
+	public KeyboardModel getKeyboardModel() {
+		return this.keyboard;
+	}
+
+	public Keyboard getKeyboard() {
+		return this.keyboardView;
 	}
 }

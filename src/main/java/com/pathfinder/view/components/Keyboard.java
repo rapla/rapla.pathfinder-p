@@ -27,54 +27,76 @@ public class Keyboard extends CustomComponent implements KeyboardSpec,
 
 	private Button deleteButton;
 	private Button spaceButton;
+	private Button wildCardButton;
 	private TranslatorSpec translator = Translator.getInstance();
 
 	public Keyboard() {
-
 		String caption;
-		GridLayout layout = new GridLayout(11, 5);
-
-		// The operations for the Keyboard in the order they appear on the
-		// screen (left to right, top to bottom)
-		String[] firstRow = new String[] { "1", "2", "3", "4", "5", "6", "7",
-				"8", "9", "0", };
-
-		String[] secondRow = new String[] { "Q", "W", "E", "R", "T", "Z", "U",
-				"I", "O", "P", "Ü" };
-
-		String[] thirdRow = new String[] { "A", "S", "D", "F", "G", "H", "J",
-				"K", "L", "Ö", "Ä" };
-
-		String[] fourthRow = new String[] { "Y", "X", "C", "V", "B", "N", "M" };
-
-		// Add buttons and have them send click events
-		// to this class
-		for (int i = 0; i < firstRow.length; i++) {
-			caption = firstRow[i];
-			layout.addComponent(new Button(caption, this), i, 0);
-		}
-
-		for (int i = 0; i < secondRow.length; i++) {
-			caption = secondRow[i];
-			layout.addComponent(new Button(caption, this), i, 1);
-		}
-
-		for (int i = 0; i < thirdRow.length; i++) {
-			caption = thirdRow[i];
-			layout.addComponent(new Button(caption, this), i, 2);
-		}
-
-		for (int i = 0; i < fourthRow.length; i++) {
-			caption = fourthRow[i];
-			layout.addComponent(new Button(caption, this), i, 3);
-		}
+		GridLayout layout = new GridLayout(12, 4);
 
 		deleteButton = new Button(translator.translate(TranslationKeys.DELETE)
 				.toUpperCase(), this);
 		spaceButton = new Button(translator.translate(TranslationKeys.SPACE)
 				.toUpperCase(), this);
-		layout.addComponent(deleteButton, 0, 4);
-		layout.addComponent(spaceButton, 1, 4);
+
+		// The operations for the Keyboard in the order they appear on the
+		// screen (left to right, top to bottom)
+		String[] firstRow = new String[] { "1", "2", "3", "4", "5", "6", "7",
+				"8", "9", "0",
+				translator.translate(TranslationKeys.DELETE).toUpperCase() };
+
+		String[] secondRow = new String[] { "Q", "W", "E", "R", "T", "Z", "U",
+				"I", "O", "P", "Ü", "<" };
+
+		String[] thirdRow = new String[] { "A", "S", "D", "F", "G", "H", "J",
+				"K", "L", "Ö", "Ä", ">" };
+
+		String[] fourthRow = new String[] { "Y", "X", "C", "V",
+				translator.translate(TranslationKeys.SPACE).toUpperCase(), "B",
+				"N", "M" };
+
+		// Add buttons and have them send click events
+		// to this class
+		for (int i = 0; i < firstRow.length; i++) {
+			caption = firstRow[i];
+			wildCardButton = new Button(caption, this);
+
+			if (!caption.equals(translator.translate(TranslationKeys.DELETE)
+					.toUpperCase())) {
+				wildCardButton.setId(caption);
+				layout.addComponent(wildCardButton, i, 0);
+			} else {
+				deleteButton.setId("DELETE");
+				layout.addComponent(deleteButton, i, 0);
+			}
+		}
+
+		for (int i = 0; i < secondRow.length; i++) {
+			caption = secondRow[i];
+			wildCardButton = new Button(caption, this);
+			wildCardButton.setId(caption);
+			layout.addComponent(wildCardButton, i, 1);
+		}
+
+		for (int i = 0; i < thirdRow.length; i++) {
+			caption = thirdRow[i];
+			wildCardButton = new Button(caption, this);
+			wildCardButton.setId(caption);
+			layout.addComponent(wildCardButton, i, 2);
+		}
+
+		for (int i = 0; i < fourthRow.length; i++) {
+			caption = fourthRow[i];
+			wildCardButton = new Button(caption, this);
+			if (!caption.equals(translator.translate(TranslationKeys.SPACE)
+					.toUpperCase())) {
+				wildCardButton.setId(caption);
+				layout.addComponent(wildCardButton, i, 3);
+			} else {
+				spaceButton.setId("SPACE");
+				layout.addComponent(spaceButton, i, 3);
+			}
+		}
 
 		setCompositionRoot(layout);
 
@@ -94,7 +116,7 @@ public class Keyboard extends CustomComponent implements KeyboardSpec,
 	@Override
 	public void buttonClick(ClickEvent event) {
 		for (KeyboardViewListenerSpec listener : listeners)
-			listener.buttonClick(event.getButton().getCaption().toString());
+			listener.buttonClick(event.getButton().getId());
 	}
 
 	@Override
