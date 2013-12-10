@@ -7,7 +7,7 @@
 package com.pathfinder.presenter;
 
 import com.pathfinder.model.KeyboardModel;
-import com.pathfinder.view.components.KeyboardView;
+import com.pathfinder.view.components.Keyboard;
 import com.pathfinder.view.components.SearchField;
 import com.pathfinder.view.components.TreeStructure;
 import com.pathfinder.view.container.SearchPanel;
@@ -19,10 +19,10 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 
 	private final KeyboardModel keyboardModel = new KeyboardModel();
 	private final TreeStructure treeStructure = new TreeStructure();
-	private final KeyboardView keyboardView = new KeyboardView();
+	private final Keyboard keyboard = new Keyboard();
 	private final SearchField searchField = new SearchField();
 	private final SearchPanel searchPanel = new SearchPanel(treeStructure,
-			keyboardView, searchField);
+			keyboard, searchField);
 	private final BeanFieldGroup<KeyboardModel> binder = new BeanFieldGroup<KeyboardModel>(
 			KeyboardModel.class);
 
@@ -30,7 +30,7 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 	private int changePosCounter;
 
 	public SearchPanelPresenter() {
-		this.keyboardView.addListener(this);
+		this.keyboard.addListener(this);
 		this.refreshItemDataSource();
 		this.binder.bind(searchField, KeyboardModel.PROPERTY_SEARCHSTRING);
 	}
@@ -99,8 +99,8 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 		return this.keyboardModel;
 	}
 
-	public KeyboardView getKeyboard() {
-		return this.keyboardView;
+	public Keyboard getKeyboard() {
+		return this.keyboard;
 	}
 
 	public int getChangePosCounter() {

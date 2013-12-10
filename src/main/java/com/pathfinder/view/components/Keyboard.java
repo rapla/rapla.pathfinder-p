@@ -22,7 +22,7 @@ import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.GridLayout;
 
 @SuppressWarnings("serial")
-public class KeyboardView extends CustomComponent implements KeyboardSpec,
+public class Keyboard extends CustomComponent implements KeyboardSpec,
 		ClickListener {
 
 	private Button deleteButton;
@@ -30,7 +30,7 @@ public class KeyboardView extends CustomComponent implements KeyboardSpec,
 	private Button wildCardButton;
 	private TranslatorSpec translator = Translator.getInstance();
 
-	public KeyboardView() {
+	public Keyboard() {
 		String caption;
 		GridLayout layout = new GridLayout(12, 4);
 
