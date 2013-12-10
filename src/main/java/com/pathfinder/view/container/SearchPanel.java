@@ -4,27 +4,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import com.pathfinder.view.components.KeyboardView;
+import com.pathfinder.view.components.Keyboard;
 import com.pathfinder.view.components.SearchField;
 import com.pathfinder.view.components.TreeStructure;
 import com.pathfinder.view.listener.SearchPanelViewListenerSpec;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.VerticalLayout;
 
+@SuppressWarnings("serial")
 public class SearchPanel extends CustomComponent implements SearchPanelSpec {
 
 	private TreeStructure treeStructure = null;
-	private KeyboardView keyboardView = null;
+	private Keyboard keyboard = null;
 	private SearchField searchField = null;
 
 	private VerticalLayout layout = new VerticalLayout();
 
 	private List<SearchPanelViewListenerSpec> listener = new ArrayList<SearchPanelViewListenerSpec>();
 
-	public SearchPanel(TreeStructure treeStructure, KeyboardView keyboardView,
+	public SearchPanel(TreeStructure treeStructure, Keyboard keyboardView,
 			SearchField searchField) {
 		this.treeStructure = treeStructure;
-		this.keyboardView = keyboardView;
+		this.keyboard = keyboardView;
 		this.searchField = searchField;
 		this.buildLayout();
 		this.setCompositionRoot(layout);
@@ -33,7 +34,7 @@ public class SearchPanel extends CustomComponent implements SearchPanelSpec {
 	@Override
 	public void buildLayout() {
 		this.layout.addComponent(treeStructure);
-		this.layout.addComponent(keyboardView);
+		this.layout.addComponent(keyboard);
 		this.layout.addComponent(searchField);
 	}
 
@@ -50,7 +51,7 @@ public class SearchPanel extends CustomComponent implements SearchPanelSpec {
 	@Override
 	public void updateTranslations(Locale locale) {
 		treeStructure.updateTranslations(locale);
-		keyboardView.updateTranslations(locale);
+		keyboard.updateTranslations(locale);
 		searchField.updateTranslations(locale);
 	}
 

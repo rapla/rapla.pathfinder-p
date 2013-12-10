@@ -1,16 +1,16 @@
 package com.pathfinder.presenter;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import com.pathfinder.model.KeyboardModel;
-import com.pathfinder.view.components.KeyboardView;
+import com.pathfinder.view.components.Keyboard;
 
 public class SearchPanelPresenterTest {
 	KeyboardModel keyboardModel;
-	KeyboardView keyboard;
+	Keyboard keyboard;
 	SearchPanelPresenter searchPanelPresenter;
 
 	@Before

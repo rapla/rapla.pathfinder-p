@@ -19,7 +19,8 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 public class Keyboard extends CustomComponent implements KeyboardSpec,
@@ -32,7 +33,12 @@ public class Keyboard extends CustomComponent implements KeyboardSpec,
 
 	public Keyboard() {
 		String caption;
-		GridLayout layout = new GridLayout(12, 4);
+		VerticalLayout verticalLayout = new VerticalLayout();
+
+		HorizontalLayout firstKeyboardRow = new HorizontalLayout();
+		HorizontalLayout secondKeyboardRow = new HorizontalLayout();
+		HorizontalLayout thirdKeyboardRow = new HorizontalLayout();
+		HorizontalLayout fourthKeyboardRow = new HorizontalLayout();
 
 		deleteButton = new Button(translator.translate(TranslationKeys.DELETE)
 				.toUpperCase(), this);
@@ -64,10 +70,10 @@ public class Keyboard extends CustomComponent implements KeyboardSpec,
 			if (!caption.equals(translator.translate(TranslationKeys.DELETE)
 					.toUpperCase())) {
 				wildCardButton.setId(caption);
-				layout.addComponent(wildCardButton, i, 0);
+				firstKeyboardRow.addComponent(wildCardButton, i);
 			} else {
 				deleteButton.setId("DELETE");
-				layout.addComponent(deleteButton, i, 0);
+				firstKeyboardRow.addComponent(deleteButton, i);
 			}
 		}
 
@@ -75,14 +81,14 @@ public class Keyboard extends CustomComponent implements KeyboardSpec,
 			caption = secondRow[i];
 			wildCardButton = new Button(caption, this);
 			wildCardButton.setId(caption);
-			layout.addComponent(wildCardButton, i, 1);
+			secondKeyboardRow.addComponent(wildCardButton, i);
 		}
 
 		for (int i = 0; i < thirdRow.length; i++) {
 			caption = thirdRow[i];
 			wildCardButton = new Button(caption, this);
 			wildCardButton.setId(caption);
-			layout.addComponent(wildCardButton, i, 2);
+			thirdKeyboardRow.addComponent(wildCardButton, i);
 		}
 
 		for (int i = 0; i < fourthRow.length; i++) {
@@ -91,14 +97,19 @@ public class Keyboard extends CustomComponent implements KeyboardSpec,
 			if (!caption.equals(translator.translate(TranslationKeys.SPACE)
 					.toUpperCase())) {
 				wildCardButton.setId(caption);
-				layout.addComponent(wildCardButton, i, 3);
+				fourthKeyboardRow.addComponent(wildCardButton, i);
 			} else {
 				spaceButton.setId("SPACE");
-				layout.addComponent(spaceButton, i, 3);
+				fourthKeyboardRow.addComponent(spaceButton, i);
 			}
 		}
 
-		setCompositionRoot(layout);
+		verticalLayout.addComponent(firstKeyboardRow);
+		verticalLayout.addComponent(secondKeyboardRow);
+		verticalLayout.addComponent(thirdKeyboardRow);
+		verticalLayout.addComponent(fourthKeyboardRow);
+
+		setCompositionRoot(verticalLayout);
 
 	}
 

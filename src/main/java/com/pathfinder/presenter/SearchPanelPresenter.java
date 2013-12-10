@@ -42,7 +42,9 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 		} else if (key.equals("SPACE")) {
 			addKeybordKeyToSearchString(" ");
 		} else if (key.equals("<")) {
-			setChangePosCounter(getChangePosCounter() - 1);
+			if (getSearchString().length() + getChangePosCounter() > 0) {
+				setChangePosCounter(getChangePosCounter() - 1);
+			}
 		} else if (key.equals(">")) {
 			if (getChangePosCounter() < 0) {
 				setChangePosCounter(getChangePosCounter() + 1);
@@ -73,9 +75,14 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 
 	public void deleteKeyFromSearchString() {
 		searchString = keyboardModel.getSearchString();
+		int positonCounter = searchString.length() + changePosCounter;
 
 		if (searchString.length() > 0) {
-			searchString = searchString.substring(0, searchString.length() - 1);
+			if (positonCounter != 0) {
+				searchString = searchString.substring(0, positonCounter - 1)
+						+ searchString.substring(positonCounter,
+								searchString.length());
+			}
 		}
 
 		keyboardModel.setSearchString(searchString);
