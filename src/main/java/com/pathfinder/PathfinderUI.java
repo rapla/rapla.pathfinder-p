@@ -67,6 +67,10 @@ public class PathfinderUI extends UI {
 			}
 
 		}
+		
+		setContent(new MainPresenter().getMainLayoutView());
+		logger.trace("Application initialized");
+		
 	}
 
 	/**
