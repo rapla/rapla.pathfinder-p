@@ -7,22 +7,25 @@
 package com.pathfinder.presenter;
 
 import com.pathfinder.model.KeyboardModel;
+import com.pathfinder.view.components.ClearButton;
 import com.pathfinder.view.components.Keyboard;
 import com.pathfinder.view.components.SearchField;
 import com.pathfinder.view.components.TreeStructure;
 import com.pathfinder.view.container.SearchPanel;
+import com.pathfinder.view.listener.ButtonClearListenerSpec;
 import com.pathfinder.view.listener.KeyboardViewListenerSpec;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 
 public class SearchPanelPresenter implements KeyboardViewListenerSpec,
-		SearchPanelPresenterSpec {
+		ButtonClearListenerSpec, SearchPanelPresenterSpec {
 
 	private final KeyboardModel keyboardModel = new KeyboardModel();
 	private final TreeStructure treeStructure = new TreeStructure();
 	private final Keyboard keyboard = new Keyboard();
 	private final SearchField searchField = new SearchField();
+	private final ClearButton clearButton = new ClearButton();
 	private final SearchPanel searchPanel = new SearchPanel(treeStructure,
-			keyboard, searchField);
+			keyboard, searchField, clearButton);
 	private final BeanFieldGroup<KeyboardModel> binder = new BeanFieldGroup<KeyboardModel>(
 			KeyboardModel.class);
 
@@ -35,6 +38,15 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 		this.binder.bind(searchField, KeyboardModel.PROPERTY_SEARCHSTRING);
 	}
 
+	// Clear ButtonListener
+	@Override
+	public void buttonClick() {
+		setChangePosCounter(0);
+		this.getKeyboardModel().setSearchString("");
+		this.refreshItemDataSource();
+	}
+
+	// Keyboard ClickListener
 	@Override
 	public void buttonClick(String key) {
 		if (key.equals("DELETE")) {
@@ -122,4 +134,5 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 	public String getSearchString() {
 		return this.keyboardModel.getSearchString();
 	}
+
 }
