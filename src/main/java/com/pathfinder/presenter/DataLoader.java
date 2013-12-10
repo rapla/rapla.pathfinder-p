@@ -7,90 +7,135 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import com.google.gson.Gson;
+import com.pathfinder.model.CourseDetailModel;
+import com.pathfinder.model.DataDetailModel;
 import com.pathfinder.model.DataModel;
+import com.pathfinder.model.PersonDetailModel;
+import com.pathfinder.model.RoomDetailModel;
 
 public class DataLoader implements DataLoaderSpec {
 	private BufferedReader br;
-	private final Gson gson = new Gson();
-	private DataModel data;
 
-	/* (non-Javadoc)
-	 * @see com.pathfinder.presenter.DataLoaderSpec#loadRooms()
-	 */
-	@Override
-	public void loadRooms() {
+	private DataModel gsonGetResources(String resource) {
+
 		try {
 			br = new BufferedReader(
 					new InputStreamReader(
 							new URL(
-									"http://localhost:8051/rapla/json/RaplaJsonService?method=getResources&jsonrpc=2.0&params=%5B%22rooms%22%2C%22%22%5D")
+									"http://localhost:8051/rapla/json/RaplaJsonService?method=getResources&jsonrpc=2.0&params=%5B%22"
+											+ resource + "%22%2C%22%22%5D")
 									.openStream()));
 		} catch (MalformedURLException e) {
-			System.out.println("Error loading URL (Rooms)");
+			System.out.println("Error loading URL by loading Resource: "
+					+ resource);
 			e.printStackTrace();
 		} catch (IOException e) {
+			System.out.println("Error loading URL by loading Resource: "
+					+ resource);
 			e.printStackTrace();
 		}
 
-		data = gson.fromJson(br, DataModel.class);
-		if (data != null) {
-			DataModel.setAllRooms(data.getResult());
-			System.out.println("All Rooms are loaded");
+		DataModel ResourceData = new Gson().fromJson(br, DataModel.class);
+
+		if (ResourceData != null) {
+			System.out.println("Resource: " + resource + " is loaded");
+			return ResourceData;
+		} else {
+			return null;
 		}
+
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pathfinder.presenter.DataLoaderSpec#loadCourses()
-	 */
-	@Override
-	public void loadCourses() {
+	private DataDetailModel gsonGetResourceDetail(String id) {
+
 		try {
 			br = new BufferedReader(
 					new InputStreamReader(
 							new URL(
-									"http://localhost:8051/rapla/json/RaplaJsonService?method=getResources&jsonrpc=2.0&params=%5B%22courses%22%2C%22%22%5D")
-									.openStream()));
+									"http://localhost:8051/rapla/json/RaplaJsonService?method=getResource&jsonrpc=2.0&params=%5B%22"
+											+ id + "%22%5D").openStream()));
 		} catch (MalformedURLException e) {
-			System.out.println("Error loading URL (Courses)");
+			System.out.println("Error loading URL by loading ResourceDetail: "
+					+ id);
 			e.printStackTrace();
 		} catch (IOException e) {
+			System.out.println("Error loading URL by loading ResourceDetail: "
+					+ id);
 			e.printStackTrace();
 		}
 
-		data = gson.fromJson(br, DataModel.class);
-		if (data != null) {
-			DataModel.setAllCourses(data.getResult());
-			System.out.println("All Courses are loaded");
+		DataDetailModel ResourceDetailData = new Gson().fromJson(br,
+				DataDetailModel.class);
+
+		if (ResourceDetailData != null) {
+			System.out.println("Resource: " + id + " is loaded");
+			return ResourceDetailData;
+		} else {
+			return null;
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see com.pathfinder.presenter.DataLoaderSpec#loadPersons()
-	 */
-	@Override
-	public void loadPersons() {
-		try {
-			br = new BufferedReader(
-					new InputStreamReader(
-							new URL(
-									"http://localhost:8051/rapla/json/RaplaJsonService?method=getResources&jsonrpc=2.0&params=%5B%22persons%22%2C%22%22%5D")
-									.openStream()));
-		} catch (MalformedURLException e) {
-			System.out.println("Error loading URL (Persons)");
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public void loadAllResources() {
+		DataModel.setAllRooms(gsonGetResources("rooms").getResult());
+		DataModel.setAllCourses(gsonGetResources("courses").getResult());
+		DataModel.setAllPersons(gsonGetResources("persons").getResult());
 
-		data = gson.fromJson(br, DataModel.class);
-		if (data != null) {
-			DataModel.setAllPersons(data.getResult());
-			System.out.println("All Persons are loaded");
-		}
 	}
 
-	@Override
-	public void loadPois() {
-		// TODO Auto-generated method stub
+	public CourseDetailModel getCourseDetail(String id) {
+		DataDetailModel dataDetail = gsonGetResourceDetail(id);
+		String name = dataDetail.getResult().getAttributeMap().get("name")
+				.getValue();
+		String vintage = dataDetail.getResult().getAttributeMap()
+				.get("jahrgang").getValue();
+		String department = dataDetail.getResult().getAttributeMap()
+				.get("abteilung").getValue();
+		String studyCourse = dataDetail.getResult().getAttributeMap()
+				.get("studiengang").getValue();
+		String picture = dataDetail.getResult().getAttributeMap().get("bild")
+				.getValue();
+		String roomNr = dataDetail.getResult().getAttributeMap().get("raumnr")
+				.getValue();
+		return new CourseDetailModel(name, vintage, department, studyCourse,
+				picture, roomNr);
+
+	}
+
+	public RoomDetailModel getRoomDetail(String id) {
+		DataDetailModel dataDetail = gsonGetResourceDetail(id);
+		String roomName = dataDetail.getResult().getAttributeMap().get("name")
+				.getValue();
+		String department = dataDetail.getResult().getAttributeMap()
+				.get("abteilung").getValue();
+		String studyCourse = dataDetail.getResult().getAttributeMap()
+				.get("studiengang").getValue();
+		String roomType = dataDetail.getResult().getAttributeMap()
+				.get("raumart").getValue();
+		String roomNr = dataDetail.getResult().getAttributeMap().get("raumnr")
+				.getValue();
+
+		return new RoomDetailModel(roomName, roomNr, roomType, studyCourse,
+				department);
+	}
+
+	public PersonDetailModel getPersonDetail(String id) {
+		DataDetailModel dataDetail = gsonGetResourceDetail(id);
+		String name = dataDetail.getResult().getAttributeMap().get("name")
+				.getValue();
+		String department = dataDetail.getResult().getAttributeMap()
+				.get("abteilung").getValue();
+		String studyCourse = dataDetail.getResult().getAttributeMap()
+				.get("studiengang").getValue();
+		String email = dataDetail.getResult().getAttributeMap().get("email")
+				.getValue();
+		String picture = dataDetail.getResult().getAttributeMap().get("bild")
+				.getValue();
+		String telefonNr = dataDetail.getResult().getAttributeMap()
+				.get("telefon").getValue();
+		String roomNr = dataDetail.getResult().getAttributeMap().get("raumnr")
+				.getValue();
+
+		return new PersonDetailModel(name, department, studyCourse, email,
+				picture, telefonNr, roomNr);
 	}
 }
