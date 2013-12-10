@@ -2,15 +2,15 @@ package com.pathfinder;
 
 import java.util.Locale;
 
-//import org.apache.logging.log4j.LogManager;
-//import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 
 import com.pathfinder.presenter.MainPresenter;
 import com.pathfinder.translation.Translator;
 import com.vaadin.annotations.Theme;
-import com.vaadin.external.org.slf4j.Logger;
-import com.vaadin.external.org.slf4j.LoggerFactory;
+//import com.vaadin.external.org.slf4j.Logger;
+//import com.vaadin.external.org.slf4j.LoggerFactory;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServletRequest;
@@ -21,9 +21,9 @@ import com.vaadin.ui.UI;
 @Theme("rapla_pathfinder_p")
 public class PathfinderUI extends UI {
 
-	// Logger logger = LogManager.getLogger(PathfinderUI.class.getName());
+	Logger logger = LogManager.getLogger(PathfinderUI.class.getName());
 
-	private Logger log = LoggerFactory.getLogger(getClass());
+	// private Logger log = LoggerFactory.getLogger(getClass());
 
 	@Override
 	protected void init(VaadinRequest request) {
@@ -31,19 +31,20 @@ public class PathfinderUI extends UI {
 		setUiLocale(request.getLocale());
 		setErrorHandler(new PathfinderErrorHandler());
 
-		/* Method 1 */
+		/* Returns the current width of the browser window */
 		Page.getCurrent().getBrowserWindowWidth();
+		logger.trace("Current window width: "
+				+ Page.getCurrent().getBrowserWindowWidth());
 
-		/* Method 2 */
+		/* Returns the max width of the browser window */
 		WebBrowser browser = getPage().getWebBrowser();
+		logger.trace("Max browser width: " + browser.getScreenWidth());
 
-		// if (browser.getScreenWidth() > 1024 && browser.getScreenHeight()
-		// >
-		// 768) {
-		// // TODO
-		// } else {
-		// // TODO
-		// }
+		if (browser.getScreenWidth() > 768) {
+			// TODO
+		} else {
+			// TODO
+		}
 
 		/* Method 3 */
 		if (request instanceof VaadinServletRequest) {
@@ -52,17 +53,14 @@ public class PathfinderUI extends UI {
 			String userAgent = httpRequest.getHeader("User-Agent")
 					.toLowerCase();
 
+			logger.trace(userAgent);
+
 			// TODO: Check user agent for all tablet matching keywords
 			if (userAgent.contains("ipad")) {
 				// ...
 			}
 
 		}
-
-		setContent(new MainPresenter().getMainLayoutView());
-		// logger.trace("Application initialized");
-		log.debug("Log");
-
 	}
 
 	/**
