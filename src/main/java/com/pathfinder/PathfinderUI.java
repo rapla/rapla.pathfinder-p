@@ -2,14 +2,14 @@ package com.pathfinder;
 
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import javax.servlet.http.HttpServletRequest;
 
 import com.pathfinder.presenter.MainPresenter;
 import com.pathfinder.translation.TranslationKeys;
 import com.pathfinder.translation.Translator;
-import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Theme;
 //import com.vaadin.external.org.slf4j.Logger;
 //import com.vaadin.external.org.slf4j.LoggerFactory;
@@ -17,12 +17,10 @@ import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServletRequest;
 import com.vaadin.server.WebBrowser;
-import com.vaadin.shared.communication.PushMode;
 import com.vaadin.ui.UI;
 
 @SuppressWarnings("serial")
 @Theme("rapla_pathfinder_p")
-@Push(PushMode.MANUAL)
 public class PathfinderUI extends UI {
 
 	Logger logger = LogManager.getLogger(PathfinderUI.class.getName());
@@ -67,10 +65,10 @@ public class PathfinderUI extends UI {
 			}
 
 		}
-		
+
 		setContent(new MainPresenter().getMainLayoutView());
 		logger.trace("Application initialized");
-		
+
 	}
 
 	/**
