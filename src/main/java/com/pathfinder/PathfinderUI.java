@@ -25,7 +25,7 @@ import com.vaadin.ui.UI;
 @Push(PushMode.MANUAL)
 public class PathfinderUI extends UI {
 
-	Logger logger = LogManager.getLogger(PathfinderUI.class.getName());
+	private static final Logger logger = LogManager.getLogger(PathfinderUI.class.getName());
 
 	// private Logger log = LoggerFactory.getLogger(getClass());
 
