@@ -1,6 +1,6 @@
 package com.pathfinder.model;
 
-public class ResourceDetailRowModel {
+public class GSON_GetResourceDetail_LEVEL_3_1 {
 	private String label;
 	private String value;
 

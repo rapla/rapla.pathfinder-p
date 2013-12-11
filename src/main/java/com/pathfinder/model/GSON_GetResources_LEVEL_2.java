@@ -2,7 +2,7 @@ package com.pathfinder.model;
 
 import java.util.Arrays;
 
-public class ResourceModel {
+public class GSON_GetResources_LEVEL_2 {
 
 	private String name = "";
 	private String link = "";

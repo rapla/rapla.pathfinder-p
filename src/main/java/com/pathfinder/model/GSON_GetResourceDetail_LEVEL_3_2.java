@@ -2,11 +2,11 @@ package com.pathfinder.model;
 
 import java.util.List;
 
-public class EventModel {
+public class GSON_GetResourceDetail_LEVEL_3_2 {
 	String name;
 	String start;
 	String end;
-	List<ResourceModel> resources;
+	List<GSON_GetResources_LEVEL_2> resources;
 	public String getName() {
 		return name;
 	}
@@ -25,10 +25,10 @@ public class EventModel {
 	public void setEnd(String end) {
 		this.end = end;
 	}
-	public List<ResourceModel> getResources() {
+	public List<GSON_GetResources_LEVEL_2> getResources() {
 		return resources;
 	}
-	public void setResources(List<ResourceModel> resources) {
+	public void setResources(List<GSON_GetResources_LEVEL_2> resources) {
 		this.resources = resources;
 	}
 
