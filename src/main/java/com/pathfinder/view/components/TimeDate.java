@@ -25,7 +25,7 @@ public class TimeDate extends Label implements TimeDateSpec {
 
 	public TimeDate() {
 		this.refreshTimeAndDate();
-		startTimeUpdater();
+		// startTimeUpdater();
 	}
 
 	@Override
@@ -33,7 +33,7 @@ public class TimeDate extends Label implements TimeDateSpec {
 		DateFormat formatter = DateFormat.getDateTimeInstance(
 				DateFormat.DEFAULT, DateFormat.SHORT, UI.getCurrent()
 						.getLocale());
-		String timestring = formatter.format(new Date())
+		String timestring = formatter.format(new Date()) + " "
 				+ TRANSLATOR.translate(TranslationKeys.OCLOCK);
 		this.setValue(timestring);
 	}
