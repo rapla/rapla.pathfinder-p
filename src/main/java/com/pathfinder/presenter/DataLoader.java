@@ -8,10 +8,12 @@ import java.net.URL;
 import java.util.Map;
 
 import com.google.gson.Gson;
+import com.pathfinder.model.CourseModel;
 import com.pathfinder.model.GSON_GetResourceDetail_LEVEL_1;
 import com.pathfinder.model.GSON_GetResourceDetail_LEVEL_3_1;
 import com.pathfinder.model.GSON_GetResources_LEVEL_1;
 import com.pathfinder.model.GSON_GetResources_LEVEL_2;
+import com.pathfinder.model.PersonModel;
 import com.pathfinder.model.RoomModel;
 
 public class DataLoader implements DataLoaderSpec {
@@ -20,22 +22,53 @@ public class DataLoader implements DataLoaderSpec {
 
 	private BufferedReader br;
 	private static RoomModel[] allRooms;
+	private static CourseModel[] allCourses;
+	private static PersonModel[] allPersons;
 
 	public void loadAllResources() {
-		GSON_GetResources_LEVEL_2[] ResourceData = gsonGetResources("rooms")
-				.getResult();
+		GSON_GetResources_LEVEL_2[] ResourceData;
+		// get all Rooms, transform from ResourceData to RoomModel
+		// and get the Detail Information
+		ResourceData = gsonGetResources("rooms").getResult();
 		allRooms = new RoomModel[ResourceData.length];
 		for (int i = 0; i < ResourceData.length; i++) {
 			allRooms[i] = new RoomModel(ResourceData[i].getName(),
 					ResourceData[i].getLink(), ResourceData[i].getId(),
 					ResourceData[i].getSearchTerms(), null, null, null, null);
-			loadDetail(allRooms[i]);
+			loadRoomDetail(allRooms[i]);
+		}
+
+		// get all Courses, transform from ResourceData to CourseModel
+		// and get the Detail Information
+		ResourceData = gsonGetResources("courses").getResult();
+
+		allCourses = new CourseModel[ResourceData.length];
+		for (int i = 0; i < ResourceData.length; i++) {
+			allCourses[i] = new CourseModel(ResourceData[i].getName(),
+					ResourceData[i].getLink(), ResourceData[i].getId(),
+					ResourceData[i].getSearchTerms(), null, null, null, null,
+					null);
+			loadCourseDetail(allCourses[i]);
+		}
+
+		// get all Persons, transform from ResourceData to PersoneModel
+		// and get the Detail Information
+		ResourceData = gsonGetResources("persons").getResult();
+		allPersons = new PersonModel[ResourceData.length];
+		for (int i = 0; i < ResourceData.length; i++) {
+			allPersons[i] = new PersonModel(ResourceData[i].getName(),
+					ResourceData[i].getLink(), ResourceData[i].getId(),
+					ResourceData[i].getSearchTerms(), null, null, null, null,
+					null, null);
+			loadPersonDetail(allPersons[i]);
 		}
 
 	}
 
 	// this Class should be GENERIC TYPE
-	private void loadDetail(RoomModel room) {
+
+	// save the Detail Informations in RoomModel
+	private void loadRoomDetail(RoomModel room) {
 		GSON_GetResourceDetail_LEVEL_1 dataDetail = gsonGetResourceDetail(room
 				.getId());
 		Map<String, GSON_GetResourceDetail_LEVEL_3_1> atribute = dataDetail
@@ -52,6 +85,57 @@ public class DataLoader implements DataLoaderSpec {
 
 		if (atribute.get("raumnr") != null)
 			room.setRoomNr(atribute.get("raumnr").getValue());
+	}
+
+	// should be replaced with the GENERIC TYPE
+	// save the Detail Informations in RoomModel
+	private void loadCourseDetail(CourseModel course) {
+		GSON_GetResourceDetail_LEVEL_1 dataDetail = gsonGetResourceDetail(course
+				.getId());
+		Map<String, GSON_GetResourceDetail_LEVEL_3_1> atribute = dataDetail
+				.getResult().getAttributeMap();
+
+		if (atribute.get("jahrgang") != null)
+			course.setVintage(atribute.get("jahrgang").getValue());
+
+		if (atribute.get("abteilung") != null)
+			course.setDepartment(atribute.get("abteilung").getValue());
+
+		if (atribute.get("studiengang") != null)
+			course.setStudyCourse(atribute.get("studiengang").getValue());
+
+		if (atribute.get("bild") != null)
+			course.setPicture(atribute.get("bild").getValue());
+
+		if (atribute.get("raumnr") != null)
+			course.setRoomNr(atribute.get("raumnr").getValue());
+
+	}
+
+	private void loadPersonDetail(PersonModel person) {
+		GSON_GetResourceDetail_LEVEL_1 dataDetail = gsonGetResourceDetail(person
+				.getId());
+		Map<String, GSON_GetResourceDetail_LEVEL_3_1> atribute = dataDetail
+				.getResult().getAttributeMap();
+
+		if (atribute.get("abteilung") != null)
+			person.setDepartment(atribute.get("abteilung").getValue());
+
+		if (atribute.get("studiengang") != null)
+			person.setStudyCourse(atribute.get("studiengang").getValue());
+
+		if (atribute.get("email") != null)
+			person.setEmail(atribute.get("email").getValue());
+
+		if (atribute.get("bild") != null)
+			person.setPicture(atribute.get("bild").getValue());
+
+		if (atribute.get("telefon") != null)
+			person.setTelefonNr(atribute.get("telefon").getValue());
+
+		if (atribute.get("raumnr") != null)
+			person.setRoomNr(atribute.get("raumnr").getValue());
+
 	}
 
 	private GSON_GetResources_LEVEL_1 gsonGetResources(String resource) {
@@ -108,52 +192,16 @@ public class DataLoader implements DataLoaderSpec {
 		}
 	}
 
-	// public CourseDetailModel getCourseDetail(String id) {
-	// GSON_GetResourceDetail_LEVEL_1 dataDetail = gsonGetResourceDetail(id);
-	// String name = dataDetail.getResult().getAttributeMap().get("name")
-	// .getValue();
-	// String vintage = dataDetail.getResult().getAttributeMap()
-	// .get("jahrgang").getValue();
-	// String department = dataDetail.getResult().getAttributeMap()
-	// .get("abteilung").getValue();
-	// String studyCourse = dataDetail.getResult().getAttributeMap()
-	// .get("studiengang").getValue();
-	// String picture = dataDetail.getResult().getAttributeMap().get("bild")
-	// .getValue();
-	// String roomNr = dataDetail.getResult().getAttributeMap().get("raumnr")
-	// .getValue();
-	// return new CourseDetailModel(name, vintage, department, studyCourse,
-	// picture, roomNr);
-	//
-	// }
-	//
+	public RoomModel[] getAllRooms() {
+		return allRooms;
+	}
 
-	//
-	// public PersonDetailModel getPersonDetail(String id) {
-	// GSON_GetResourceDetail_LEVEL_1 dataDetail = gsonGetResourceDetail(id);
-	// String name = dataDetail.getResult().getAttributeMap().get("name")
-	// .getValue();
-	// String department = dataDetail.getResult().getAttributeMap()
-	// .get("abteilung").getValue();
-	// String studyCourse = dataDetail.getResult().getAttributeMap()
-	// .get("studiengang").getValue();
-	// String email = dataDetail.getResult().getAttributeMap().get("email")
-	// .getValue();
-	// String picture = dataDetail.getResult().getAttributeMap().get("bild")
-	// .getValue();
-	// String telefonNr = dataDetail.getResult().getAttributeMap()
-	// .get("telefon").getValue();
-	// String roomNr = dataDetail.getResult().getAttributeMap().get("raumnr")
-	// .getValue();
-	//
-	// return new PersonDetailModel(name, department, studyCourse, email,
-	// picture, telefonNr, roomNr);
-	// }
+	public CourseModel[] getAllCourses() {
+		return allCourses;
+	}
 
-	// //JUST TO TEST BETA
-	// public static void main(String[] args) {
-	// DataLoader x = new DataLoader();
-	// x.loadAllResources();
-	//
-	// }
+	public PersonModel[] getAllPersons() {
+		return allPersons;
+	}
+
 }
