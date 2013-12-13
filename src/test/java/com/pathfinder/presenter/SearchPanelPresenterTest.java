@@ -16,7 +16,6 @@ public class SearchPanelPresenterTest {
 	@Before
 	public void setUp() {
 		searchPanelPresenter = new SearchPanelPresenter();
-		keyboardModel = searchPanelPresenter.getKeyboardModel();
 		keyboard = searchPanelPresenter.getKeyboard();
 
 	}
@@ -25,7 +24,7 @@ public class SearchPanelPresenterTest {
 	public void addKeyboardKeyToSearchStringTest() {
 		searchPanelPresenter.buttonClick("I");
 		searchPanelPresenter.buttonClick("K");
-		assertEquals("IK", keyboardModel.getSearchString());
+		assertEquals("IK", searchPanelPresenter.getSearchString());
 	}
 
 	@Test
@@ -33,7 +32,7 @@ public class SearchPanelPresenterTest {
 		searchPanelPresenter.buttonClick("I");
 		searchPanelPresenter.buttonClick("K");
 		searchPanelPresenter.buttonClick("DELETE");
-		assertEquals("I", keyboardModel.getSearchString());
+		assertEquals("I", searchPanelPresenter.getSearchString());
 	}
 
 	@Test
@@ -41,7 +40,7 @@ public class SearchPanelPresenterTest {
 		searchPanelPresenter.buttonClick("I");
 		searchPanelPresenter.buttonClick("K");
 		searchPanelPresenter.clearSearchString();
-		assertEquals("", keyboardModel.getSearchString());
+		assertEquals("", searchPanelPresenter.getSearchString());
 	}
 
 }

@@ -12,6 +12,8 @@ public interface SearchPanelPresenterSpec {
 
 	void clearSearchString();
 
+	void setSearchString(String value);
+
 	@Pure
 	String getSearchString();
 

@@ -23,8 +23,8 @@ public class SearchPanelPresenterSpecContract implements
 		if (preCondition()) {
 		}
 		if (postCondition()) {
-			assert target.getSearchString() == old(target.getSearchString())
-					+ key : "String added a new Char";
+			assert target.getSearchString().equals(
+					old(target.getSearchString()) + key) : "String added a new Char";
 		}
 	}
 
@@ -33,8 +33,9 @@ public class SearchPanelPresenterSpecContract implements
 		if (preCondition()) {
 		}
 		if (postCondition()) {
-			assert target.getSearchString() == old(target.getSearchString())
-					.substring(0, target.getSearchString().length() - 1) : "String deleted a Char";
+			String oldString = old(target.getSearchString());
+			assert target.getSearchString().equals(
+					oldString.substring(0, oldString.length() - 1)) : "String deleted a Char";
 		}
 	}
 
@@ -55,6 +56,23 @@ public class SearchPanelPresenterSpecContract implements
 		if (postCondition()) {
 		}
 		return ignored();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pathfinder.presenter.SearchPanelPresenterSpec#setSearchString(java
+	 * .lang.String)
+	 */
+	@Override
+	public void setSearchString(String value) {
+		if (preCondition()) {
+			assert value != null : "Value mustn't be null";
+		}
+		if (postCondition()) {
+			assert target.getSearchString().equals(value) : "Value wasn't updated";
+		}
 	}
 
 }

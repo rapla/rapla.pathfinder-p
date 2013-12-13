@@ -7,25 +7,21 @@
 package com.pathfinder.presenter;
 
 import com.pathfinder.model.KeyboardModel;
-import com.pathfinder.view.components.ClearButton;
 import com.pathfinder.view.components.Keyboard;
 import com.pathfinder.view.components.SearchField;
 import com.pathfinder.view.components.TreeStructure;
 import com.pathfinder.view.container.SearchPanel;
-import com.pathfinder.view.listener.ButtonClearListenerSpec;
 import com.pathfinder.view.listener.KeyboardViewListenerSpec;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 
 public class SearchPanelPresenter implements KeyboardViewListenerSpec,
-		ButtonClearListenerSpec, SearchPanelPresenterSpec {
+		SearchPanelPresenterSpec {
 
-	private final KeyboardModel keyboardModel = new KeyboardModel();
 	private final TreeStructure treeStructure = new TreeStructure();
 	private final Keyboard keyboard = new Keyboard();
 	private final SearchField searchField = new SearchField();
-	private final ClearButton clearButton = new ClearButton();
 	private final SearchPanel searchPanel = new SearchPanel(treeStructure,
-			keyboard, searchField, clearButton);
+			keyboard, searchField);
 	private final BeanFieldGroup<KeyboardModel> binder = new BeanFieldGroup<KeyboardModel>(
 			KeyboardModel.class);
 
@@ -34,16 +30,9 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 
 	public SearchPanelPresenter() {
 		this.keyboard.addListener(this);
-		this.refreshItemDataSource();
+		this.binder.setBuffered(false);
+		this.binder.setItemDataSource(new KeyboardModel());
 		this.binder.bind(searchField, KeyboardModel.PROPERTY_SEARCHSTRING);
-	}
-
-	// Clear ButtonListener
-	@Override
-	public void buttonClick() {
-		setChangePosCounter(0);
-		this.getKeyboardModel().setSearchString("");
-		this.refreshItemDataSource();
 	}
 
 	// Keyboard ClickListener
@@ -69,7 +58,7 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 
 	public void addKeybordKeyToSearchString(String key) {
 		changePosCounter = getChangePosCounter();
-		searchString = keyboardModel.getSearchString();
+		searchString = getSearchString();
 		if (changePosCounter < 0) {
 			int positonCounter = searchString.length() + changePosCounter;
 
@@ -81,12 +70,12 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 			searchString += key;
 		}
 
-		keyboardModel.setSearchString(searchString);
-		this.refreshItemDataSource();
+		setSearchString(searchString);
+
 	}
 
 	public void deleteKeyFromSearchString() {
-		searchString = keyboardModel.getSearchString();
+		searchString = getSearchString();
 		int positonCounter = searchString.length() + changePosCounter;
 
 		if (searchString.length() > 0) {
@@ -97,25 +86,15 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 			}
 		}
 
-		keyboardModel.setSearchString(searchString);
-		this.refreshItemDataSource();
+		setSearchString(searchString);
 	}
 
 	public void clearSearchString() {
-		keyboardModel.setSearchString("");
-		this.refreshItemDataSource();
-	}
-
-	private void refreshItemDataSource() {
-		this.binder.setItemDataSource(keyboardModel);
+		setSearchString("");
 	}
 
 	public SearchPanel getSearchPanel() {
 		return this.searchPanel;
-	}
-
-	public KeyboardModel getKeyboardModel() {
-		return this.keyboardModel;
 	}
 
 	public Keyboard getKeyboard() {
@@ -132,7 +111,24 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 
 	@Override
 	public String getSearchString() {
-		return this.keyboardModel.getSearchString();
+		return (String) binder.getItemDataSource()
+				.getItemProperty(KeyboardModel.PROPERTY_SEARCHSTRING)
+				.getValue();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pathfinder.presenter.SearchPanelPresenterSpec#setSearchString(java
+	 * .lang.String)
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public void setSearchString(String value) {
+		binder.getItemDataSource()
+				.getItemProperty(KeyboardModel.PROPERTY_SEARCHSTRING)
+				.setValue(value);
 	}
 
 }
