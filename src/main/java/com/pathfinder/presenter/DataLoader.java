@@ -13,6 +13,7 @@ import com.pathfinder.model.GSON_GetResourceDetail_LEVEL_1;
 import com.pathfinder.model.GSON_GetResourceDetail_LEVEL_3_1;
 import com.pathfinder.model.GSON_GetResources_LEVEL_1;
 import com.pathfinder.model.GSON_GetResources_LEVEL_2;
+import com.pathfinder.model.POIModel;
 import com.pathfinder.model.PersonModel;
 import com.pathfinder.model.RoomModel;
 
@@ -24,6 +25,7 @@ public class DataLoader implements DataLoaderSpec {
 	private static RoomModel[] allRooms;
 	private static CourseModel[] allCourses;
 	private static PersonModel[] allPersons;
+	private static POIModel[] allPois;
 
 	public void loadAllResources() {
 		GSON_GetResources_LEVEL_2[] ResourceData;
@@ -202,6 +204,10 @@ public class DataLoader implements DataLoaderSpec {
 
 	public PersonModel[] getAllPersons() {
 		return allPersons;
+	}
+
+	public static POIModel[] getAllPois() {
+		return allPois;
 	}
 
 }

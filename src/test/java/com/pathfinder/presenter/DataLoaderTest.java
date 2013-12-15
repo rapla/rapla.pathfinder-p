@@ -31,4 +31,10 @@ public class DataLoaderTest {
 		assertNotNull(dataloader.getAllPersons());
 	}
 
+	// @Test
+	// public void POIsNotNull() {
+	// dataloader.loadAllPOIs();
+	// assertNotNull(dataloader.getAllPois());
+	// }
+
 }
