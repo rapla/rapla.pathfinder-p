@@ -1,5 +1,7 @@
 package com.pathfinder.presenter;
 
-public interface DetailContainerPresenterSpec {
+import com.vaadin.ui.CustomComponent;
 
+public interface DetailContainerPresenterSpec {
+	CustomComponent getDetailContainer();
 }

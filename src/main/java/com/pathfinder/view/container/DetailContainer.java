@@ -1,16 +1,14 @@
-package com.pathfinder.view.components;
+package com.pathfinder.view.container;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import org.apache.commons.lang.StringUtils;
-
 import com.pathfinder.model.ResourceModel;
+import com.pathfinder.view.components.DetailImage;
+import com.pathfinder.view.components.DetailInfo;
 import com.pathfinder.view.listener.DetailViewListenerSpec;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.server.ExternalResource;
-import com.vaadin.ui.BrowserFrame;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.VerticalLayout;
 
@@ -18,33 +16,23 @@ public class DetailContainer extends CustomComponent implements
 		DetailContainerSpec {
 
 	private final VerticalLayout vertical = new VerticalLayout();
-	private Detail detail = null;
-	private BrowserFrame browserFrame = new BrowserFrame();
+	private DetailInfo<?> detailInfo = null;
+	private DetailImage detailImage = null;
 	private List<DetailViewListenerSpec> listener = new ArrayList<DetailViewListenerSpec>();
 
-	public DetailContainer(Class classFile, BeanItem beanItem) {
-		this.detail = new Detail(classFile, beanItem);
+	public DetailContainer(Class<?> classFile, BeanItem<?> beanItem, String imageSource) {
+		this.detailInfo = new DetailInfo<ResourceModel>(classFile, beanItem);
+		this.detailImage = new DetailImage(imageSource);
 		this.buildLayout();
-		this.init();
 	}
 
 	public void buildLayout() {
+		this.detailInfo.setSizeFull();
+		this.detailImage.setSizeFull();
 		this.setSizeFull();
-		detail.setSizeFull();
-		browserFrame.setSizeFull();
-		vertical.addComponent(detail);
-		vertical.addComponent(browserFrame);
+		this.vertical.addComponent(detailInfo);
+		this.vertical.addComponent(detailImage);
 		this.setCompositionRoot(vertical);
-	}
-
-	private void init() {
-		browserFrame.setAlternateText("");
-	}
-
-	public void setSrc(String imageSrc) {
-		if (StringUtils.isNotEmpty(imageSrc)) {	
-			browserFrame.setSource(new ExternalResource(imageSrc));
-		}	
 	}
 
 	@Override

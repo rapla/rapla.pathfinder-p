@@ -1,6 +1,7 @@
-package com.pathfinder.view.components;
+package com.pathfinder.view.container;
 
 import com.pathfinder.model.ResourceModel;
+import com.pathfinder.view.components.ComponentSpec;
 import com.pathfinder.view.listener.DetailViewListenerSpec;
 
 public interface DetailContainerSpec extends ComponentSpec {

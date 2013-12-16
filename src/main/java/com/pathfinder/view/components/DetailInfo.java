@@ -16,19 +16,14 @@ import com.vaadin.ui.CustomComponent;
  * 
  * @param <T>
  */
-public class Detail<T> extends CustomComponent implements DetailSpec {
+public class DetailInfo<T> extends CustomComponent implements DetailInfoSpec {
 	private Class<T> typeParameterClass = null;
 	private BeanItem<T> beanItem = null;
 	private List<DetailViewListenerSpec> listener = new ArrayList<DetailViewListenerSpec>();
 
-	public Detail(Class classFile, BeanItem beanItem) {
+	public DetailInfo(Class classFile, BeanItem beanItem) {
 		this.typeParameterClass = typeParameterClass;
 		this.beanItem = beanItem;
-	}
-
-	@Override
-	public void refreshDetails() {
-
 		BeanFieldGroup<T> binder = new BeanFieldGroup<T>(typeParameterClass);
 		binder.buildAndBindMemberFields(beanItem);
 	}

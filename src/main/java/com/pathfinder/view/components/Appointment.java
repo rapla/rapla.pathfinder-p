@@ -17,20 +17,15 @@ import com.vaadin.ui.Notification.Type;
 
 public class Appointment extends BrowserFrame implements AppointmentSpec {
 
-	private String appointmentUrl = null;
 	private List<AppointmentViewListenerSpec> listener = new ArrayList<AppointmentViewListenerSpec>();
 	private TranslatorSpec translator = Translator.getInstance();
 
-	public Appointment() {
+	public Appointment(String url) {
 		this.setAlternateText(translator
 				.translate(TranslationKeys.NO_DATA_AVAILABLE));
-	}
 
-	@Override
-	public void refreshAppointmentView(String url) {
-		this.appointmentUrl = url;
-		if (StringUtils.isNotEmpty(appointmentUrl)) {
-			this.setSource(new ExternalResource(this.appointmentUrl));
+		if (StringUtils.isNotEmpty(url)) {
+			this.setSource(new ExternalResource(url));// "http://demo.vaadin.com/sampler/")
 		} else {
 			this.setSource(new ExternalResource("about:blank"));
 			// TODO Check Notification Type
