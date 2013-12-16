@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import com.pathfinder.model.KeyboardModel;
 import com.pathfinder.view.components.Keyboard;
+import com.pathfinder.view.components.KeyboardIds;
 
 public class SearchPanelPresenterTest {
 	KeyboardModel keyboardModel;
@@ -31,7 +32,7 @@ public class SearchPanelPresenterTest {
 	public void deleteKeyboardKeyFromSearchStringTest() {
 		searchPanelPresenter.buttonClick("I");
 		searchPanelPresenter.buttonClick("K");
-		searchPanelPresenter.buttonClick("DELETE");
+		searchPanelPresenter.buttonClick(KeyboardIds.DELETE);
 		assertEquals("I", searchPanelPresenter.getSearchString());
 	}
 
@@ -41,6 +42,66 @@ public class SearchPanelPresenterTest {
 		searchPanelPresenter.buttonClick("K");
 		searchPanelPresenter.clearSearchString();
 		assertEquals("", searchPanelPresenter.getSearchString());
+	}
+
+	@Test
+	public void complexKeyboardKeyTest() {
+
+		searchPanelPresenter.buttonClick("L");
+		searchPanelPresenter.buttonClick("P");
+		assertEquals("LP", searchPanelPresenter.getSearchString());
+
+		searchPanelPresenter.buttonClick(KeyboardIds.DELETE);
+		searchPanelPresenter.buttonClick(KeyboardIds.DELETE);
+		searchPanelPresenter.buttonClick(KeyboardIds.DELETE);
+		searchPanelPresenter.buttonClick(KeyboardIds.DELETE);
+		assertEquals("", searchPanelPresenter.getSearchString());
+
+		searchPanelPresenter.buttonClick("T");
+		searchPanelPresenter.buttonClick("Ä");
+		searchPanelPresenter.buttonClick("ß");
+		assertEquals("TÄß", searchPanelPresenter.getSearchString());
+
+		searchPanelPresenter.buttonClick(KeyboardIds.SPACE);
+		assertEquals("TÄß ", searchPanelPresenter.getSearchString());
+
+		searchPanelPresenter.buttonClick(KeyboardIds.SPACE);
+		searchPanelPresenter.buttonClick(KeyboardIds.SPACE);
+		assertEquals("TÄß   ", searchPanelPresenter.getSearchString());
+
+		searchPanelPresenter.buttonClick(KeyboardIds.RIGHT);
+		searchPanelPresenter.buttonClick(KeyboardIds.RIGHT);
+		searchPanelPresenter.buttonClick(KeyboardIds.RIGHT);
+		searchPanelPresenter.buttonClick(KeyboardIds.RIGHT);
+		searchPanelPresenter.buttonClick(KeyboardIds.RIGHT);
+		searchPanelPresenter.buttonClick(KeyboardIds.DELETE);
+		assertEquals("TÄß  ", searchPanelPresenter.getSearchString());
+
+		searchPanelPresenter.buttonClick("Ü");
+		searchPanelPresenter.buttonClick("Ü");
+		searchPanelPresenter.buttonClick(KeyboardIds.LEFT);
+		searchPanelPresenter.buttonClick("X");
+		assertEquals("TÄß  ÜXÜ", searchPanelPresenter.getSearchString());
+
+		searchPanelPresenter.buttonClick(KeyboardIds.LEFT);
+		searchPanelPresenter.buttonClick(KeyboardIds.LEFT);
+		searchPanelPresenter.buttonClick(KeyboardIds.LEFT);
+		searchPanelPresenter.buttonClick(KeyboardIds.LEFT);
+		searchPanelPresenter.buttonClick(KeyboardIds.LEFT);
+		searchPanelPresenter.buttonClick(KeyboardIds.LEFT);
+		searchPanelPresenter.buttonClick(KeyboardIds.LEFT);
+		searchPanelPresenter.buttonClick(KeyboardIds.LEFT);
+		searchPanelPresenter.buttonClick(KeyboardIds.LEFT);
+		searchPanelPresenter.buttonClick(KeyboardIds.LEFT);
+		searchPanelPresenter.buttonClick(KeyboardIds.LEFT);
+		searchPanelPresenter.buttonClick("Ö");
+		assertEquals("ÖTÄß  ÜXÜ", searchPanelPresenter.getSearchString());
+
+		searchPanelPresenter.buttonClick(KeyboardIds.RIGHT);
+		searchPanelPresenter.buttonClick(KeyboardIds.RIGHT);
+		searchPanelPresenter.buttonClick(KeyboardIds.RIGHT);
+		searchPanelPresenter.buttonClick("M");
+		assertEquals("ÖTÄßM  ÜXÜ", searchPanelPresenter.getSearchString());
 	}
 
 }

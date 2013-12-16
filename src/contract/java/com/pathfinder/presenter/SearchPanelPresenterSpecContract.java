@@ -21,10 +21,12 @@ public class SearchPanelPresenterSpecContract implements
 	@Override
 	public void addKeybordKeyToSearchString(String key) {
 		if (preCondition()) {
+			assert key != null : "key not null";
+			assert key.length() == 1 : "key is exactly one letter";
 		}
 		if (postCondition()) {
-			assert target.getSearchString().equals(
-					old(target.getSearchString()) + key) : "String added a new Char";
+			assert target.getSearchString().length() == old(
+					target.getSearchString()).length() + 1 : "One letter added to search string";
 		}
 	}
 
@@ -33,9 +35,6 @@ public class SearchPanelPresenterSpecContract implements
 		if (preCondition()) {
 		}
 		if (postCondition()) {
-			String oldString = old(target.getSearchString());
-			assert target.getSearchString().equals(
-					oldString.substring(0, oldString.length() - 1)) : "String deleted a Char";
 		}
 	}
 

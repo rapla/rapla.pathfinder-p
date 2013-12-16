@@ -8,12 +8,17 @@ package com.pathfinder.presenter;
 
 import com.pathfinder.model.KeyboardModel;
 import com.pathfinder.view.components.Keyboard;
+import com.pathfinder.view.components.KeyboardIds;
 import com.pathfinder.view.components.SearchField;
 import com.pathfinder.view.components.TreeStructure;
 import com.pathfinder.view.container.SearchPanel;
 import com.pathfinder.view.listener.KeyboardViewListenerSpec;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 
+/**
+ * Presenter which handles keyboard and search logic
+ * 
+ */
 public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 		SearchPanelPresenterSpec {
 
@@ -25,9 +30,6 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 	private final BeanFieldGroup<KeyboardModel> binder = new BeanFieldGroup<KeyboardModel>(
 			KeyboardModel.class);
 
-	private String searchString;
-	private int changePosCounter;
-
 	public SearchPanelPresenter() {
 		this.keyboard.addListener(this);
 		this.binder.setBuffered(false);
@@ -37,56 +39,62 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 
 	// Keyboard ClickListener
 	@Override
-	public void buttonClick(String key) {
-		if (key.equals("DELETE")) {
-			deleteKeyFromSearchString();
-		} else if (key.equals("SPACE")) {
-			addKeybordKeyToSearchString(" ");
-		} else if (key.equals("<")) {
-			if (getSearchString().length() + getChangePosCounter() > 0) {
+	public void buttonClick(Object keyId) {
+		if (keyId instanceof KeyboardIds) {
+			KeyboardIds id = (KeyboardIds) keyId;
+			switch (id) {
+			case DELETE:
+				deleteKeyFromSearchString();
+				break;
+			case SPACE:
+				addKeybordKeyToSearchString(" ");
+				break;
+			case LEFT:
 				setChangePosCounter(getChangePosCounter() - 1);
-			}
-		} else if (key.equals(">")) {
-			if (getChangePosCounter() < 0) {
+				break;
+			case RIGHT:
 				setChangePosCounter(getChangePosCounter() + 1);
+				break;
 			}
 		} else {
-			addKeybordKeyToSearchString(key);
-
+			addKeybordKeyToSearchString((String) keyId);
 		}
 	}
 
 	public void addKeybordKeyToSearchString(String key) {
-		changePosCounter = getChangePosCounter();
-		searchString = getSearchString();
-		if (changePosCounter < 0) {
-			int positonCounter = searchString.length() + changePosCounter;
+		int oldCursorPosition = getChangePosCounter();
 
-			searchString = searchString.substring(0, positonCounter)
-					+ key
-					+ searchString.substring(positonCounter,
-							searchString.length());
+		StringBuilder newSearchString = new StringBuilder(getSearchString());
+
+		if (oldCursorPosition < newSearchString.length()
+				&& oldCursorPosition >= 0) {
+			newSearchString.insert(oldCursorPosition, key);
 		} else {
-			searchString += key;
+			newSearchString.append(key);
 		}
+		setSearchString(newSearchString.toString());
 
-		setSearchString(searchString);
+		searchField.focus();
+		setChangePosCounter(oldCursorPosition + 1);
 
 	}
 
 	public void deleteKeyFromSearchString() {
-		searchString = getSearchString();
-		int positonCounter = searchString.length() + changePosCounter;
+		int oldCursorPosition = getChangePosCounter();
 
-		if (searchString.length() > 0) {
-			if (positonCounter != 0) {
-				searchString = searchString.substring(0, positonCounter - 1)
-						+ searchString.substring(positonCounter,
-								searchString.length());
-			}
+		StringBuilder newSearchString = new StringBuilder(getSearchString());
+
+		if (oldCursorPosition > 0
+				&& oldCursorPosition <= newSearchString.length()) {
+			newSearchString.deleteCharAt(oldCursorPosition - 1);
+
+			setSearchString(newSearchString.toString());
+
+			searchField.focus();
+			setChangePosCounter(oldCursorPosition - 1);
+		} else {
+			searchField.focus();
 		}
-
-		setSearchString(searchString);
 	}
 
 	public void clearSearchString() {
@@ -102,18 +110,22 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 	}
 
 	public int getChangePosCounter() {
-		return changePosCounter;
+		return searchField.getCursorPosition();
 	}
 
-	public void setChangePosCounter(int changePosCounter) {
-		this.changePosCounter = changePosCounter;
+	public void setChangePosCounter(int cursorPosition) {
+		if (cursorPosition >= 0 && cursorPosition <= getSearchString().length())
+			searchField.setCursorPosition(cursorPosition);
 	}
 
 	@Override
 	public String getSearchString() {
-		return (String) binder.getItemDataSource()
+		String returnString = (String) binder.getItemDataSource()
 				.getItemProperty(KeyboardModel.PROPERTY_SEARCHSTRING)
 				.getValue();
+		if (returnString == null)
+			returnString = "";
+		return returnString;
 	}
 
 	/*
