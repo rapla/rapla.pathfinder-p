@@ -1,5 +1,7 @@
 package com.pathfinder.view.layout;
 
-public class MobileLayout implements MobileLayoutSpec {
+import com.vaadin.ui.CustomComponent;
+
+public class MobileLayout extends CustomComponent implements MobileLayoutSpec {
 
 }

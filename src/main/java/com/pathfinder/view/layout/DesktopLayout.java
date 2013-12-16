@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import com.pathfinder.presenter.DetailContainerPresenter;
 import com.pathfinder.translation.TranslationKeys;
 import com.pathfinder.translation.Translator;
 import com.pathfinder.view.TranslatabelSpec;
@@ -26,20 +27,22 @@ import com.vaadin.ui.VerticalLayout;
 public class DesktopLayout extends CustomComponent implements
 		DesktopLayoutSpec, MenuBarViewListenerSpec, TranslatabelSpec {
 	private InfoPanel infoPanel = null;
-	private DetailContainer detailContainer = null;
-	private SearchPanel searchPanel = null;
 	private MenuBar menuBar = null;
+	private SearchPanel searchPanel = null;
+
+	private DetailContainer detailContainer = null;
 
 	private final VerticalLayout layout = new VerticalLayout();
 
 	private List<MainLayoutViewListenerSpec> listener = new ArrayList<MainLayoutViewListenerSpec>();
 
-	public DesktopLayout(InfoPanel infoPanel, DetailContainer detailContainer,
-			SearchPanel searchPanel, MenuBar menuBar) {
+	public DesktopLayout(InfoPanel infoPanel, MenuBar menuBar,
+			SearchPanel searchPanel) {
+
 		this.infoPanel = infoPanel;
-		this.detailContainer = detailContainer;
-		this.searchPanel = searchPanel;
 		this.menuBar = menuBar;
+
+		this.searchPanel = searchPanel;
 
 		this.buildLayout();
 		this.setCompositionRoot(layout);
@@ -48,42 +51,21 @@ public class DesktopLayout extends CustomComponent implements
 	@Override
 	public void buildLayout() {
 		this.layout.addComponent(infoPanel);
-		this.layout.addComponent(detailContainer);
-		// Should not be shown at startup
-		this.hideDetailContainer();
 		this.layout.addComponent(searchPanel);
 		this.layout.addComponent(menuBar);
 		menuBar.addMenuBarListener(this);
 	}
 
 	@Override
-	public void hideInfoPanel() {
-		this.infoPanel.setVisible(false);
+	public void switchToDetailView() {
+		detailContainer = new DetailContainer(null, null, null);
+		layout.replaceComponent(searchPanel, detailContainer);
 	}
 
 	@Override
-	public void showInfoPanel() {
-		this.infoPanel.setVisible(true);
-	}
-
-	@Override
-	public void hideDetailContainer() {
-		this.detailContainer.setVisible(false);
-	}
-
-	@Override
-	public void showDetailContainer() {
-		this.detailContainer.setVisible(true);
-	}
-
-	@Override
-	public void hideSearchPanel() {
-		this.searchPanel.setVisible(false);
-	}
-
-	@Override
-	public void showSearchPanel() {
-		this.searchPanel.setVisible(true);
+	public void switchToSearchView() {
+		layout.replaceComponent(detailContainer, searchPanel);
+		detailContainer = null;
 	}
 
 	@Override

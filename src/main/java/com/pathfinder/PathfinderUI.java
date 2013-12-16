@@ -1,5 +1,7 @@
 package com.pathfinder;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -7,12 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.pathfinder.presenter.MainPresenter;
+import com.pathfinder.presenter.DesktopPresenter;
+import com.pathfinder.presenter.MobilePresenter;
 import com.pathfinder.translation.TranslationKeys;
 import com.pathfinder.translation.Translator;
 import com.vaadin.annotations.Theme;
-//import com.vaadin.external.org.slf4j.Logger;
-//import com.vaadin.external.org.slf4j.LoggerFactory;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServletRequest;
@@ -23,13 +24,11 @@ import com.vaadin.ui.UI;
 @Theme("rapla_pathfinder_p")
 public class PathfinderUI extends UI {
 
-	private static final Logger logger = LogManager.getLogger(PathfinderUI.class.getName());
-
-	// private Logger log = LoggerFactory.getLogger(getClass());
+	private static final Logger logger = LogManager
+			.getLogger(PathfinderUI.class.getName());
 
 	@Override
 	protected void init(VaadinRequest request) {
-
 		setUiLocale(request.getLocale());
 		setErrorHandler(new PathfinderErrorHandler());
 		Page.getCurrent().setTitle(
@@ -44,31 +43,38 @@ public class PathfinderUI extends UI {
 		WebBrowser browser = getPage().getWebBrowser();
 		logger.trace("Max browser width: " + browser.getScreenWidth());
 
-		if (browser.getScreenWidth() > 768) {
-			// TODO
-		} else {
-			// TODO
-		}
-
-		/* Method 3 */
+		/* Returns the user agent */
+		String userAgent = "";
 		if (request instanceof VaadinServletRequest) {
 			HttpServletRequest httpRequest = ((VaadinServletRequest) request)
 					.getHttpServletRequest();
-			String userAgent = httpRequest.getHeader("User-Agent")
-					.toLowerCase();
+			userAgent = httpRequest.getHeader("User-Agent").toLowerCase();
 
-			logger.trace(userAgent);
-
-			// TODO: Check user agent for all tablet matching keywords
-			if (userAgent.contains("ipad")) {
-				// ...
-			}
-
+			logger.trace("User Agent: " + userAgent);
 		}
 
-		setContent(new MainPresenter().getMainLayoutView());
-		logger.trace("Application initialized");
+		if (!isMobileUserAgent(userAgent) || browser.getScreenWidth() > 768) {
+			setContent(new DesktopPresenter().getDesktopLayoutView());
+			logger.trace("Desktop application initialized");
+		} else {
+			setContent(new MobilePresenter().getMobileLayoutView());
+			logger.trace("Mobile application initialized");
+		}
+	}
 
+	private boolean isMobileUserAgent(String userAgent) {
+		boolean mobileUserAgent = false;
+		String[] mobileAgents = new String[] { "ipad", "iphone", "mobile",
+				"android", "ios", "blackberry", "phone" };
+		ArrayList<String> mobileAgentList = new ArrayList<String>(
+				Arrays.asList(mobileAgents));
+
+		for (String agent : mobileAgentList) {
+			if (agent.equals(userAgent)) {
+				mobileUserAgent = true;
+			}
+		}
+		return mobileUserAgent;
 	}
 
 	/**

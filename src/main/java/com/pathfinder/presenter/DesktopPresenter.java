@@ -12,23 +12,24 @@ import com.vaadin.ui.CustomComponent;
  * @author alexh
  * 
  */
-public class MainPresenter implements MainLayoutViewListenerSpec,
-		MainPresenterSpec {
+public class DesktopPresenter implements MainLayoutViewListenerSpec,
+		DesktopPresenterSpec {
+	// These components are always needed
 	private final InfoPanelPresenter infoPanelPresenter = new InfoPanelPresenter();
-	private final DetailContainerPresenter detailContainerPresenter = new DetailContainerPresenter();
-	private final SearchPanelPresenter searchPanelPresenter = new SearchPanelPresenter();
 	private final MenuBarPresenter menuBarPresenter = new MenuBarPresenter();
+	private final SearchPanelPresenter searchPanelPresenter = new SearchPanelPresenter();
+
 	private final DesktopLayout desktopLayout = new DesktopLayout(
 			infoPanelPresenter.getInfoPanel(),
-			detailContainerPresenter.getDetailContainer(),
-			searchPanelPresenter.getSearchPanel(),
-			menuBarPresenter.getMenuBar());
-
-	public MainPresenter() {
+			menuBarPresenter.getMenuBar(),
+			searchPanelPresenter.getSearchPanel());
+			
+	public DesktopPresenter() {
 		desktopLayout.addMainLayoutViewListener(this);
 	}
-
-	public CustomComponent getMainLayoutView() {
+	
+	@Override
+	public CustomComponent getDesktopLayoutView() {
 		return desktopLayout;
 	}
 
