@@ -1,6 +1,7 @@
 package com.pathfinder.presenter;
 
 import java.util.Locale;
+import java.util.TimerTask;
 
 import com.pathfinder.view.layout.DesktopLayout;
 import com.pathfinder.view.listener.MainLayoutViewListenerSpec;
@@ -20,14 +21,19 @@ public class DesktopPresenter implements MainLayoutViewListenerSpec,
 	private final SearchPanelPresenter searchPanelPresenter = new SearchPanelPresenter();
 
 	private final DesktopLayout desktopLayout = new DesktopLayout(
-			infoPanelPresenter.getInfoPanel(),
-			menuBarPresenter.getMenuBar(),
+			infoPanelPresenter.getInfoPanel(), menuBarPresenter.getMenuBar(),
 			searchPanelPresenter.getSearchPanel());
-			
+
 	public DesktopPresenter() {
 		desktopLayout.addMainLayoutViewListener(this);
 	}
-	
+
+	// class ResourceClickListener extends
+	// {
+	// Timer timer = new Timer();
+	// timer.schedule(new RespawnDesktopLayoutTimer(), 60000);
+	// }
+
 	@Override
 	public CustomComponent getDesktopLayoutView() {
 		return desktopLayout;
@@ -36,5 +42,13 @@ public class DesktopPresenter implements MainLayoutViewListenerSpec,
 	@Override
 	public void languageChanged(Locale locale) {
 		desktopLayout.updateTranslations(locale);
+	}
+
+	class RespawnDesktopLayoutTimer extends TimerTask {
+
+		@Override
+		public void run() {
+			desktopLayout.switchToSearchView();
+		}
 	}
 }

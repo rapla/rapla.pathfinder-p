@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import com.pathfinder.presenter.DetailContainerPresenter;
 import com.pathfinder.translation.TranslationKeys;
 import com.pathfinder.translation.Translator;
 import com.pathfinder.view.TranslatabelSpec;

@@ -11,6 +11,12 @@ import com.pathfinder.view.listener.SearchPanelViewListenerSpec;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * Defines the layout for the SearchPanel: TreeStructure, Keyboard and SearchField
+ * 
+ * @author alexh
+ *
+ */
 public class SearchPanel extends CustomComponent implements SearchPanelSpec {
 
 	private TreeStructure treeStructure = null;
@@ -26,15 +32,20 @@ public class SearchPanel extends CustomComponent implements SearchPanelSpec {
 		this.treeStructure = treeStructure;
 		this.keyboardView = keyboardView;
 		this.searchField = searchField;
+		
 		this.buildLayout();
 		this.setCompositionRoot(layout);
 	}
 
 	@Override
 	public void buildLayout() {
+		this.treeStructure.setSizeFull();
+		this.keyboardView.setSizeFull();
+		this.searchField.setSizeFull();
 		this.layout.addComponent(treeStructure);
 		this.layout.addComponent(keyboardView);
 		this.layout.addComponent(searchField);
+		this.layout.setSizeFull();
 	}
 
 	@Override
@@ -53,5 +64,4 @@ public class SearchPanel extends CustomComponent implements SearchPanelSpec {
 		keyboardView.updateTranslations(locale);
 		searchField.updateTranslations(locale);
 	}
-
 }

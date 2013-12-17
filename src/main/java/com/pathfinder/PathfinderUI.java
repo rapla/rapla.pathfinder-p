@@ -3,6 +3,8 @@ package com.pathfinder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,13 +28,22 @@ public class PathfinderUI extends UI {
 
 	private static final Logger logger = LogManager
 			.getLogger(PathfinderUI.class.getName());
+	// private final DataLoader dataLoader = new DataLoader();
+	private boolean dataLoaded = false;
 
 	@Override
 	protected void init(VaadinRequest request) {
+		Timer timer = new Timer();
+		// Start in 0,001 seconds, is repeated every day (24hours)
+		timer.schedule(new DataLoadTimer(), 1, 86400000);
+
 		setUiLocale(request.getLocale());
 		setErrorHandler(new PathfinderErrorHandler());
 		Page.getCurrent().setTitle(
 				Translator.getInstance().translate(TranslationKeys.APP_TITLE));
+
+		/* Browser data */
+		logger.trace(">> Browser Data <<");
 
 		/* Returns the current width of the browser window */
 		Page.getCurrent().getBrowserWindowWidth();
@@ -49,16 +60,15 @@ public class PathfinderUI extends UI {
 			HttpServletRequest httpRequest = ((VaadinServletRequest) request)
 					.getHttpServletRequest();
 			userAgent = httpRequest.getHeader("User-Agent").toLowerCase();
-
 			logger.trace("User Agent: " + userAgent);
 		}
 
-		if (!isMobileUserAgent(userAgent) || browser.getScreenWidth() > 768) {
-			setContent(new DesktopPresenter().getDesktopLayoutView());
-			logger.trace("Desktop application initialized");
-		} else {
+		if (isMobileUserAgent(userAgent) || browser.getScreenWidth() < 768) {
 			setContent(new MobilePresenter().getMobileLayoutView());
 			logger.trace("Mobile application initialized");
+		} else {
+			setContent(new DesktopPresenter().getDesktopLayoutView());
+			logger.trace("Desktop application initialized");
 		}
 	}
 
@@ -77,6 +87,19 @@ public class PathfinderUI extends UI {
 		return mobileUserAgent;
 	}
 
+	class DataLoadTimer extends TimerTask {
+		@Override
+		public void run() {
+			logger.trace("Get new data from the RAPLA-Server");
+			synchronized (UI.getCurrent()) {
+				dataLoaded = false;
+				// dataLoader.
+				dataLoaded = true;
+			}
+			logger.trace("Updated data from the RAPLA-Server");
+		}
+	}
+
 	/**
 	 * Sets locale of UI as specified in parameter; if it's not supported or
 	 * null, the fallback locale will be taken
@@ -93,4 +116,7 @@ public class PathfinderUI extends UI {
 
 	}
 
+	public boolean isDataLoaded() {
+		return this.dataLoaded;
+	}
 }
