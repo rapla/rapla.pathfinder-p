@@ -21,6 +21,11 @@ public class DataLoader implements DataLoaderSpec {
 	private static final String URL_RESOURSE = "http://localhost:8051/rapla/json/RaplaJsonService?method=getResources&jsonrpc=2.0&params=";
 	private static final String URL_RESOURSE_DETAIL = "http://localhost:8051/rapla/json/RaplaJsonService?method=getResource&jsonrpc=2.0&params=";
 
+	private final String REQUEST_PERSONS = "persons";
+	private final String REQUEST_ROOMS = "raum";
+	private final String REQUEST_POIS = "sonstiges";
+	private final String REQUEST_COURSES = "courses";
+
 	private BufferedReader br;
 	private static RoomModel[] allRooms;
 	private static CourseModel[] allCourses;
@@ -31,7 +36,7 @@ public class DataLoader implements DataLoaderSpec {
 		GSON_GetResources_LEVEL_2[] ResourceData;
 		// get all Rooms, transform from ResourceData to RoomModel
 		// and get the Detail Information
-		ResourceData = gsonGetResources("rooms").getResult();
+		ResourceData = gsonGetResources(REQUEST_ROOMS).getResult();
 		allRooms = new RoomModel[ResourceData.length];
 		for (int i = 0; i < ResourceData.length; i++) {
 			allRooms[i] = new RoomModel(ResourceData[i].getName(),
@@ -42,7 +47,7 @@ public class DataLoader implements DataLoaderSpec {
 
 		// get all Courses, transform from ResourceData to CourseModel
 		// and get the Detail Information
-		ResourceData = gsonGetResources("courses").getResult();
+		ResourceData = gsonGetResources(REQUEST_COURSES).getResult();
 
 		allCourses = new CourseModel[ResourceData.length];
 		for (int i = 0; i < ResourceData.length; i++) {
@@ -55,7 +60,7 @@ public class DataLoader implements DataLoaderSpec {
 
 		// get all Persons, transform from ResourceData to PersoneModel
 		// and get the Detail Information
-		ResourceData = gsonGetResources("persons").getResult();
+		ResourceData = gsonGetResources(REQUEST_PERSONS).getResult();
 		allPersons = new PersonModel[ResourceData.length];
 		for (int i = 0; i < ResourceData.length; i++) {
 			allPersons[i] = new PersonModel(ResourceData[i].getName(),
@@ -65,6 +70,33 @@ public class DataLoader implements DataLoaderSpec {
 			loadPersonDetail(allPersons[i]);
 		}
 
+		// get all POIs, transform from ResourceData to POIModel
+		// and get the Detail Information
+		ResourceData = gsonGetResources(REQUEST_POIS).getResult();
+
+		allPois = new POIModel[ResourceData.length];
+		for (int i = 0; i < ResourceData.length; i++) {
+			allPois[i] = new POIModel(ResourceData[i].getName(),
+					ResourceData[i].getLink(), ResourceData[i].getId(),
+					ResourceData[i].getSearchTerms(), null, null);
+			loadPOIDetail(allPois[i]);
+		}
+
+	}
+
+	// should be replaced with the GENERIC TYPE
+	// save the Detail Informations in POIModel
+	private void loadPOIDetail(POIModel poi) {
+		GSON_GetResourceDetail_LEVEL_1 dataDetail = gsonGetResourceDetail(poi
+				.getId());
+		Map<String, GSON_GetResourceDetail_LEVEL_3_1> atribute = dataDetail
+				.getResult().getAttributeMap();
+
+		if (atribute.get("raumnr") != null)
+			poi.setRoomNr(atribute.get("raumnr").getValue());
+
+		if (atribute.get("bild") != null)
+			poi.setPicture(atribute.get("bild").getValue());
 	}
 
 	// this Class should be GENERIC TYPE
@@ -206,7 +238,7 @@ public class DataLoader implements DataLoaderSpec {
 		return allPersons;
 	}
 
-	public static POIModel[] getAllPois() {
+	public POIModel[] getAllPois() {
 		return allPois;
 	}
 
