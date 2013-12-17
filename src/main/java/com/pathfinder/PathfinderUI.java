@@ -21,6 +21,8 @@ import com.vaadin.ui.UI;
 @SuppressWarnings("serial")
 @Theme("rapla_pathfinder_p")
 public class PathfinderUI extends UI {
+	
+	
 
 	// Logger logger = LogManager.getLogger(PathfinderUI.class.getName());
 
@@ -36,6 +38,8 @@ public class PathfinderUI extends UI {
 
 		// Setting locale of UI as locale of request, if locale supported by
 		// translator and not null; otherwise use fallback locale
+	
+		this.setStyleName("main");
 		if (request.getLocale() != null
 				&& Translator.getInstance().isLocaleSupported(
 						request.getLocale())) {

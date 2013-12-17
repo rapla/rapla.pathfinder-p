@@ -1,12 +1,92 @@
 /* Import the reindeer theme.*/
 /* This only allows us to use the mixins defined in it and does not add any styles by itself. */
-@import "../reindeer/reindeer.scss";
 
 /* This contains all of your theme.*/
 /* If somebody wants to extend the theme she will include this mixin. */
 @mixin rapla_pathfinder_p {
-  /* Include all the styles from the reindeer theme */
-  @include reindeer;
 
-  /* Insert your theme rules here */
+	* {
+		margin: 0;
+		padding: 0;
+	}
+
+	.main {
+		background: #ccc;
+		width: 100%;
+		height: 100%;
+	}
+
+	.v-slot.v-slot-keyboard-button {
+		float: left;
+		height: 40px;
+		width: 3%;
+		margin-top: 4px;
+		margin-right: 2px;
+		background-image: -webkit-linear-gradient(top, #666666 0%, #494949 100%);
+		background-image: -moz-linear-gradient(top, #666666 0%, #494949 100%);
+		background-image: -ms-linear-gradient(top, #666666 0%, #494949 100%);
+	}
+
+	.v-slot {
+		overflow: hidden;
+		display: block;
+	}
+
+	.v-slot.v-slot-keyboard-delete {
+		float: left;
+		height: 40px;
+		width: 6.2%;
+		margin-top: 4px;
+		margin-right: 2px;
+		background-image: -webkit-linear-gradient(top, #666666 0%, #494949 100%);
+		background-image: -moz-linear-gradient(top, #666666 0%, #494949 100%);
+		background-image: -ms-linear-gradient(top, #666666 0%, #494949 100%);
+	}
+
+	.v-slot.v-slot-keyboard-space {
+		float: left;
+		height: 40px;
+		width: 15.6%;
+		margin-top: 4px;
+		margin-right: 2px;
+		background-image: -webkit-linear-gradient(top, #666666 0%, #494949 100%);
+		background-image: -moz-linear-gradient(top, #666666 0%, #494949 100%);
+		background-image: -ms-linear-gradient(top, #666666 0%, #494949 100%);
+	}
+
+	.v-button-caption {
+		color: #FFFFFF;
+		font: 14px Arial;
+		display: block;
+		height: 29px;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+	}
+
+	.v-slot.v-slot-keyboard-button .v-button-caption {
+		padding-left: 38%;
+		padding-top: 26%;
+	}
+
+	.v-slot.v-slot-keyboard-delete .v-button-caption {
+		padding-left: 12%;
+		padding-top: 13%;
+	}
+
+	.v-slot.v-slot-keyboard-space .v-button-caption {
+		padding-left: 31%;
+		padding-top: 5%;
+	}
+	
+	.v-textfield.v-widget {
+		width: 37.5%;
+		background-color: #FFF;
+		border: 1px #e2001b solid;
+		height: 25px;
+		display: block;
+		margin-top: 4px;
+		color: #4a4a4a;
+		font: 14px Arial;
+	}
 }
