@@ -18,7 +18,7 @@ import com.vaadin.server.VaadinServletService;
  * 
  */
 @WebServlet(value = "/*", asyncSupported = true)
-@VaadinServletConfiguration(productionMode = false, ui = PathfinderUI.class)
+@VaadinServletConfiguration(productionMode = false, ui = PathfinderUI.class, widgetset = "com.pathfinder.widgetset.PathfinderWidgetset")
 public class PathfinderServlet extends VaadinServlet {
 
 	/*
