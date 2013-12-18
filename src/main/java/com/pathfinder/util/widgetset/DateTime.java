@@ -1,11 +1,11 @@
-package com.pathfinder.widgetset;
+package com.pathfinder.util.widgetset;
 
 import java.util.Date;
 import java.util.Locale;
 
+import com.pathfinder.util.widgetset.client.datetime.DateTimeServerRpc;
+import com.pathfinder.util.widgetset.client.datetime.DateTimeState;
 import com.pathfinder.view.components.TimeDateSpec;
-import com.pathfinder.widgetset.client.datetime.DateTimeServerRpc;
-import com.pathfinder.widgetset.client.datetime.DateTimeState;
 import com.vaadin.ui.AbstractComponent;
 
 /**

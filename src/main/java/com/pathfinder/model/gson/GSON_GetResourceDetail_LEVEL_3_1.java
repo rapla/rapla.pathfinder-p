@@ -1,4 +1,4 @@
-package com.pathfinder.model;
+package com.pathfinder.model.gson;
 
 public class GSON_GetResourceDetail_LEVEL_3_1 {
 	private String label;

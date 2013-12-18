@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.pathfinder.translation;
+package com.pathfinder.util.translation;
 
 /**
  * @author tim

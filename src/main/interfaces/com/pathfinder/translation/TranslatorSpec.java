@@ -5,6 +5,8 @@ package com.pathfinder.translation;
 
 import java.util.Locale;
 
+import com.pathfinder.util.translation.TranslationKeys;
+
 import de.vksi.c4j.ContractReference;
 import de.vksi.c4j.Pure;
 

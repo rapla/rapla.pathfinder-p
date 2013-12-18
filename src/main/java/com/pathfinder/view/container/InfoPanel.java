@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import com.pathfinder.util.widgetset.DateTime;
 import com.pathfinder.view.components.FreeRoom;
 import com.pathfinder.view.listener.InfoPanelViewListenerSpec;
-import com.pathfinder.widgetset.DateTime;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 

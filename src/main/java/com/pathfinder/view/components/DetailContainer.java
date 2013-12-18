@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import com.pathfinder.model.GSON_GetResources_LEVEL_2;
+import com.pathfinder.model.gson.GSON_GetResources_LEVEL_2;
 import com.pathfinder.view.listener.DetailViewListenerSpec;
 import com.vaadin.ui.CustomComponent;
 

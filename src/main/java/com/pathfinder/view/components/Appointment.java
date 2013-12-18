@@ -6,9 +6,9 @@ import java.util.Locale;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.pathfinder.translation.TranslationKeys;
-import com.pathfinder.translation.Translator;
 import com.pathfinder.translation.TranslatorSpec;
+import com.pathfinder.util.translation.TranslationKeys;
+import com.pathfinder.util.translation.Translator;
 import com.pathfinder.view.listener.AppointmentViewListenerSpec;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.ui.BrowserFrame;

@@ -1,4 +1,4 @@
-package com.pathfinder.widgetset.client.datetime;
+package com.pathfinder.util.widgetset.client.datetime;
 
 /**
  * Contains the last synchronized value of system time and the last known UI's

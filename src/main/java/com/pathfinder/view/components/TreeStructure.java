@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Locale;
 
 import com.pathfinder.model.ResourceModel;
-import com.pathfinder.translation.TranslationKeys;
-import com.pathfinder.translation.Translator;
 import com.pathfinder.translation.TranslatorSpec;
+import com.pathfinder.util.translation.TranslationKeys;
+import com.pathfinder.util.translation.Translator;
 import com.pathfinder.view.listener.TreeStructureViewListenerSpec;
 import com.vaadin.data.Container.Filter;
 import com.vaadin.data.util.BeanItemContainer;

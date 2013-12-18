@@ -10,6 +10,7 @@ import static de.vksi.c4j.Condition.unchanged;
 
 import java.util.Locale;
 
+import com.pathfinder.util.translation.TranslationKeys;
 import com.vaadin.ui.UI;
 
 import de.vksi.c4j.ClassInvariant;

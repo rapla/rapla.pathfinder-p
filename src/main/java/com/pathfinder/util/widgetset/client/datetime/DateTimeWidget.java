@@ -1,4 +1,4 @@
-package com.pathfinder.widgetset.client.datetime;
+package com.pathfinder.util.widgetset.client.datetime;
 
 import java.util.Date;
 

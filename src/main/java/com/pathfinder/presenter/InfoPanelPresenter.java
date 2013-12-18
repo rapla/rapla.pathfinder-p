@@ -1,8 +1,8 @@
 package com.pathfinder.presenter;
 
+import com.pathfinder.util.widgetset.DateTime;
 import com.pathfinder.view.components.FreeRoom;
 import com.pathfinder.view.container.InfoPanel;
-import com.pathfinder.widgetset.DateTime;
 
 public class InfoPanelPresenter implements InfoPanelPresenterSpec {
 	private final DateTime dateTime = new DateTime();

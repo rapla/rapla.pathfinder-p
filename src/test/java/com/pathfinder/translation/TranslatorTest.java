@@ -10,6 +10,9 @@ import java.util.Locale;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.pathfinder.util.translation.TranslationKeys;
+import com.pathfinder.util.translation.Translator;
+
 /**
  * @author tim
  * 

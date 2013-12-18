@@ -13,8 +13,8 @@ import org.apache.logging.log4j.Logger;
 
 import com.pathfinder.presenter.DesktopPresenter;
 import com.pathfinder.presenter.MobilePresenter;
-import com.pathfinder.translation.TranslationKeys;
-import com.pathfinder.translation.Translator;
+import com.pathfinder.util.translation.TranslationKeys;
+import com.pathfinder.util.translation.Translator;
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;

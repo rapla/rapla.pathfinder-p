@@ -9,13 +9,13 @@ import java.util.Map;
 
 import com.google.gson.Gson;
 import com.pathfinder.model.CourseModel;
-import com.pathfinder.model.GSON_GetResourceDetail_LEVEL_1;
-import com.pathfinder.model.GSON_GetResourceDetail_LEVEL_3_1;
-import com.pathfinder.model.GSON_GetResources_LEVEL_1;
-import com.pathfinder.model.GSON_GetResources_LEVEL_2;
 import com.pathfinder.model.POIModel;
 import com.pathfinder.model.PersonModel;
 import com.pathfinder.model.RoomModel;
+import com.pathfinder.model.gson.GSON_GetResourceDetail_LEVEL_1;
+import com.pathfinder.model.gson.GSON_GetResourceDetail_LEVEL_3_1;
+import com.pathfinder.model.gson.GSON_GetResources_LEVEL_1;
+import com.pathfinder.model.gson.GSON_GetResources_LEVEL_2;
 
 public class DataLoader implements DataLoaderSpec {
 	private static final String URL_RESOURSE = "http://localhost:8051/rapla/json/RaplaJsonService?method=getResources&jsonrpc=2.0&params=";

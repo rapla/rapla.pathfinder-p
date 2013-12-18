@@ -1,4 +1,4 @@
-package com.pathfinder.model;
+package com.pathfinder.model.gson;
 
 import java.util.Arrays;
 

@@ -1,9 +1,9 @@
-package com.pathfinder.widgetset.client.datetime;
+package com.pathfinder.util.widgetset.client.datetime;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Widget;
-import com.pathfinder.widgetset.DateTime;
+import com.pathfinder.util.widgetset.DateTime;
 import com.vaadin.client.communication.RpcProxy;
 import com.vaadin.client.communication.StateChangeEvent;
 import com.vaadin.client.ui.AbstractComponentConnector;

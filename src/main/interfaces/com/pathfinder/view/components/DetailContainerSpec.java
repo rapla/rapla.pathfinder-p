@@ -1,6 +1,6 @@
 package com.pathfinder.view.components;
 
-import com.pathfinder.model.GSON_GetResources_LEVEL_2;
+import com.pathfinder.model.gson.GSON_GetResources_LEVEL_2;
 import com.pathfinder.view.listener.DetailViewListenerSpec;
 
 public interface DetailContainerSpec extends ComponentSpec {

@@ -1,13 +1,14 @@
 /**
  * 
  */
-package com.pathfinder.translation;
+package com.pathfinder.util.translation;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import com.pathfinder.translation.TranslatorSpec;
 import com.vaadin.ui.UI;
 
 /**
