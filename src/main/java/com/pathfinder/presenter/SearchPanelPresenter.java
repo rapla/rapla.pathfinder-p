@@ -58,7 +58,10 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 			}
 		} else {
 			addKeybordKeyToSearchString((String) keyId);
+
 		}
+		
+		treeStructure.addFilters(Keyboard.getSearchString());
 	}
 
 	public void addKeybordKeyToSearchString(String key) {
@@ -105,9 +108,11 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 		return this.searchPanel;
 	}
 
+	// TODO Why? Is this necessary?
 	public Keyboard getKeyboard() {
 		return this.keyboard;
 	}
+
 
 	public int getChangePosCounter() {
 		return searchField.getCursorPosition();

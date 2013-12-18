@@ -8,8 +8,6 @@ import com.pathfinder.view.listener.DetailViewListenerSpec;
  * @author alexh
  * 
  */
-public interface DetailSpec extends ComponentSpec {
-	void refreshDetails();
-
+public interface DetailImageSpec extends ComponentSpec {
 	void addDetailListener(DetailViewListenerSpec listener);
 }

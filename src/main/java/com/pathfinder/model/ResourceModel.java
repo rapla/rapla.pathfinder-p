@@ -9,6 +9,13 @@ public class ResourceModel {
 	private String id = "";
 	private String[] searchTerms;
 
+	// TODO Only for testing - can be removed
+	public ResourceModel(String all) {
+		name = all;
+		link = all;
+		id = all;
+	}
+
 	public String getName() {
 		return name;
 	}

@@ -1,10 +1,12 @@
 package com.pathfinder.presenter;
 
-import com.pathfinder.view.components.DetailContainer;
+import com.pathfinder.view.container.DetailContainer;
 
 public class DetailContainerPresenter implements DetailContainerPresenterSpec {
-	private final DetailContainer detailContainer = new DetailContainer();
+	private DetailContainer detailContainer = new DetailContainer(null, null,
+			null);
 
+	@Override
 	public DetailContainer getDetailContainer() {
 		return this.detailContainer;
 	}

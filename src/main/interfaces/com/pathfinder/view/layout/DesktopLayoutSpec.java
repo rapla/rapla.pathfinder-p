@@ -10,17 +10,9 @@ import com.pathfinder.view.listener.MainLayoutViewListenerSpec;
  * 
  */
 public interface DesktopLayoutSpec extends ViewSpec {
-	void hideInfoPanel();
+	void switchToDetailView();
 
-	void showInfoPanel();
-
-	void hideDetailContainer();
-
-	void showDetailContainer();
-
-	void hideSearchPanel();
-
-	void showSearchPanel();
+	void switchToSearchView();
 
 	void addMainLayoutViewListener(MainLayoutViewListenerSpec listener);
 }
