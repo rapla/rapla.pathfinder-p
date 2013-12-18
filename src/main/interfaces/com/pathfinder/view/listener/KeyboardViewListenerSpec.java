@@ -6,5 +6,5 @@ package com.pathfinder.view.listener;
  *
  */
 public interface KeyboardViewListenerSpec {
-	void buttonClick(String key);
+	void buttonClick(Object keyId);
 }

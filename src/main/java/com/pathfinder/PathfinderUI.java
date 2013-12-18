@@ -22,6 +22,8 @@ import com.vaadin.ui.UI;
 @SuppressWarnings("serial")
 @Theme("rapla_pathfinder_p")
 public class PathfinderUI extends UI {
+	
+	
 
 	private static final Logger logger = LogManager.getLogger(PathfinderUI.class.getName());
 
@@ -34,6 +36,10 @@ public class PathfinderUI extends UI {
 		setErrorHandler(new PathfinderErrorHandler());
 		Page.getCurrent().setTitle(
 				Translator.getInstance().translate(TranslationKeys.APP_TITLE));
+		// Setting locale of UI as locale of request, if locale supported by
+		// translator and not null; otherwise use fallback locale
+	
+		this.setStyleName("main");
 
 		/* Returns the current width of the browser window */
 		Page.getCurrent().getBrowserWindowWidth();

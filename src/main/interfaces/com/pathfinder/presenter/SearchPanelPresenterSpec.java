@@ -1,5 +1,9 @@
 package com.pathfinder.presenter;
 
+import de.vksi.c4j.ContractReference;
+import de.vksi.c4j.Pure;
+
+@ContractReference(SearchPanelPresenterSpecContract.class)
 public interface SearchPanelPresenterSpec {
 
 	void addKeybordKeyToSearchString(String key);
@@ -7,5 +11,10 @@ public interface SearchPanelPresenterSpec {
 	void deleteKeyFromSearchString();
 
 	void clearSearchString();
+
+	void setSearchString(String value);
+
+	@Pure
+	String getSearchString();
 
 }
