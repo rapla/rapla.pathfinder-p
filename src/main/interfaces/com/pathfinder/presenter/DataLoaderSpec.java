@@ -1,17 +1,20 @@
 package com.pathfinder.presenter;
 
-import com.pathfinder.model.CourseDetailModel;
-import com.pathfinder.model.PersonDetailModel;
-import com.pathfinder.model.RoomDetailModel;
+import com.pathfinder.model.CourseModel;
+import com.pathfinder.model.POIModel;
+import com.pathfinder.model.PersonModel;
+import com.pathfinder.model.RoomModel;
 
 public interface DataLoaderSpec {
 
 	void loadAllResources();
 
-	CourseDetailModel getCourseDetail(String id);
+	RoomModel[] getAllRooms();
 
-	RoomDetailModel getRoomDetail(String id);
+	CourseModel[] getAllCourses();
 
-	PersonDetailModel getPersonDetail(String id);
+	PersonModel[] getAllPersons();
+	
+	POIModel[] getAllPois();
 
 }

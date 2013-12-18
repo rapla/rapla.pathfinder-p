@@ -1,31 +1,24 @@
 package com.pathfinder.model;
 
-public class CourseModel {
+public class POIModel {
 	// Attention! Events were not yet been implemented
 	private String name;
 	private String link = "";
 	private String id = "";
 	private String[] searchTerms;
 
-	private String vintage;
-	private String department;
-	private String studyCourse;
-	private String picture;
 	private String roomNr;
+	private String picture;
 
-	public CourseModel(String name, String link, String id,
-			String[] searchTerms, String vintage, String department,
-			String studyCourse, String picture, String roomNr) {
+	public POIModel(String name, String link, String id, String[] searchTerms,
+			String roomNr, String picture) {
 		super();
 		this.name = name;
 		this.link = link;
 		this.id = id;
 		this.searchTerms = searchTerms;
-		this.vintage = vintage;
-		this.department = department;
-		this.studyCourse = studyCourse;
-		this.picture = picture;
 		this.roomNr = roomNr;
+		this.picture = picture;
 	}
 
 	public String getName() {
@@ -60,28 +53,12 @@ public class CourseModel {
 		this.searchTerms = searchTerms;
 	}
 
-	public String getVintage() {
-		return vintage;
+	public String getRoomNr() {
+		return roomNr;
 	}
 
-	public void setVintage(String vintage) {
-		this.vintage = vintage;
-	}
-
-	public String getDepartment() {
-		return department;
-	}
-
-	public void setDepartment(String department) {
-		this.department = department;
-	}
-
-	public String getStudyCourse() {
-		return studyCourse;
-	}
-
-	public void setStudyCourse(String studyCourse) {
-		this.studyCourse = studyCourse;
+	public void setRoomNr(String roomNr) {
+		this.roomNr = roomNr;
 	}
 
 	public String getPicture() {
@@ -91,13 +68,4 @@ public class CourseModel {
 	public void setPicture(String picture) {
 		this.picture = picture;
 	}
-
-	public String getRoomNr() {
-		return roomNr;
-	}
-
-	public void setRoomNr(String roomNr) {
-		this.roomNr = roomNr;
-	}
-
 }

@@ -61,7 +61,7 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 
 		}
 		
-		treeStructure.addFilters(Keyboard.getSearchString());
+		treeStructure.addFilters(getSearchString());
 	}
 
 	public void addKeybordKeyToSearchString(String key) {

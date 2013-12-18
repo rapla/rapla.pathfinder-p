@@ -43,9 +43,8 @@ public class PathfinderUI extends UI {
 		setUiLocale(request.getLocale());
 		setErrorHandler(new PathfinderErrorHandler());
 		Page.getCurrent().setTitle(
-		this.setStyleName("main");
 				Translator.getInstance().translate(TranslationKeys.APP_TITLE));
-
+		this.setStyleName("main");
 		/* Browser data */
 		logger.trace(">> Browser Data <<");
 

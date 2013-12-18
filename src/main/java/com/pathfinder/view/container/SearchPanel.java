@@ -42,10 +42,10 @@ public class SearchPanel extends CustomComponent implements SearchPanelSpec {
 	@Override
 	public void buildLayout() {
 		this.treeStructure.setSizeFull();
-		this.keyboardView.setSizeFull();
+		this.keyboard.setSizeFull();
 		this.searchField.setSizeFull();
 		this.layout.addComponent(treeStructure);
-		this.layout.addComponent(keyboardView);
+		this.layout.addComponent(keyboard);
 		this.layout.addComponent(searchField);
 		this.layout.setSizeFull();
 	}
