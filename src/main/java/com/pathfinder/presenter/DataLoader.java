@@ -16,10 +16,18 @@ import com.pathfinder.model.gson.GSON_GetResourceDetail_LEVEL_1;
 import com.pathfinder.model.gson.GSON_GetResourceDetail_LEVEL_3_1;
 import com.pathfinder.model.gson.GSON_GetResources_LEVEL_1;
 import com.pathfinder.model.gson.GSON_GetResources_LEVEL_2;
+import com.pathfinder.util.properties.ApplicationProperties;
+import com.pathfinder.util.properties.PropertiesKey;
 
 public class DataLoader implements DataLoaderSpec {
-	private static final String URL_RESOURSE = "http://localhost:8051/rapla/json/RaplaJsonService?method=getResources&jsonrpc=2.0&params=";
-	private static final String URL_RESOURSE_DETAIL = "http://localhost:8051/rapla/json/RaplaJsonService?method=getResource&jsonrpc=2.0&params=";
+	private static final String BASE_URL = ApplicationProperties.getInstance()
+			.getProperty(PropertiesKey.GSON_BASE_URL);
+
+	private static final String URL_RESOURSE = BASE_URL
+			+ "?method=getResources&jsonrpc=2.0&params=";
+
+	private static final String URL_RESOURSE_DETAIL = BASE_URL
+			+ "?method=getResource&jsonrpc=2.0&params=";
 
 	private final String REQUEST_PERSONS = "persons";
 	private final String REQUEST_ROOMS = "raum";
