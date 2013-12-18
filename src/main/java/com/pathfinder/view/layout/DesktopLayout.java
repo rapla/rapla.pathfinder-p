@@ -87,7 +87,7 @@ public class DesktopLayout extends CustomComponent implements
 	@Override
 	public void updateTranslations(Locale locale) {
 		infoPanel.updateTranslations(locale);
-		detailContainer.updateTranslations(locale);
+		// detailContainer.updateTranslations(locale);
 		searchPanel.updateTranslations(locale);
 		menuBar.updateTranslations(locale);
 		Page.getCurrent().setTitle(
