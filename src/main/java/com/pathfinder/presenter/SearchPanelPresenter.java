@@ -8,7 +8,7 @@ package com.pathfinder.presenter;
 
 import com.pathfinder.model.KeyboardModel;
 import com.pathfinder.view.components.Keyboard;
-import com.pathfinder.view.components.KeyboardIds;
+import com.pathfinder.view.components.KeyboardId;
 import com.pathfinder.view.components.SearchField;
 import com.pathfinder.view.components.TreeStructure;
 import com.pathfinder.view.container.SearchPanel;
@@ -39,28 +39,27 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 
 	// Keyboard ClickListener
 	@Override
-	public void buttonClick(Object keyId) {
-		if (keyId instanceof KeyboardIds) {
-			KeyboardIds id = (KeyboardIds) keyId;
-			switch (id) {
-			case DELETE:
-				deleteKeyFromSearchString();
-				break;
-			case SPACE:
-				addKeybordKeyToSearchString(" ");
-				break;
-			case LEFT:
-				setChangePosCounter(getChangePosCounter() - 1);
-				break;
-			case RIGHT:
-				setChangePosCounter(getChangePosCounter() + 1);
-				break;
-			}
-		} else {
-			addKeybordKeyToSearchString((String) keyId);
+	public void buttonClick(KeyboardId keyId) {
 
+		KeyboardId id = (KeyboardId) keyId;
+		switch (id) {
+		case DELETE:
+			deleteKeyFromSearchString();
+			break;
+		case SPACE:
+			addKeybordKeyToSearchString(" ");
+			break;
+		case LEFT:
+			setChangePosCounter(getChangePosCounter() - 1);
+			break;
+		case RIGHT:
+			setChangePosCounter(getChangePosCounter() + 1);
+			break;
+		default:
+			addKeybordKeyToSearchString(keyId.getLabel());
+			break;
 		}
-		
+
 		treeStructure.addFilters(getSearchString());
 	}
 
@@ -112,7 +111,6 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 	public Keyboard getKeyboard() {
 		return this.keyboard;
 	}
-
 
 	public int getChangePosCounter() {
 		return searchField.getCursorPosition();

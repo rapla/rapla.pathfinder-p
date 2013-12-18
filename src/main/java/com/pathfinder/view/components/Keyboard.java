@@ -7,6 +7,8 @@
 
 package com.pathfinder.view.components;
 
+import static com.pathfinder.view.components.KeyboardId.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -24,123 +26,113 @@ import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 public class Keyboard extends CustomComponent implements KeyboardSpec,
-                ClickListener {
+		ClickListener {
 
-        private Button deleteButton;
-        private Button spaceButton;
-        private Button wildCardButton;
-        private TranslatorSpec translator = Translator.getInstance();
+	private Button deleteButton;
+	private Button spaceButton;
+	private TranslatorSpec translator = Translator.getInstance();
 
-        public Keyboard() {
-                String caption;
-                VerticalLayout layout = new VerticalLayout();
-                HorizontalLayout row1 = new HorizontalLayout();
-                HorizontalLayout row2 = new HorizontalLayout();
-                HorizontalLayout row3 = new HorizontalLayout();
-                HorizontalLayout row4 = new HorizontalLayout();
+	public Keyboard() {
+		VerticalLayout layout = new VerticalLayout();
+		HorizontalLayout row1 = new HorizontalLayout();
+		HorizontalLayout row2 = new HorizontalLayout();
+		HorizontalLayout row3 = new HorizontalLayout();
+		HorizontalLayout row4 = new HorizontalLayout();
 
-                deleteButton = new Button(translator.translate(TranslationKeys.DELETE)
-                                .toUpperCase(), this);
-                spaceButton = new Button(translator.translate(TranslationKeys.SPACE)
-                                .toUpperCase(), this);
+		// The operations for the Keyboard in the order they appear on the
+		// screen (left to right, top to bottom)
+		KeyboardId[] firstRow = new KeyboardId[] { ONE, TWO, THREE, FOUR, FIVE,
+				SIX, SEVEN, EIGHT, NINE, ZERO };
+		KeyboardId[] secondRow = new KeyboardId[] { Q, W, E, R, T, Z, U, I, O,
+				P, UE, LEFT };
+		KeyboardId[] thirdRow = new KeyboardId[] { A, S, D, F, G, H, J, K, L,
+				OE, AE, RIGHT };
+		KeyboardId[] fourthRow = new KeyboardId[] { Y, X, C, V, B, N, M };
 
-                // The operations for the Keyboard in the order they appear on the
-                // screen (left to right, top to bottom)
-                String[] firstRow = new String[] { "1", "2", "3", "4", "5", "6", "7",
-                                "8", "9", "0",
-                                translator.translate(TranslationKeys.DELETE).toUpperCase() };
+		deleteButton = createButton(DELETE);
+		spaceButton = createButton(SPACE);
 
-                String[] secondRow = new String[] { "Q", "W", "E", "R", "T", "Z", "U",
-                                "I", "O", "P", "Ü", "<" };
+		// Add buttons and have them send click events
+		// to this class
+		for (KeyboardId id : firstRow) {
+			row1.addComponent(createButton(id));
+		}
+		row1.addComponent(deleteButton);
 
-                String[] thirdRow = new String[] { "A", "S", "D", "F", "G", "H", "J",
-                                "K", "L", "Ö", "Ä", ">" };
+		for (KeyboardId id : secondRow) {
+			row2.addComponent(createButton(id));
+		}
 
-                String[] fourthRow = new String[] { "Y", "X", "C", "V",
-                                translator.translate(TranslationKeys.SPACE).toUpperCase(), "B",
-                                "N", "M" };
+		for (KeyboardId id : thirdRow) {
+			row3.addComponent(createButton(id));
+		}
 
-                // Add buttons and have them send click events
-                // to this class
-                for (int i = 0; i < firstRow.length; i++) {
-                        caption = firstRow[i];
-                        wildCardButton = new Button(caption, this);
+		for (KeyboardId id : fourthRow) {
+			row4.addComponent(createButton(id));
+		}
+		row4.addComponent(spaceButton, 4);
 
-                        if (!caption.equals(translator.translate(TranslationKeys.DELETE)
-                                        .toUpperCase())) {
-                                wildCardButton.setId(caption);
-                                wildCardButton.setStyleName("keyboard-button");
-                                row1.addComponent(wildCardButton, i);
-                        } else {
-                                deleteButton.setId("DELETE");
-                                deleteButton.setStyleName("keyboard-delete");
-                                row1.addComponent(deleteButton, i);
-                        }
-                }
+		layout.addComponent(row1);
+		layout.addComponent(row2);
+		layout.addComponent(row3);
+		layout.addComponent(row4);
 
-                for (int i = 0; i < secondRow.length; i++) {
-                        caption = secondRow[i];
-                        wildCardButton = new Button(caption, this);
-                        wildCardButton.setId(caption);
-                        wildCardButton.setStyleName("keyboard-button");
-                        row2.addComponent(wildCardButton, i);
-                }
+		setCompositionRoot(layout);
 
-                for (int i = 0; i < thirdRow.length; i++) {
-                        caption = thirdRow[i];
-                        wildCardButton = new Button(caption, this);
-                        wildCardButton.setId(caption);
-                        wildCardButton.setStyleName("keyboard-button");
-                        row3.addComponent(wildCardButton, i);
-                }
+	}
 
-                for (int i = 0; i < fourthRow.length; i++) {
-                        caption = fourthRow[i];
-                        wildCardButton = new Button(caption, this);
-                        if (!caption.equals(translator.translate(TranslationKeys.SPACE)
-                                        .toUpperCase())) {
-                                wildCardButton.setId(caption);
-                                wildCardButton.setStyleName("keyboard-button");
-                                row4.addComponent(wildCardButton, i);
-                        } else {
-                                spaceButton.setId("SPACE");
-                                spaceButton.setStyleName("keyboard-space");
-                                row4.addComponent(spaceButton, i);
-                        }
-                }
-                
-                layout.addComponent(row1);
-                layout.addComponent(row2);
-                layout.addComponent(row3);
-                layout.addComponent(row4);
+	/* Only the presenter registers one listener... */
+	List<KeyboardViewListenerSpec> listeners = new ArrayList<KeyboardViewListenerSpec>();
 
-                setCompositionRoot(layout);
+	public void addListener(KeyboardViewListenerSpec listener) {
+		listeners.add(listener);
+	}
 
-        }
+	/**
+	 * Creates a new Button with label as specified in id and this class as
+	 * listener
+	 * 
+	 * @param id
+	 *            Keyboard ID with label
+	 * @return New Button as specified above
+	 */
+	private Button createButton(KeyboardId id) {
+		Button newButton = new Button();
+		newButton.setData(id);
+		newButton.addClickListener(this);
 
-        /* Only the presenter registers one listener... */
-        List<KeyboardViewListenerSpec> listeners = new ArrayList<KeyboardViewListenerSpec>();
+		switch (id) {
+		case SPACE:
+			newButton.setStyleName("keyboard-space");
+			newButton.setCaption(translator.translate(TranslationKeys.SPACE));
+			break;
+		case DELETE:
+			newButton.setStyleName("keyboard-delete");
+			newButton.setCaption(translator.translate(TranslationKeys.DELETE));
+			break;
+		default:
+			newButton.setStyleName("keyboard-button");
+			newButton.setCaption(id.getLabel());
+			break;
+		}
 
-        public void addListener(KeyboardViewListenerSpec listener) {
-                listeners.add(listener);
-        }
+		return newButton;
+	}
 
-        /**
-         * Relay button clicks to the presenter with an implementation-independent
-         * event
-         */
-        @Override
-        public void buttonClick(ClickEvent event) {
-                for (KeyboardViewListenerSpec listener : listeners)
-                        listener.buttonClick(event.getButton().getId());
-        }
+	/**
+	 * Relay button clicks to the presenter with an implementation-independent
+	 * event
+	 */
+	@Override
+	public void buttonClick(ClickEvent event) {
+		for (KeyboardViewListenerSpec listener : listeners)
+			listener.buttonClick((KeyboardId) event.getButton().getData());
+	}
 
-        @Override
-        public void updateTranslations(Locale locale) {
-                deleteButton.setCaption(translator.translate(TranslationKeys.DELETE)
-                                .toUpperCase());
-                spaceButton.setCaption(translator.translate(TranslationKeys.SPACE)
-                                .toUpperCase());
-        }
+	@Override
+	public void updateTranslations(Locale locale) {
+		deleteButton.setCaption(translator.translate(TranslationKeys.DELETE));
+		spaceButton.setCaption(translator.translate(TranslationKeys.SPACE));
+	}
 
 }
