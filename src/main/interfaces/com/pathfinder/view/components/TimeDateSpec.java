@@ -1,7 +1,5 @@
 package com.pathfinder.view.components;
 
-import com.pathfinder.view.listener.TimeDateViewListenerSpec;
-
 /**
  * TimeDateSpec
  * 
@@ -9,7 +7,5 @@ import com.pathfinder.view.listener.TimeDateViewListenerSpec;
  * 
  */
 public interface TimeDateSpec extends ComponentSpec {
-	void refreshTimeAndDate();
 
-	void addTimeDateListener(TimeDateViewListenerSpec listener);
 }
