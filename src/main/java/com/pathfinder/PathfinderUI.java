@@ -13,6 +13,9 @@ import org.apache.logging.log4j.Logger;
 
 import com.pathfinder.presenter.DesktopPresenter;
 import com.pathfinder.presenter.MobilePresenter;
+import com.pathfinder.util.properties.ApplicationProperties;
+import com.pathfinder.util.properties.ApplicationPropertiesSpec;
+import com.pathfinder.util.properties.PropertiesKey;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.vaadin.annotations.Theme;
@@ -25,20 +28,21 @@ import com.vaadin.ui.UI;
 @SuppressWarnings("serial")
 @Theme("rapla_pathfinder_p")
 public class PathfinderUI extends UI {
-	
-	
 
 	private static final Logger logger = LogManager
 			.getLogger(PathfinderUI.class.getName());
 	// private final DataLoader dataLoader = new DataLoader();
 	private boolean dataLoaded = false;
+	private ApplicationPropertiesSpec properties = ApplicationProperties
+			.getInstance();
 
 	@Override
 	protected void init(VaadinRequest request) {
 
 		Timer timer = new Timer();
 		// Start in 0,001 seconds, is repeated every day (24hours)
-		timer.schedule(new DataLoadTimer(), 1, 86400000);
+		timer.schedule(new DataLoadTimer(), 1,
+				properties.getIntProperty(PropertiesKey.DATA_LOAD_INTERVALL));
 
 		setUiLocale(request.getLocale());
 		setErrorHandler(new PathfinderErrorHandler());
@@ -118,7 +122,6 @@ public class PathfinderUI extends UI {
 		}
 
 	}
-
 
 	public boolean isDataLoaded() {
 		return this.dataLoaded;
