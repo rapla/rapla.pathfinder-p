@@ -6,7 +6,7 @@ import java.util.Locale;
 
 import com.pathfinder.view.components.Keyboard;
 import com.pathfinder.view.components.SearchField;
-import com.pathfinder.view.components.TreeStructure;
+import com.pathfinder.view.components.AccordionView;
 import com.pathfinder.view.listener.SearchPanelViewListenerSpec;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
@@ -20,7 +20,7 @@ import com.vaadin.ui.VerticalLayout;
  */
 public class SearchPanel extends CustomComponent implements SearchPanelSpec {
 
-	private TreeStructure treeStructure = null;
+	private AccordionView accordionView = null;
 	private Keyboard keyboard = null;
 	private SearchField searchField = null;
 
@@ -29,9 +29,9 @@ public class SearchPanel extends CustomComponent implements SearchPanelSpec {
 
 	private List<SearchPanelViewListenerSpec> listener = new ArrayList<SearchPanelViewListenerSpec>();
 
-	public SearchPanel(TreeStructure treeStructure, Keyboard keyboardView,
+	public SearchPanel(AccordionView accordionView, Keyboard keyboardView,
 			SearchField searchField) {
-		this.treeStructure = treeStructure;
+		this.accordionView = accordionView;
 		this.keyboard = keyboardView;
 		this.searchField = searchField;
 		
@@ -41,10 +41,10 @@ public class SearchPanel extends CustomComponent implements SearchPanelSpec {
 
 	@Override
 	public void buildLayout() {
-		this.treeStructure.setSizeFull();
+		this.accordionView.setSizeFull();
 		this.keyboard.setSizeFull();
 		this.searchField.setSizeFull();
-		this.layout.addComponent(treeStructure);
+		this.layout.addComponent(accordionView);
 		this.layout.addComponent(keyboard);
 		this.layout.addComponent(searchField);
 		this.layout.setSizeFull();
@@ -62,7 +62,7 @@ public class SearchPanel extends CustomComponent implements SearchPanelSpec {
 
 	@Override
 	public void updateTranslations(Locale locale) {
-		treeStructure.updateTranslations(locale);
+		accordionView.updateTranslations(locale);
 		keyboard.updateTranslations(locale);
 		searchField.updateTranslations(locale);
 	}

@@ -8,7 +8,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import com.pathfinder.translation.TranslatorSpec;
+import com.pathfinder.util.translation.TranslatorSpec;
 import com.vaadin.ui.UI;
 
 /**

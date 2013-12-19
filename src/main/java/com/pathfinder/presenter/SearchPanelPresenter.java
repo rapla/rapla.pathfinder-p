@@ -10,7 +10,7 @@ import com.pathfinder.model.KeyboardModel;
 import com.pathfinder.view.components.Keyboard;
 import com.pathfinder.view.components.KeyboardId;
 import com.pathfinder.view.components.SearchField;
-import com.pathfinder.view.components.TreeStructure;
+import com.pathfinder.view.components.AccordionView;
 import com.pathfinder.view.container.SearchPanel;
 import com.pathfinder.view.listener.KeyboardViewListenerSpec;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
@@ -22,10 +22,10 @@ import com.vaadin.data.fieldgroup.BeanFieldGroup;
 public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 		SearchPanelPresenterSpec {
 
-	private final TreeStructure treeStructure = new TreeStructure();
+	private final AccordionView accordionView = new AccordionView();
 	private final Keyboard keyboard = new Keyboard();
 	private final SearchField searchField = new SearchField();
-	private final SearchPanel searchPanel = new SearchPanel(treeStructure,
+	private final SearchPanel searchPanel = new SearchPanel(accordionView,
 			keyboard, searchField);
 	private final BeanFieldGroup<KeyboardModel> binder = new BeanFieldGroup<KeyboardModel>(
 			KeyboardModel.class);
@@ -60,7 +60,7 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 			break;
 		}
 
-		treeStructure.addFilters(getSearchString());
+		accordionView.addFilters(getSearchString());
 	}
 
 	public void addKeybordKeyToSearchString(String key) {

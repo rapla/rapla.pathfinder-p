@@ -1,10 +1,11 @@
 /**
  * 
  */
-package com.pathfinder.translation;
+package com.pathfinder.util.translation;
 
 import java.util.Locale;
 
+import com.pathfinder.translation.TranslatorSpecContract;
 import com.pathfinder.util.translation.TranslationKeys;
 
 import de.vksi.c4j.ContractReference;

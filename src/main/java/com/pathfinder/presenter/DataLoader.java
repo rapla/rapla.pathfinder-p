@@ -9,7 +9,7 @@ import java.util.Map;
 
 import com.google.gson.Gson;
 import com.pathfinder.model.CourseModel;
-import com.pathfinder.model.POIModel;
+import com.pathfinder.model.PoiModel;
 import com.pathfinder.model.PersonModel;
 import com.pathfinder.model.RoomModel;
 import com.pathfinder.model.gson.GSON_GetResourceDetail_LEVEL_1;
@@ -38,7 +38,7 @@ public class DataLoader implements DataLoaderSpec {
 	private static RoomModel[] allRooms;
 	private static CourseModel[] allCourses;
 	private static PersonModel[] allPersons;
-	private static POIModel[] allPois;
+	private static PoiModel[] allPois;
 
 	public void loadAllResources() {
 		GSON_GetResources_LEVEL_2[] ResourceData;
@@ -82,9 +82,9 @@ public class DataLoader implements DataLoaderSpec {
 		// and get the Detail Information
 		ResourceData = gsonGetResources(REQUEST_POIS).getResult();
 
-		allPois = new POIModel[ResourceData.length];
+		allPois = new PoiModel[ResourceData.length];
 		for (int i = 0; i < ResourceData.length; i++) {
-			allPois[i] = new POIModel(ResourceData[i].getName(),
+			allPois[i] = new PoiModel(ResourceData[i].getName(),
 					ResourceData[i].getLink(), ResourceData[i].getId(),
 					ResourceData[i].getSearchTerms(), null, null);
 			loadPOIDetail(allPois[i]);
@@ -94,7 +94,7 @@ public class DataLoader implements DataLoaderSpec {
 
 	// should be replaced with the GENERIC TYPE
 	// save the Detail Informations in POIModel
-	private void loadPOIDetail(POIModel poi) {
+	private void loadPOIDetail(PoiModel poi) {
 		GSON_GetResourceDetail_LEVEL_1 dataDetail = gsonGetResourceDetail(poi
 				.getId());
 		Map<String, GSON_GetResourceDetail_LEVEL_3_1> atribute = dataDetail
@@ -246,7 +246,7 @@ public class DataLoader implements DataLoaderSpec {
 		return allPersons;
 	}
 
-	public POIModel[] getAllPois() {
+	public PoiModel[] getAllPois() {
 		return allPois;
 	}
 

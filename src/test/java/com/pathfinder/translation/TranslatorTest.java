@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
+import com.pathfinder.util.translation.TranslatorSpec;
 
 /**
  * @author tim

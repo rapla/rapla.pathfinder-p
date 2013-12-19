@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import com.pathfinder.translation.TranslatorSpec;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
+import com.pathfinder.util.translation.TranslatorSpec;
 import com.pathfinder.view.listener.SearchFieldViewListenerSpec;
 import com.vaadin.ui.TextField;
 

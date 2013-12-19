@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Locale;
 
 import com.pathfinder.model.ResourceModel;
-import com.pathfinder.translation.TranslatorSpec;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
+import com.pathfinder.util.translation.TranslatorSpec;
 import com.pathfinder.view.listener.TreeStructureViewListenerSpec;
 import com.vaadin.data.Container.Filter;
 import com.vaadin.data.util.BeanItemContainer;
@@ -23,7 +23,7 @@ import com.vaadin.ui.Table.ColumnHeaderMode;
  * @author alexh
  * 
  */
-public class TreeStructure extends CustomComponent implements TreeStructureSpec {
+public class AccordionView extends CustomComponent implements TreeStructureSpec {
 
 	private final Accordion accordion = new Accordion();
 	private final TranslatorSpec translator = Translator.getInstance();
@@ -46,7 +46,7 @@ public class TreeStructure extends CustomComponent implements TreeStructureSpec 
 
 	private List<TreeStructureViewListenerSpec> listener = new ArrayList<TreeStructureViewListenerSpec>();
 
-	public TreeStructure() {
+	public AccordionView() {
 		this.rooms = createTable(roomContainer);
 		this.courses = createTable(courseContainer);
 		this.persons = createTable(personContainer);
