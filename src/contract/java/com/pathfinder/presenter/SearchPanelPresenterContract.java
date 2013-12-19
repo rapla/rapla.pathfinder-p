@@ -4,11 +4,18 @@ import static de.vksi.c4j.Condition.ignored;
 import static de.vksi.c4j.Condition.old;
 import static de.vksi.c4j.Condition.postCondition;
 import static de.vksi.c4j.Condition.preCondition;
+
+import com.pathfinder.model.CourseModel;
+import com.pathfinder.model.PersonModel;
+import com.pathfinder.model.PoiModel;
+import com.pathfinder.model.RoomModel;
+import com.pathfinder.view.container.SearchPanel;
+import com.vaadin.data.util.BeanItemContainer;
+
 import de.vksi.c4j.ClassInvariant;
 import de.vksi.c4j.Target;
 
-public class SearchPanelPresenterSpecContract implements
-		SearchPanelPresenterSpec {
+public class SearchPanelPresenterContract implements SearchPanelPresenterSpec {
 
 	@Target
 	private SearchPanelPresenterSpec target;
@@ -74,4 +81,46 @@ public class SearchPanelPresenterSpecContract implements
 		}
 	}
 
+	@Override
+	public void setRoomContainer(BeanItemContainer<RoomModel> beanItemContainer) {
+		if (preCondition()) {
+		}
+		if (postCondition()) {
+		}
+	}
+
+	@Override
+	public void setCourseContainer(
+			BeanItemContainer<CourseModel> beanItemContainer) {
+		if (preCondition()) {
+		}
+		if (postCondition()) {
+		}
+	}
+
+	@Override
+	public void setPersonContainer(
+			BeanItemContainer<PersonModel> beanItemContainer) {
+		if (preCondition()) {
+		}
+		if (postCondition()) {
+		}
+	}
+
+	@Override
+	public void setPoiContainer(BeanItemContainer<PoiModel> beanItemContainer) {
+		if (preCondition()) {
+		}
+		if (postCondition()) {
+		}
+	}
+
+	@Override
+	public SearchPanel getSearchPanel() {
+		if (preCondition()) {
+		}
+		if (postCondition()) {
+		}
+		return null;
+	}
 }

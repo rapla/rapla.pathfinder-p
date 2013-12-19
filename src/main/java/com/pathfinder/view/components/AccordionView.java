@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import com.pathfinder.model.ResourceModel;
+import com.pathfinder.model.CourseModel;
+import com.pathfinder.model.PersonModel;
+import com.pathfinder.model.PoiModel;
+import com.pathfinder.model.RoomModel;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
@@ -23,7 +26,7 @@ import com.vaadin.ui.Table.ColumnHeaderMode;
  * @author alexh
  * 
  */
-public class AccordionView extends CustomComponent implements TreeStructureSpec {
+public class AccordionView extends CustomComponent implements AccordionSpec {
 
 	private final Accordion accordion = new Accordion();
 	private final TranslatorSpec translator = Translator.getInstance();
@@ -35,54 +38,39 @@ public class AccordionView extends CustomComponent implements TreeStructureSpec 
 			translator.translate(TranslationKeys.PERSON));
 	private String poisString = new String(
 			translator.translate(TranslationKeys.POI));
-	private Table rooms = null;
-	private Table courses = null;
-	private Table persons = null;
-	private Table pois = null;
-	private BeanItemContainer<ResourceModel> roomContainer = new BeanItemContainer<ResourceModel>(
-			ResourceModel.class);
-	private BeanItemContainer<ResourceModel> courseContainer = new BeanItemContainer<ResourceModel>(
-			ResourceModel.class);;
-	private BeanItemContainer<ResourceModel> personContainer = new BeanItemContainer<ResourceModel>(
-			ResourceModel.class);;
-	private BeanItemContainer<ResourceModel> poiContainer = new BeanItemContainer<ResourceModel>(
-			ResourceModel.class);;
+	private Table roomTable = null;
+	private Table courseTable = null;
+	private Table personTable = null;
+	private Table poiTable = null;
+
+	// Needed BeanItemContainer
+	private BeanItemContainer<RoomModel> roomContainer = new BeanItemContainer<RoomModel>(
+			RoomModel.class);
+	private BeanItemContainer<CourseModel> courseContainer = new BeanItemContainer<CourseModel>(
+			CourseModel.class);
+	private BeanItemContainer<PersonModel> personContainer = new BeanItemContainer<PersonModel>(
+			PersonModel.class);
+	private BeanItemContainer<PoiModel> poiContainer = new BeanItemContainer<PoiModel>(
+			PoiModel.class);
 
 	private List<TreeStructureViewListenerSpec> listener = new ArrayList<TreeStructureViewListenerSpec>();
 
 	public AccordionView() {
-		this.rooms = createTable(roomContainer);
-		this.courses = createTable(courseContainer);
-		this.persons = createTable(personContainer);
-		this.pois = createTable(poiContainer);
-		init();
+		this.roomTable = createTable(roomContainer);
+		this.courseTable = createTable(courseContainer);
+		this.personTable = createTable(personContainer);
+		this.poiTable = createTable(poiContainer);
+		this.buildLayout();
 
-		setCompositionRoot(accordion);
+		this.setCompositionRoot(accordion);
 	}
 
-	private void init() {
-		accordion.setSizeFull();
-		accordion.addTab(rooms, roomsString);
-		accordion.addTab(courses, coursesString);
-		accordion.addTab(persons, personsString);
-		accordion.addTab(pois, poisString);
-	}
-
-	private Table createTable(BeanItemContainer<ResourceModel> beanItemContainer) {
+	private <T> Table createTable(BeanItemContainer<T> beanItemContainer) {
 		Table table = new Table();
-
-		// TODO Only for testing
-		for (int i = 0; i < 10; i++) {
-			ResourceModel resource = new ResourceModel(Integer.toString(i));
-			beanItemContainer.addItem(resource);
-		}
-
 		table.setContainerDataSource(beanItemContainer);
 
 		table.setColumnHeaderMode(ColumnHeaderMode.HIDDEN);
-		// TODO column identifier have to be checked - it should be the same in
-		// all models
-		// table.setVisibleColumns(new Object[] { "name" });
+		table.setVisibleColumns(new Object[] { "name" });
 		table.setPageLength(5);
 		table.setSizeFull();
 		table.setSelectable(true);
@@ -90,28 +78,38 @@ public class AccordionView extends CustomComponent implements TreeStructureSpec 
 		return table;
 	}
 
-	public void setContainerDataSourceForRooms(
-			BeanItemContainer<ResourceModel> container) {
-		this.roomContainer = container;
-		rooms.setContainerDataSource(roomContainer);
+	private void buildLayout() {
+		accordion.setSizeFull();
+		accordion.addTab(roomTable, roomsString);
+		accordion.addTab(courseTable, coursesString);
+		accordion.addTab(personTable, personsString);
+		accordion.addTab(poiTable, poisString);
 	}
 
-	public void setContainerDataSourceForCourses(
-			BeanItemContainer<ResourceModel> container) {
-		this.courseContainer = container;
-		courses.setContainerDataSource(courseContainer);
+	@Override
+	public void setRoomContainer(BeanItemContainer<RoomModel> beanItemContainer) {
+		this.roomContainer = beanItemContainer;
+		roomTable.setContainerDataSource(roomContainer);
 	}
 
-	public void setContainerDataSourceForPersons(
-			BeanItemContainer<ResourceModel> container) {
-		this.personContainer = container;
-		persons.setContainerDataSource(personContainer);
+	@Override
+	public void setCourseContainer(
+			BeanItemContainer<CourseModel> beanItemContainer) {
+		this.courseContainer = beanItemContainer;
+		courseTable.setContainerDataSource(courseContainer);
 	}
 
-	public void setContainerDataSourceForPois(
-			BeanItemContainer<ResourceModel> container) {
-		this.poiContainer = container;
-		pois.setContainerDataSource(poiContainer);
+	@Override
+	public void setPersonContainer(
+			BeanItemContainer<PersonModel> beanItemContainer) {
+		this.personContainer = beanItemContainer;
+		personTable.setContainerDataSource(personContainer);
+	}
+
+	@Override
+	public void setPoiContainer(BeanItemContainer<PoiModel> beanItemContainer) {
+		this.poiContainer = beanItemContainer;
+		poiTable.setContainerDataSource(poiContainer);
 	}
 
 	public void addFilters(String filterString) {

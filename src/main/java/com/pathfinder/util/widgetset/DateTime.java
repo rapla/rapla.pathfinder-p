@@ -5,7 +5,7 @@ import java.util.Locale;
 
 import com.pathfinder.util.widgetset.client.datetime.DateTimeServerRpc;
 import com.pathfinder.util.widgetset.client.datetime.DateTimeState;
-import com.pathfinder.view.components.TimeDateSpec;
+import com.pathfinder.view.components.DateTimeSpec;
 import com.vaadin.ui.AbstractComponent;
 
 /**
@@ -15,7 +15,7 @@ import com.vaadin.ui.AbstractComponent;
  * @author tim
  * 
  */
-public class DateTime extends AbstractComponent implements TimeDateSpec {
+public class DateTime extends AbstractComponent implements DateTimeSpec {
 
 	private DateTimeServerRpc rpc = new DateTimeServerRpc() {
 

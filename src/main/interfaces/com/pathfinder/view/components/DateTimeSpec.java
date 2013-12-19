@@ -6,6 +6,6 @@ package com.pathfinder.view.components;
  * @author alexh
  * 
  */
-public interface TimeDateSpec extends ComponentSpec {
+public interface DateTimeSpec extends ComponentSpec {
 
 }

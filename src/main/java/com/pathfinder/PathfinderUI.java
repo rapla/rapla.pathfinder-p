@@ -11,8 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.pathfinder.presenter.DataLoader;
+import com.pathfinder.presenter.DataLoaderSpec;
 import com.pathfinder.presenter.DesktopPresenter;
+import com.pathfinder.presenter.DesktopPresenterSpec;
 import com.pathfinder.presenter.MobilePresenter;
+import com.pathfinder.presenter.MobilePresenterSpec;
 import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.ApplicationPropertiesSpec;
 import com.pathfinder.util.properties.PropertiesKey;
@@ -31,8 +35,9 @@ public class PathfinderUI extends UI {
 
 	private static final Logger logger = LogManager
 			.getLogger(PathfinderUI.class.getName());
-	// private final DataLoader dataLoader = new DataLoader();
-	private boolean dataLoaded = false;
+	private final DataLoaderSpec dataLoader = new DataLoader();
+	private DesktopPresenterSpec desktopPresenter = null;
+	private MobilePresenterSpec mobilePresenter = null;
 	private ApplicationPropertiesSpec properties = ApplicationProperties
 			.getInstance();
 
@@ -71,10 +76,12 @@ public class PathfinderUI extends UI {
 		}
 
 		if (isMobileUserAgent(userAgent) || browser.getScreenWidth() < 768) {
-			setContent(new MobilePresenter().getMobileLayoutView());
+			mobilePresenter = new MobilePresenter();
+			setContent(mobilePresenter.getMobileLayoutView());
 			logger.trace("Mobile application initialized");
 		} else {
-			setContent(new DesktopPresenter().getDesktopLayoutView());
+			desktopPresenter = new DesktopPresenter();
+			setContent(desktopPresenter.getDesktopLayoutView());
 			logger.trace("Desktop application initialized");
 		}
 	}
@@ -99,9 +106,11 @@ public class PathfinderUI extends UI {
 		public void run() {
 			logger.trace("Get new data from the RAPLA-Server");
 			synchronized (UI.getCurrent()) {
-				dataLoaded = false;
-				// dataLoader.
-				dataLoaded = true;
+				dataLoader.loadAllResources();
+				desktopPresenter.setRoomContainer(dataLoader.getAllRooms());
+				desktopPresenter.setCourseContainer(dataLoader.getAllCourses());
+				desktopPresenter.setPersonContainer(dataLoader.getAllPersons());
+				desktopPresenter.setPoiContainer(dataLoader.getAllPois());
 			}
 			logger.trace("Updated data from the RAPLA-Server");
 		}
@@ -121,9 +130,5 @@ public class PathfinderUI extends UI {
 			setLocale(Translator.getInstance().getFallbackLocale());
 		}
 
-	}
-
-	public boolean isDataLoaded() {
-		return this.dataLoaded;
 	}
 }

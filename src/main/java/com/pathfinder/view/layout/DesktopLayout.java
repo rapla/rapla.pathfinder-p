@@ -11,7 +11,7 @@ import com.pathfinder.view.components.MenuBar;
 import com.pathfinder.view.container.DetailContainer;
 import com.pathfinder.view.container.InfoPanel;
 import com.pathfinder.view.container.SearchPanel;
-import com.pathfinder.view.listener.MainLayoutViewListenerSpec;
+import com.pathfinder.view.listener.DesktopLayoutViewListenerSpec;
 import com.pathfinder.view.listener.MenuBarViewListenerSpec;
 import com.vaadin.server.Page;
 import com.vaadin.ui.CustomComponent;
@@ -33,7 +33,7 @@ public class DesktopLayout extends CustomComponent implements
 
 	private final VerticalLayout layout = new VerticalLayout();
 
-	private List<MainLayoutViewListenerSpec> listener = new ArrayList<MainLayoutViewListenerSpec>();
+	private List<DesktopLayoutViewListenerSpec> listener = new ArrayList<DesktopLayoutViewListenerSpec>();
 
 	public DesktopLayout(InfoPanel infoPanel, MenuBar menuBar,
 			SearchPanel searchPanel) {
@@ -73,13 +73,13 @@ public class DesktopLayout extends CustomComponent implements
 	}
 
 	@Override
-	public void addMainLayoutViewListener(MainLayoutViewListenerSpec listener) {
+	public void addMainLayoutViewListener(DesktopLayoutViewListenerSpec listener) {
 		this.listener.add(listener);
 	}
 
 	@Override
 	public void languageChanged(Locale locale) {
-		for (MainLayoutViewListenerSpec mlListener : listener) {
+		for (DesktopLayoutViewListenerSpec mlListener : listener) {
 			mlListener.languageChanged(locale);
 		}
 	}

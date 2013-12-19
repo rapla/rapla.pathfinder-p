@@ -1,5 +1,13 @@
 package com.pathfinder.presenter;
 
-public interface MobilePresenterSpec {
+import com.vaadin.ui.CustomComponent;
 
+/**
+ * Interface for the MobilePresenter
+ * 
+ * @author alexh
+ * 
+ */
+public interface MobilePresenterSpec {
+	CustomComponent getMobileLayoutView();
 }

@@ -3,18 +3,15 @@ package com.pathfinder.presenter;
 import com.pathfinder.view.layout.MobileLayout;
 import com.vaadin.ui.CustomComponent;
 
-public class MobilePresenter implements MobilePresenterSpec{
-	// private final InfoPanelPresenter infoPanelPresenter = new
-	// InfoPanelPresenter();
-	// private final DetailContainerPresenter detailContainerPresenter = new
-	// DetailContainerPresenter();
-	// private final SearchPanelPresenter searchPanelPresenter = new
-	// SearchPanelPresenter();
-	// private final MenuBarPresenter menuBarPresenter = new MenuBarPresenter();
+/**
+ * Presenter to define the behavior on a mobile client
+ * @author alexh
+ *
+ */
+public class MobilePresenter implements MobilePresenterSpec {
 	private final MobileLayout mobileLayout = new MobileLayout();
-	
+
 	public CustomComponent getMobileLayoutView() {
 		return mobileLayout;
 	}
-
 }

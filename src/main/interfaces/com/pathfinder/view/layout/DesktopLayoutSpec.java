@@ -1,7 +1,7 @@
 package com.pathfinder.view.layout;
 
 import com.pathfinder.view.ViewSpec;
-import com.pathfinder.view.listener.MainLayoutViewListenerSpec;
+import com.pathfinder.view.listener.DesktopLayoutViewListenerSpec;
 
 /**
  * MainLayoutSpec
@@ -14,5 +14,5 @@ public interface DesktopLayoutSpec extends ViewSpec {
 
 	void switchToSearchView();
 
-	void addMainLayoutViewListener(MainLayoutViewListenerSpec listener);
+	void addMainLayoutViewListener(DesktopLayoutViewListenerSpec listener);
 }

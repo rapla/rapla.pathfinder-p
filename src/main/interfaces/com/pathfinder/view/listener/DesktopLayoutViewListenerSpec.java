@@ -9,6 +9,6 @@ import java.util.Locale;
  * @author tim
  * 
  */
-public interface MainLayoutViewListenerSpec {
+public interface DesktopLayoutViewListenerSpec {
 	void languageChanged(Locale locale);
 }

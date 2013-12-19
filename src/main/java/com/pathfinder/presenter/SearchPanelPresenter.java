@@ -6,14 +6,19 @@
 
 package com.pathfinder.presenter;
 
+import com.pathfinder.model.CourseModel;
 import com.pathfinder.model.KeyboardModel;
+import com.pathfinder.model.PersonModel;
+import com.pathfinder.model.PoiModel;
+import com.pathfinder.model.RoomModel;
+import com.pathfinder.view.components.AccordionView;
 import com.pathfinder.view.components.Keyboard;
 import com.pathfinder.view.components.KeyboardId;
 import com.pathfinder.view.components.SearchField;
-import com.pathfinder.view.components.AccordionView;
 import com.pathfinder.view.container.SearchPanel;
 import com.pathfinder.view.listener.KeyboardViewListenerSpec;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
+import com.vaadin.data.util.BeanItemContainer;
 
 /**
  * Presenter which handles keyboard and search logic
@@ -103,6 +108,29 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 		setSearchString("");
 	}
 
+	@Override
+	public void setRoomContainer(BeanItemContainer<RoomModel> beanItemContainer) {
+		accordionView.setRoomContainer(beanItemContainer);
+	}
+
+	@Override
+	public void setCourseContainer(
+			BeanItemContainer<CourseModel> beanItemContainer) {
+		accordionView.setCourseContainer(beanItemContainer);
+	}
+
+	@Override
+	public void setPersonContainer(
+			BeanItemContainer<PersonModel> beanItemContainer) {
+		accordionView.setPersonContainer(beanItemContainer);
+	}
+
+	@Override
+	public void setPoiContainer(BeanItemContainer<PoiModel> beanItemContainer) {
+		accordionView.setPoiContainer(beanItemContainer);
+	}
+
+	@Override
 	public SearchPanel getSearchPanel() {
 		return this.searchPanel;
 	}

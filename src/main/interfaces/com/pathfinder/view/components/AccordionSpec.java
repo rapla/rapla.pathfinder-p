@@ -1,13 +1,21 @@
-package com.pathfinder.presenter;
+package com.pathfinder.view.components;
 
 import com.pathfinder.model.CourseModel;
 import com.pathfinder.model.PersonModel;
 import com.pathfinder.model.PoiModel;
 import com.pathfinder.model.RoomModel;
+import com.pathfinder.view.listener.TreeStructureViewListenerSpec;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.ui.CustomComponent;
 
-public interface DesktopPresenterSpec {
+/**
+ * TreeStructureSpec
+ * 
+ * @author alexh
+ * 
+ */
+public interface AccordionSpec extends ComponentSpec {
+	void addTreeStructureSpecListener(TreeStructureViewListenerSpec listener);
+
 	void setRoomContainer(BeanItemContainer<RoomModel> beanItemContainer);
 
 	void setCourseContainer(BeanItemContainer<CourseModel> beanItemContainer);
@@ -15,6 +23,4 @@ public interface DesktopPresenterSpec {
 	void setPersonContainer(BeanItemContainer<PersonModel> beanItemContainer);
 
 	void setPoiContainer(BeanItemContainer<PoiModel> beanItemContainer);
-
-	CustomComponent getDesktopLayoutView();
 }
