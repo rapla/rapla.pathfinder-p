@@ -6,7 +6,6 @@ import java.util.TimerTask;
 import com.pathfinder.util.widgetset.DateTime;
 import com.pathfinder.view.components.FreeRoom;
 import com.pathfinder.view.components.MenuBar;
-import com.pathfinder.view.container.DetailContainer;
 import com.pathfinder.view.container.InfoPanel;
 import com.pathfinder.view.layout.DesktopLayout;
 import com.pathfinder.view.listener.MainLayoutViewListenerSpec;

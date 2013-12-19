@@ -1,6 +1,5 @@
 package com.pathfinder.presenter;
 
-import com.pathfinder.view.layout.DesktopLayout;
 import com.pathfinder.view.layout.MobileLayout;
 import com.vaadin.ui.CustomComponent;
 
