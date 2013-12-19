@@ -17,21 +17,18 @@ import com.vaadin.ui.CustomComponent;
  * @param <T>
  */
 public class DetailInfo<T> extends CustomComponent implements DetailInfoSpec {
-	private Class<T> typeParameterClass = null;
 	private BeanItem<T> beanItem = null;
 	private List<DetailViewListenerSpec> listener = new ArrayList<DetailViewListenerSpec>();
 
-	public DetailInfo(Class classFile, BeanItem beanItem) {
-		this.typeParameterClass = typeParameterClass;
+	public DetailInfo(Class<T> beanType, BeanItem<T> beanItem) {
 		this.beanItem = beanItem;
-		BeanFieldGroup<T> binder = new BeanFieldGroup<T>(typeParameterClass);
-		binder.buildAndBindMemberFields(beanItem);
+		BeanFieldGroup<T> binder = new BeanFieldGroup<T>(beanType);
+		binder.buildAndBindMemberFields(this.beanItem);
 	}
 
 	@Override
 	public void updateTranslations(Locale locale) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override

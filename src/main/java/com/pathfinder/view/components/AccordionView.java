@@ -39,10 +39,14 @@ public class AccordionView extends CustomComponent implements TreeStructureSpec 
 	private Table courses = null;
 	private Table persons = null;
 	private Table pois = null;
-	private BeanItemContainer<ResourceModel> roomContainer = new BeanItemContainer<ResourceModel>(ResourceModel.class);
-	private BeanItemContainer<ResourceModel> courseContainer = new BeanItemContainer<ResourceModel>(ResourceModel.class);;
-	private BeanItemContainer<ResourceModel> personContainer = new BeanItemContainer<ResourceModel>(ResourceModel.class);;
-	private BeanItemContainer<ResourceModel> poiContainer = new BeanItemContainer<ResourceModel>(ResourceModel.class);;
+	private BeanItemContainer<ResourceModel> roomContainer = new BeanItemContainer<ResourceModel>(
+			ResourceModel.class);
+	private BeanItemContainer<ResourceModel> courseContainer = new BeanItemContainer<ResourceModel>(
+			ResourceModel.class);;
+	private BeanItemContainer<ResourceModel> personContainer = new BeanItemContainer<ResourceModel>(
+			ResourceModel.class);;
+	private BeanItemContainer<ResourceModel> poiContainer = new BeanItemContainer<ResourceModel>(
+			ResourceModel.class);;
 
 	private List<TreeStructureViewListenerSpec> listener = new ArrayList<TreeStructureViewListenerSpec>();
 
@@ -117,7 +121,7 @@ public class AccordionView extends CustomComponent implements TreeStructureSpec 
 		courseContainer.removeAllContainerFilters();
 		personContainer.removeAllContainerFilters();
 		poiContainer.removeAllContainerFilters();
-		
+
 		roomContainer.addContainerFilter(filter);
 		courseContainer.addContainerFilter(filter);
 		personContainer.addContainerFilter(filter);

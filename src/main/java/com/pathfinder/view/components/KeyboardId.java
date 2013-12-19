@@ -3,7 +3,6 @@
  */
 package com.pathfinder.view.components;
 
-
 /**
  * IDs of keyboard (used for identifying which key was pressed)
  * 
