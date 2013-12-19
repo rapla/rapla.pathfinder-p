@@ -4,7 +4,12 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 
 import com.vaadin.annotations.VaadinServletConfiguration;
+import com.vaadin.server.BootstrapFragmentResponse;
+import com.vaadin.server.BootstrapListener;
+import com.vaadin.server.BootstrapPageResponse;
 import com.vaadin.server.CustomizedSystemMessages;
+import com.vaadin.server.SessionInitEvent;
+import com.vaadin.server.SessionInitListener;
 import com.vaadin.server.SystemMessages;
 import com.vaadin.server.SystemMessagesInfo;
 import com.vaadin.server.SystemMessagesProvider;
@@ -30,7 +35,9 @@ public class PathfinderServlet extends VaadinServlet {
 	protected void servletInitialized() throws ServletException {
 		super.servletInitialized();
 
-		setDefaultSystemMessages(getService());
+		this.setDefaultSystemMessages(getService());
+		// TODO This method should only be called if the client is the Stele
+		this.addMetaTagForIE10Mode();
 	}
 
 	/**
@@ -70,5 +77,33 @@ public class PathfinderServlet extends VaadinServlet {
 		messages.setCommunicationErrorNotificationEnabled(false);
 		messages.setInternalErrorNotificationEnabled(false);
 		messages.setOutOfSyncNotificationEnabled(false);
+	}
+
+	/**
+	 * Adds a meta tag to allow always the IE10 mode if client is the Stele
+	 */
+	private void addMetaTagForIE10Mode() {
+		getService().addSessionInitListener(new SessionInitListener() {
+
+			@Override
+			public void sessionInit(SessionInitEvent event) {
+				event.getSession().addBootstrapListener(
+						new BootstrapListener() {
+							@Override
+							public void modifyBootstrapFragment(
+									BootstrapFragmentResponse response) {
+							}
+
+							@Override
+							public void modifyBootstrapPage(
+									BootstrapPageResponse response) {
+								response.getDocument().head()
+										.prependElement("meta")
+										.attr("http-equiv", "X-UA-Compatible")
+										.attr("content", "IE=10;chrome=1");
+							}
+						});
+			}
+		});
 	}
 }
