@@ -29,7 +29,7 @@ public class DesktopLayout extends CustomComponent implements
 	private MenuBar menuBar = null;
 	private SearchPanel searchPanel = null;
 
-	private DetailContainer detailContainer = null;
+	private DetailContainer<?> detailContainer = null;
 
 	private final VerticalLayout layout = new VerticalLayout();
 
@@ -56,8 +56,8 @@ public class DesktopLayout extends CustomComponent implements
 	}
 
 	@Override
-	public void switchToDetailView() {
-		detailContainer = new DetailContainer(null, null, null);
+	public <T> void switchToDetailView() {
+		detailContainer = new DetailContainer<T>(null, null, null);
 		layout.replaceComponent(searchPanel, detailContainer);
 	}
 

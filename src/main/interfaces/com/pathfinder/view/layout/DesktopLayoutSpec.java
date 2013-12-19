@@ -10,7 +10,7 @@ import com.pathfinder.view.listener.MainLayoutViewListenerSpec;
  * 
  */
 public interface DesktopLayoutSpec extends ViewSpec {
-	void switchToDetailView();
+	<T> void switchToDetailView();
 
 	void switchToSearchView();
 
