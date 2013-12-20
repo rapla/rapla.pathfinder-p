@@ -6,7 +6,6 @@
 
 package com.pathfinder.presenter;
 
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,7 +21,6 @@ import com.pathfinder.view.components.KeyboardId;
 import com.pathfinder.view.components.SearchField;
 import com.pathfinder.view.container.SearchPanel;
 import com.pathfinder.view.listener.KeyboardViewListenerSpec;
-import com.vaadin.data.Item;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent;
@@ -92,14 +90,18 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 	class TableClickListener implements ItemClickListener {
 		@Override
 		public void itemClick(ItemClickEvent event) {
-			Item item = event.getItem();
-			if (item instanceof RoomModel) {
-				logger.trace("Raum was clicked");
+			Object object = event.getItemId();
+			if (object instanceof RoomModel) {
+				logger.trace("Room was clicked");
+			} else if (object instanceof CourseModel) {
+				logger.trace("Course was clicked");
+			} else if (object instanceof PersonModel) {
+				logger.trace("Person was clicked");
+			} else if (object instanceof PoiModel) {
+				logger.trace("Poi was clicked");
 			} else {
-				logger.trace("Not yet implemented");
-				logger.log(Level.TRACE, "Not yet implemented");
+				logger.trace("Unknown item was clicked");
 			}
-			// TODO There´s not yet all implemented
 		}
 	}
 

@@ -64,6 +64,7 @@ public class AccordionView extends CustomComponent implements AccordionSpec {
 	private <T> Table createTable(BeanItemContainer<T> beanItemContainer) {
 		Table table = new Table();
 		table.setContainerDataSource(beanItemContainer);
+		table.setImmediate(true);
 
 		table.setColumnHeaderMode(ColumnHeaderMode.HIDDEN);
 		table.setVisibleColumns(new Object[] { "name" });
@@ -84,8 +85,15 @@ public class AccordionView extends CustomComponent implements AccordionSpec {
 
 	@Override
 	public void setRoomContainer(BeanItemContainer<RoomModel> beanItemContainer) {
-		this.roomContainer.removeAllItems();
-		this.roomContainer.addAll(beanItemContainer.getItemIds());
+		this.roomTable.removeAllItems();
+		for (RoomModel itemId : beanItemContainer.getItemIds()) {
+			this.roomTable.addItem(itemId);
+		}
+
+		// TODO Table have to be refreshed to show the newest data
+		// roomTable.setContainerDataSource(roomTable.getContainerDataSource());
+		// roomTable.refreshRowCache();
+		// accordion.markAsDirty();
 	}
 
 	@Override

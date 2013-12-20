@@ -6,9 +6,11 @@
 /* If somebody wants to extend the theme she will include this mixin. */
 @mixin rapla_pathfinder_p {
   /* Include all the styles from the reindeer theme */
+ /* TODO Can we already use Tune-Theme? */
   @include reindeer;
 
   /* Insert your theme rules here */
+/*	
 	* {
 		margin: 0;
 		padding: 0;
@@ -93,4 +95,5 @@
 		color: #4a4a4a;
 		font: 14px Arial;
 	}
+	*/
 }

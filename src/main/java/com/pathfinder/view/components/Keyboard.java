@@ -103,15 +103,15 @@ public class Keyboard extends CustomComponent implements KeyboardSpec,
 
 		switch (id) {
 		case SPACE:
-			newButton.setStyleName("keyboard-space");
+			newButton.addStyleName("keyboard-space");
 			newButton.setCaption(translator.translate(TranslationKeys.SPACE));
 			break;
 		case DELETE:
-			newButton.setStyleName("keyboard-delete");
+			newButton.addStyleName("keyboard-delete");
 			newButton.setCaption(translator.translate(TranslationKeys.DELETE));
 			break;
 		default:
-			newButton.setStyleName("keyboard-button");
+			newButton.addStyleName("keyboard-button");
 			newButton.setCaption(id.getLabel());
 			break;
 		}

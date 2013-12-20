@@ -43,7 +43,7 @@ public class PathfinderUI extends UI {
 
 	@Override
 	protected void init(VaadinRequest request) {
-
+		// new Responsive(this);
 		Timer timer = new Timer();
 		// Start in 0,001 seconds, is repeated every day (24hours)
 		timer.schedule(new DataLoadTimer(), 1,
@@ -53,7 +53,7 @@ public class PathfinderUI extends UI {
 		setErrorHandler(new PathfinderErrorHandler());
 		Page.getCurrent().setTitle(
 				Translator.getInstance().translate(TranslationKeys.APP_TITLE));
-		this.setStyleName("main");
+		this.addStyleName("main");
 		/* Browser data */
 		logger.trace(">> Browser Data <<");
 

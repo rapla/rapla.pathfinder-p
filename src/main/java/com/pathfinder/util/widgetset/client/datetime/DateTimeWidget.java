@@ -24,7 +24,7 @@ public class DateTimeWidget extends Label {
 
 	public DateTimeWidget() {
 
-		setStyleName(CLASSNAME);
+		addStyleName(CLASSNAME);
 
 		setTime(new Date().getTime());
 
