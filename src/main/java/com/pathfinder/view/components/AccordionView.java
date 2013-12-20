@@ -1,7 +1,5 @@
 package com.pathfinder.view.components;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import com.pathfinder.model.CourseModel;
@@ -11,10 +9,10 @@ import com.pathfinder.model.RoomModel;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
-import com.pathfinder.view.listener.TreeStructureViewListenerSpec;
 import com.vaadin.data.Container.Filter;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.filter.SimpleStringFilter;
+import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.ui.Accordion;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Table;
@@ -53,8 +51,6 @@ public class AccordionView extends CustomComponent implements AccordionSpec {
 	private BeanItemContainer<PoiModel> poiContainer = new BeanItemContainer<PoiModel>(
 			PoiModel.class);
 
-	private List<TreeStructureViewListenerSpec> listener = new ArrayList<TreeStructureViewListenerSpec>();
-
 	public AccordionView() {
 		this.roomTable = createTable(roomContainer);
 		this.courseTable = createTable(courseContainer);
@@ -88,28 +84,28 @@ public class AccordionView extends CustomComponent implements AccordionSpec {
 
 	@Override
 	public void setRoomContainer(BeanItemContainer<RoomModel> beanItemContainer) {
-		this.roomContainer = beanItemContainer;
-		roomTable.setContainerDataSource(roomContainer);
+		this.roomContainer.removeAllItems();
+		this.roomContainer.addAll(beanItemContainer.getItemIds());
 	}
 
 	@Override
 	public void setCourseContainer(
 			BeanItemContainer<CourseModel> beanItemContainer) {
-		this.courseContainer = beanItemContainer;
-		courseTable.setContainerDataSource(courseContainer);
+		this.courseContainer.removeAllItems();
+		this.courseContainer.addAll(beanItemContainer.getItemIds());
 	}
 
 	@Override
 	public void setPersonContainer(
 			BeanItemContainer<PersonModel> beanItemContainer) {
-		this.personContainer = beanItemContainer;
-		personTable.setContainerDataSource(personContainer);
+		this.personContainer.removeAllItems();
+		this.personContainer.addAll(beanItemContainer.getItemIds());
 	}
 
 	@Override
 	public void setPoiContainer(BeanItemContainer<PoiModel> beanItemContainer) {
-		this.poiContainer = beanItemContainer;
-		poiTable.setContainerDataSource(poiContainer);
+		this.poiContainer.removeAllItems();
+		this.poiContainer.addAll(beanItemContainer.getItemIds());
 	}
 
 	public void addFilters(String filterString) {
@@ -140,8 +136,22 @@ public class AccordionView extends CustomComponent implements AccordionSpec {
 	}
 
 	@Override
-	public void addTreeStructureSpecListener(
-			TreeStructureViewListenerSpec listener) {
-		this.listener.add(listener);
+	public void addItemClickListenerRoomTable(ItemClickListener listener) {
+		roomTable.addItemClickListener(listener);
+	}
+
+	@Override
+	public void addItemClickListenerCourseTable(ItemClickListener listener) {
+		courseTable.addItemClickListener(listener);
+	}
+
+	@Override
+	public void addItemClickListenerPersonTable(ItemClickListener listener) {
+		personTable.addItemClickListener(listener);
+	}
+
+	@Override
+	public void addItemClickListenerPoiTable(ItemClickListener listener) {
+		poiTable.addItemClickListener(listener);
 	}
 }

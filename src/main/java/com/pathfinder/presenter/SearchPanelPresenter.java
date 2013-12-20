@@ -6,6 +6,11 @@
 
 package com.pathfinder.presenter;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.pathfinder.PathfinderUI;
 import com.pathfinder.model.CourseModel;
 import com.pathfinder.model.KeyboardModel;
 import com.pathfinder.model.PersonModel;
@@ -17,8 +22,11 @@ import com.pathfinder.view.components.KeyboardId;
 import com.pathfinder.view.components.SearchField;
 import com.pathfinder.view.container.SearchPanel;
 import com.pathfinder.view.listener.KeyboardViewListenerSpec;
+import com.vaadin.data.Item;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.event.ItemClickEvent;
+import com.vaadin.event.ItemClickEvent.ItemClickListener;
 
 /**
  * Presenter which handles keyboard and search logic
@@ -27,11 +35,15 @@ import com.vaadin.data.util.BeanItemContainer;
 public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 		SearchPanelPresenterSpec {
 
+	private static final Logger logger = LogManager
+			.getLogger(PathfinderUI.class.getName());
+
 	private final AccordionView accordionView = new AccordionView();
 	private final Keyboard keyboard = new Keyboard();
 	private final SearchField searchField = new SearchField();
 	private final SearchPanel searchPanel = new SearchPanel(accordionView,
 			keyboard, searchField);
+
 	private final BeanFieldGroup<KeyboardModel> binder = new BeanFieldGroup<KeyboardModel>(
 			KeyboardModel.class);
 
@@ -40,6 +52,15 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 		this.binder.setBuffered(false);
 		this.binder.setItemDataSource(new KeyboardModel());
 		this.binder.bind(searchField, KeyboardModel.PROPERTY_SEARCHSTRING);
+
+		this.accordionView
+				.addItemClickListenerRoomTable(new TableClickListener());
+		this.accordionView
+				.addItemClickListenerCourseTable(new TableClickListener());
+		this.accordionView
+				.addItemClickListenerPersonTable(new TableClickListener());
+		this.accordionView
+				.addItemClickListenerPoiTable(new TableClickListener());
 	}
 
 	// Keyboard ClickListener
@@ -66,6 +87,20 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 		}
 
 		accordionView.addFilters(getSearchString());
+	}
+
+	class TableClickListener implements ItemClickListener {
+		@Override
+		public void itemClick(ItemClickEvent event) {
+			Item item = event.getItem();
+			if (item instanceof RoomModel) {
+				logger.trace("Raum was clicked");
+			} else {
+				logger.trace("Not yet implemented");
+				logger.log(Level.TRACE, "Not yet implemented");
+			}
+			// TODO There´s not yet all implemented
+		}
 	}
 
 	public void addKeybordKeyToSearchString(String key) {

@@ -4,8 +4,8 @@ import com.pathfinder.model.CourseModel;
 import com.pathfinder.model.PersonModel;
 import com.pathfinder.model.PoiModel;
 import com.pathfinder.model.RoomModel;
-import com.pathfinder.view.listener.TreeStructureViewListenerSpec;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.event.ItemClickEvent.ItemClickListener;
 
 /**
  * TreeStructureSpec
@@ -14,7 +14,6 @@ import com.vaadin.data.util.BeanItemContainer;
  * 
  */
 public interface AccordionSpec extends ComponentSpec {
-	void addTreeStructureSpecListener(TreeStructureViewListenerSpec listener);
 
 	void setRoomContainer(BeanItemContainer<RoomModel> beanItemContainer);
 
@@ -23,4 +22,12 @@ public interface AccordionSpec extends ComponentSpec {
 	void setPersonContainer(BeanItemContainer<PersonModel> beanItemContainer);
 
 	void setPoiContainer(BeanItemContainer<PoiModel> beanItemContainer);
+
+	void addItemClickListenerRoomTable(ItemClickListener listener);
+
+	void addItemClickListenerCourseTable(ItemClickListener listener);
+
+	void addItemClickListenerPersonTable(ItemClickListener listener);
+
+	void addItemClickListenerPoiTable(ItemClickListener listener);
 }
