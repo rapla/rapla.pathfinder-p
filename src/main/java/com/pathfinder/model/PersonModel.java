@@ -1,33 +1,52 @@
 package com.pathfinder.model;
 
 public class PersonModel {
-	// Attention! Events were not yet been implemented
+	// TODO Events have to be implemented in the future
+	public static final String PROPERTY_ID = "id";
+	public static final String PROPERTY_NAME = "name";
+	public static final String PROPERTY_LINK = "link";
+	public static final String PROPERTY_SEARCHTERMS = "searchTerms";
+	public static final String PROPERTY_DEPARTMENT = "department";
+	public static final String PROPERTY_COURSE = "course";
+	public static final String PROPERTY_EMAIL = "email";
+	public static final String PROPERTY_PICTURE = "picture";
+	public static final String PROPERTY_TELEPHONE = "telephone";
+	public static final String PROPERTY_ROOMNR = "roomNr";
+
+	private String id = "";
 	private String name;
 	private String link = "";
-	private String id = "";
+	// TODO Do we need this?
 	private String[] searchTerms;
-
 	private String department;
-	private String studyCourse;
+	private String course;
 	private String email;
 	private String picture;
-	private String telefonNr;
+	private String telephone;
 	private String roomNr;
 
 	public PersonModel(String name, String link, String id,
-			String[] searchTerms, String department, String studyCourse,
-			String email, String picture, String telefonNr, String roomNr) {
+			String[] searchTerms, String department, String course,
+			String email, String picture, String telephone, String roomNr) {
 		super();
 		this.name = name;
 		this.link = link;
 		this.id = id;
 		this.searchTerms = searchTerms;
 		this.department = department;
-		this.studyCourse = studyCourse;
+		this.course = course;
 		this.email = email;
 		this.picture = picture;
-		this.telefonNr = telefonNr;
+		this.telephone = telephone;
 		this.roomNr = roomNr;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -46,13 +65,6 @@ public class PersonModel {
 		this.link = link;
 	}
 
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
 
 	public String[] getSearchTerms() {
 		return searchTerms;
@@ -70,12 +82,12 @@ public class PersonModel {
 		this.department = department;
 	}
 
-	public String getStudyCourse() {
-		return studyCourse;
+	public String getCourse() {
+		return course;
 	}
 
-	public void setStudyCourse(String studyCourse) {
-		this.studyCourse = studyCourse;
+	public void setCourse(String course) {
+		this.course = course;
 	}
 
 	public String getEmail() {
@@ -94,12 +106,12 @@ public class PersonModel {
 		this.picture = picture;
 	}
 
-	public String getTelefonNr() {
-		return telefonNr;
+	public String getTelephone() {
+		return telephone;
 	}
 
-	public void setTelefonNr(String telefonNr) {
-		this.telefonNr = telefonNr;
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
 	}
 
 	public String getRoomNr() {
@@ -109,5 +121,4 @@ public class PersonModel {
 	public void setRoomNr(String roomNr) {
 		this.roomNr = roomNr;
 	}
-
 }

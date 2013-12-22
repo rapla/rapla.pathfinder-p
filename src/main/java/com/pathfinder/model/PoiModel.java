@@ -1,14 +1,21 @@
 package com.pathfinder.model;
 
 public class PoiModel {
-	// Attention! Events were not yet been implemented
+	// TODO Events have to be implemented in the future
+	public static final String PROPERTY_ID = "id";
+	public static final String PROPERTY_NAME = "name";
+	public static final String PROPERTY_LINK = "link";
+	public static final String PROPERTY_SEARCHTERMS = "searchTerms";
+	public static final String PROPERTY_PICTURE = "picture";
+	public static final String PROPERTY_ROOMNR = "roomNr";
+
+	private String id = "";
 	private String name;
 	private String link = "";
-	private String id = "";
+	// TODO Do we need this?
 	private String[] searchTerms;
-
-	private String roomNr;
 	private String picture;
+	private String roomNr;
 
 	public PoiModel(String name, String link, String id, String[] searchTerms,
 			String roomNr, String picture) {
@@ -19,6 +26,14 @@ public class PoiModel {
 		this.searchTerms = searchTerms;
 		this.roomNr = roomNr;
 		this.picture = picture;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -37,13 +52,6 @@ public class PoiModel {
 		this.link = link;
 	}
 
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
 
 	public String[] getSearchTerms() {
 		return searchTerms;
@@ -51,6 +59,14 @@ public class PoiModel {
 
 	public void setSearchTerms(String[] searchTerms) {
 		this.searchTerms = searchTerms;
+	}
+
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
 	}
 
 	public String getRoomNr() {
@@ -61,11 +77,4 @@ public class PoiModel {
 		this.roomNr = roomNr;
 	}
 
-	public String getPicture() {
-		return picture;
-	}
-
-	public void setPicture(String picture) {
-		this.picture = picture;
-	}
 }

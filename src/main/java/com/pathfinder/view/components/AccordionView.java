@@ -1,5 +1,7 @@
 package com.pathfinder.view.components;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import com.pathfinder.model.CourseModel;
@@ -11,6 +13,7 @@ import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
 import com.vaadin.data.Container.Filter;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.data.util.filter.Or;
 import com.vaadin.data.util.filter.SimpleStringFilter;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.ui.Accordion;
@@ -40,6 +43,10 @@ public class AccordionView extends CustomComponent implements AccordionSpec {
 	private Table courseTable = null;
 	private Table personTable = null;
 	private Table poiTable = null;
+	private String[] visibleRoomTableColumns = new String[] { "name" };
+	private String[] visibleCourseTableColumns = new String[] { "name" };
+	private String[] visiblePersonTableColumns = new String[] { "name" };
+	private String[] visiblePoiTableColumns = new String[] { "name", "roomNr" };
 
 	// Needed BeanItemContainer
 	private BeanItemContainer<RoomModel> roomContainer = new BeanItemContainer<RoomModel>(
@@ -52,22 +59,25 @@ public class AccordionView extends CustomComponent implements AccordionSpec {
 			PoiModel.class);
 
 	public AccordionView() {
-		this.roomTable = createTable(roomContainer);
-		this.courseTable = createTable(courseContainer);
-		this.personTable = createTable(personContainer);
-		this.poiTable = createTable(poiContainer);
+		this.roomTable = createTable(roomContainer, visibleRoomTableColumns);
+		this.courseTable = createTable(courseContainer,
+				visibleCourseTableColumns);
+		this.personTable = createTable(personContainer,
+				visiblePersonTableColumns);
+		this.poiTable = createTable(poiContainer, visiblePoiTableColumns);
 		this.buildLayout();
 
 		this.setCompositionRoot(accordion);
 	}
 
-	private <T> Table createTable(BeanItemContainer<T> beanItemContainer) {
+	private <T> Table createTable(BeanItemContainer<T> beanItemContainer,
+			Object[] vivisbleColumns) {
 		Table table = new Table();
 		table.setContainerDataSource(beanItemContainer);
 		table.setImmediate(true);
 
 		table.setColumnHeaderMode(ColumnHeaderMode.HIDDEN);
-		table.setVisibleColumns(new Object[] { "name" });
+		table.setVisibleColumns(vivisbleColumns);
 		table.setPageLength(5);
 		table.setSizeFull();
 		table.setSelectable(true);
@@ -81,6 +91,56 @@ public class AccordionView extends CustomComponent implements AccordionSpec {
 		accordion.addTab(courseTable, coursesString);
 		accordion.addTab(personTable, personsString);
 		accordion.addTab(poiTable, poisString);
+	}
+
+	public void addFilters(String filterString) {
+		List<Filter> roomFilters = new ArrayList<Filter>();
+		for (String visibleColumn : visibleRoomTableColumns) {
+			Filter filter = new SimpleStringFilter(visibleColumn, filterString,
+					true, false);
+			roomFilters.add(filter);
+		}
+
+		List<Filter> courseFilters = new ArrayList<Filter>();
+		for (String visibleColumn : visibleCourseTableColumns) {
+			Filter filter = new SimpleStringFilter(visibleColumn, filterString,
+					true, false);
+			courseFilters.add(filter);
+		}
+
+		List<Filter> personFilters = new ArrayList<Filter>();
+		for (String visibleColumn : visiblePersonTableColumns) {
+			Filter filter = new SimpleStringFilter(visibleColumn, filterString,
+					true, false);
+			personFilters.add(filter);
+		}
+
+		List<Filter> poiFilters = new ArrayList<Filter>();
+		for (String visibleColumn : visiblePoiTableColumns) {
+			Filter filter = new SimpleStringFilter(visibleColumn, filterString,
+					true, false);
+			poiFilters.add(filter);
+		}
+
+		//Only for testing
+		System.out.println(roomFilters.toArray(new Filter[] {}).length);
+		System.out.println(courseFilters.toArray(new Filter[] {}).length);
+		System.out.println(personFilters.toArray(new Filter[] {}).length);
+		System.out.println(poiFilters.toArray(new Filter[] {}).length);
+
+		roomContainer.removeAllContainerFilters();
+		courseContainer.removeAllContainerFilters();
+		personContainer.removeAllContainerFilters();
+		poiContainer.removeAllContainerFilters();
+
+		roomContainer.addContainerFilter(new Or(roomFilters
+				.toArray(new Filter[] {})));
+		courseContainer.addContainerFilter(new Or(courseFilters
+				.toArray(new Filter[] {})));
+		personContainer.addContainerFilter(new Or(personFilters
+				.toArray(new Filter[] {})));
+		poiContainer.addContainerFilter(new Or(poiFilters
+				.toArray(new Filter[] {})));
 	}
 
 	@Override
@@ -114,20 +174,6 @@ public class AccordionView extends CustomComponent implements AccordionSpec {
 	public void setPoiContainer(BeanItemContainer<PoiModel> beanItemContainer) {
 		this.poiContainer.removeAllItems();
 		this.poiContainer.addAll(beanItemContainer.getItemIds());
-	}
-
-	public void addFilters(String filterString) {
-		Filter filter = new SimpleStringFilter("name", filterString, false,
-				false);
-		roomContainer.removeAllContainerFilters();
-		courseContainer.removeAllContainerFilters();
-		personContainer.removeAllContainerFilters();
-		poiContainer.removeAllContainerFilters();
-
-		roomContainer.addContainerFilter(filter);
-		courseContainer.addContainerFilter(filter);
-		personContainer.addContainerFilter(filter);
-		poiContainer.addContainerFilter(filter);
 	}
 
 	@Override

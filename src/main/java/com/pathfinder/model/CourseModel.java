@@ -1,21 +1,31 @@
 package com.pathfinder.model;
 
 public class CourseModel {
-	// Attention! Events were not yet been implemented
+	// TODO Events have to be implemented in the future
+	public static final String PROPERTY_ID = "id";
+	public static final String PROPERTY_NAME = "name";
+	public static final String PROPERTY_LINK = "link";
+	public static final String PROPERTY_SEARCHTERMS = "searchTerms";
+	public static final String PROPERTY_VINTAGE = "vintage";
+	public static final String PROPERTY_DEPARTMENT = "department";
+	public static final String PROPERTY_COURSE = "course";
+	public static final String PROPERTY_PICTURE = "picture";
+	public static final String PROPERTY_ROOMNR = "roomNr";
+
+	private String id = "";
 	private String name;
 	private String link = "";
-	private String id = "";
+	// TODO Do we need this?
 	private String[] searchTerms;
-
 	private String vintage;
 	private String department;
-	private String studyCourse;
+	private String course;
 	private String picture;
 	private String roomNr;
 
 	public CourseModel(String name, String link, String id,
 			String[] searchTerms, String vintage, String department,
-			String studyCourse, String picture, String roomNr) {
+			String course, String picture, String roomNr) {
 		super();
 		this.name = name;
 		this.link = link;
@@ -23,9 +33,17 @@ public class CourseModel {
 		this.searchTerms = searchTerms;
 		this.vintage = vintage;
 		this.department = department;
-		this.studyCourse = studyCourse;
+		this.course = course;
 		this.picture = picture;
 		this.roomNr = roomNr;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -42,14 +60,6 @@ public class CourseModel {
 
 	public void setLink(String link) {
 		this.link = link;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	public String[] getSearchTerms() {
@@ -76,12 +86,12 @@ public class CourseModel {
 		this.department = department;
 	}
 
-	public String getStudyCourse() {
-		return studyCourse;
+	public String getCourse() {
+		return course;
 	}
 
-	public void setStudyCourse(String studyCourse) {
-		this.studyCourse = studyCourse;
+	public void setCourse(String course) {
+		this.course = course;
 	}
 
 	public String getPicture() {
@@ -99,5 +109,4 @@ public class CourseModel {
 	public void setRoomNr(String roomNr) {
 		this.roomNr = roomNr;
 	}
-
 }

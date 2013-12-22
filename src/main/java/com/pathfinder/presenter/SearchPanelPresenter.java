@@ -210,5 +210,4 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 				.getItemProperty(KeyboardModel.PROPERTY_SEARCHSTRING)
 				.setValue(value);
 	}
-
 }

@@ -155,7 +155,7 @@ public class DataLoader implements DataLoaderSpec {
 			room.setDepartment(atribute.get("abteilung").getValue());
 
 		if (atribute.get("studiengang") != null)
-			room.setStudyCourse(atribute.get("studiengang").getValue());
+			room.setCourse(atribute.get("studiengang").getValue());
 
 		if (atribute.get("raumart") != null)
 			room.setRoomType(atribute.get("raumart").getValue());
@@ -179,7 +179,7 @@ public class DataLoader implements DataLoaderSpec {
 			course.setDepartment(atribute.get("abteilung").getValue());
 
 		if (atribute.get("studiengang") != null)
-			course.setStudyCourse(atribute.get("studiengang").getValue());
+			course.setCourse(atribute.get("studiengang").getValue());
 
 		if (atribute.get("bild") != null)
 			course.setPicture(atribute.get("bild").getValue());
@@ -199,7 +199,7 @@ public class DataLoader implements DataLoaderSpec {
 			person.setDepartment(atribute.get("abteilung").getValue());
 
 		if (atribute.get("studiengang") != null)
-			person.setStudyCourse(atribute.get("studiengang").getValue());
+			person.setCourse(atribute.get("studiengang").getValue());
 
 		if (atribute.get("email") != null)
 			person.setEmail(atribute.get("email").getValue());
@@ -208,7 +208,7 @@ public class DataLoader implements DataLoaderSpec {
 			person.setPicture(atribute.get("bild").getValue());
 
 		if (atribute.get("telefon") != null)
-			person.setTelefonNr(atribute.get("telefon").getValue());
+			person.setTelephone(atribute.get("telefon").getValue());
 
 		if (atribute.get("raumnr") != null)
 			person.setRoomNr(atribute.get("raumnr").getValue());
