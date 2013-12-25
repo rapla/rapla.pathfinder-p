@@ -1,6 +1,7 @@
 package com.pathfinder.view.components;
 
-import com.pathfinder.view.listener.SearchFieldViewListenerSpec;
+import com.vaadin.event.FieldEvents.TextChangeListener;
+import com.vaadin.ui.Button.ClickListener;
 
 /**
  * SearchFieldSpec
@@ -9,5 +10,9 @@ import com.pathfinder.view.listener.SearchFieldViewListenerSpec;
  * 
  */
 public interface SearchFieldSpec extends ComponentSpec {
-	void addSearchFieldListener(SearchFieldViewListenerSpec listener);
+	void addSearchFieldListener(TextChangeListener listener);
+
+	void addMagnifierClickListener(ClickListener listener);
+
+	void addDeleteAllClickListener(ClickListener listener);
 }

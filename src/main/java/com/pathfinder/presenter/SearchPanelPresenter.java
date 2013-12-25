@@ -21,17 +21,20 @@ import com.pathfinder.view.components.KeyboardId;
 import com.pathfinder.view.components.SearchField;
 import com.pathfinder.view.container.SearchPanel;
 import com.pathfinder.view.listener.KeyboardViewListenerSpec;
+import com.pathfinder.view.listener.SearchFieldViewListenerSpec;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
+import com.vaadin.ui.Button.ClickListener;
 
 /**
  * Presenter which handles keyboard and search logic
  * 
  */
 public class SearchPanelPresenter implements KeyboardViewListenerSpec,
-		SearchPanelPresenterSpec {
+		SearchFieldViewListenerSpec, SearchPanelPresenterSpec {
 
 	private static final Logger logger = LogManager
 			.getLogger(PathfinderUI.class.getName());
@@ -49,7 +52,8 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 		this.keyboard.addListener(this);
 		this.binder.setBuffered(false);
 		this.binder.setItemDataSource(new KeyboardModel());
-		this.binder.bind(searchField, KeyboardModel.PROPERTY_SEARCHSTRING);
+		this.binder.bind(searchField.getSearchField(),
+				KeyboardModel.PROPERTY_SEARCHSTRING);
 
 		this.accordionView
 				.addItemClickListenerRoomTable(new TableClickListener());
@@ -118,7 +122,7 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 		}
 		setSearchString(newSearchString.toString());
 
-		searchField.focus();
+		searchField.getSearchField().focus();
 		setChangePosCounter(oldCursorPosition + 1);
 
 	}
@@ -134,10 +138,10 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 
 			setSearchString(newSearchString.toString());
 
-			searchField.focus();
+			searchField.getSearchField().focus();
 			setChangePosCounter(oldCursorPosition - 1);
 		} else {
-			searchField.focus();
+			searchField.getSearchField().focus();
 		}
 	}
 
@@ -178,12 +182,12 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 	}
 
 	public int getChangePosCounter() {
-		return searchField.getCursorPosition();
+		return searchField.getSearchField().getCursorPosition();
 	}
 
 	public void setChangePosCounter(int cursorPosition) {
 		if (cursorPosition >= 0 && cursorPosition <= getSearchString().length())
-			searchField.setCursorPosition(cursorPosition);
+			searchField.getSearchField().setCursorPosition(cursorPosition);
 	}
 
 	@Override
