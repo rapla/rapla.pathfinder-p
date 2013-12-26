@@ -1,6 +1,5 @@
 package com.pathfinder.view.components;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -20,8 +19,7 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.filter.Or;
 import com.vaadin.data.util.filter.SimpleStringFilter;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
-import com.vaadin.server.FileResource;
-import com.vaadin.server.VaadinService;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Accordion;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.TabSheet.Tab;
@@ -36,17 +34,12 @@ import com.vaadin.ui.Table.ColumnHeaderMode;
  */
 public class AccordionView extends CustomComponent implements AccordionSpec {
 
-	private String basepath = VaadinService.getCurrent().getBaseDirectory()
-			.getAbsolutePath();
-
-	private FileResource orderlines = new FileResource(new File(basepath
-			+ "/VAADIN/themes/rapla_pathfinder_p/icon/orderlines.png"));
-
 	private static final Logger logger = LogManager
 			.getLogger(AccordionView.class.getName());
 
 	private final TranslatorSpec translator = Translator.getInstance();
 
+	private ThemeResource orderlines = new ThemeResource("icon/orderlines.png");
 	private String accordionCaptionRooms = new String(
 			translator.translate(TranslationKeys.ROOM));
 	private String accordionCaptionCourses = new String(
@@ -84,7 +77,7 @@ public class AccordionView extends CustomComponent implements AccordionSpec {
 		this.createTable(personTable, personContainer,
 				visiblePersonTableColumns);
 		this.createTable(poiTable, poiContainer, visiblePoiTableColumns);
-		this.accordion.setPrimaryStyleName("accordion-result");
+
 		this.buildLayout();
 		this.setCompositionRoot(accordion);
 	}
@@ -107,12 +100,6 @@ public class AccordionView extends CustomComponent implements AccordionSpec {
 	}
 
 	private void buildLayout() {
-		// accordion.addTab(roomTable, accordionCaptionRooms);
-		// accordion.addTab(courseTable, accordionCaptionCourses);
-		// accordion.addTab(personTable, accordionCaptionPersons);
-		// accordion.addTab(poiTable, accordionCaptionPois);
-		// accordion.setSizeFull();
-
 		Tab rooms = accordion.addTab(roomTable, accordionCaptionRooms);
 		rooms.setIcon(orderlines);
 		Tab courses = accordion.addTab(courseTable, accordionCaptionCourses);
@@ -121,7 +108,9 @@ public class AccordionView extends CustomComponent implements AccordionSpec {
 		persons.setIcon(orderlines);
 		Tab pois = accordion.addTab(poiTable, accordionCaptionPois);
 		pois.setIcon(orderlines);
-		accordion.setSizeFull();
+
+		this.accordion.setSizeFull();
+		this.accordion.setPrimaryStyleName("accordion-result");
 	}
 
 	public void useFiltersForAllTables(String filterString) {
