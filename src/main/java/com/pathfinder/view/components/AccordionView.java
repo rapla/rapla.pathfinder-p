@@ -1,5 +1,6 @@
 package com.pathfinder.view.components;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -16,8 +17,11 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.filter.Or;
 import com.vaadin.data.util.filter.SimpleStringFilter;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
+import com.vaadin.server.FileResource;
+import com.vaadin.server.VaadinService;
 import com.vaadin.ui.Accordion;
 import com.vaadin.ui.CustomComponent;
+import com.vaadin.ui.TabSheet.Tab;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnHeaderMode;
 
@@ -28,6 +32,12 @@ import com.vaadin.ui.Table.ColumnHeaderMode;
  * 
  */
 public class AccordionView extends CustomComponent implements AccordionSpec {
+	
+	private String basepath = VaadinService.getCurrent().getBaseDirectory()
+			.getAbsolutePath();
+	
+	private FileResource orderlines = new FileResource(new File(basepath
+			+ "/VAADIN/themes/rapla_pathfinder_p/icon/orderlines.png"));
 
 	private final Accordion accordion = new Accordion();
 	private final TranslatorSpec translator = Translator.getInstance();
@@ -92,10 +102,14 @@ public class AccordionView extends CustomComponent implements AccordionSpec {
 
 	private void buildLayout() {
 		accordion.setSizeFull();
-		accordion.addTab(roomTable, roomsString);
-		accordion.addTab(courseTable, coursesString);
-		accordion.addTab(personTable, personsString);
-		accordion.addTab(poiTable, poisString);
+		Tab rooms = accordion.addTab(roomTable, roomsString);
+		rooms.setIcon(orderlines);
+		Tab courses = accordion.addTab(courseTable, coursesString);
+		courses.setIcon(orderlines);
+		Tab persons = accordion.addTab(personTable, personsString);
+		persons.setIcon(orderlines);
+		Tab pois = accordion.addTab(poiTable, poisString);
+		pois.setIcon(orderlines);
 	}
 
 	public void addFilters(String filterString) {

@@ -158,19 +158,27 @@
 		.v-caption {
 			color: #cccccc;
 			font: 20px Arial;
+			padding-top: 0.2%;
 		}
 		
-		
+		img {
+			width: 30px;
+			height: 30px;
+			padding-left: 0.3%;
+		}
 	}
 	
 	.result-table-row {
 			height: 40px;
 			background-color: #767676;
 			margin-top: 2px;
+			width: 98%;
+			display: block;
 			
 			.result-table-cell-wrapper {
 				color: #cccccc;
 				font: 20px Arial;
+				padding-left:35px;
 			}
 	}
 }
