@@ -1,14 +1,12 @@
 package com.pathfinder.view.components;
 
-import java.io.File;
 import java.util.Locale;
 
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
 import com.vaadin.event.FieldEvents.TextChangeListener;
-import com.vaadin.server.FileResource;
-import com.vaadin.server.VaadinService;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomComponent;
@@ -22,13 +20,8 @@ public class SearchField extends CustomComponent implements SearchFieldSpec {
 	private Button deleteAll;
 	private TextField searchField;
 
-	private String basepath = VaadinService.getCurrent().getBaseDirectory()
-			.getAbsolutePath();
-
-	private FileResource deleteResource = new FileResource(new File(basepath
-			+ "/VAADIN/themes/rapla_pathfinder_p/icon/DeleteAll.png"));
-	private FileResource magnifierResource = new FileResource(new File(basepath
-			+ "/VAADIN/themes/rapla_pathfinder_p/icon/Magnifier.png"));
+	private ThemeResource deleteResource = new ThemeResource("icon/DeleteAll.png");
+	private ThemeResource magnifierResource = new ThemeResource("icon/Magnifier.png");
 
 	private HorizontalLayout horizontal = new HorizontalLayout();
 
