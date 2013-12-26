@@ -50,10 +50,11 @@ public class SearchField extends CustomComponent implements SearchFieldSpec {
 
 		magnifier.setIcon(magnifierResource);
 		deleteAll.setIcon(deleteResource);
-
-		magnifier.setWidth(10, Unit.PERCENTAGE);
-		deleteAll.setWidth(10, Unit.PERCENTAGE);
-		searchField.setWidth(80, Unit.PERCENTAGE);
+		
+		horizontal.setPrimaryStyleName("search");
+		searchField.setPrimaryStyleName("searchfield");
+		magnifier.setPrimaryStyleName("search-icon");
+		deleteAll.setPrimaryStyleName("delete-icon");
 
 		horizontal.addComponent(magnifier);
 		horizontal.addComponent(searchField);

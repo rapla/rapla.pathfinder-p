@@ -1,5 +1,6 @@
 package com.pathfinder.view.components;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -19,8 +20,11 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.filter.Or;
 import com.vaadin.data.util.filter.SimpleStringFilter;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
+import com.vaadin.server.FileResource;
+import com.vaadin.server.VaadinService;
 import com.vaadin.ui.Accordion;
 import com.vaadin.ui.CustomComponent;
+import com.vaadin.ui.TabSheet.Tab;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnHeaderMode;
 
@@ -31,6 +35,12 @@ import com.vaadin.ui.Table.ColumnHeaderMode;
  * 
  */
 public class AccordionView extends CustomComponent implements AccordionSpec {
+
+	private String basepath = VaadinService.getCurrent().getBaseDirectory()
+			.getAbsolutePath();
+
+	private FileResource orderlines = new FileResource(new File(basepath
+			+ "/VAADIN/themes/rapla_pathfinder_p/icon/orderlines.png"));
 
 	private static final Logger logger = LogManager
 			.getLogger(AccordionView.class.getName());
@@ -93,13 +103,24 @@ public class AccordionView extends CustomComponent implements AccordionSpec {
 		table.setSortAscending(true);
 		table.setSelectable(true);
 		table.setSizeFull();
+		table.setPrimaryStyleName("result-table");
 	}
 
 	private void buildLayout() {
-		accordion.addTab(roomTable, accordionCaptionRooms);
-		accordion.addTab(courseTable, accordionCaptionCourses);
-		accordion.addTab(personTable, accordionCaptionPersons);
-		accordion.addTab(poiTable, accordionCaptionPois);
+		// accordion.addTab(roomTable, accordionCaptionRooms);
+		// accordion.addTab(courseTable, accordionCaptionCourses);
+		// accordion.addTab(personTable, accordionCaptionPersons);
+		// accordion.addTab(poiTable, accordionCaptionPois);
+		// accordion.setSizeFull();
+
+		Tab rooms = accordion.addTab(roomTable, accordionCaptionRooms);
+		rooms.setIcon(orderlines);
+		Tab courses = accordion.addTab(courseTable, accordionCaptionCourses);
+		courses.setIcon(orderlines);
+		Tab persons = accordion.addTab(personTable, accordionCaptionPersons);
+		persons.setIcon(orderlines);
+		Tab pois = accordion.addTab(poiTable, accordionCaptionPois);
+		pois.setIcon(orderlines);
 		accordion.setSizeFull();
 	}
 
