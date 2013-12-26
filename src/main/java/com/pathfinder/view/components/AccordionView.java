@@ -84,7 +84,7 @@ public class AccordionView extends CustomComponent implements AccordionSpec {
 		this.createTable(personTable, personContainer,
 				visiblePersonTableColumns);
 		this.createTable(poiTable, poiContainer, visiblePoiTableColumns);
-
+		this.accordion.setPrimaryStyleName("accordion-result");
 		this.buildLayout();
 		this.setCompositionRoot(accordion);
 	}
