@@ -3,10 +3,6 @@ package com.pathfinder.view.components;
 import java.io.File;
 import java.util.Locale;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import com.pathfinder.PathfinderUI;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
@@ -21,9 +17,6 @@ import com.vaadin.ui.TextField;
 
 @SuppressWarnings("serial")
 public class SearchField extends CustomComponent implements SearchFieldSpec {
-
-	private static final Logger logger = LogManager
-			.getLogger(PathfinderUI.class.getName());
 
 	private Button magnifier;
 	private Button deleteAll;
@@ -67,7 +60,6 @@ public class SearchField extends CustomComponent implements SearchFieldSpec {
 		horizontal.addComponent(deleteAll);
 
 		setCompositionRoot(horizontal);
-
 	}
 
 	@Override
@@ -99,6 +91,7 @@ public class SearchField extends CustomComponent implements SearchFieldSpec {
 		this.magnifier = magnifier;
 	}
 
+	// TODO wird diese Methode benötigt?
 	public Button getDeleteAll() {
 		return deleteAll;
 	}

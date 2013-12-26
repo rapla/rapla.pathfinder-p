@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.pathfinder.model.CourseModel;
 import com.pathfinder.model.PersonModel;
 import com.pathfinder.model.PoiModel;
@@ -22,125 +25,139 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnHeaderMode;
 
 /**
- * Defines the TreeStructure - accordion plus Tables to view the search results
+ * Defines the accordion view plus tables to view the search results
  * 
  * @author alexh
  * 
  */
 public class AccordionView extends CustomComponent implements AccordionSpec {
 
-	private final Accordion accordion = new Accordion();
-	private final TranslatorSpec translator = Translator.getInstance();
-	private String roomsString = new String(
-			translator.translate(TranslationKeys.ROOM));
-	private String coursesString = new String(
-			translator.translate(TranslationKeys.COURSE));
-	private String personsString = new String(
-			translator.translate(TranslationKeys.PERSON));
-	private String poisString = new String(
-			translator.translate(TranslationKeys.POI));
-	private Table roomTable = null;
-	private Table courseTable = null;
-	private Table personTable = null;
-	private Table poiTable = null;
-	private String[] visibleRoomTableColumns = new String[] { "name" };
-	private String[] visibleCourseTableColumns = new String[] { "name" };
-	private String[] visiblePersonTableColumns = new String[] { "name" };
-	private String[] visiblePoiTableColumns = new String[] { "name", "roomNr" };
+	private static final Logger logger = LogManager
+			.getLogger(AccordionView.class.getName());
 
-	// Needed BeanItemContainer
-	private BeanItemContainer<RoomModel> roomContainer = new BeanItemContainer<RoomModel>(
+	private final TranslatorSpec translator = Translator.getInstance();
+
+	private String accordionCaptionRooms = new String(
+			translator.translate(TranslationKeys.ROOM));
+	private String accordionCaptionCourses = new String(
+			translator.translate(TranslationKeys.COURSE));
+	private String accordionCaptionPersons = new String(
+			translator.translate(TranslationKeys.PERSON));
+	private String accordionCaptionPois = new String(
+			translator.translate(TranslationKeys.POI));
+
+	private final Accordion accordion = new Accordion();
+	private final Table roomTable = new Table();
+	private final Table courseTable = new Table();
+	private final Table personTable = new Table();
+	private final Table poiTable = new Table();
+
+	private final String[] visibleRoomTableColumns = new String[] { "name" };
+	private final String[] visibleCourseTableColumns = new String[] { "name" };
+	private final String[] visiblePersonTableColumns = new String[] { "name" };
+	private final String[] visiblePoiTableColumns = new String[] { "name",
+			"roomNr" };
+
+	private final BeanItemContainer<RoomModel> roomContainer = new BeanItemContainer<RoomModel>(
 			RoomModel.class);
-	private BeanItemContainer<CourseModel> courseContainer = new BeanItemContainer<CourseModel>(
+	private final BeanItemContainer<CourseModel> courseContainer = new BeanItemContainer<CourseModel>(
 			CourseModel.class);
-	private BeanItemContainer<PersonModel> personContainer = new BeanItemContainer<PersonModel>(
+	private final BeanItemContainer<PersonModel> personContainer = new BeanItemContainer<PersonModel>(
 			PersonModel.class);
-	private BeanItemContainer<PoiModel> poiContainer = new BeanItemContainer<PoiModel>(
+	private final BeanItemContainer<PoiModel> poiContainer = new BeanItemContainer<PoiModel>(
 			PoiModel.class);
 
 	public AccordionView() {
-		this.roomTable = createTable(roomContainer, visibleRoomTableColumns);
-		this.courseTable = createTable(courseContainer,
+		this.createTable(roomTable, roomContainer, visibleRoomTableColumns);
+		this.createTable(courseTable, courseContainer,
 				visibleCourseTableColumns);
-		this.personTable = createTable(personContainer,
+		this.createTable(personTable, personContainer,
 				visiblePersonTableColumns);
-		this.poiTable = createTable(poiContainer, visiblePoiTableColumns);
-		this.buildLayout();
+		this.createTable(poiTable, poiContainer, visiblePoiTableColumns);
 
+		this.buildLayout();
 		this.setCompositionRoot(accordion);
 	}
 
-	private <T> Table createTable(BeanItemContainer<T> beanItemContainer,
-			Object[] vivisbleColumns) {
-		Table table = new Table();
+	private <T> void createTable(Table table,
+			BeanItemContainer<T> beanItemContainer, Object[] vivisbleColumns) {
 		table.setContainerDataSource(beanItemContainer);
 		table.setImmediate(true);
-
 		table.setColumnHeaderMode(ColumnHeaderMode.HIDDEN);
 		table.setVisibleColumns(vivisbleColumns);
 		table.setPageLength(5);
-		table.setSizeFull();
+		// TODO Use class property as property id instead of a string -->
+		// Vererbung bei den Models
+		// TODO Doesn´t work yet
+		table.setSortContainerPropertyId("name");
+		table.setSortAscending(true);
 		table.setSelectable(true);
-
-		return table;
+		table.setSizeFull();
 	}
 
 	private void buildLayout() {
+		accordion.addTab(roomTable, accordionCaptionRooms);
+		accordion.addTab(courseTable, accordionCaptionCourses);
+		accordion.addTab(personTable, accordionCaptionPersons);
+		accordion.addTab(poiTable, accordionCaptionPois);
 		accordion.setSizeFull();
-		accordion.addTab(roomTable, roomsString);
-		accordion.addTab(courseTable, coursesString);
-		accordion.addTab(personTable, personsString);
-		accordion.addTab(poiTable, poisString);
 	}
 
-	public void addFilters(String filterString) {
+	public void useFiltersForAllTables(String filterString) {
+		/* Filter lists */
 		List<Filter> roomFilters = new ArrayList<Filter>();
-		for (String visibleColumn : visibleRoomTableColumns) {
-			Filter filter = new SimpleStringFilter(visibleColumn, filterString,
-					true, false);
-			roomFilters.add(filter);
-		}
-
 		List<Filter> courseFilters = new ArrayList<Filter>();
-		for (String visibleColumn : visibleCourseTableColumns) {
-			Filter filter = new SimpleStringFilter(visibleColumn, filterString,
-					true, false);
-			courseFilters.add(filter);
-		}
-
 		List<Filter> personFilters = new ArrayList<Filter>();
-		for (String visibleColumn : visiblePersonTableColumns) {
-			Filter filter = new SimpleStringFilter(visibleColumn, filterString,
-					true, false);
-			personFilters.add(filter);
-		}
-
 		List<Filter> poiFilters = new ArrayList<Filter>();
-		for (String visibleColumn : visiblePoiTableColumns) {
+
+		/* Create the filters */
+		roomFilters = this.createFilters(visibleRoomTableColumns, filterString);
+		courseFilters = this.createFilters(visibleCourseTableColumns,
+				filterString);
+		personFilters = this.createFilters(visiblePersonTableColumns,
+				filterString);
+		poiFilters = this.createFilters(visiblePoiTableColumns, filterString);
+
+		/* Remove the old filters */
+		this.removeAllFiltersFromContainers();
+
+		/* Add the new filters */
+		this.addFiltersToTables(roomFilters, roomContainer, "room");
+		this.addFiltersToTables(courseFilters, courseContainer, "course");
+		this.addFiltersToTables(personFilters, personContainer, "person");
+		this.addFiltersToTables(poiFilters, poiContainer, "poi");
+	}
+
+	private List<Filter> createFilters(String[] visibleTableColumns,
+			String filterString) {
+		List<Filter> filters = new ArrayList<Filter>();
+		for (String visibleColumn : visibleTableColumns) {
 			Filter filter = new SimpleStringFilter(visibleColumn, filterString,
 					true, false);
-			poiFilters.add(filter);
+			filters.add(filter);
 		}
+		return filters;
+	}
 
-		//Only for testing
-		System.out.println(roomFilters.toArray(new Filter[] {}).length);
-		System.out.println(courseFilters.toArray(new Filter[] {}).length);
-		System.out.println(personFilters.toArray(new Filter[] {}).length);
-		System.out.println(poiFilters.toArray(new Filter[] {}).length);
-
+	private void removeAllFiltersFromContainers() {
 		roomContainer.removeAllContainerFilters();
 		courseContainer.removeAllContainerFilters();
 		personContainer.removeAllContainerFilters();
 		poiContainer.removeAllContainerFilters();
+	}
 
-		roomContainer.addContainerFilter(new Or(roomFilters
+	private <T> void addFiltersToTables(List<Filter> filters,
+			BeanItemContainer<T> beanItemContainer, String type) {
+		logger.trace("Length of " + type + " filters: "
+				+ filters.toArray(new Filter[] {}).length);
+		beanItemContainer.addContainerFilter(new Or(filters
 				.toArray(new Filter[] {})));
-		courseContainer.addContainerFilter(new Or(courseFilters
-				.toArray(new Filter[] {})));
-		personContainer.addContainerFilter(new Or(personFilters
-				.toArray(new Filter[] {})));
-		poiContainer.addContainerFilter(new Or(poiFilters
-				.toArray(new Filter[] {})));
+	}
+
+	public void deselectClickedItem(Table table, Object itemId) {
+		// TODO Doesn´t work yet
+		table.sanitizeSelection();
+		table.unselect(itemId);
 	}
 
 	@Override
@@ -178,11 +195,16 @@ public class AccordionView extends CustomComponent implements AccordionSpec {
 
 	@Override
 	public void updateTranslations(Locale locale) {
-		roomsString = new String(translator.translate(TranslationKeys.ROOM));
-		coursesString = new String(translator.translate(TranslationKeys.COURSE));
-		personsString = new String(translator.translate(TranslationKeys.PERSON));
-		poisString = new String(translator.translate(TranslationKeys.POI));
+		accordionCaptionRooms = new String(
+				translator.translate(TranslationKeys.ROOM));
+		accordionCaptionCourses = new String(
+				translator.translate(TranslationKeys.COURSE));
+		accordionCaptionPersons = new String(
+				translator.translate(TranslationKeys.PERSON));
+		accordionCaptionPois = new String(
+				translator.translate(TranslationKeys.POI));
 
+		// TODO
 		// accordion.getTab(rooms).setCaption(roomsString);
 		// accordion.getTab(courses).setCaption(coursesString);
 		// accordion.getTab(persons).setCaption(personsString);

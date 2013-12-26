@@ -24,10 +24,9 @@ import com.pathfinder.view.listener.KeyboardViewListenerSpec;
 import com.pathfinder.view.listener.SearchFieldViewListenerSpec;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
-import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Table;
 
 /**
  * Presenter which handles keyboard and search logic
@@ -88,7 +87,7 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 			break;
 		}
 
-		accordionView.addFilters(getSearchString());
+		accordionView.useFiltersForAllTables(getSearchString());
 	}
 
 	class TableClickListener implements ItemClickListener {
@@ -96,7 +95,8 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 		public void itemClick(ItemClickEvent event) {
 			Object object = event.getItemId();
 			if (object instanceof RoomModel) {
-				logger.trace("Room was clicked");
+				logger.trace("Room was clicked - ItemID: " + ((RoomModel)object).getName());
+				accordionView.deselectClickedItem((Table)event.getSource(), event.getItemId());
 			} else if (object instanceof CourseModel) {
 				logger.trace("Course was clicked");
 			} else if (object instanceof PersonModel) {
