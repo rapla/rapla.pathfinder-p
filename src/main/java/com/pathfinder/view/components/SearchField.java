@@ -13,17 +13,18 @@ import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 
-@SuppressWarnings("serial")
 public class SearchField extends CustomComponent implements SearchFieldSpec {
 
-	private Button magnifier;
-	private Button deleteAll;
-	private TextField searchField;
+	private final Button magnifier = new Button();
+	private final Button deleteAll = new Button();
+	private final TextField searchField = new TextField();
 
-	private ThemeResource deleteResource = new ThemeResource("icon/DeleteAll.png");
-	private ThemeResource magnifierResource = new ThemeResource("icon/Magnifier.png");
+	private ThemeResource deleteResource = new ThemeResource(
+			"icon/DeleteAll.png");
+	private ThemeResource magnifierResource = new ThemeResource(
+			"icon/Magnifier.png");
 
-	private HorizontalLayout horizontal = new HorizontalLayout();
+	private final HorizontalLayout horizontal = new HorizontalLayout();
 
 	private TranslatorSpec translator = Translator.getInstance();
 
@@ -32,28 +33,30 @@ public class SearchField extends CustomComponent implements SearchFieldSpec {
 	}
 
 	private void init() {
-		searchField = new TextField();
-		magnifier = new Button();
-		deleteAll = new Button();
-
 		magnifier.setEnabled(false);
+		magnifier.setIcon(magnifierResource);
+
+		deleteAll.setIcon(deleteResource);
 
 		searchField.setInputPrompt(translator
 				.translate(TranslationKeys.SEARCH_PROMP));
 
-		magnifier.setIcon(magnifierResource);
-		deleteAll.setIcon(deleteResource);
-		
+		this.setStyles();
+		this.buildLayout();
+		setCompositionRoot(horizontal);
+	}
+
+	private void buildLayout() {
+		horizontal.addComponent(magnifier);
+		horizontal.addComponent(searchField);
+		horizontal.addComponent(deleteAll);
+	}
+
+	private void setStyles() {
 		horizontal.setPrimaryStyleName("search");
 		searchField.setPrimaryStyleName("searchfield");
 		magnifier.setPrimaryStyleName("search-icon");
 		deleteAll.setPrimaryStyleName("delete-icon");
-
-		horizontal.addComponent(magnifier);
-		horizontal.addComponent(searchField);
-		horizontal.addComponent(deleteAll);
-
-		setCompositionRoot(horizontal);
 	}
 
 	@Override
@@ -77,29 +80,8 @@ public class SearchField extends CustomComponent implements SearchFieldSpec {
 		deleteAll.addClickListener(listener);
 	}
 
-	public Button getMagnifier() {
-		return magnifier;
-	}
-
-	public void setMagnifier(Button magnifier) {
-		this.magnifier = magnifier;
-	}
-
-	// TODO wird diese Methode benötigt?
-	public Button getDeleteAll() {
-		return deleteAll;
-	}
-
-	public void setDeleteAll(Button deleteAll) {
-		this.deleteAll = deleteAll;
-	}
-
+	@Override
 	public TextField getSearchField() {
 		return searchField;
 	}
-
-	public void setSearchField(TextField searchField) {
-		this.searchField = searchField;
-	}
-
 }

@@ -1,25 +1,35 @@
 package com.pathfinder.presenter;
 
-import static com.pathfinder.view.components.KeyboardId.*;
+import static com.pathfinder.view.components.KeyboardId.AE;
+import static com.pathfinder.view.components.KeyboardId.DELETE;
+import static com.pathfinder.view.components.KeyboardId.I;
+import static com.pathfinder.view.components.KeyboardId.K;
+import static com.pathfinder.view.components.KeyboardId.L;
+import static com.pathfinder.view.components.KeyboardId.LEFT;
+import static com.pathfinder.view.components.KeyboardId.M;
+import static com.pathfinder.view.components.KeyboardId.OE;
+import static com.pathfinder.view.components.KeyboardId.P;
+import static com.pathfinder.view.components.KeyboardId.RIGHT;
+import static com.pathfinder.view.components.KeyboardId.S;
+import static com.pathfinder.view.components.KeyboardId.SPACE;
+import static com.pathfinder.view.components.KeyboardId.T;
+import static com.pathfinder.view.components.KeyboardId.UE;
+import static com.pathfinder.view.components.KeyboardId.X;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import com.pathfinder.model.KeyboardModel;
-import com.pathfinder.view.components.Keyboard;
 import com.pathfinder.view.components.KeyboardId;
 
 public class SearchPanelPresenterTest {
 	KeyboardModel keyboardModel;
-	Keyboard keyboard;
 	SearchPanelPresenter searchPanelPresenter;
 
 	@Before
 	public void setUp() {
 		searchPanelPresenter = new SearchPanelPresenter();
-		keyboard = searchPanelPresenter.getKeyboard();
-
 	}
 
 	@Test
