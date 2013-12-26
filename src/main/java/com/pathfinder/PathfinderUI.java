@@ -53,7 +53,7 @@ public class PathfinderUI extends UI {
 		setErrorHandler(new PathfinderErrorHandler());
 		Page.getCurrent().setTitle(
 				Translator.getInstance().translate(TranslationKeys.APP_TITLE));
-		this.addStyleName("main");
+		this.setPrimaryStyleName("main");
 		/* Browser data */
 		logger.trace(">> Browser Data <<");
 

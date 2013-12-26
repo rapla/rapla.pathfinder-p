@@ -8,9 +8,7 @@
   /* Include all the styles from the reindeer theme */
  /* TODO Can we already use Tune-Theme? */
   @include reindeer;
-
-  /* Insert your theme rules here */
-/*	
+	
 	* {
 		margin: 0;
 		padding: 0;
@@ -18,82 +16,161 @@
 
 	.main {
 		background: #ccc;
-		width: 100%;
+		width: 98% !important;
 		height: 100%;
-	}
-
-	.v-slot.v-slot-keyboard-button {
-		float: left;
-		height: 40px;
-		width: 3%;
-		margin-top: 4px;
-		margin-right: 2px;
-		background-image: -webkit-linear-gradient(top, #666666 0%, #494949 100%);
-		background-image: -moz-linear-gradient(top, #666666 0%, #494949 100%);
-		background-image: -ms-linear-gradient(top, #666666 0%, #494949 100%);
-	}
-
-	.v-slot {
-		overflow: hidden;
-		display: block;
-	}
-
-	.v-slot.v-slot-keyboard-delete {
-		float: left;
-		height: 40px;
-		width: 6.2%;
-		margin-top: 4px;
-		margin-right: 2px;
-		background-image: -webkit-linear-gradient(top, #666666 0%, #494949 100%);
-		background-image: -moz-linear-gradient(top, #666666 0%, #494949 100%);
-		background-image: -ms-linear-gradient(top, #666666 0%, #494949 100%);
-	}
-
-	.v-slot.v-slot-keyboard-space {
-		float: left;
-		height: 40px;
-		width: 15.6%;
-		margin-top: 4px;
-		margin-right: 2px;
-		background-image: -webkit-linear-gradient(top, #666666 0%, #494949 100%);
-		background-image: -moz-linear-gradient(top, #666666 0%, #494949 100%);
-		background-image: -ms-linear-gradient(top, #666666 0%, #494949 100%);
-	}
-
-	.v-button-caption {
-		color: #FFFFFF;
-		font: 14px Arial;
-		display: block;
-		height: 29px;
-		-webkit-user-select: none;
-		-moz-user-select: none;
-		-ms-user-select: none;
-	}
-
-	.v-slot.v-slot-keyboard-button .v-button-caption {
-		padding-left: 38%;
-		padding-top: 26%;
-	}
-
-	.v-slot.v-slot-keyboard-delete .v-button-caption {
-		padding-left: 12%;
-		padding-top: 13%;
-	}
-
-	.v-slot.v-slot-keyboard-space .v-button-caption {
-		padding-left: 31%;
-		padding-top: 5%;
+		padding-left: 1%;
+		padding-right: 1%;
 	}
 	
-	.v-textfield.v-widget {
-		width: 37.5%;
-		background-color: #FFF;
-		border: 1px #e2001b solid;
-		height: 25px;
+	/* Keyboard Styling */
+	
+	.keyboard-row {
+		overflow: hidden;
 		display: block;
-		margin-top: 4px;
-		color: #4a4a4a;
-		font: 14px Arial;
+		float: left;
+		width : 100%;
+		margin-left: 0.2%;
+		
+		.v-slot {
+			display: block;
+		
+			.keyboard-button {
+				float: left;
+				height: 100px;
+				width: 8.13%;
+				margin-top: 4px;
+				margin-right: 0.2%;
+				background-image: -webkit-linear-gradient(top, #666666 0%, #494949 100%);
+				background-image: -moz-linear-gradient(top, #666666 0%, #494949 100%);
+				background-image: -ms-linear-gradient(top, #666666 0%, #494949 100%);
+				
+				.keyboard-button-caption {
+					padding-left: 45%;
+					padding-top: 25%;
+					color: #FFFFFF;
+					font: 20px Arial;
+					display: block;
+					-webkit-user-select: none;
+					-moz-user-select: none;
+					-ms-user-select: none;
+				}
+			}
+			
+			.keyboard-delete {
+				float: left;
+				height: 100px;
+				width: 16.4%;
+				margin-top: 4px;
+				margin-right: 0.2%;
+				background-image: -webkit-linear-gradient(top, #666666 0%, #494949 100%);
+				background-image: -moz-linear-gradient(top, #666666 0%, #494949 100%);
+				background-image: -ms-linear-gradient(top, #666666 0%, #494949 100%);
+				
+				.keyboard-delete-caption {
+					padding-left: 43%;
+					padding-top: 13%;
+					color: #FFFFFF;
+					font: 20px Arial;
+					display: block;
+					-webkit-user-select: none;
+					-moz-user-select: none;
+					-ms-user-select: none;
+				}
+			}
+			
+			.keyboard-space {
+				float: left;
+				height: 100px;
+				width: 41.4%;
+				margin-top: 4px;
+				margin-right: 0.2%;
+				background-image: -webkit-linear-gradient(top, #666666 0%, #494949 100%);
+				background-image: -moz-linear-gradient(top, #666666 0%, #494949 100%);
+				background-image: -ms-linear-gradient(top, #666666 0%, #494949 100%);
+				
+				.keyboard-space-caption {
+					padding-left: 43%;
+					padding-top: 5%;
+					color: #FFFFFF;
+					font: 20px Arial;
+					display: block;
+					-webkit-user-select: none;
+					-moz-user-select: none;
+					-ms-user-select: none;
+				}
+			}
+		}
 	}
-	*/
+	
+	/* Search Field Styling */
+	
+	.search {
+		width: 100%;
+		margin-top: 1%;
+		margin-bottom: 1%;
+		background-color: #e2001b;
+		
+		.v-slot {
+			display: block;
+			
+			.search-icon {
+				float:left;
+				width: 3%;
+				height: 40px;
+				
+				img {
+					height:25px;
+					width:25px;
+					padding-left: 28%;
+					padding-top: 10%;
+				}
+			}
+			
+			.searchfield {
+				float:left;
+				width:94%;
+				height: 40px;
+				background-color: #FFFFFF;
+				border: 1px solid #e2001b;
+				font: 20px Arial;
+			}
+			
+			.delete-icon {
+				float:left;
+				width: 3%;
+				height: 40px;
+				
+				img {
+					height:25px;
+					width:25px;
+					padding-left: 28%;
+					padding-top: 10%;
+				}
+			}
+		}
+	}	
+	
+	.accordion-result-item-caption {
+		height: 40px;
+		background-color: #393939;
+		margin-top: 3px;
+		
+		.v-caption {
+			color: #cccccc;
+			font: 20px Arial;
+		}
+		
+		
+	}
+	
+	.result-table-row {
+			height: 40px;
+			background-color: #767676;
+			margin-top: 2px;
+			
+			.result-table-cell-wrapper {
+				color: #cccccc;
+				font: 20px Arial;
+			}
+	}
 }

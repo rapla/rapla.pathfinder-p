@@ -35,9 +35,13 @@ public class Keyboard extends CustomComponent implements KeyboardSpec,
 	public Keyboard() {
 		VerticalLayout layout = new VerticalLayout();
 		HorizontalLayout row1 = new HorizontalLayout();
+		row1.setPrimaryStyleName("keyboard-row");
 		HorizontalLayout row2 = new HorizontalLayout();
+		row2.setPrimaryStyleName("keyboard-row");
 		HorizontalLayout row3 = new HorizontalLayout();
+		row3.setPrimaryStyleName("keyboard-row");
 		HorizontalLayout row4 = new HorizontalLayout();
+		row4.setPrimaryStyleName("keyboard-row");
 
 		// The operations for the Keyboard in the order they appear on the
 		// screen (left to right, top to bottom)
@@ -103,15 +107,15 @@ public class Keyboard extends CustomComponent implements KeyboardSpec,
 
 		switch (id) {
 		case SPACE:
-			newButton.addStyleName("keyboard-space");
+			newButton.setPrimaryStyleName("keyboard-space");
 			newButton.setCaption(translator.translate(TranslationKeys.SPACE));
 			break;
 		case DELETE:
-			newButton.addStyleName("keyboard-delete");
+			newButton.setPrimaryStyleName("keyboard-delete");
 			newButton.setCaption(translator.translate(TranslationKeys.DELETE));
 			break;
 		default:
-			newButton.addStyleName("keyboard-button");
+			newButton.setPrimaryStyleName("keyboard-button");
 			newButton.setCaption(id.getLabel());
 			break;
 		}
