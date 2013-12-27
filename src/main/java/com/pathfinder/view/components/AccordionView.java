@@ -41,11 +41,11 @@ public class AccordionView extends CustomComponent implements AccordionSpec {
 
 	private ThemeResource orderlines = new ThemeResource("icon/orderlines.png");
 	private String accordionCaptionRooms = new String(
-			translator.translate(TranslationKeys.ROOM));
+			translator.translate(TranslationKeys.ROOMS));
 	private String accordionCaptionCourses = new String(
-			translator.translate(TranslationKeys.COURSE));
+			translator.translate(TranslationKeys.COURSES));
 	private String accordionCaptionPersons = new String(
-			translator.translate(TranslationKeys.PERSON));
+			translator.translate(TranslationKeys.PERSONS));
 	private String accordionCaptionPois = new String(
 			translator.translate(TranslationKeys.POI));
 
@@ -206,19 +206,18 @@ public class AccordionView extends CustomComponent implements AccordionSpec {
 	@Override
 	public void updateTranslations(Locale locale) {
 		accordionCaptionRooms = new String(
-				translator.translate(TranslationKeys.ROOM));
+				translator.translate(TranslationKeys.ROOMS));
 		accordionCaptionCourses = new String(
-				translator.translate(TranslationKeys.COURSE));
+				translator.translate(TranslationKeys.COURSES));
 		accordionCaptionPersons = new String(
-				translator.translate(TranslationKeys.PERSON));
+				translator.translate(TranslationKeys.PERSONS));
 		accordionCaptionPois = new String(
 				translator.translate(TranslationKeys.POI));
 
-		// TODO
-		// accordion.getTab(rooms).setCaption(roomsString);
-		// accordion.getTab(courses).setCaption(coursesString);
-		// accordion.getTab(persons).setCaption(personsString);
-		// accordion.getTab(pois).setCaption(poisString);
+		accordion.getTab(roomTable).setCaption(accordionCaptionRooms);
+		accordion.getTab(courseTable).setCaption(accordionCaptionCourses);
+		accordion.getTab(personTable).setCaption(accordionCaptionPersons);
+		accordion.getTab(poiTable).setCaption(accordionCaptionPois);
 	}
 
 	@Override
