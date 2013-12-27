@@ -8,7 +8,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import com.pathfinder.util.translation.TranslatorSpec;
 import com.vaadin.ui.UI;
 
 /**
@@ -50,6 +49,10 @@ public class Translator implements TranslatorSpec {
 				TRANSLATION_FILE_PREFIX, Locale.GERMAN));
 		bundles.put(Locale.ENGLISH.getLanguage(), ResourceBundle.getBundle(
 				TRANSLATION_FILE_PREFIX, Locale.ENGLISH));
+		bundles.put(Locale.FRENCH.getLanguage(), ResourceBundle.getBundle(
+				TRANSLATION_FILE_PREFIX, Locale.FRENCH));
+		bundles.put("es", ResourceBundle.getBundle(TRANSLATION_FILE_PREFIX,
+				new Locale("es")));
 	}
 
 	/**
