@@ -1,6 +1,6 @@
 package com.pathfinder.model.gson;
 
-public class GSON_GetResourceDetail_LEVEL_3_1 {
+public class GsonGetResourceDetailLevel31 {
 	private String label;
 	private String value;
 

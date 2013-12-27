@@ -14,25 +14,25 @@ public class DataLoaderTest {
 	}
 
 	@Test
-	public void RoomsNotNull() {
+	public void roomsNotNullTest() {
 		dataloader.loadAllResources();
 		assertNotNull(dataloader.getAllRooms());
 	}
 
 	@Test
-	public void CoursesNotNull() {
+	public void coursesNotNullTest() {
 		dataloader.loadAllResources();
 		assertNotNull(dataloader.getAllCourses());
 	}
 
 	@Test
-	public void PersonsNotNull() {
+	public void personsNotNullTest() {
 		dataloader.loadAllResources();
 		assertNotNull(dataloader.getAllPersons());
 	}
 
 	@Test
-	public void POIsNotNull() {
+	public void poisNotNullTest() {
 		dataloader.loadAllResources();
 		assertNotNull(dataloader.getAllPois());
 	}

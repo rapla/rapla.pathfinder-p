@@ -2,7 +2,7 @@ package com.pathfinder.model.gson;
 
 import java.util.Arrays;
 
-public class GSON_GetResources_LEVEL_2 {
+public class GsonGetResourcesLevel2 {
 
 	private String name = "";
 	private String link = "";

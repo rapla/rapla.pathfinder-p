@@ -17,10 +17,10 @@ import com.pathfinder.model.CourseModel;
 import com.pathfinder.model.PoiModel;
 import com.pathfinder.model.PersonModel;
 import com.pathfinder.model.RoomModel;
-import com.pathfinder.model.gson.GSON_GetResourceDetail_LEVEL_1;
-import com.pathfinder.model.gson.GSON_GetResourceDetail_LEVEL_3_1;
-import com.pathfinder.model.gson.GSON_GetResources_LEVEL_1;
-import com.pathfinder.model.gson.GSON_GetResources_LEVEL_2;
+import com.pathfinder.model.gson.GsonGetResourceDetailLevel1;
+import com.pathfinder.model.gson.GsonGetResourceDetailLevel31;
+import com.pathfinder.model.gson.GsonGetResourcesLevel1;
+import com.pathfinder.model.gson.GsonGetResourcesLevel2;
 import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.PropertiesKey;
 import com.vaadin.data.util.BeanItemContainer;
@@ -61,14 +61,14 @@ public class DataLoader implements DataLoaderSpec {
 		allPersons = new BeanItemContainer<PersonModel>(PersonModel.class);
 		allPois = new BeanItemContainer<PoiModel>(PoiModel.class);
 
-		List<GSON_GetResources_LEVEL_2> ResourceData;
+		List<GsonGetResourcesLevel2> ResourceData;
 		// get all Rooms, transform from ResourceData to RoomModel
 		// and get the Detail Information
 		ResourceData = gsonGetResources(REQUEST_ROOMS).getResult();
 
 		logger.info(MASSAGE_REQUST_DETAIL_LOADING);
 
-		for (GSON_GetResources_LEVEL_2 room_get : ResourceData) {
+		for (GsonGetResourcesLevel2 room_get : ResourceData) {
 			RoomModel room_save = new RoomModel(room_get.getName(),
 					room_get.getLink(), room_get.getId(),
 					room_get.getSearchTerms(), null, null, null, null);
@@ -84,7 +84,7 @@ public class DataLoader implements DataLoaderSpec {
 
 		logger.info(MASSAGE_REQUST_DETAIL_LOADING);
 
-		for (GSON_GetResources_LEVEL_2 course_get : ResourceData) {
+		for (GsonGetResourcesLevel2 course_get : ResourceData) {
 			CourseModel course_save = new CourseModel(course_get.getName(),
 					course_get.getLink(), course_get.getId(),
 					course_get.getSearchTerms(), null, null, null, null, null);
@@ -100,7 +100,7 @@ public class DataLoader implements DataLoaderSpec {
 
 		logger.info(MASSAGE_REQUST_DETAIL_LOADING);
 
-		for (GSON_GetResources_LEVEL_2 person_get : ResourceData) {
+		for (GsonGetResourcesLevel2 person_get : ResourceData) {
 			PersonModel person_save = new PersonModel(person_get.getName(),
 					person_get.getLink(), person_get.getId(),
 					person_get.getSearchTerms(), null, null, null, null, null,
@@ -117,7 +117,7 @@ public class DataLoader implements DataLoaderSpec {
 
 		logger.info(MASSAGE_REQUST_DETAIL_LOADING);
 
-		for (GSON_GetResources_LEVEL_2 poi_get : ResourceData) {
+		for (GsonGetResourcesLevel2 poi_get : ResourceData) {
 			PoiModel poi_save = new PoiModel(poi_get.getName(),
 					poi_get.getLink(), poi_get.getId(),
 					poi_get.getSearchTerms(), null, null);
@@ -132,9 +132,9 @@ public class DataLoader implements DataLoaderSpec {
 	// should be replaced with the GENERIC TYPE
 	// save the Detail Informations in POIModel
 	private void loadPOIDetail(PoiModel poi) {
-		GSON_GetResourceDetail_LEVEL_1 dataDetail = gsonGetResourceDetail(poi
+		GsonGetResourceDetailLevel1 dataDetail = gsonGetResourceDetail(poi
 				.getId());
-		Map<String, GSON_GetResourceDetail_LEVEL_3_1> atribute = dataDetail
+		Map<String, GsonGetResourceDetailLevel31> atribute = dataDetail
 				.getResult().getAttributeMap();
 
 		if (atribute.get("raumnr") != null)
@@ -148,9 +148,9 @@ public class DataLoader implements DataLoaderSpec {
 
 	// save the Detail Informations in RoomModel
 	private void loadRoomDetail(RoomModel room) {
-		GSON_GetResourceDetail_LEVEL_1 dataDetail = gsonGetResourceDetail(room
+		GsonGetResourceDetailLevel1 dataDetail = gsonGetResourceDetail(room
 				.getId());
-		Map<String, GSON_GetResourceDetail_LEVEL_3_1> atribute = dataDetail
+		Map<String, GsonGetResourceDetailLevel31> atribute = dataDetail
 				.getResult().getAttributeMap();
 
 		if (atribute.get("abteilung") != null)
@@ -169,9 +169,9 @@ public class DataLoader implements DataLoaderSpec {
 	// should be replaced with the GENERIC TYPE
 	// save the Detail Informations in RoomModel
 	private void loadCourseDetail(CourseModel course) {
-		GSON_GetResourceDetail_LEVEL_1 dataDetail = gsonGetResourceDetail(course
+		GsonGetResourceDetailLevel1 dataDetail = gsonGetResourceDetail(course
 				.getId());
-		Map<String, GSON_GetResourceDetail_LEVEL_3_1> atribute = dataDetail
+		Map<String, GsonGetResourceDetailLevel31> atribute = dataDetail
 				.getResult().getAttributeMap();
 
 		if (atribute.get("jahrgang") != null)
@@ -192,9 +192,9 @@ public class DataLoader implements DataLoaderSpec {
 	}
 
 	private void loadPersonDetail(PersonModel person) {
-		GSON_GetResourceDetail_LEVEL_1 dataDetail = gsonGetResourceDetail(person
+		GsonGetResourceDetailLevel1 dataDetail = gsonGetResourceDetail(person
 				.getId());
-		Map<String, GSON_GetResourceDetail_LEVEL_3_1> atribute = dataDetail
+		Map<String, GsonGetResourceDetailLevel31> atribute = dataDetail
 				.getResult().getAttributeMap();
 
 		if (atribute.get("abteilung") != null)
@@ -217,7 +217,7 @@ public class DataLoader implements DataLoaderSpec {
 
 	}
 
-	private GSON_GetResources_LEVEL_1 gsonGetResources(String resource) {
+	private GsonGetResourcesLevel1 gsonGetResources(String resource) {
 
 		try {
 			br = new BufferedReader(new InputStreamReader(new URL(URL_RESOURSE
@@ -230,8 +230,8 @@ public class DataLoader implements DataLoaderSpec {
 			e.printStackTrace();
 		}
 
-		GSON_GetResources_LEVEL_1 ResourceData = new Gson().fromJson(br,
-				GSON_GetResources_LEVEL_1.class);
+		GsonGetResourcesLevel1 ResourceData = new Gson().fromJson(br,
+				GsonGetResourcesLevel1.class);
 
 		if (ResourceData != null) {
 			logger.info("Resource: " + resource + " is loaded");
@@ -242,7 +242,7 @@ public class DataLoader implements DataLoaderSpec {
 
 	}
 
-	private GSON_GetResourceDetail_LEVEL_1 gsonGetResourceDetail(String id) {
+	private GsonGetResourceDetailLevel1 gsonGetResourceDetail(String id) {
 
 		try {
 			br = new BufferedReader(new InputStreamReader(
@@ -256,8 +256,8 @@ public class DataLoader implements DataLoaderSpec {
 			e.printStackTrace();
 		}
 
-		GSON_GetResourceDetail_LEVEL_1 ResourceDetailData = new Gson()
-				.fromJson(br, GSON_GetResourceDetail_LEVEL_1.class);
+		GsonGetResourceDetailLevel1 ResourceDetailData = new Gson()
+				.fromJson(br, GsonGetResourceDetailLevel1.class);
 
 		if (ResourceDetailData != null) {
 			return ResourceDetailData;
