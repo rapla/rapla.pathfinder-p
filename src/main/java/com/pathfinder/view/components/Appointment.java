@@ -18,7 +18,7 @@ import com.vaadin.ui.Notification.Type;
 public class Appointment extends BrowserFrame implements AppointmentSpec {
 
 	private List<AppointmentViewListenerSpec> listener = new ArrayList<AppointmentViewListenerSpec>();
-	private TranslatorSpec translator = Translator.getInstance();
+	private final TranslatorSpec translator = Translator.getInstance();
 
 	public Appointment(String url) {
 		this.setAlternateText(translator

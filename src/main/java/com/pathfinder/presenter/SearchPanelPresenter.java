@@ -6,6 +6,8 @@
 
 package com.pathfinder.presenter;
 
+import java.util.Locale;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,6 +17,7 @@ import com.pathfinder.model.KeyboardModel;
 import com.pathfinder.model.PersonModel;
 import com.pathfinder.model.PoiModel;
 import com.pathfinder.model.RoomModel;
+import com.pathfinder.view.TranslatabelSpec;
 import com.pathfinder.view.components.AccordionView;
 import com.pathfinder.view.components.Keyboard;
 import com.pathfinder.view.components.KeyboardId;
@@ -33,7 +36,7 @@ import com.vaadin.ui.Table;
  * 
  */
 public class SearchPanelPresenter implements KeyboardViewListenerSpec,
-		SearchFieldViewListenerSpec, SearchPanelPresenterSpec {
+		SearchFieldViewListenerSpec, SearchPanelPresenterSpec, TranslatabelSpec {
 
 	private static final Logger logger = LogManager
 			.getLogger(PathfinderUI.class.getName());
@@ -95,8 +98,10 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 		public void itemClick(ItemClickEvent event) {
 			Object object = event.getItemId();
 			if (object instanceof RoomModel) {
-				logger.trace("Room was clicked - ItemID: " + ((RoomModel)object).getName());
-				accordionView.deselectClickedItem((Table)event.getSource(), event.getItemId());
+				logger.trace("Room was clicked - ItemID: "
+						+ ((RoomModel) object).getName());
+				accordionView.deselectClickedItem((Table) event.getSource(),
+						event.getItemId());
 			} else if (object instanceof CourseModel) {
 				logger.trace("Course was clicked");
 			} else if (object instanceof PersonModel) {
@@ -208,5 +213,10 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 		binder.getItemDataSource()
 				.getItemProperty(KeyboardModel.PROPERTY_SEARCHSTRING)
 				.setValue(value);
+	}
+
+	@Override
+	public void updateTranslations(Locale locale) {
+		searchPanel.updateTranslations(locale);
 	}
 }

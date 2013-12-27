@@ -24,7 +24,6 @@ import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
-@SuppressWarnings("serial")
 public class Keyboard extends CustomComponent implements KeyboardSpec,
 		ClickListener {
 
@@ -82,7 +81,6 @@ public class Keyboard extends CustomComponent implements KeyboardSpec,
 		layout.addComponent(row4);
 
 		setCompositionRoot(layout);
-
 	}
 
 	/* Only the presenter registers one listener... */
@@ -138,5 +136,4 @@ public class Keyboard extends CustomComponent implements KeyboardSpec,
 		deleteButton.setCaption(translator.translate(TranslationKeys.DELETE));
 		spaceButton.setCaption(translator.translate(TranslationKeys.SPACE));
 	}
-
 }

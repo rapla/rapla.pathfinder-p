@@ -23,7 +23,7 @@ public class DetailContainer<T> extends CustomComponent implements
 	public DetailContainer(Class<T> beanType, BeanItem<T> beanItem,
 			String imageSource) {
 		this.detailInfo = new DetailInfo<T>(beanType, beanItem);
-		this.detailImage = new DetailImage(imageSource);
+		//this.detailImage = new DetailImage(caption, imageSource);
 		this.buildLayout();
 	}
 
