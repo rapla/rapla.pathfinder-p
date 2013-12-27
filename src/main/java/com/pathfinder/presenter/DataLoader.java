@@ -25,14 +25,24 @@ import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.PropertiesKey;
 import com.vaadin.data.util.BeanItemContainer;
 
+/**
+ * Loads the data from the rapla server
+ * 
+ * @author igor
+ * 
+ */
 public class DataLoader implements DataLoaderSpec {
-	private static final String BASE_URL = ApplicationProperties.getInstance()
+
+	private static final Logger logger = LogManager
+			.getLogger(PathfinderUI.class.getName());
+
+	private final String BASE_URL = ApplicationProperties.getInstance()
 			.getProperty(PropertiesKey.GSON_BASE_URL);
 
-	private static final String URL_RESOURSE = BASE_URL
+	private final String URL_RESOURSE = BASE_URL
 			+ "?method=getResources&jsonrpc=2.0&params=";
 
-	private static final String URL_RESOURSE_DETAIL = BASE_URL
+	private final String URL_RESOURSE_DETAIL = BASE_URL
 			+ "?method=getResource&jsonrpc=2.0&params=";
 
 	private final String REQUEST_PERSONS = "persons";
@@ -45,21 +55,22 @@ public class DataLoader implements DataLoaderSpec {
 	private final String MASSAGE_ERROR_LOADING_URL_RESOURSE = "Error loading URL by loading Resource: ";
 	private final String MASSAGE_ERROR_LOADING_URL_RESOURSE_DETAIL = "Error loading URL by loading ResourceDetail id: ";
 
-	private static final Logger logger = LogManager
-			.getLogger(PathfinderUI.class.getName());
-
 	private BufferedReader br;
-	private static BeanItemContainer<RoomModel> allRooms;
-	private static BeanItemContainer<CourseModel> allCourses;
-	private static BeanItemContainer<PersonModel> allPersons;
-	private static BeanItemContainer<PoiModel> allPois;
+	private final BeanItemContainer<RoomModel> allRooms = new BeanItemContainer<RoomModel>(
+			RoomModel.class);
+	private final BeanItemContainer<CourseModel> allCourses = new BeanItemContainer<CourseModel>(
+			CourseModel.class);
+	private final BeanItemContainer<PersonModel> allPersons = new BeanItemContainer<PersonModel>(
+			PersonModel.class);
+	private final BeanItemContainer<PoiModel> allPois = new BeanItemContainer<PoiModel>(
+			PoiModel.class);
 
 	public void loadAllResources() {
-		// RESET all Data
-		allRooms = new BeanItemContainer<RoomModel>(RoomModel.class);
-		allCourses = new BeanItemContainer<CourseModel>(CourseModel.class);
-		allPersons = new BeanItemContainer<PersonModel>(PersonModel.class);
-		allPois = new BeanItemContainer<PoiModel>(PoiModel.class);
+		// Reset all Data
+		allRooms.removeAllItems();
+		allCourses.removeAllItems();
+		allPersons.removeAllItems();
+		allPois.removeAllItems();
 
 		List<GsonGetResourcesLevel2> ResourceData;
 		// get all Rooms, transform from ResourceData to RoomModel
@@ -126,7 +137,6 @@ public class DataLoader implements DataLoaderSpec {
 		}
 
 		logger.info(MASSAGE_REQUST_DETAIL_LOADED);
-
 	}
 
 	// should be replaced with the GENERIC TYPE
@@ -188,7 +198,6 @@ public class DataLoader implements DataLoaderSpec {
 
 		if (atribute.get("raumnr") != null)
 			course.setRoomNr(atribute.get("raumnr").getValue());
-
 	}
 
 	private void loadPersonDetail(PersonModel person) {
@@ -214,11 +223,9 @@ public class DataLoader implements DataLoaderSpec {
 
 		if (atribute.get("raumnr") != null)
 			person.setRoomNr(atribute.get("raumnr").getValue());
-
 	}
 
 	private GsonGetResourcesLevel1 gsonGetResources(String resource) {
-
 		try {
 			br = new BufferedReader(new InputStreamReader(new URL(URL_RESOURSE
 					+ "%5B%22" + resource + "%22%2C%22%22%5D").openStream()));
@@ -239,11 +246,9 @@ public class DataLoader implements DataLoaderSpec {
 		} else {
 			return null;
 		}
-
 	}
 
 	private GsonGetResourceDetailLevel1 gsonGetResourceDetail(String id) {
-
 		try {
 			br = new BufferedReader(new InputStreamReader(
 					new URL(URL_RESOURSE_DETAIL + "%5B%22" + id + "%22%5D")
@@ -256,8 +261,8 @@ public class DataLoader implements DataLoaderSpec {
 			e.printStackTrace();
 		}
 
-		GsonGetResourceDetailLevel1 ResourceDetailData = new Gson()
-				.fromJson(br, GsonGetResourceDetailLevel1.class);
+		GsonGetResourceDetailLevel1 ResourceDetailData = new Gson().fromJson(
+				br, GsonGetResourceDetailLevel1.class);
 
 		if (ResourceDetailData != null) {
 			return ResourceDetailData;
@@ -282,5 +287,4 @@ public class DataLoader implements DataLoaderSpec {
 	public BeanItemContainer<PoiModel> getAllPois() {
 		return allPois;
 	}
-
 }
