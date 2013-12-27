@@ -49,16 +49,18 @@ public class DataLoader implements DataLoaderSpec {
 			.getLogger(PathfinderUI.class.getName());
 
 	private BufferedReader br;
-	private static BeanItemContainer<RoomModel> allRooms = new BeanItemContainer<RoomModel>(
-			RoomModel.class);
-	private static BeanItemContainer<CourseModel> allCourses = new BeanItemContainer<CourseModel>(
-			CourseModel.class);
-	private static BeanItemContainer<PersonModel> allPersons = new BeanItemContainer<PersonModel>(
-			PersonModel.class);
-	private static BeanItemContainer<PoiModel> allPois = new BeanItemContainer<PoiModel>(
-			PoiModel.class);
+	private static BeanItemContainer<RoomModel> allRooms;
+	private static BeanItemContainer<CourseModel> allCourses;
+	private static BeanItemContainer<PersonModel> allPersons;
+	private static BeanItemContainer<PoiModel> allPois;
 
 	public void loadAllResources() {
+		// RESET all Data
+		allRooms = new BeanItemContainer<RoomModel>(RoomModel.class);
+		allCourses = new BeanItemContainer<CourseModel>(CourseModel.class);
+		allPersons = new BeanItemContainer<PersonModel>(PersonModel.class);
+		allPois = new BeanItemContainer<PoiModel>(PoiModel.class);
+
 		List<GSON_GetResources_LEVEL_2> ResourceData;
 		// get all Rooms, transform from ResourceData to RoomModel
 		// and get the Detail Information
