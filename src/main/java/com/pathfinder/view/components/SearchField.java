@@ -19,14 +19,14 @@ public class SearchField extends CustomComponent implements SearchFieldSpec {
 	private final Button deleteAll = new Button();
 	private final TextField searchField = new TextField();
 
-	private ThemeResource deleteResource = new ThemeResource(
+	private final ThemeResource deleteResource = new ThemeResource(
 			"icon/DeleteAll.png");
-	private ThemeResource magnifierResource = new ThemeResource(
+	private final ThemeResource magnifierResource = new ThemeResource(
 			"icon/Magnifier.png");
 
 	private final HorizontalLayout horizontal = new HorizontalLayout();
 
-	private TranslatorSpec translator = Translator.getInstance();
+	private final TranslatorSpec translator = Translator.getInstance();
 
 	public SearchField() {
 		this.init();

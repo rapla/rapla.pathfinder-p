@@ -39,7 +39,8 @@ public class AccordionView extends CustomComponent implements AccordionSpec {
 
 	private final TranslatorSpec translator = Translator.getInstance();
 
-	private ThemeResource orderlines = new ThemeResource("icon/orderlines.png");
+	private final ThemeResource orderlines = new ThemeResource(
+			"icon/orderlines.png");
 	private String accordionCaptionRooms = new String(
 			translator.translate(TranslationKeys.ROOMS));
 	private String accordionCaptionCourses = new String(

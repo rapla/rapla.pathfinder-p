@@ -5,6 +5,8 @@ import static de.vksi.c4j.Condition.old;
 import static de.vksi.c4j.Condition.postCondition;
 import static de.vksi.c4j.Condition.preCondition;
 
+import java.util.Locale;
+
 import com.pathfinder.model.CourseModel;
 import com.pathfinder.model.PersonModel;
 import com.pathfinder.model.PoiModel;
@@ -122,5 +124,11 @@ public class SearchPanelPresenterContract implements SearchPanelPresenterSpec {
 		if (postCondition()) {
 		}
 		return null;
+	}
+
+	@Override
+	public void updateTranslations(Locale locale) {
+		// TODO Auto-generated method stub
+		
 	}
 }

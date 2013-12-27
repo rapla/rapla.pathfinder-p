@@ -7,6 +7,8 @@ import com.pathfinder.model.CourseModel;
 import com.pathfinder.model.PersonModel;
 import com.pathfinder.model.PoiModel;
 import com.pathfinder.model.RoomModel;
+import com.pathfinder.util.translation.TranslationKeys;
+import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.widgetset.DateTime;
 import com.pathfinder.view.components.DateTimeSpec;
 import com.pathfinder.view.components.FreeRoom;
@@ -19,10 +21,15 @@ import com.pathfinder.view.layout.DesktopLayout;
 import com.pathfinder.view.layout.DesktopLayoutSpec;
 import com.pathfinder.view.listener.DesktopLayoutViewListenerSpec;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.server.Page;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomComponent;
+import com.vaadin.ui.UI;
 
 /**
- * To see something when you build the project
+ * The presenter for the desktop/stele view
  * 
  * @author alexh
  * 
@@ -49,23 +56,30 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 			searchPanelPresenter.getSearchPanel());
 
 	public DesktopPresenter() {
-		desktopLayout.addMainLayoutViewListener(this);
+		menuBar.addClickListenerGermanButton(new LanguageButtonClickedListener());
+		menuBar.addClickListenerEnglishButton(new LanguageButtonClickedListener());
 	}
 
+	// TODO
 	// class ResourceClickListener extends
 	// {
 	// Timer timer = new Timer();
 	// timer.schedule(new RespawnDesktopLayoutTimer(), 60000);
 	// }
 
-	@Override
-	public CustomComponent getDesktopLayoutView() {
-		return (DesktopLayout) desktopLayout;
-	}
-
-	@Override
-	public void languageChanged(Locale locale) {
-		desktopLayout.updateTranslations(locale);
+	class LanguageButtonClickedListener implements ClickListener {
+		@Override
+		public void buttonClick(ClickEvent event) {
+			Locale locale = Locale.GERMAN;
+			Button clickedButton = (Button) event.getSource();
+			if (clickedButton == menuBar.getGermanButton()) {
+				locale = Locale.GERMAN;
+			} else if (clickedButton == menuBar.getEnglishButton()) {
+				locale = Locale.ENGLISH;
+			}
+			UI.getCurrent().setLocale(locale);
+			languageChanged(locale);
+		}
 	}
 
 	class RespawnDesktopLayoutTimer extends TimerTask {
@@ -96,5 +110,20 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	@Override
 	public void setPoiContainer(BeanItemContainer<PoiModel> beanItemContainer) {
 		searchPanelPresenter.setPoiContainer(beanItemContainer);
+	}
+
+	@Override
+	public void languageChanged(Locale locale) {
+		infoPanel.updateTranslations(locale);
+		// TODO detailContainer.updateTranslations(locale);
+		searchPanelPresenter.updateTranslations(locale);
+		menuBar.updateTranslations(locale);
+		Page.getCurrent().setTitle(
+				Translator.getInstance().translate(TranslationKeys.APP_TITLE));
+	}
+
+	@Override
+	public CustomComponent getDesktopLayoutView() {
+		return (DesktopLayout) desktopLayout;
 	}
 }

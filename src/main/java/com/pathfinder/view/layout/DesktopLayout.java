@@ -1,19 +1,11 @@
 package com.pathfinder.view.layout;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
-import com.pathfinder.util.translation.TranslationKeys;
-import com.pathfinder.util.translation.Translator;
-import com.pathfinder.view.TranslatabelSpec;
 import com.pathfinder.view.components.MenuBar;
 import com.pathfinder.view.container.DetailContainer;
 import com.pathfinder.view.container.InfoPanel;
 import com.pathfinder.view.container.SearchPanel;
-import com.pathfinder.view.listener.DesktopLayoutViewListenerSpec;
-import com.pathfinder.view.listener.MenuBarViewListenerSpec;
-import com.vaadin.server.Page;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.VerticalLayout;
 
@@ -23,8 +15,7 @@ import com.vaadin.ui.VerticalLayout;
  * @author alexh
  * 
  */
-public class DesktopLayout extends CustomComponent implements
-		DesktopLayoutSpec, MenuBarViewListenerSpec, TranslatabelSpec {
+public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec {
 	private InfoPanel infoPanel = null;
 	private MenuBar menuBar = null;
 	private SearchPanel searchPanel = null;
@@ -32,8 +23,6 @@ public class DesktopLayout extends CustomComponent implements
 	private DetailContainer<?> detailContainer = null;
 
 	private final VerticalLayout layout = new VerticalLayout();
-
-	private List<DesktopLayoutViewListenerSpec> listener = new ArrayList<DesktopLayoutViewListenerSpec>();
 
 	public DesktopLayout(InfoPanel infoPanel, MenuBar menuBar,
 			SearchPanel searchPanel) {
@@ -52,7 +41,6 @@ public class DesktopLayout extends CustomComponent implements
 		this.layout.addComponent(infoPanel);
 		this.layout.addComponent(searchPanel);
 		this.layout.addComponent(menuBar);
-		menuBar.addMenuBarListener(this);
 	}
 
 	@Override
@@ -73,24 +61,7 @@ public class DesktopLayout extends CustomComponent implements
 	}
 
 	@Override
-	public void addMainLayoutViewListener(DesktopLayoutViewListenerSpec listener) {
-		this.listener.add(listener);
-	}
-
-	@Override
-	public void languageChanged(Locale locale) {
-		for (DesktopLayoutViewListenerSpec mlListener : listener) {
-			mlListener.languageChanged(locale);
-		}
-	}
-
-	@Override
 	public void updateTranslations(Locale locale) {
-		infoPanel.updateTranslations(locale);
-		// detailContainer.updateTranslations(locale);
-		searchPanel.updateTranslations(locale);
-		menuBar.updateTranslations(locale);
-		Page.getCurrent().setTitle(
-				Translator.getInstance().translate(TranslationKeys.APP_TITLE));
+		// TODO Auto-generated method stub
 	}
 }

@@ -18,6 +18,7 @@ import com.vaadin.ui.CustomComponent;
  */
 public class DetailInfo<T> extends CustomComponent implements DetailInfoSpec {
 	private BeanItem<T> beanItem = null;
+	
 	private List<DetailViewListenerSpec> listener = new ArrayList<DetailViewListenerSpec>();
 
 	public DetailInfo(Class<T> beanType, BeanItem<T> beanItem) {

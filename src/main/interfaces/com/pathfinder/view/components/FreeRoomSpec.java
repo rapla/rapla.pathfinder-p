@@ -9,8 +9,6 @@ import com.pathfinder.view.listener.FreeRoomViewListenerSpec;
  * 
  */
 public interface FreeRoomSpec extends ComponentSpec {
-	void buildLayout();
-
 	void refreshFreeRooms();
 
 	void addFreeRoomListener(FreeRoomViewListenerSpec listener);
