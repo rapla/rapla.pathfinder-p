@@ -135,11 +135,13 @@ public class PathfinderServlet extends VaadinServlet {
 	private void scheduleDataLoading() {
 
 		// Load Data once synchronously
+		// TODO Why not directly in the dataloaderTask and start in 0,001 seconds?
 		dataLoader.loadAllResources();
 
 		TimerTask dataLoaderTask = new TimerTask() {
 			@Override
 			public void run() {
+				// TODO Why are these trace messages not shown?
 				logger.trace("Get new data from the RAPLA-Server");
 				dataLoader.loadAllResources();
 				logger.trace("Updated data from the RAPLA-Server");

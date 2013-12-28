@@ -53,6 +53,7 @@ public class DataLoader implements DataLoaderSpec {
 	private final String MASSAGE_ERROR_LOADING_URL_RESOURSE_DETAIL = "Error loading URL by loading ResourceDetail id: ";
 
 	private BufferedReader br;
+	// TODO Why does this not work without static oO?
 	private static BeanItemContainer<RoomModel> roomContainer = new BeanItemContainer<RoomModel>(
 			RoomModel.class);
 	private static BeanItemContainer<CourseModel> courseContainer = new BeanItemContainer<CourseModel>(
@@ -288,7 +289,6 @@ public class DataLoader implements DataLoaderSpec {
 
 	@Override
 	public BeanItemContainer<RoomModel> getRoomContainer() {
-		System.out.println(roomContainer.getItemIds());
 		return roomContainer;
 	}
 

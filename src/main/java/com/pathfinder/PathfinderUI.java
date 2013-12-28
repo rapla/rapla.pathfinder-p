@@ -34,7 +34,6 @@ public class PathfinderUI extends UI {
 
 	@Override
 	protected void init(VaadinRequest request) {
-
 		setUiLocale(request.getLocale());
 
 		setErrorHandler(new PathfinderErrorHandler());
@@ -43,6 +42,11 @@ public class PathfinderUI extends UI {
 				Translator.getInstance().translate(TranslationKeys.APP_TITLE));
 
 		this.setPrimaryStyleName("main");
+
+		this.buildLayout(request);
+	}
+
+	private void buildLayout(VaadinRequest request) {
 		/* Browser data */
 		logger.trace(">> Browser Data <<");
 
@@ -93,13 +97,11 @@ public class PathfinderUI extends UI {
 	}
 
 	private void setData() {
-
 		DataLoader dataLoader = new DataLoader();
 		desktopPresenter.setRoomContainer(dataLoader.getRoomContainer());
 		desktopPresenter.setCourseContainer(dataLoader.getCourseContainer());
 		desktopPresenter.setPersonContainer(dataLoader.getPersonContainer());
 		desktopPresenter.setPoiContainer(dataLoader.getPoiContainer());
-
 	}
 
 	/**
@@ -115,6 +117,5 @@ public class PathfinderUI extends UI {
 		} else {
 			setLocale(Translator.getInstance().getFallbackLocale());
 		}
-
 	}
 }
