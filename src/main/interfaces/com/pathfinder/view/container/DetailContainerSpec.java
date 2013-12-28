@@ -1,17 +1,17 @@
 package com.pathfinder.view.container;
 
-import com.pathfinder.model.ResourceModel;
+import com.pathfinder.model.CourseModel;
+import com.pathfinder.model.PersonModel;
+import com.pathfinder.model.PoiModel;
+import com.pathfinder.model.RoomModel;
 import com.pathfinder.view.components.ComponentSpec;
-import com.pathfinder.view.listener.DetailViewListenerSpec;
 
 public interface DetailContainerSpec extends ComponentSpec {
-	void addRoomDetails(Class<ResourceModel> clazz);
+	void addRoomDetails(Class<RoomModel> clazz);
 
-	void addPersonDetails(Class<ResourceModel> clazz);
+	void addCourseDetails(Class<CourseModel> clazz);
 
-	void addCourseDetails(Class<ResourceModel> clazz);
+	void addPersonDetails(Class<PersonModel> clazz);
 
-	void addPoiDetails(Class<ResourceModel> clazz);
-
-	void addDetailContainerViewListener(DetailViewListenerSpec listener);
+	void addPoiDetails(Class<PoiModel> clazz);
 }

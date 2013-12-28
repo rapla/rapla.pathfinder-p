@@ -1,13 +1,13 @@
 package com.pathfinder.view.container;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
-import com.pathfinder.model.ResourceModel;
+import com.pathfinder.model.CourseModel;
+import com.pathfinder.model.PersonModel;
+import com.pathfinder.model.PoiModel;
+import com.pathfinder.model.RoomModel;
 import com.pathfinder.view.components.DetailImage;
 import com.pathfinder.view.components.DetailInfo;
-import com.pathfinder.view.listener.DetailViewListenerSpec;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.VerticalLayout;
@@ -18,12 +18,11 @@ public class DetailContainer<T> extends CustomComponent implements
 	private final VerticalLayout vertical = new VerticalLayout();
 	private DetailInfo<?> detailInfo = null;
 	private DetailImage detailImage = null;
-	private List<DetailViewListenerSpec> listener = new ArrayList<DetailViewListenerSpec>();
 
 	public DetailContainer(Class<T> beanType, BeanItem<T> beanItem,
 			String imageSource) {
 		this.detailInfo = new DetailInfo<T>(beanType, beanItem);
-		//this.detailImage = new DetailImage(caption, imageSource);
+		// this.detailImage = new DetailImage(caption, imageSource);
 		this.buildLayout();
 	}
 
@@ -37,38 +36,27 @@ public class DetailContainer<T> extends CustomComponent implements
 	}
 
 	@Override
-	public void addRoomDetails(Class<ResourceModel> clazz) {
+	public void addRoomDetails(Class<RoomModel> clazz) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
-	public void addPersonDetails(Class<ResourceModel> clazz) {
+	public void addCourseDetails(Class<CourseModel> clazz) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
-	public void addCourseDetails(Class<ResourceModel> clazz) {
+	public void addPersonDetails(Class<PersonModel> clazz) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
-	public void addPoiDetails(Class<ResourceModel> clazz) {
+	public void addPoiDetails(Class<PoiModel> clazz) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void updateTranslations(Locale locale) {
 		// TODO Auto-generated method stub
-
 	}
-
-	@Override
-	public void addDetailContainerViewListener(DetailViewListenerSpec listener) {
-		this.listener.add(listener);
-	}
-
 }
