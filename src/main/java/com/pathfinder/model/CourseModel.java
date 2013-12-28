@@ -14,7 +14,7 @@ public class CourseModel extends ResourceModel {
 	public CourseModel(String name, String link, String id,
 			String[] searchTerms, String vintage, String department,
 			String course, String picture, String roomNr) {
-		super(name, link, id, searchTerms, id);
+		super(id, name, link, searchTerms, roomNr);
 		this.vintage = vintage;
 		this.department = department;
 		this.course = course;

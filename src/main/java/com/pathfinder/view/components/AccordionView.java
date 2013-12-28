@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import com.pathfinder.model.CourseModel;
 import com.pathfinder.model.PersonModel;
 import com.pathfinder.model.PoiModel;
+import com.pathfinder.model.ResourceModel;
 import com.pathfinder.model.RoomModel;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
@@ -56,11 +57,11 @@ public class AccordionView extends CustomComponent implements AccordionSpec {
 	private final Table personTable = new Table();
 	private final Table poiTable = new Table();
 
-	private final String[] visibleRoomTableColumns = new String[] { "name" };
-	private final String[] visibleCourseTableColumns = new String[] { "name" };
-	private final String[] visiblePersonTableColumns = new String[] { "name" };
-	private final String[] visiblePoiTableColumns = new String[] { "name",
-			"roomNr" };
+	private final String[] visibleRoomTableColumns = new String[] { ResourceModel.PROPERTY_NAME };
+	private final String[] visibleCourseTableColumns = new String[] { ResourceModel.PROPERTY_NAME };
+	private final String[] visiblePersonTableColumns = new String[] { ResourceModel.PROPERTY_NAME };
+	private final String[] visiblePoiTableColumns = new String[] {
+			ResourceModel.PROPERTY_NAME, ResourceModel.PROPERTY_ROOMNR };
 
 	private final BeanItemContainer<RoomModel> roomContainer = new BeanItemContainer<RoomModel>(
 			RoomModel.class);

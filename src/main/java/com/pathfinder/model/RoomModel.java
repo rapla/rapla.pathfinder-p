@@ -13,10 +13,10 @@ public class RoomModel extends ResourceModel {
 
 	public RoomModel(String name, String link, String id, String[] searchTerms,
 			String roomNr, String roomType, String course, String department) {
-		super(name, link, id, searchTerms, id);
-		this.roomType = roomType;
-		this.course = course;
-		this.department = department;
+		super(id, name, link, searchTerms, roomNr);
+		this.setRoomType(roomType);
+		this.setCourse(course);
+		this.setDepartment(department);
 	}
 
 	public String getDepartment() {

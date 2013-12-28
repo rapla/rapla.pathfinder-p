@@ -7,8 +7,8 @@ public class PoiModel extends ResourceModel {
 
 	public PoiModel(String name, String link, String id, String[] searchTerms,
 			String roomNr, String picture) {
-		super(name, link, id, searchTerms, id);
-		this.picture = picture;
+		super(id, name, link, searchTerms, roomNr);
+		this.setPicture(picture);
 	}
 
 	public String getPicture() {

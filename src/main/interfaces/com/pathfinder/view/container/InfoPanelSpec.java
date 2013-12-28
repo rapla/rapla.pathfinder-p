@@ -1,7 +1,6 @@
 package com.pathfinder.view.container;
 
 import com.pathfinder.view.ViewSpec;
-import com.pathfinder.view.listener.InfoPanelViewListenerSpec;
 
 /**
  * InfoPanelSpec
@@ -10,5 +9,4 @@ import com.pathfinder.view.listener.InfoPanelViewListenerSpec;
  * 
  */
 public interface InfoPanelSpec extends ViewSpec {
-	void addInfoPanelViewListener(InfoPanelViewListenerSpec listener);
 }

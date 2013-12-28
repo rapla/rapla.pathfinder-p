@@ -17,12 +17,12 @@ public class PersonModel extends ResourceModel {
 	public PersonModel(String name, String link, String id,
 			String[] searchTerms, String department, String course,
 			String email, String picture, String telephone, String roomNr) {
-		super(name, link, id, searchTerms, id);
-		this.department = department;
-		this.course = course;
-		this.email = email;
-		this.picture = picture;
-		this.telephone = telephone;
+		super(id, name, link, searchTerms, roomNr);
+		this.setDepartment(department);
+		this.setCourse(course);
+		this.setEmail(email);
+		this.setPicture(picture);
+		this.setTelephone(telephone);
 	}
 
 	public String getDepartment() {
