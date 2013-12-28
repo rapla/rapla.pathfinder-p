@@ -5,17 +5,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.google.gson.Gson;
-import com.pathfinder.PathfinderUI;
 import com.pathfinder.model.CourseModel;
-import com.pathfinder.model.PoiModel;
 import com.pathfinder.model.PersonModel;
+import com.pathfinder.model.PoiModel;
 import com.pathfinder.model.RoomModel;
 import com.pathfinder.model.gson.GsonGetResourceDetailLevel1;
 import com.pathfinder.model.gson.GsonGetResourceDetailLevel31;
@@ -32,17 +30,13 @@ import com.vaadin.data.util.BeanItemContainer;
  * 
  */
 public class DataLoader implements DataLoaderSpec {
-
-	private static final Logger logger = LogManager
-			.getLogger(PathfinderUI.class.getName());
-
-	private final String BASE_URL = ApplicationProperties.getInstance()
+	private static final String BASE_URL = ApplicationProperties.getInstance()
 			.getProperty(PropertiesKey.GSON_BASE_URL);
 
-	private final String URL_RESOURSE = BASE_URL
+	private static final String URL_RESOURSE = BASE_URL
 			+ "?method=getResources&jsonrpc=2.0&params=";
 
-	private final String URL_RESOURSE_DETAIL = BASE_URL
+	private static final String URL_RESOURSE_DETAIL = BASE_URL
 			+ "?method=getResource&jsonrpc=2.0&params=";
 
 	private final String REQUEST_PERSONS = "persons";
@@ -55,88 +49,95 @@ public class DataLoader implements DataLoaderSpec {
 	private final String MASSAGE_ERROR_LOADING_URL_RESOURSE = "Error loading URL by loading Resource: ";
 	private final String MASSAGE_ERROR_LOADING_URL_RESOURSE_DETAIL = "Error loading URL by loading ResourceDetail id: ";
 
+	private static final Logger logger = LogManager.getLogger(DataLoader.class);
+
 	private BufferedReader br;
-	private final BeanItemContainer<RoomModel> allRooms = new BeanItemContainer<RoomModel>(
-			RoomModel.class);
-	private final BeanItemContainer<CourseModel> allCourses = new BeanItemContainer<CourseModel>(
-			CourseModel.class);
-	private final BeanItemContainer<PersonModel> allPersons = new BeanItemContainer<PersonModel>(
-			PersonModel.class);
-	private final BeanItemContainer<PoiModel> allPois = new BeanItemContainer<PoiModel>(
-			PoiModel.class);
+	private static BeanItemContainer<RoomModel> allRooms;
+	private static BeanItemContainer<CourseModel> allCourses;
+	private static BeanItemContainer<PersonModel> allPersons;
+	private static BeanItemContainer<PoiModel> allPois;
 
 	public void loadAllResources() {
-		// Reset all Data
-		allRooms.removeAllItems();
-		allCourses.removeAllItems();
-		allPersons.removeAllItems();
-		allPois.removeAllItems();
-
-		List<GsonGetResourcesLevel2> ResourceData;
-		// get all Rooms, transform from ResourceData to RoomModel
-		// and get the Detail Information
-		ResourceData = gsonGetResources(REQUEST_ROOMS).getResult();
+		// RESET all Data
+		allRooms = new BeanItemContainer<RoomModel>(RoomModel.class);
+		allCourses = new BeanItemContainer<CourseModel>(CourseModel.class);
+		allPersons = new BeanItemContainer<PersonModel>(PersonModel.class);
+		allPois = new BeanItemContainer<PoiModel>(PoiModel.class);
 
 		logger.info(MASSAGE_REQUST_DETAIL_LOADING);
 
-		for (GsonGetResourcesLevel2 room_get : ResourceData) {
-			RoomModel room_save = new RoomModel(room_get.getName(),
-					room_get.getLink(), room_get.getId(),
-					room_get.getSearchTerms(), null, null, null, null);
-			allRooms.addItem(room_save);
-			loadRoomDetail(room_save);
-		}
+		// get all Rooms, transform from ResourceData to RoomModel
+		// and get the Detail Information
+		GsonGetResourcesLevel1 gsonGetResourcesLevel1 = gsonGetResources(REQUEST_ROOMS);
+
+		if (gsonGetResourcesLevel1 != null)
+			for (GsonGetResourcesLevel2 roomGet : gsonGetResourcesLevel1
+					.getResult()) {
+				RoomModel room_save = new RoomModel(roomGet.getName(),
+						roomGet.getLink(), roomGet.getId(),
+						roomGet.getSearchTerms(), null, null, null, null);
+				allRooms.addItem(room_save);
+				loadRoomDetail(room_save);
+			}
 
 		logger.info(MASSAGE_REQUST_DETAIL_LOADED);
+
+		logger.info(MASSAGE_REQUST_DETAIL_LOADING);
 
 		// get all Courses, transform from ResourceData to CourseModel
 		// and get the Detail Information
-		ResourceData = gsonGetResources(REQUEST_COURSES).getResult();
+		gsonGetResourcesLevel1 = gsonGetResources(REQUEST_COURSES);
 
-		logger.info(MASSAGE_REQUST_DETAIL_LOADING);
-
-		for (GsonGetResourcesLevel2 course_get : ResourceData) {
-			CourseModel course_save = new CourseModel(course_get.getName(),
-					course_get.getLink(), course_get.getId(),
-					course_get.getSearchTerms(), null, null, null, null, null);
-			allCourses.addItem(course_save);
-			loadCourseDetail(course_save);
-		}
+		if (gsonGetResourcesLevel1 != null)
+			for (GsonGetResourcesLevel2 courseGet : gsonGetResourcesLevel1
+					.getResult()) {
+				CourseModel course_save = new CourseModel(courseGet.getName(),
+						courseGet.getLink(), courseGet.getId(),
+						courseGet.getSearchTerms(), null, null, null, null,
+						null);
+				allCourses.addItem(course_save);
+				loadCourseDetail(course_save);
+			}
 
 		logger.info(MASSAGE_REQUST_DETAIL_LOADED);
+
+		logger.info(MASSAGE_REQUST_DETAIL_LOADING);
 
 		// get all Persons, transform from ResourceData to PersoneModel
 		// and get the Detail Information
-		ResourceData = gsonGetResources(REQUEST_PERSONS).getResult();
+		gsonGetResourcesLevel1 = gsonGetResources(REQUEST_PERSONS);
 
-		logger.info(MASSAGE_REQUST_DETAIL_LOADING);
-
-		for (GsonGetResourcesLevel2 person_get : ResourceData) {
-			PersonModel person_save = new PersonModel(person_get.getName(),
-					person_get.getLink(), person_get.getId(),
-					person_get.getSearchTerms(), null, null, null, null, null,
-					null);
-			allPersons.addItem(person_save);
-			loadPersonDetail(person_save);
-		}
+		if (gsonGetResourcesLevel1 != null)
+			for (GsonGetResourcesLevel2 personGet : gsonGetResourcesLevel1
+					.getResult()) {
+				PersonModel person_save = new PersonModel(personGet.getName(),
+						personGet.getLink(), personGet.getId(),
+						personGet.getSearchTerms(), null, null, null, null,
+						null, null);
+				allPersons.addItem(person_save);
+				loadPersonDetail(person_save);
+			}
 
 		logger.info(MASSAGE_REQUST_DETAIL_LOADED);
+
+		logger.info(MASSAGE_REQUST_DETAIL_LOADING);
 
 		// get all POIs, transform from ResourceData to POIModel
 		// and get the Detail Information
-		ResourceData = gsonGetResources(REQUEST_POIS).getResult();
+		gsonGetResourcesLevel1 = gsonGetResources(REQUEST_POIS);
 
-		logger.info(MASSAGE_REQUST_DETAIL_LOADING);
-
-		for (GsonGetResourcesLevel2 poi_get : ResourceData) {
-			PoiModel poi_save = new PoiModel(poi_get.getName(),
-					poi_get.getLink(), poi_get.getId(),
-					poi_get.getSearchTerms(), null, null);
-			allPois.addItem(poi_save);
-			loadPOIDetail(poi_save);
-		}
+		if (gsonGetResourcesLevel1 != null)
+			for (GsonGetResourcesLevel2 poiGet : gsonGetResourcesLevel1
+					.getResult()) {
+				PoiModel poi_save = new PoiModel(poiGet.getName(),
+						poiGet.getLink(), poiGet.getId(),
+						poiGet.getSearchTerms(), null, null);
+				allPois.addItem(poi_save);
+				loadPOIDetail(poi_save);
+			}
 
 		logger.info(MASSAGE_REQUST_DETAIL_LOADED);
+
 	}
 
 	// should be replaced with the GENERIC TYPE
@@ -198,6 +199,7 @@ public class DataLoader implements DataLoaderSpec {
 
 		if (atribute.get("raumnr") != null)
 			course.setRoomNr(atribute.get("raumnr").getValue());
+
 	}
 
 	private void loadPersonDetail(PersonModel person) {
@@ -223,18 +225,20 @@ public class DataLoader implements DataLoaderSpec {
 
 		if (atribute.get("raumnr") != null)
 			person.setRoomNr(atribute.get("raumnr").getValue());
+
 	}
 
 	private GsonGetResourcesLevel1 gsonGetResources(String resource) {
+
 		try {
 			br = new BufferedReader(new InputStreamReader(new URL(URL_RESOURSE
 					+ "%5B%22" + resource + "%22%2C%22%22%5D").openStream()));
 		} catch (MalformedURLException e) {
-			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURSE + resource);
-			e.printStackTrace();
+			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURSE + resource, e);
+			return null;
 		} catch (IOException e) {
-			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURSE + resource);
-			e.printStackTrace();
+			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURSE + resource, e);
+			return null;
 		}
 
 		GsonGetResourcesLevel1 ResourceData = new Gson().fromJson(br,
@@ -246,19 +250,21 @@ public class DataLoader implements DataLoaderSpec {
 		} else {
 			return null;
 		}
+
 	}
 
 	private GsonGetResourceDetailLevel1 gsonGetResourceDetail(String id) {
+
 		try {
 			br = new BufferedReader(new InputStreamReader(
 					new URL(URL_RESOURSE_DETAIL + "%5B%22" + id + "%22%5D")
 							.openStream()));
 		} catch (MalformedURLException e) {
-			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURSE_DETAIL + id);
-			e.printStackTrace();
+			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURSE_DETAIL + id, e);
+			return null;
 		} catch (IOException e) {
-			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURSE_DETAIL + id);
-			e.printStackTrace();
+			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURSE_DETAIL + id, e);
+			return null;
 		}
 
 		GsonGetResourceDetailLevel1 ResourceDetailData = new Gson().fromJson(
@@ -287,4 +293,5 @@ public class DataLoader implements DataLoaderSpec {
 	public BeanItemContainer<PoiModel> getAllPois() {
 		return allPois;
 	}
+
 }

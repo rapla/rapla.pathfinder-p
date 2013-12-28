@@ -1,8 +1,19 @@
 package com.pathfinder;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.pathfinder.presenter.DataLoader;
+import com.pathfinder.presenter.DataLoaderSpec;
+import com.pathfinder.util.properties.ApplicationProperties;
+import com.pathfinder.util.properties.ApplicationPropertiesSpec;
+import com.pathfinder.util.properties.PropertiesKey;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.BootstrapFragmentResponse;
 import com.vaadin.server.BootstrapListener;
@@ -15,6 +26,7 @@ import com.vaadin.server.SystemMessagesInfo;
 import com.vaadin.server.SystemMessagesProvider;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.server.VaadinServletService;
+import com.vaadin.ui.UI;
 
 /**
  * Default Servlet and entry point for the Application
@@ -25,6 +37,14 @@ import com.vaadin.server.VaadinServletService;
 @WebServlet(value = "/*", asyncSupported = true)
 @VaadinServletConfiguration(productionMode = false, ui = PathfinderUI.class, widgetset = "com.pathfinder.util.widgetset.PathfinderWidgetset")
 public class PathfinderServlet extends VaadinServlet {
+
+	private static final Logger logger = LogManager
+			.getLogger(PathfinderServlet.class);
+
+	private ApplicationPropertiesSpec properties = ApplicationProperties
+			.getInstance();
+
+	private final DataLoaderSpec dataLoader = new DataLoader();
 
 	/*
 	 * (non-Javadoc)
@@ -38,6 +58,8 @@ public class PathfinderServlet extends VaadinServlet {
 		this.setDefaultSystemMessages(getService());
 		// TODO This method should only be called if the client is the Stele
 		this.addMetaTagForIE10Mode();
+
+		this.scheduleDataLoading();
 	}
 
 	/**
@@ -105,5 +127,31 @@ public class PathfinderServlet extends VaadinServlet {
 						});
 			}
 		});
+	}
+
+	/**
+	 * Load Data once and start timer to load data asynchronously after specific
+	 * interval
+	 */
+	private void scheduleDataLoading() {
+
+		// Load Data once synchronously
+		dataLoader.loadAllResources();
+
+		TimerTask dataLoaderTask = new TimerTask() {
+			@Override
+			public void run() {
+				logger.trace("Get new data from the RAPLA-Server");
+				synchronized (UI.getCurrent()) {
+					dataLoader.loadAllResources();
+				}
+				logger.trace("Updated data from the RAPLA-Server");
+			}
+		};
+
+		// Start in 0,001 seconds, is repeated every day (24hours)
+		new Timer().schedule(dataLoaderTask,
+				properties.getIntProperty(PropertiesKey.DATA_LOAD_INTERVALL));
+
 	}
 }

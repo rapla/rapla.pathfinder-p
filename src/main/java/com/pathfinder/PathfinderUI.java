@@ -3,8 +3,6 @@ package com.pathfinder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,14 +10,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.pathfinder.presenter.DataLoader;
-import com.pathfinder.presenter.DataLoaderSpec;
 import com.pathfinder.presenter.DesktopPresenter;
 import com.pathfinder.presenter.DesktopPresenterSpec;
 import com.pathfinder.presenter.MobilePresenter;
 import com.pathfinder.presenter.MobilePresenterSpec;
-import com.pathfinder.util.properties.ApplicationProperties;
-import com.pathfinder.util.properties.ApplicationPropertiesSpec;
-import com.pathfinder.util.properties.PropertiesKey;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.vaadin.annotations.Theme;
@@ -35,24 +29,19 @@ public class PathfinderUI extends UI {
 
 	private static final Logger logger = LogManager
 			.getLogger(PathfinderUI.class.getName());
-	private final DataLoaderSpec dataLoader = new DataLoader();
 	private DesktopPresenterSpec desktopPresenter = null;
 	private MobilePresenterSpec mobilePresenter = null;
-	private ApplicationPropertiesSpec properties = ApplicationProperties
-			.getInstance();
 
 	@Override
 	protected void init(VaadinRequest request) {
-		// new Responsive(this);
-		Timer timer = new Timer();
-		// Start in 0,001 seconds, is repeated every day (24hours)
-		timer.schedule(new DataLoadTimer(), 1,
-				properties.getIntProperty(PropertiesKey.DATA_LOAD_INTERVALL));
 
 		setUiLocale(request.getLocale());
+
 		setErrorHandler(new PathfinderErrorHandler());
+
 		Page.getCurrent().setTitle(
 				Translator.getInstance().translate(TranslationKeys.APP_TITLE));
+
 		this.setPrimaryStyleName("main");
 		/* Browser data */
 		logger.trace(">> Browser Data <<");
@@ -83,6 +72,8 @@ public class PathfinderUI extends UI {
 			desktopPresenter = new DesktopPresenter();
 			setContent(desktopPresenter.getDesktopLayoutView());
 			logger.trace("Desktop application initialized");
+
+			setData();
 		}
 	}
 
@@ -101,19 +92,14 @@ public class PathfinderUI extends UI {
 		return mobileUserAgent;
 	}
 
-	class DataLoadTimer extends TimerTask {
-		@Override
-		public void run() {
-			logger.trace("Get new data from the RAPLA-Server");
-			synchronized (UI.getCurrent()) {
-				dataLoader.loadAllResources();
-				desktopPresenter.setRoomContainer(dataLoader.getAllRooms());
-				desktopPresenter.setCourseContainer(dataLoader.getAllCourses());
-				desktopPresenter.setPersonContainer(dataLoader.getAllPersons());
-				desktopPresenter.setPoiContainer(dataLoader.getAllPois());
-			}
-			logger.trace("Updated data from the RAPLA-Server");
-		}
+	private void setData() {
+
+		DataLoader dataLoader = new DataLoader();
+		desktopPresenter.setRoomContainer(dataLoader.getAllRooms());
+		desktopPresenter.setCourseContainer(dataLoader.getAllCourses());
+		desktopPresenter.setPersonContainer(dataLoader.getAllPersons());
+		desktopPresenter.setPoiContainer(dataLoader.getAllPois());
+
 	}
 
 	/**
