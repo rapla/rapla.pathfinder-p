@@ -10,12 +10,12 @@ public interface DataLoaderSpec {
 
 	void loadAllResources();
 
-	BeanItemContainer<RoomModel> getAllRooms();
+	BeanItemContainer<RoomModel> getRoomContainer();
 
-	BeanItemContainer<CourseModel> getAllCourses();
+	BeanItemContainer<CourseModel> getCourseContainer();
 
-	BeanItemContainer<PersonModel> getAllPersons();
+	BeanItemContainer<PersonModel> getPersonContainer();
 
-	BeanItemContainer<PoiModel> getAllPois();
+	BeanItemContainer<PoiModel> getPoiContainer();
 
 }

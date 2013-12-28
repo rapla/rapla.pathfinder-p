@@ -16,25 +16,25 @@ public class DataLoaderTest {
 	@Test
 	public void roomsNotNullTest() {
 		dataloader.loadAllResources();
-		assertNotEquals(0, dataloader.getAllRooms());
+		assertNotEquals(0, dataloader.getRoomContainer());
 	}
 
 	@Test
 	public void coursesNotNullTest() {
 		dataloader.loadAllResources();
-		assertNotEquals(0, dataloader.getAllCourses());
+		assertNotEquals(0, dataloader.getCourseContainer());
 	}
 
 	@Test
 	public void personsNotNullTest() {
 		dataloader.loadAllResources();
-		assertNotEquals(0, dataloader.getAllPersons().size());
+		assertNotEquals(0, dataloader.getPersonContainer());
 	}
 
 	@Test
 	public void poisNotNullTest() {
 		dataloader.loadAllResources();
-		assertNotEquals(0, dataloader.getAllPois());
+		assertNotEquals(0, dataloader.getPoiContainer());
 	}
 
 }

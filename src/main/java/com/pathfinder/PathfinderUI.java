@@ -95,10 +95,10 @@ public class PathfinderUI extends UI {
 	private void setData() {
 
 		DataLoader dataLoader = new DataLoader();
-		desktopPresenter.setRoomContainer(dataLoader.getAllRooms());
-		desktopPresenter.setCourseContainer(dataLoader.getAllCourses());
-		desktopPresenter.setPersonContainer(dataLoader.getAllPersons());
-		desktopPresenter.setPoiContainer(dataLoader.getAllPois());
+		desktopPresenter.setRoomContainer(dataLoader.getRoomContainer());
+		desktopPresenter.setCourseContainer(dataLoader.getCourseContainer());
+		desktopPresenter.setPersonContainer(dataLoader.getPersonContainer());
+		desktopPresenter.setPoiContainer(dataLoader.getPoiContainer());
 
 	}
 
