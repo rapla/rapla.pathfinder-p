@@ -29,6 +29,8 @@ import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Table;
 
 /**
@@ -65,6 +67,9 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 				.addItemClickListenerPersonTable(new TableClickListener());
 		this.accordionView
 				.addItemClickListenerPoiTable(new TableClickListener());
+
+		this.searchField
+				.addDeleteAllClickListener(new deleteAllClickListener());
 	}
 
 	// Keyboard ClickListener
@@ -91,6 +96,15 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 		}
 
 		accordionView.useFiltersForAllTables(getSearchString());
+	}
+
+	class deleteAllClickListener implements ClickListener {
+
+		@Override
+		public void buttonClick(ClickEvent event) {
+			clearSearchString();
+		}
+
 	}
 
 	class TableClickListener implements ItemClickListener {
