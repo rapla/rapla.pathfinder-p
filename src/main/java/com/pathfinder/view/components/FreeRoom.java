@@ -35,8 +35,8 @@ public class FreeRoom extends CustomComponent implements FreeRoomSpec {
 
 	@Override
 	public void updateTranslations(Locale locale) {
-		verticalLayout.setCaption(translator
-				.translate(TranslationKeys.CURRENTLY_FREE_ROOMS) + ":");
+		this.setCaption(translator
+				.translate(TranslationKeys.CURRENTLY_FREE_ROOMS));
 	}
 
 	@Override
