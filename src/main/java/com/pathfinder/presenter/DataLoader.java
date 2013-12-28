@@ -24,7 +24,7 @@ import com.pathfinder.util.properties.PropertiesKey;
 import com.vaadin.data.util.BeanItemContainer;
 
 /**
- * Loads data from the rapla server
+ * Load data from the rapla server
  * 
  * @author igor
  * 
@@ -53,13 +53,13 @@ public class DataLoader implements DataLoaderSpec {
 	private final String MASSAGE_ERROR_LOADING_URL_RESOURSE_DETAIL = "Error loading URL by loading ResourceDetail id: ";
 
 	private BufferedReader br;
-	private BeanItemContainer<RoomModel> roomContainer = new BeanItemContainer<RoomModel>(
+	private static BeanItemContainer<RoomModel> roomContainer = new BeanItemContainer<RoomModel>(
 			RoomModel.class);
-	private BeanItemContainer<CourseModel> courseContainer = new BeanItemContainer<CourseModel>(
+	private static BeanItemContainer<CourseModel> courseContainer = new BeanItemContainer<CourseModel>(
 			CourseModel.class);
-	private BeanItemContainer<PersonModel> personContainer = new BeanItemContainer<PersonModel>(
+	private static BeanItemContainer<PersonModel> personContainer = new BeanItemContainer<PersonModel>(
 			PersonModel.class);
-	private BeanItemContainer<PoiModel> poiContainer = new BeanItemContainer<PoiModel>(
+	private static BeanItemContainer<PoiModel> poiContainer = new BeanItemContainer<PoiModel>(
 			PoiModel.class);
 
 	@Override
@@ -69,9 +69,9 @@ public class DataLoader implements DataLoaderSpec {
 		courseContainer.removeAllItems();
 		personContainer.removeAllItems();
 		poiContainer.removeAllItems();
-		
+
 		logger.info(MASSAGE_REQUST_DETAIL_LOADING);
-		
+
 		// Get the data
 		this.loadAllRooms();
 		this.loadAllCourses();
@@ -96,24 +96,22 @@ public class DataLoader implements DataLoaderSpec {
 		logger.info(MASSAGE_REQUST_DETAIL_LOADED);
 	}
 
-	// this Class should be GENERIC TYPE
-	
 	// save the Detail Informations in RoomModel
 	private void loadRoomDetail(RoomModel room) {
 		GsonGetResourceDetailLevel1 dataDetail = gsonGetResourceDetail(room
 				.getId());
 		Map<String, GsonGetResourceDetailLevel31> atribute = dataDetail
 				.getResult().getAttributeMap();
-	
+
 		if (atribute.get("abteilung") != null)
 			room.setDepartment(atribute.get("abteilung").getValue());
-	
+
 		if (atribute.get("studiengang") != null)
 			room.setCourse(atribute.get("studiengang").getValue());
-	
+
 		if (atribute.get("raumart") != null)
 			room.setRoomType(atribute.get("raumart").getValue());
-	
+
 		if (atribute.get("raumnr") != null)
 			room.setRoomNr(atribute.get("raumnr").getValue());
 	}
@@ -137,7 +135,7 @@ public class DataLoader implements DataLoaderSpec {
 	}
 
 	// this Class should be GENERIC TYPE
-	
+
 	// should be replaced with the GENERIC TYPE
 	// save the Detail Informations in RoomModel
 	private void loadCourseDetail(CourseModel course) {
@@ -145,19 +143,19 @@ public class DataLoader implements DataLoaderSpec {
 				.getId());
 		Map<String, GsonGetResourceDetailLevel31> atribute = dataDetail
 				.getResult().getAttributeMap();
-	
+
 		if (atribute.get("jahrgang") != null)
 			course.setVintage(atribute.get("jahrgang").getValue());
-	
+
 		if (atribute.get("abteilung") != null)
 			course.setDepartment(atribute.get("abteilung").getValue());
-	
+
 		if (atribute.get("studiengang") != null)
 			course.setCourse(atribute.get("studiengang").getValue());
-	
+
 		if (atribute.get("bild") != null)
 			course.setPicture(atribute.get("bild").getValue());
-	
+
 		if (atribute.get("raumnr") != null)
 			course.setRoomNr(atribute.get("raumnr").getValue());
 	}
@@ -181,28 +179,28 @@ public class DataLoader implements DataLoaderSpec {
 	}
 
 	// this Class should be GENERIC TYPE
-	
+
 	private void loadPersonDetail(PersonModel person) {
 		GsonGetResourceDetailLevel1 dataDetail = gsonGetResourceDetail(person
 				.getId());
 		Map<String, GsonGetResourceDetailLevel31> atribute = dataDetail
 				.getResult().getAttributeMap();
-	
+
 		if (atribute.get("abteilung") != null)
 			person.setDepartment(atribute.get("abteilung").getValue());
-	
+
 		if (atribute.get("studiengang") != null)
 			person.setCourse(atribute.get("studiengang").getValue());
-	
+
 		if (atribute.get("email") != null)
 			person.setEmail(atribute.get("email").getValue());
-	
+
 		if (atribute.get("bild") != null)
 			person.setPicture(atribute.get("bild").getValue());
-	
+
 		if (atribute.get("telefon") != null)
 			person.setTelephone(atribute.get("telefon").getValue());
-	
+
 		if (atribute.get("raumnr") != null)
 			person.setRoomNr(atribute.get("raumnr").getValue());
 	}
@@ -224,8 +222,6 @@ public class DataLoader implements DataLoaderSpec {
 		logger.info(MASSAGE_REQUST_DETAIL_LOADED);
 	}
 
-	
-
 	// this Class should be GENERIC TYPE
 
 	// TODO should be replaced with the GENERIC TYPE
@@ -235,10 +231,10 @@ public class DataLoader implements DataLoaderSpec {
 				.getId());
 		Map<String, GsonGetResourceDetailLevel31> atribute = dataDetail
 				.getResult().getAttributeMap();
-	
+
 		if (atribute.get("raumnr") != null)
 			poi.setRoomNr(atribute.get("raumnr").getValue());
-	
+
 		if (atribute.get("bild") != null)
 			poi.setPicture(atribute.get("bild").getValue());
 	}
@@ -292,6 +288,7 @@ public class DataLoader implements DataLoaderSpec {
 
 	@Override
 	public BeanItemContainer<RoomModel> getRoomContainer() {
+		System.out.println(roomContainer.getItemIds());
 		return roomContainer;
 	}
 
