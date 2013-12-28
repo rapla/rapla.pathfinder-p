@@ -1,43 +1,44 @@
 package com.pathfinder.view.components;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
-import com.pathfinder.view.listener.MenuBarViewListenerSpec;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 
 /**
- * MenuBar with buttons for the language, wheelchair appointment view and to get back to the search panel
+ * MenuBar with buttons for the language, appointment and wheelchair
  * 
  * @author alexh
  * 
  */
 public class MenuBar extends CustomComponent implements MenuBarSpec {
 
-	private final HorizontalLayout mainLayout = new HorizontalLayout();
+	private final HorizontalLayout horizontalLayout = new HorizontalLayout();
 	private final TranslatorSpec translator = Translator.getInstance();
 	private Button germanButton = new Button(
 			translator.translate(TranslationKeys.GERMAN));
 	private Button englishButton = new Button(
 			translator.translate(TranslationKeys.ENGLISH));
-
-	private List<MenuBarViewListenerSpec> listener = new ArrayList<MenuBarViewListenerSpec>();
+	private Button appointmentButton = new Button(
+			translator.translate(TranslationKeys.EVENT));
 
 	public MenuBar() {
 		buildMainLayout();
-		setCompositionRoot(mainLayout);
+		setCompositionRoot(horizontalLayout);
 	}
 
 	private void buildMainLayout() {
-		mainLayout.addComponent(germanButton);
-		mainLayout.addComponent(englishButton);
+		horizontalLayout.addComponent(germanButton);
+		horizontalLayout.addComponent(englishButton);
+		horizontalLayout.addComponent(appointmentButton);
+		
+		// TODO Only commented for testing
+		// this.appointmentButton.setVisible(false);
 	}
 
 	@Override
@@ -48,6 +49,21 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	@Override
 	public void addClickListenerEnglishButton(ClickListener listener) {
 		englishButton.addClickListener(listener);
+	}
+
+	@Override
+	public void addClickListenerAppointmentButton(ClickListener listener) {
+		appointmentButton.addClickListener(listener);
+	}
+
+	@Override
+	public void showAppointmentButton() {
+		this.appointmentButton.setVisible(true);
+	}
+
+	@Override
+	public void hideAppointmentButton() {
+		this.appointmentButton.setVisible(false);
 	}
 
 	@Override
@@ -64,11 +80,7 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	public void updateTranslations(Locale locale) {
 		germanButton.setCaption(translator.translate(TranslationKeys.GERMAN));
 		englishButton.setCaption(translator.translate(TranslationKeys.ENGLISH));
-	}
-
-	@Override
-	// TODO
-	public void addMenuBarListener(MenuBarViewListenerSpec listener) {
-		this.listener.add(listener);
+		appointmentButton.setCaption(translator
+				.translate(TranslationKeys.EVENT));
 	}
 }

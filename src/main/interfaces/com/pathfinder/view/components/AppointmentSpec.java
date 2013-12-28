@@ -1,7 +1,5 @@
 package com.pathfinder.view.components;
 
-import com.pathfinder.view.listener.AppointmentViewListenerSpec;
-
 /**
  * AppointmentSpec
  * 
@@ -9,5 +7,5 @@ import com.pathfinder.view.listener.AppointmentViewListenerSpec;
  * 
  */
 public interface AppointmentSpec extends ComponentSpec {
-	void addAppointmentViewListener(AppointmentViewListenerSpec listener);
+	void setUrl(String url);
 }

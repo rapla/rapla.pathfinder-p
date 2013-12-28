@@ -1,6 +1,5 @@
 package com.pathfinder.view.components;
 
-import com.pathfinder.view.listener.MenuBarViewListenerSpec;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
 
@@ -11,11 +10,15 @@ import com.vaadin.ui.Button.ClickListener;
  * 
  */
 public interface MenuBarSpec extends ComponentSpec {
-	void addMenuBarListener(MenuBarViewListenerSpec listener);
-
 	void addClickListenerGermanButton(ClickListener listener);
 
 	void addClickListenerEnglishButton(ClickListener listener);
+
+	void addClickListenerAppointmentButton(ClickListener listener);
+
+	void showAppointmentButton();
+
+	void hideAppointmentButton();
 
 	Button getGermanButton();
 

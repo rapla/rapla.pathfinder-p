@@ -69,7 +69,7 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 				.addItemClickListenerPoiTable(new TableClickListener());
 
 		this.searchField
-				.addDeleteAllClickListener(new deleteAllClickListener());
+				.addDeleteAllClickListener(new DeleteAllClickListener());
 	}
 
 	// Keyboard ClickListener
@@ -94,11 +94,9 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 			addKeybordKeyToSearchString(keyId.getLabel());
 			break;
 		}
-
-		accordionView.useFiltersForAllTables(getSearchString());
 	}
 
-	class deleteAllClickListener implements ClickListener {
+	class DeleteAllClickListener implements ClickListener {
 
 		@Override
 		public void buttonClick(ClickEvent event) {
@@ -143,7 +141,6 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 
 		searchField.getSearchField().focus();
 		setChangePosCounter(oldCursorPosition + 1);
-
 	}
 
 	public void deleteKeyFromSearchString() {
@@ -227,6 +224,7 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 		binder.getItemDataSource()
 				.getItemProperty(KeyboardModel.PROPERTY_SEARCHSTRING)
 				.setValue(value);
+		accordionView.useFiltersForAllTables(getSearchString());
 	}
 
 	@Override

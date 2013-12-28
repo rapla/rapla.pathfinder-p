@@ -10,6 +10,8 @@ import com.pathfinder.model.RoomModel;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.widgetset.DateTime;
+import com.pathfinder.view.components.Appointment;
+import com.pathfinder.view.components.AppointmentSpec;
 import com.pathfinder.view.components.DateTimeSpec;
 import com.pathfinder.view.components.FreeRoom;
 import com.pathfinder.view.components.FreeRoomSpec;
@@ -27,6 +29,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.Window;
 
 /**
  * The presenter for the desktop/stele view
@@ -39,10 +42,6 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	// Needed components
 	private final DateTimeSpec dateTime = new DateTime();
 	private final FreeRoomSpec freeRoomView = new FreeRoom();
-	// TODO it´s not possible to use the DetailContainer yet because of a
-	// NullPointerException
-	// private DetailContainer detailContainer = new DetailContainer(null, null,
-	// null);
 	private final MenuBarSpec menuBar = new MenuBar();
 
 	// Needed sub-presenters
@@ -58,6 +57,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	public DesktopPresenter() {
 		menuBar.addClickListenerGermanButton(new LanguageButtonClickedListener());
 		menuBar.addClickListenerEnglishButton(new LanguageButtonClickedListener());
+		menuBar.addClickListenerAppointmentButton(new AppointmentButtonClickListener());
 	}
 
 	// TODO
@@ -79,6 +79,22 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 			}
 			UI.getCurrent().setLocale(locale);
 			languageChanged(locale);
+		}
+	}
+
+	class AppointmentButtonClickListener implements ClickListener {
+		@Override
+		public void buttonClick(ClickEvent event) {
+			// TODO For testing. Should be integrated in the DesktopLayout
+			Window window = new Window("Appointment");
+			// TODO Should be variable URL - getResourceUrl();
+			AppointmentSpec appointment = new Appointment();
+			appointment
+					.setUrl("http://localhost:8051/rapla/rapla?page=calendar&user=stele&file=kurs&allocatable_id=2373");
+			window.setContent((Appointment) appointment);
+			window.setSizeFull();
+			((Appointment) appointment).setSizeFull();
+			UI.getCurrent().addWindow(window);
 		}
 	}
 

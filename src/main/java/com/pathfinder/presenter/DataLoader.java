@@ -49,8 +49,8 @@ public class DataLoader implements DataLoaderSpec {
 
 	private final String MASSAGE_REQUST_DETAIL_LOADING = "Load Details...";
 	private final String MASSAGE_REQUST_DETAIL_LOADED = "Details are loaded";
-	private final String MASSAGE_ERROR_LOADING_URL_RESOURSE = "Error loading URL by loading Resource: ";
-	private final String MASSAGE_ERROR_LOADING_URL_RESOURSE_DETAIL = "Error loading URL by loading ResourceDetail id: ";
+	private final String MASSAGE_ERROR_LOADING_URL_RESOURCE = "Error loading URL by loading Resource: ";
+	private final String MASSAGE_ERROR_LOADING_URL_RESOURCE_DETAIL = "Error loading URL by loading ResourceDetail id: ";
 
 	private BufferedReader br;
 	// TODO Why does this not work without static oO?
@@ -245,10 +245,10 @@ public class DataLoader implements DataLoaderSpec {
 			br = new BufferedReader(new InputStreamReader(new URL(URL_RESOURCE
 					+ "%5B%22" + resource + "%22%2C%22%22%5D").openStream()));
 		} catch (MalformedURLException e) {
-			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURSE + resource, e);
+			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURCE + resource, e);
 			return null;
 		} catch (IOException e) {
-			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURSE + resource, e);
+			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURCE + resource, e);
 			return null;
 		}
 
@@ -269,10 +269,10 @@ public class DataLoader implements DataLoaderSpec {
 					new URL(URL_RESOURCE_DETAIL + "%5B%22" + id + "%22%5D")
 							.openStream()));
 		} catch (MalformedURLException e) {
-			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURSE_DETAIL + id, e);
+			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURCE_DETAIL + id, e);
 			return null;
 		} catch (IOException e) {
-			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURSE_DETAIL + id, e);
+			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURCE_DETAIL + id, e);
 			return null;
 		}
 
@@ -282,7 +282,7 @@ public class DataLoader implements DataLoaderSpec {
 		if (ResourceDetailData != null) {
 			return ResourceDetailData;
 		} else {
-			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURSE_DETAIL + id);
+			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURCE_DETAIL + id);
 			return null;
 		}
 	}
