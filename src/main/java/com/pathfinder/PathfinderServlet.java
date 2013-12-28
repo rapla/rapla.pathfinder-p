@@ -26,7 +26,6 @@ import com.vaadin.server.SystemMessagesInfo;
 import com.vaadin.server.SystemMessagesProvider;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.server.VaadinServletService;
-import com.vaadin.ui.UI;
 
 /**
  * Default Servlet and entry point for the Application
@@ -142,16 +141,15 @@ public class PathfinderServlet extends VaadinServlet {
 			@Override
 			public void run() {
 				logger.trace("Get new data from the RAPLA-Server");
-				synchronized (UI.getCurrent()) {
-					dataLoader.loadAllResources();
-				}
+				dataLoader.loadAllResources();
 				logger.trace("Updated data from the RAPLA-Server");
 			}
 		};
 
 		// Start in 0,001 seconds, is repeated every day (24hours)
-		new Timer().schedule(dataLoaderTask,
-				properties.getIntProperty(PropertiesKey.DATA_LOAD_INTERVALL));
+		long loadInterval = properties
+				.getIntProperty(PropertiesKey.DATA_LOAD_INTERVALL);
+		new Timer().schedule(dataLoaderTask, loadInterval, loadInterval);
 
 	}
 }
