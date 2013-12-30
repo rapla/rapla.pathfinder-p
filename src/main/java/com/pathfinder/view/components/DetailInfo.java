@@ -1,10 +1,8 @@
 package com.pathfinder.view.components;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
-import com.pathfinder.view.listener.DetailViewListenerSpec;
+import com.pathfinder.model.PoiModel;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.CustomComponent;
@@ -17,23 +15,18 @@ import com.vaadin.ui.CustomComponent;
  * @param <T>
  */
 public class DetailInfo<T> extends CustomComponent implements DetailInfoSpec {
-	private BeanItem<T> beanItem = null;
-	
-	private List<DetailViewListenerSpec> listener = new ArrayList<DetailViewListenerSpec>();
+	//private BeanItem<T> beanItem = null;
 
 	public DetailInfo(Class<T> beanType, BeanItem<T> beanItem) {
-		this.beanItem = beanItem;
+		PoiModel poi = new PoiModel("", "", "", new String[]{}, "", "");
+		BeanItem<PoiModel> beanItem1 = new BeanItem<PoiModel>(poi);
+	//	this.beanItem = beanItem;
 		BeanFieldGroup<T> binder = new BeanFieldGroup<T>(beanType);
-		binder.buildAndBindMemberFields(this.beanItem);
+		binder.buildAndBindMemberFields(beanItem1);
 	}
 
 	@Override
 	public void updateTranslations(Locale locale) {
 		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void addDetailListener(DetailViewListenerSpec listener) {
-		this.listener.add(listener);
 	}
 }
