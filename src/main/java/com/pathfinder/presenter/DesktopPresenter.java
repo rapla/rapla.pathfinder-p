@@ -15,6 +15,7 @@ import com.pathfinder.view.components.AppointmentSpec;
 import com.pathfinder.view.components.DateTimeSpec;
 import com.pathfinder.view.components.FreeRoom;
 import com.pathfinder.view.components.FreeRoomSpec;
+import com.pathfinder.view.components.LanguageMenu;
 import com.pathfinder.view.components.MenuBar;
 import com.pathfinder.view.components.MenuBarSpec;
 import com.pathfinder.view.container.InfoPanel;
@@ -22,9 +23,10 @@ import com.pathfinder.view.container.InfoPanelSpec;
 import com.pathfinder.view.layout.DesktopLayout;
 import com.pathfinder.view.layout.DesktopLayoutSpec;
 import com.pathfinder.view.listener.DesktopLayoutViewListenerSpec;
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.Page;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomComponent;
@@ -43,6 +45,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	private final DateTimeSpec dateTime = new DateTime();
 	private final FreeRoomSpec freeRoomView = new FreeRoom();
 	private final MenuBarSpec menuBar = new MenuBar();
+	private final LanguageMenu languageMenu = new LanguageMenu();
 
 	// Needed sub-presenters
 	private final SearchPanelPresenterSpec searchPanelPresenter = new SearchPanelPresenter();
@@ -52,12 +55,11 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 			(FreeRoom) freeRoomView);
 	private final DesktopLayoutSpec desktopLayout = new DesktopLayout(
 			(InfoPanel) infoPanel, (MenuBar) menuBar,
-			searchPanelPresenter.getSearchPanel());
+			searchPanelPresenter.getSearchPanel(), (LanguageMenu) languageMenu);
 
 	public DesktopPresenter() {
-		menuBar.addClickListenerGermanButton(new LanguageButtonClickedListener());
-		menuBar.addClickListenerEnglishButton(new LanguageButtonClickedListener());
 		menuBar.addClickListenerAppointmentButton(new AppointmentButtonClickListener());
+		languageMenu.addValueChangeListener(new LanguageValueChangeListener());
 	}
 
 	// TODO
@@ -66,17 +68,19 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	// Timer timer = new Timer();
 	// timer.schedule(new RespawnDesktopLayoutTimer(), 60000);
 	// }
-
-	class LanguageButtonClickedListener implements ClickListener {
-		@Override
-		public void buttonClick(ClickEvent event) {
+	
+	class LanguageValueChangeListener implements ValueChangeListener {
+		public void valueChange(ValueChangeEvent event) {
+			String[] languages = languageMenu.getLanguages();
 			Locale locale = Locale.GERMAN;
-			Button clickedButton = (Button) event.getSource();
-			if (clickedButton == menuBar.getGermanButton()) {
+			final Object valueString = event.getProperty().getValue();
+			if(valueString.equals(languages[0])){
 				locale = Locale.GERMAN;
-			} else if (clickedButton == menuBar.getEnglishButton()) {
+			}
+			else if(valueString.equals(languages[1])){
 				locale = Locale.ENGLISH;
 			}
+			
 			UI.getCurrent().setLocale(locale);
 			languageChanged(locale);
 		}

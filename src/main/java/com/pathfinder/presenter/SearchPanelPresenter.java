@@ -68,8 +68,8 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 		this.accordionView
 				.addItemClickListenerPoiTable(new TableClickListener());
 
-		this.searchField
-				.addDeleteAllClickListener(new DeleteAllClickListener());
+		/*this.searchField
+				.addDeleteAllClickListener(new DeleteAllClickListener());*/
 	}
 
 	// Keyboard ClickListener

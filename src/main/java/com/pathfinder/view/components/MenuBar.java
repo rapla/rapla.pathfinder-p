@@ -20,10 +20,6 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 
 	private final HorizontalLayout horizontalLayout = new HorizontalLayout();
 	private final TranslatorSpec translator = Translator.getInstance();
-	private Button germanButton = new Button(
-			translator.translate(TranslationKeys.GERMAN));
-	private Button englishButton = new Button(
-			translator.translate(TranslationKeys.ENGLISH));
 	private Button appointmentButton = new Button(
 			translator.translate(TranslationKeys.EVENT));
 
@@ -33,22 +29,10 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	}
 
 	private void buildMainLayout() {
-		horizontalLayout.addComponent(germanButton);
-		horizontalLayout.addComponent(englishButton);
 		horizontalLayout.addComponent(appointmentButton);
 		
 		// TODO Only commented for testing
 		// this.appointmentButton.setVisible(false);
-	}
-
-	@Override
-	public void addClickListenerGermanButton(ClickListener listener) {
-		germanButton.addClickListener(listener);
-	}
-
-	@Override
-	public void addClickListenerEnglishButton(ClickListener listener) {
-		englishButton.addClickListener(listener);
 	}
 
 	@Override
@@ -67,19 +51,7 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	}
 
 	@Override
-	public Button getGermanButton() {
-		return this.germanButton;
-	}
-
-	@Override
-	public Button getEnglishButton() {
-		return this.englishButton;
-	}
-
-	@Override
 	public void updateTranslations(Locale locale) {
-		germanButton.setCaption(translator.translate(TranslationKeys.GERMAN));
-		englishButton.setCaption(translator.translate(TranslationKeys.ENGLISH));
 		appointmentButton.setCaption(translator
 				.translate(TranslationKeys.EVENT));
 	}
