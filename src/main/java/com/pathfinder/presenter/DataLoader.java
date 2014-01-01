@@ -14,11 +14,11 @@ import com.google.gson.Gson;
 import com.pathfinder.model.CourseModel;
 import com.pathfinder.model.PersonModel;
 import com.pathfinder.model.PoiModel;
+import com.pathfinder.model.ResourceModel;
 import com.pathfinder.model.RoomModel;
 import com.pathfinder.model.gson.GsonGetResourceDetailLevel1;
 import com.pathfinder.model.gson.GsonGetResourceDetailLevel31;
 import com.pathfinder.model.gson.GsonGetResourcesLevel1;
-import com.pathfinder.model.gson.GsonGetResourcesLevel2;
 import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.PropertiesKey;
 import com.vaadin.data.util.BeanItemContainer;
@@ -86,7 +86,7 @@ public class DataLoader implements DataLoaderSpec {
 		GsonGetResourcesLevel1 gsonGetResourcesLevel1 = gsonGetResources(REQUEST_ROOMS);
 
 		if (gsonGetResourcesLevel1 != null)
-			for (GsonGetResourcesLevel2 roomGet : gsonGetResourcesLevel1
+			for (ResourceModel roomGet : gsonGetResourcesLevel1
 					.getResult()) {
 				RoomModel room = new RoomModel(roomGet.getName(),
 						roomGet.getLink(), roomGet.getId(),
@@ -122,7 +122,7 @@ public class DataLoader implements DataLoaderSpec {
 		GsonGetResourcesLevel1 gsonGetResourcesLevel1 = gsonGetResources(REQUEST_COURSES);
 
 		if (gsonGetResourcesLevel1 != null)
-			for (GsonGetResourcesLevel2 courseGet : gsonGetResourcesLevel1
+			for (ResourceModel courseGet : gsonGetResourcesLevel1
 					.getResult()) {
 				CourseModel course = new CourseModel(courseGet.getName(),
 						courseGet.getLink(), courseGet.getId(),
@@ -162,7 +162,7 @@ public class DataLoader implements DataLoaderSpec {
 		GsonGetResourcesLevel1 gsonGetResourcesLevel1 = gsonGetResources(REQUEST_PERSONS);
 
 		if (gsonGetResourcesLevel1 != null)
-			for (GsonGetResourcesLevel2 personGet : gsonGetResourcesLevel1
+			for (ResourceModel personGet : gsonGetResourcesLevel1
 					.getResult()) {
 				PersonModel person = new PersonModel(personGet.getName(),
 						personGet.getLink(), personGet.getId(),
@@ -205,7 +205,7 @@ public class DataLoader implements DataLoaderSpec {
 		GsonGetResourcesLevel1 gsonGetResourcesLevel1 = gsonGetResources(REQUEST_POIS);
 
 		if (gsonGetResourcesLevel1 != null)
-			for (GsonGetResourcesLevel2 poiGet : gsonGetResourcesLevel1
+			for (ResourceModel poiGet : gsonGetResourcesLevel1
 					.getResult()) {
 				PoiModel poi = new PoiModel(poiGet.getName(), poiGet.getLink(),
 						poiGet.getId(), poiGet.getSearchTerms(), null, null);

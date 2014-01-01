@@ -2,11 +2,13 @@ package com.pathfinder.model.gson;
 
 import java.util.List;
 
+import com.pathfinder.model.ResourceModel;
+
 public class GsonGetResourceDetailLevel32 {
 	String name;
 	String start;
 	String end;
-	List<GsonGetResourcesLevel2> resources;
+	List<ResourceModel> resources;
 	public String getName() {
 		return name;
 	}
@@ -25,10 +27,10 @@ public class GsonGetResourceDetailLevel32 {
 	public void setEnd(String end) {
 		this.end = end;
 	}
-	public List<GsonGetResourcesLevel2> getResources() {
+	public List<ResourceModel> getResources() {
 		return resources;
 	}
-	public void setResources(List<GsonGetResourcesLevel2> resources) {
+	public void setResources(List<ResourceModel> resources) {
 		this.resources = resources;
 	}
 
