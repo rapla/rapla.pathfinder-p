@@ -42,6 +42,8 @@ public class DataLoader implements DataLoaderSpec {
 	private final String URL_RESOURCE_DETAIL = BASE_URL
 			+ "?method=getResource&jsonrpc=2.0&params=";
 
+	private final String EMPTYPARAMETER = ",''";
+
 	private final String REQUEST_PERSONS = "persons";
 	private final String REQUEST_ROOMS = "raum";
 	private final String REQUEST_POIS = "sonstiges";
@@ -243,7 +245,8 @@ public class DataLoader implements DataLoaderSpec {
 	private GsonGetResourcesLevel1 gsonGetResources(String resource) {
 		try {
 			br = new BufferedReader(new InputStreamReader(new URL(URL_RESOURCE
-					+ "%5B%22" + resource + "%22%2C%22%22%5D").openStream()));
+					+ "['" + resource + "'" + EMPTYPARAMETER + EMPTYPARAMETER
+					+ "]").openStream()));
 		} catch (MalformedURLException e) {
 			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURCE + resource, e);
 			return null;
@@ -265,9 +268,9 @@ public class DataLoader implements DataLoaderSpec {
 
 	private GsonGetResourceDetailLevel1 gsonGetResourceDetail(String id) {
 		try {
-			br = new BufferedReader(new InputStreamReader(
-					new URL(URL_RESOURCE_DETAIL + "%5B%22" + id + "%22%5D")
-							.openStream()));
+			br = new BufferedReader(new InputStreamReader(new URL(
+					URL_RESOURCE_DETAIL + "['" + id + "'" + EMPTYPARAMETER
+							+ "]").openStream()));
 		} catch (MalformedURLException e) {
 			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURCE_DETAIL + id, e);
 			return null;
