@@ -16,9 +16,9 @@ public class ResourceModel {
 
 	public ResourceModel(String id, String name, String link,
 			String[] searchTerms, String roomNr) {
+		this.setId(id);
 		this.setName(name);
 		this.setLink(link);
-		this.setId(id);
 		this.setSearchTerms(searchTerms);
 		this.setRoomNr(roomNr);
 	}

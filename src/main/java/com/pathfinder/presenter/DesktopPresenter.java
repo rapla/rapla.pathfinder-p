@@ -15,7 +15,6 @@ import com.pathfinder.view.components.AppointmentSpec;
 import com.pathfinder.view.components.DateTimeSpec;
 import com.pathfinder.view.components.FreeRoom;
 import com.pathfinder.view.components.FreeRoomSpec;
-import com.pathfinder.view.components.LanguageMenu;
 import com.pathfinder.view.components.MenuBar;
 import com.pathfinder.view.components.MenuBarSpec;
 import com.pathfinder.view.container.InfoPanel;
@@ -45,7 +44,6 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	private final DateTimeSpec dateTime = new DateTime();
 	private final FreeRoomSpec freeRoomView = new FreeRoom();
 	private final MenuBarSpec menuBar = new MenuBar();
-	private final LanguageMenu languageMenu = new LanguageMenu();
 
 	// Needed sub-presenters
 	private final SearchPanelPresenterSpec searchPanelPresenter = new SearchPanelPresenter();
@@ -55,11 +53,11 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 			(FreeRoom) freeRoomView);
 	private final DesktopLayoutSpec desktopLayout = new DesktopLayout(
 			(InfoPanel) infoPanel, (MenuBar) menuBar,
-			searchPanelPresenter.getSearchPanel(), (LanguageMenu) languageMenu);
+			searchPanelPresenter.getSearchPanel());
 
 	public DesktopPresenter() {
 		menuBar.addClickListenerAppointmentButton(new AppointmentButtonClickListener());
-		languageMenu.addValueChangeListener(new LanguageValueChangeListener());
+		menuBar.addValueChangeListener(new LanguageValueChangeListener());
 	}
 
 	// TODO
@@ -68,19 +66,18 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	// Timer timer = new Timer();
 	// timer.schedule(new RespawnDesktopLayoutTimer(), 60000);
 	// }
-	
+
 	class LanguageValueChangeListener implements ValueChangeListener {
 		public void valueChange(ValueChangeEvent event) {
-			String[] languages = languageMenu.getLanguages();
+			String[] languages = menuBar.getLanguages();
 			Locale locale = Locale.GERMAN;
 			final Object valueString = event.getProperty().getValue();
-			if(valueString.equals(languages[0])){
+			if (valueString.equals(languages[0])) {
 				locale = Locale.GERMAN;
-			}
-			else if(valueString.equals(languages[1])){
+			} else if (valueString.equals(languages[1])) {
 				locale = Locale.ENGLISH;
 			}
-			
+
 			UI.getCurrent().setLocale(locale);
 			languageChanged(locale);
 		}

@@ -2,7 +2,6 @@ package com.pathfinder.view.layout;
 
 import java.util.Locale;
 
-import com.pathfinder.view.components.LanguageMenu;
 import com.pathfinder.view.components.MenuBar;
 import com.pathfinder.view.container.DetailContainer;
 import com.pathfinder.view.container.InfoPanel;
@@ -20,20 +19,18 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	private InfoPanel infoPanel = null;
 	private MenuBar menuBar = null;
 	private SearchPanel searchPanel = null;
-	private LanguageMenu languageMenu = null;
 
 	private DetailContainer<?> detailContainer = null;
 
 	private final VerticalLayout layout = new VerticalLayout();
 
 	public DesktopLayout(InfoPanel infoPanel, MenuBar menuBar,
-			SearchPanel searchPanel, LanguageMenu languageMenu) {
+			SearchPanel searchPanel) {
 
 		this.infoPanel = infoPanel;
 		this.menuBar = menuBar;
 
 		this.searchPanel = searchPanel;
-		this.languageMenu = languageMenu;
 
 		this.buildLayout();
 		this.setCompositionRoot(layout);
@@ -44,7 +41,6 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 		this.layout.addComponent(infoPanel);
 		this.layout.addComponent(searchPanel);
 		this.layout.addComponent(menuBar);
-		this.layout.addComponent(languageMenu);
 	}
 
 	@Override
