@@ -42,16 +42,15 @@ public class DataLoader implements DataLoaderSpec {
 	private final String URL_RESOURCE_DETAIL = BASE_URL
 			+ "?method=getResource&jsonrpc=2.0&params=";
 
-	private final String EMPTYPARAMETER = ",''";
+	private final String URL_EMPTY_PARAMETER = ",''";
 
 	private final String REQUEST_PERSONS = "persons";
 	private final String REQUEST_ROOMS = "raum";
 	private final String REQUEST_POIS = "sonstiges";
 	private final String REQUEST_COURSES = "courses";
 
-	private final String MASSAGE_REQUST_DETAIL_LOADING = "Load Details...";
 	private final String MASSAGE_REQUST_DETAIL_LOADED = "Details are loaded";
-	private final String MASSAGE_ERROR_LOADING_URL_RESOURCE = "Error loading URL by loading Resource: ";
+	private final String MASSAGE_ERROR_LOADING_URL_RESOURCE = "Error loading URL by loading resource: ";
 	private final String MASSAGE_ERROR_LOADING_URL_RESOURCE_DETAIL = "Error loading URL by loading ResourceDetail id: ";
 
 	private BufferedReader br;
@@ -67,15 +66,15 @@ public class DataLoader implements DataLoaderSpec {
 
 	@Override
 	public void loadAllResources() {
-		// Reset all Data
+		/* Reset all resource data */
+		logger.info("Reset all resource data");
 		roomContainer.removeAllItems();
 		courseContainer.removeAllItems();
 		personContainer.removeAllItems();
 		poiContainer.removeAllItems();
 
-		logger.info(MASSAGE_REQUST_DETAIL_LOADING);
-
-		// Get the data
+		/* Get the data */
+		logger.info("Begin loading all resource data");
 		this.loadAllRooms();
 		this.loadAllCourses();
 		this.loadAllPersons();
@@ -89,34 +88,33 @@ public class DataLoader implements DataLoaderSpec {
 		if (gsonGetResourcesLevel1 != null)
 			for (GsonGetResourcesLevel2 roomGet : gsonGetResourcesLevel1
 					.getResult()) {
-				RoomModel room_save = new RoomModel(roomGet.getName(),
+				RoomModel room = new RoomModel(roomGet.getName(),
 						roomGet.getLink(), roomGet.getId(),
 						roomGet.getSearchTerms(), null, null, null, null);
-				roomContainer.addItem(room_save);
-				loadRoomDetail(room_save);
+				loadRoomDetail(room);
+				roomContainer.addItem(room);
 			}
 
 		logger.info(MASSAGE_REQUST_DETAIL_LOADED);
 	}
 
-	// save the Detail Informations in RoomModel
 	private void loadRoomDetail(RoomModel room) {
 		GsonGetResourceDetailLevel1 dataDetail = gsonGetResourceDetail(room
 				.getId());
-		Map<String, GsonGetResourceDetailLevel31> atribute = dataDetail
+		Map<String, GsonGetResourceDetailLevel31> attribute = dataDetail
 				.getResult().getAttributeMap();
 
-		if (atribute.get("abteilung") != null)
-			room.setDepartment(atribute.get("abteilung").getValue());
+		if (attribute.get("abteilung") != null)
+			room.setDepartment(attribute.get("abteilung").getValue());
 
-		if (atribute.get("studiengang") != null)
-			room.setCourse(atribute.get("studiengang").getValue());
+		if (attribute.get("studiengang") != null)
+			room.setCourse(attribute.get("studiengang").getValue());
 
-		if (atribute.get("raumart") != null)
-			room.setRoomType(atribute.get("raumart").getValue());
+		if (attribute.get("raumart") != null)
+			room.setRoomType(attribute.get("raumart").getValue());
 
-		if (atribute.get("raumnr") != null)
-			room.setRoomNr(atribute.get("raumnr").getValue());
+		if (attribute.get("raumnr") != null)
+			room.setRoomNr(attribute.get("raumnr").getValue());
 	}
 
 	private void loadAllCourses() {
@@ -126,41 +124,37 @@ public class DataLoader implements DataLoaderSpec {
 		if (gsonGetResourcesLevel1 != null)
 			for (GsonGetResourcesLevel2 courseGet : gsonGetResourcesLevel1
 					.getResult()) {
-				CourseModel course_save = new CourseModel(courseGet.getName(),
+				CourseModel course = new CourseModel(courseGet.getName(),
 						courseGet.getLink(), courseGet.getId(),
 						courseGet.getSearchTerms(), null, null, null, null,
 						null);
-				courseContainer.addItem(course_save);
-				loadCourseDetail(course_save);
+				courseContainer.addItem(course);
+				loadCourseDetail(course);
 			}
 
 		logger.info(MASSAGE_REQUST_DETAIL_LOADED);
 	}
 
-	// this Class should be GENERIC TYPE
-
-	// should be replaced with the GENERIC TYPE
-	// save the Detail Informations in RoomModel
 	private void loadCourseDetail(CourseModel course) {
 		GsonGetResourceDetailLevel1 dataDetail = gsonGetResourceDetail(course
 				.getId());
-		Map<String, GsonGetResourceDetailLevel31> atribute = dataDetail
+		Map<String, GsonGetResourceDetailLevel31> attribute = dataDetail
 				.getResult().getAttributeMap();
 
-		if (atribute.get("jahrgang") != null)
-			course.setVintage(atribute.get("jahrgang").getValue());
+		if (attribute.get("jahrgang") != null)
+			course.setVintage(attribute.get("jahrgang").getValue());
 
-		if (atribute.get("abteilung") != null)
-			course.setDepartment(atribute.get("abteilung").getValue());
+		if (attribute.get("abteilung") != null)
+			course.setDepartment(attribute.get("abteilung").getValue());
 
-		if (atribute.get("studiengang") != null)
-			course.setCourse(atribute.get("studiengang").getValue());
+		if (attribute.get("studiengang") != null)
+			course.setCourse(attribute.get("studiengang").getValue());
 
-		if (atribute.get("bild") != null)
-			course.setPicture(atribute.get("bild").getValue());
+		if (attribute.get("bild") != null)
+			course.setPicture(attribute.get("bild").getValue());
 
-		if (atribute.get("raumnr") != null)
-			course.setRoomNr(atribute.get("raumnr").getValue());
+		if (attribute.get("raumnr") != null)
+			course.setRoomNr(attribute.get("raumnr").getValue());
 	}
 
 	private void loadAllPersons() {
@@ -170,42 +164,40 @@ public class DataLoader implements DataLoaderSpec {
 		if (gsonGetResourcesLevel1 != null)
 			for (GsonGetResourcesLevel2 personGet : gsonGetResourcesLevel1
 					.getResult()) {
-				PersonModel person_save = new PersonModel(personGet.getName(),
+				PersonModel person = new PersonModel(personGet.getName(),
 						personGet.getLink(), personGet.getId(),
 						personGet.getSearchTerms(), null, null, null, null,
 						null, null);
-				personContainer.addItem(person_save);
-				loadPersonDetail(person_save);
+				personContainer.addItem(person);
+				loadPersonDetail(person);
 			}
 
 		logger.info(MASSAGE_REQUST_DETAIL_LOADED);
 	}
 
-	// this Class should be GENERIC TYPE
-
 	private void loadPersonDetail(PersonModel person) {
 		GsonGetResourceDetailLevel1 dataDetail = gsonGetResourceDetail(person
 				.getId());
-		Map<String, GsonGetResourceDetailLevel31> atribute = dataDetail
+		Map<String, GsonGetResourceDetailLevel31> attribute = dataDetail
 				.getResult().getAttributeMap();
 
-		if (atribute.get("abteilung") != null)
-			person.setDepartment(atribute.get("abteilung").getValue());
+		if (attribute.get("abteilung") != null)
+			person.setDepartment(attribute.get("abteilung").getValue());
 
-		if (atribute.get("studiengang") != null)
-			person.setCourse(atribute.get("studiengang").getValue());
+		if (attribute.get("studiengang") != null)
+			person.setCourse(attribute.get("studiengang").getValue());
 
-		if (atribute.get("email") != null)
-			person.setEmail(atribute.get("email").getValue());
+		if (attribute.get("email") != null)
+			person.setEmail(attribute.get("email").getValue());
 
-		if (atribute.get("bild") != null)
-			person.setPicture(atribute.get("bild").getValue());
+		if (attribute.get("bild") != null)
+			person.setPicture(attribute.get("bild").getValue());
 
-		if (atribute.get("telefon") != null)
-			person.setTelephone(atribute.get("telefon").getValue());
+		if (attribute.get("telefon") != null)
+			person.setTelephone(attribute.get("telefon").getValue());
 
-		if (atribute.get("raumnr") != null)
-			person.setRoomNr(atribute.get("raumnr").getValue());
+		if (attribute.get("raumnr") != null)
+			person.setRoomNr(attribute.get("raumnr").getValue());
 	}
 
 	private void loadAllPois() {
@@ -215,38 +207,33 @@ public class DataLoader implements DataLoaderSpec {
 		if (gsonGetResourcesLevel1 != null)
 			for (GsonGetResourcesLevel2 poiGet : gsonGetResourcesLevel1
 					.getResult()) {
-				PoiModel poi_save = new PoiModel(poiGet.getName(),
-						poiGet.getLink(), poiGet.getId(),
-						poiGet.getSearchTerms(), null, null);
-				poiContainer.addItem(poi_save);
-				loadPOIDetail(poi_save);
+				PoiModel poi = new PoiModel(poiGet.getName(), poiGet.getLink(),
+						poiGet.getId(), poiGet.getSearchTerms(), null, null);
+				poiContainer.addItem(poi);
+				loadPoiDetail(poi);
 			}
 
 		logger.info(MASSAGE_REQUST_DETAIL_LOADED);
 	}
 
-	// this Class should be GENERIC TYPE
-
-	// TODO should be replaced with the GENERIC TYPE
-	// save the Detail Informations in POIModel
-	private void loadPOIDetail(PoiModel poi) {
+	private void loadPoiDetail(PoiModel poi) {
 		GsonGetResourceDetailLevel1 dataDetail = gsonGetResourceDetail(poi
 				.getId());
-		Map<String, GsonGetResourceDetailLevel31> atribute = dataDetail
+		Map<String, GsonGetResourceDetailLevel31> attribute = dataDetail
 				.getResult().getAttributeMap();
 
-		if (atribute.get("raumnr") != null)
-			poi.setRoomNr(atribute.get("raumnr").getValue());
+		if (attribute.get("raumnr") != null)
+			poi.setRoomNr(attribute.get("raumnr").getValue());
 
-		if (atribute.get("bild") != null)
-			poi.setPicture(atribute.get("bild").getValue());
+		if (attribute.get("bild") != null)
+			poi.setPicture(attribute.get("bild").getValue());
 	}
 
 	private GsonGetResourcesLevel1 gsonGetResources(String resource) {
 		try {
 			br = new BufferedReader(new InputStreamReader(new URL(URL_RESOURCE
-					+ "['" + resource + "'" + EMPTYPARAMETER + EMPTYPARAMETER
-					+ "]").openStream()));
+					+ "['" + resource + "'" + URL_EMPTY_PARAMETER
+					+ URL_EMPTY_PARAMETER + "]").openStream()));
 		} catch (MalformedURLException e) {
 			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURCE + resource, e);
 			return null;
@@ -269,7 +256,7 @@ public class DataLoader implements DataLoaderSpec {
 	private GsonGetResourceDetailLevel1 gsonGetResourceDetail(String id) {
 		try {
 			br = new BufferedReader(new InputStreamReader(new URL(
-					URL_RESOURCE_DETAIL + "['" + id + "'" + EMPTYPARAMETER
+					URL_RESOURCE_DETAIL + "['" + id + "'" + URL_EMPTY_PARAMETER
 							+ "]").openStream()));
 		} catch (MalformedURLException e) {
 			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURCE_DETAIL + id, e);
