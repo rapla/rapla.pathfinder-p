@@ -3,16 +3,16 @@ package com.pathfinder.model.gson;
 import java.util.Arrays;
 import java.util.Map;
 
-public class GsonGetResourceDetailLevel2 {
+public class AttributeMap {
 
-	Map<String, GsonGetResourceDetailLevel31> attributeMap;
-	GsonGetResourceDetailLevel32[] events;
+	Map<String, Attribut> attributeMap;
+	Event[] events;
 
-	public Map<String, GsonGetResourceDetailLevel31> getAttributeMap() {
+	public Map<String, Attribut> getAttributeMap() {
 		return attributeMap;
 	}
 
-	public void setAttributeMap(Map<String, GsonGetResourceDetailLevel31> attributeMap) {
+	public void setAttributeMap(Map<String, Attribut> attributeMap) {
 		this.attributeMap = attributeMap;
 	}
 

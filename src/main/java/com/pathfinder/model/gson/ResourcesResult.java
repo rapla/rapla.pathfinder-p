@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.pathfinder.model.ResourceModel;
 
-public class GsonGetResourcesLevel1 {
+public class ResourcesResult {
 
 	private List<ResourceModel> result;
 

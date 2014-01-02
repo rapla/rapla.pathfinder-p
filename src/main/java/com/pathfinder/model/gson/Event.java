@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.pathfinder.model.ResourceModel;
 
-public class GsonGetResourceDetailLevel32 {
+public class Event {
 	String name;
 	String start;
 	String end;

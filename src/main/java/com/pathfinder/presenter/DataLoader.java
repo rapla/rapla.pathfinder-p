@@ -16,9 +16,9 @@ import com.pathfinder.model.PersonModel;
 import com.pathfinder.model.PoiModel;
 import com.pathfinder.model.ResourceModel;
 import com.pathfinder.model.RoomModel;
-import com.pathfinder.model.gson.GsonGetResourceDetailLevel1;
-import com.pathfinder.model.gson.GsonGetResourceDetailLevel31;
-import com.pathfinder.model.gson.GsonGetResourcesLevel1;
+import com.pathfinder.model.gson.ResourceDetailResult;
+import com.pathfinder.model.gson.Attribut;
+import com.pathfinder.model.gson.ResourcesResult;
 import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.PropertiesKey;
 import com.vaadin.data.util.BeanItemContainer;
@@ -83,10 +83,10 @@ public class DataLoader implements DataLoaderSpec {
 
 	private void loadAllRooms() {
 		// Get all rooms and all detail information
-		GsonGetResourcesLevel1 gsonGetResourcesLevel1 = gsonGetResources(REQUEST_ROOMS);
+		ResourcesResult resourcesResult = gsonGetResources(REQUEST_ROOMS);
 
-		if (gsonGetResourcesLevel1 != null)
-			for (ResourceModel roomGet : gsonGetResourcesLevel1
+		if (resourcesResult != null)
+			for (ResourceModel roomGet : resourcesResult
 					.getResult()) {
 				RoomModel room = new RoomModel(roomGet.getName(),
 						roomGet.getLink(), roomGet.getId(),
@@ -99,9 +99,9 @@ public class DataLoader implements DataLoaderSpec {
 	}
 
 	private void loadRoomDetail(RoomModel room) {
-		GsonGetResourceDetailLevel1 dataDetail = gsonGetResourceDetail(room
+		ResourceDetailResult dataDetail = gsonGetResourceDetail(room
 				.getId());
-		Map<String, GsonGetResourceDetailLevel31> attribute = dataDetail
+		Map<String, Attribut> attribute = dataDetail
 				.getResult().getAttributeMap();
 
 		if (attribute.get("abteilung") != null)
@@ -119,10 +119,10 @@ public class DataLoader implements DataLoaderSpec {
 
 	private void loadAllCourses() {
 		// Get all courses and all detail information
-		GsonGetResourcesLevel1 gsonGetResourcesLevel1 = gsonGetResources(REQUEST_COURSES);
+		ResourcesResult resourcesResult = gsonGetResources(REQUEST_COURSES);
 
-		if (gsonGetResourcesLevel1 != null)
-			for (ResourceModel courseGet : gsonGetResourcesLevel1
+		if (resourcesResult != null)
+			for (ResourceModel courseGet : resourcesResult
 					.getResult()) {
 				CourseModel course = new CourseModel(courseGet.getName(),
 						courseGet.getLink(), courseGet.getId(),
@@ -136,9 +136,9 @@ public class DataLoader implements DataLoaderSpec {
 	}
 
 	private void loadCourseDetail(CourseModel course) {
-		GsonGetResourceDetailLevel1 dataDetail = gsonGetResourceDetail(course
+		ResourceDetailResult dataDetail = gsonGetResourceDetail(course
 				.getId());
-		Map<String, GsonGetResourceDetailLevel31> attribute = dataDetail
+		Map<String, Attribut> attribute = dataDetail
 				.getResult().getAttributeMap();
 
 		if (attribute.get("jahrgang") != null)
@@ -159,10 +159,10 @@ public class DataLoader implements DataLoaderSpec {
 
 	private void loadAllPersons() {
 		// Get all persons and all detail information
-		GsonGetResourcesLevel1 gsonGetResourcesLevel1 = gsonGetResources(REQUEST_PERSONS);
+		ResourcesResult resourcesResult = gsonGetResources(REQUEST_PERSONS);
 
-		if (gsonGetResourcesLevel1 != null)
-			for (ResourceModel personGet : gsonGetResourcesLevel1
+		if (resourcesResult != null)
+			for (ResourceModel personGet : resourcesResult
 					.getResult()) {
 				PersonModel person = new PersonModel(personGet.getName(),
 						personGet.getLink(), personGet.getId(),
@@ -176,9 +176,9 @@ public class DataLoader implements DataLoaderSpec {
 	}
 
 	private void loadPersonDetail(PersonModel person) {
-		GsonGetResourceDetailLevel1 dataDetail = gsonGetResourceDetail(person
+		ResourceDetailResult dataDetail = gsonGetResourceDetail(person
 				.getId());
-		Map<String, GsonGetResourceDetailLevel31> attribute = dataDetail
+		Map<String, Attribut> attribute = dataDetail
 				.getResult().getAttributeMap();
 
 		if (attribute.get("abteilung") != null)
@@ -202,10 +202,10 @@ public class DataLoader implements DataLoaderSpec {
 
 	private void loadAllPois() {
 		// Get all pois and all detail information
-		GsonGetResourcesLevel1 gsonGetResourcesLevel1 = gsonGetResources(REQUEST_POIS);
+		ResourcesResult resourcesResult = gsonGetResources(REQUEST_POIS);
 
-		if (gsonGetResourcesLevel1 != null)
-			for (ResourceModel poiGet : gsonGetResourcesLevel1
+		if (resourcesResult != null)
+			for (ResourceModel poiGet : resourcesResult
 					.getResult()) {
 				PoiModel poi = new PoiModel(poiGet.getName(), poiGet.getLink(),
 						poiGet.getId(), poiGet.getSearchTerms(), null, null);
@@ -217,9 +217,9 @@ public class DataLoader implements DataLoaderSpec {
 	}
 
 	private void loadPoiDetail(PoiModel poi) {
-		GsonGetResourceDetailLevel1 dataDetail = gsonGetResourceDetail(poi
+		ResourceDetailResult dataDetail = gsonGetResourceDetail(poi
 				.getId());
-		Map<String, GsonGetResourceDetailLevel31> attribute = dataDetail
+		Map<String, Attribut> attribute = dataDetail
 				.getResult().getAttributeMap();
 
 		if (attribute.get("raumnr") != null)
@@ -229,7 +229,7 @@ public class DataLoader implements DataLoaderSpec {
 			poi.setPicture(attribute.get("bild").getValue());
 	}
 
-	private GsonGetResourcesLevel1 gsonGetResources(String resource) {
+	private ResourcesResult gsonGetResources(String resource) {
 		try {
 			br = new BufferedReader(new InputStreamReader(new URL(URL_RESOURCE
 					+ "['" + resource + "'" + URL_EMPTY_PARAMETER
@@ -242,8 +242,8 @@ public class DataLoader implements DataLoaderSpec {
 			return null;
 		}
 
-		GsonGetResourcesLevel1 ResourceData = new Gson().fromJson(br,
-				GsonGetResourcesLevel1.class);
+		ResourcesResult ResourceData = new Gson().fromJson(br,
+				ResourcesResult.class);
 
 		if (ResourceData != null) {
 			logger.info("Resource: " + resource + " is loaded");
@@ -253,7 +253,7 @@ public class DataLoader implements DataLoaderSpec {
 		}
 	}
 
-	private GsonGetResourceDetailLevel1 gsonGetResourceDetail(String id) {
+	private ResourceDetailResult gsonGetResourceDetail(String id) {
 		try {
 			br = new BufferedReader(new InputStreamReader(new URL(
 					URL_RESOURCE_DETAIL + "['" + id + "'" + URL_EMPTY_PARAMETER
@@ -266,8 +266,8 @@ public class DataLoader implements DataLoaderSpec {
 			return null;
 		}
 
-		GsonGetResourceDetailLevel1 ResourceDetailData = new Gson().fromJson(
-				br, GsonGetResourceDetailLevel1.class);
+		ResourceDetailResult ResourceDetailData = new Gson().fromJson(
+				br, ResourceDetailResult.class);
 
 		if (ResourceDetailData != null) {
 			return ResourceDetailData;
