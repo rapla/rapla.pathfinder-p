@@ -86,7 +86,7 @@ public class DataLoader implements DataLoaderSpec {
 		this.loadAllCourses();
 		this.loadAllPersons();
 		this.loadAllPois();
-		
+
 		// load Faculty
 		this.loadFaculty();
 	}
@@ -132,8 +132,8 @@ public class DataLoader implements DataLoaderSpec {
 
 		if (resourcesResult != null)
 			for (ResourceModel courseGet : resourcesResult.getResult()) {
-				CourseModel course = new CourseModel(courseGet.getId(),courseGet.getName(),
-						courseGet.getLink(), 
+				CourseModel course = new CourseModel(courseGet.getId(),
+						courseGet.getName(), courseGet.getLink(),
 						courseGet.getSearchTerms(), null, null, null, null,
 						null, null);
 				courseContainer.addItem(course);
@@ -171,10 +171,10 @@ public class DataLoader implements DataLoaderSpec {
 
 		if (resourcesResult != null)
 			for (ResourceModel personGet : resourcesResult.getResult()) {
-				PersonModel person = new PersonModel(personGet.getName(),
-						personGet.getLink(), personGet.getId(),
+				PersonModel person = new PersonModel(personGet.getId(),
+						personGet.getName(), personGet.getLink(),
 						personGet.getSearchTerms(), null, null, null, null,
-						null, null);
+						null, null, null);
 				personContainer.addItem(person);
 				loadPersonDetail(person);
 			}
@@ -237,6 +237,8 @@ public class DataLoader implements DataLoaderSpec {
 
 		if (CategoryId == null)
 			CategoryId = URL_EMPTY_PARAMETER;
+		else
+			CategoryId = ",'" + CategoryId + "'";
 
 		try {
 			br = new BufferedReader(new InputStreamReader(new URL(URL_RESOURCE
@@ -288,8 +290,9 @@ public class DataLoader implements DataLoaderSpec {
 	private CategoryResult gsonGetOrganigram() {
 
 		try {
-			br = new BufferedReader(new InputStreamReader(new URL(
-					URL_ORGANIGRAM + "%5B%22%22%5D").openStream()));
+			br = new BufferedReader(new InputStreamReader(
+					new URL(URL_ORGANIGRAM + "[" + URL_EMPTY_PARAMETER + "]")
+							.openStream()));
 		} catch (MalformedURLException e) {
 			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURCE
 					+ REQUEST_ORGANIGRAM);
@@ -319,21 +322,46 @@ public class DataLoader implements DataLoaderSpec {
 
 		for (Category faculty_get : faculty) {
 
-			// get all room in an special faculty
-			ResourceData = gsonGetResources(REQUEST_COURSES,
-					faculty_get.getId()).getResult();
-			// look if there is any courses with the same id in the RAM
-			for (ResourceModel course_get : ResourceData) {
-				CourseModel course = courseContainer
-						.getItem(course_get.getId()).getBean();
-				if (course != null) {
-					// write the actualy category Information to the found item
-					course.setFaculty(faculty_get.getName());
+			try {
+				// get all courses in an special faculty
+				ResourceData = gsonGetResources(REQUEST_COURSES,
+						faculty_get.getId()).getResult();
+				// look if there is any courses with the same id in the RAM
+				for (ResourceModel course_get : ResourceData) {
+					CourseModel course = courseContainer.getItem(
+							course_get.getId()).getBean();
+					if (course != null) {
+						// add the actual category information to the found item
+						course.setFaculty(faculty_get.getName());
+
+					}
 
 				}
-
+			} catch (Exception e) {
+				logger.error("Faculty " + faculty_get.getName()
+						+ " has no courses");
 			}
 
+			try {
+				// get all persons in an special faculty
+				ResourceData = gsonGetResources(REQUEST_PERSONS,
+						faculty_get.getId()).getResult();
+
+				// look if there is any persons with the same id in the RAM
+				for (ResourceModel person_get : ResourceData) {
+					PersonModel person = personContainer.getItem(
+							person_get.getId()).getBean();
+					if (person != null) {
+						// add the actual category information to the found item
+						person.setFaculty(faculty_get.getName());
+
+					}
+
+				}
+			} catch (Exception e) {
+				logger.error("Faculty " + faculty_get.getName()
+						+ " has no persons");
+			}
 		}
 	}
 

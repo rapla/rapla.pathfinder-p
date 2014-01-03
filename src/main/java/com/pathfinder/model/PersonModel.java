@@ -7,22 +7,26 @@ public class PersonModel extends ResourceModel {
 	public static final String PROPERTY_EMAIL = "email";
 	public static final String PROPERTY_PICTURE = "picture";
 	public static final String PROPERTY_TELEPHONE = "telephone";
+	public static final String PROPERTY_FACULTY = "faculty";
 
 	private String department;
 	private String course;
 	private String email;
 	private String picture;
 	private String telephone;
+	private String faculty;
 
-	public PersonModel(String name, String link, String id,
-			String[] searchTerms, String department, String course,
-			String email, String picture, String telephone, String roomNr) {
+	public PersonModel(String id, String name, String link,
+			String[] searchTerms, String roomNr, String department,
+			String course, String email, String picture, String telephone,
+			String faculty) {
 		super(id, name, link, searchTerms, roomNr);
-		this.setDepartment(department);
-		this.setCourse(course);
-		this.setEmail(email);
-		this.setPicture(picture);
-		this.setTelephone(telephone);
+		this.department = department;
+		this.course = course;
+		this.email = email;
+		this.picture = picture;
+		this.telephone = telephone;
+		this.faculty = faculty;
 	}
 
 	public String getDepartment() {
@@ -63,5 +67,13 @@ public class PersonModel extends ResourceModel {
 
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
+	}
+
+	public String getFaculty() {
+		return faculty;
+	}
+
+	public void setFaculty(String faculty) {
+		this.faculty = faculty;
 	}
 }
