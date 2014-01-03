@@ -102,6 +102,7 @@ public class PathfinderServlet extends VaadinServlet {
 
 	/**
 	 * Adds a meta tag to allow always the IE10 mode if client is the Stele
+	 * TODO Do we need this?
 	 */
 	private void addMetaTagForIE10Mode() {
 		getService().addSessionInitListener(new SessionInitListener() {
