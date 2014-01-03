@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
@@ -16,6 +17,8 @@ import com.pathfinder.model.PersonModel;
 import com.pathfinder.model.PoiModel;
 import com.pathfinder.model.ResourceModel;
 import com.pathfinder.model.RoomModel;
+import com.pathfinder.model.gson.Category;
+import com.pathfinder.model.gson.CategoryResult;
 import com.pathfinder.model.gson.ResourceDetailResult;
 import com.pathfinder.model.gson.Attribut;
 import com.pathfinder.model.gson.ResourcesResult;
@@ -42,12 +45,16 @@ public class DataLoader implements DataLoaderSpec {
 	private final String URL_RESOURCE_DETAIL = BASE_URL
 			+ "?method=getResource&jsonrpc=2.0&params=";
 
+	private final String URL_ORGANIGRAM = BASE_URL
+			+ "?method=getOrganigram&jsonrpc=2.0&params=";
+
 	private final String URL_EMPTY_PARAMETER = ",''";
 
 	private final String REQUEST_PERSONS = "persons";
 	private final String REQUEST_ROOMS = "raum";
 	private final String REQUEST_POIS = "sonstiges";
 	private final String REQUEST_COURSES = "courses";
+	private final String REQUEST_ORGANIGRAM = "organigram";
 
 	private final String MASSAGE_REQUST_DETAIL_LOADED = "Details are loaded";
 	private final String MASSAGE_ERROR_LOADING_URL_RESOURCE = "Error loading URL by loading resource: ";
@@ -79,15 +86,17 @@ public class DataLoader implements DataLoaderSpec {
 		this.loadAllCourses();
 		this.loadAllPersons();
 		this.loadAllPois();
+		
+		// load Faculty
+		this.loadFaculty();
 	}
 
 	private void loadAllRooms() {
 		// Get all rooms and all detail information
-		ResourcesResult resourcesResult = gsonGetResources(REQUEST_ROOMS);
+		ResourcesResult resourcesResult = gsonGetResources(REQUEST_ROOMS, null);
 
 		if (resourcesResult != null)
-			for (ResourceModel roomGet : resourcesResult
-					.getResult()) {
+			for (ResourceModel roomGet : resourcesResult.getResult()) {
 				RoomModel room = new RoomModel(roomGet.getName(),
 						roomGet.getLink(), roomGet.getId(),
 						roomGet.getSearchTerms(), null, null, null, null);
@@ -99,10 +108,9 @@ public class DataLoader implements DataLoaderSpec {
 	}
 
 	private void loadRoomDetail(RoomModel room) {
-		ResourceDetailResult dataDetail = gsonGetResourceDetail(room
-				.getId());
-		Map<String, Attribut> attribute = dataDetail
-				.getResult().getAttributeMap();
+		ResourceDetailResult dataDetail = gsonGetResourceDetail(room.getId());
+		Map<String, Attribut> attribute = dataDetail.getResult()
+				.getAttributeMap();
 
 		if (attribute.get("abteilung") != null)
 			room.setDepartment(attribute.get("abteilung").getValue());
@@ -119,15 +127,15 @@ public class DataLoader implements DataLoaderSpec {
 
 	private void loadAllCourses() {
 		// Get all courses and all detail information
-		ResourcesResult resourcesResult = gsonGetResources(REQUEST_COURSES);
+		ResourcesResult resourcesResult = gsonGetResources(REQUEST_COURSES,
+				null);
 
 		if (resourcesResult != null)
-			for (ResourceModel courseGet : resourcesResult
-					.getResult()) {
-				CourseModel course = new CourseModel(courseGet.getName(),
-						courseGet.getLink(), courseGet.getId(),
+			for (ResourceModel courseGet : resourcesResult.getResult()) {
+				CourseModel course = new CourseModel(courseGet.getId(),courseGet.getName(),
+						courseGet.getLink(), 
 						courseGet.getSearchTerms(), null, null, null, null,
-						null);
+						null, null);
 				courseContainer.addItem(course);
 				loadCourseDetail(course);
 			}
@@ -136,10 +144,9 @@ public class DataLoader implements DataLoaderSpec {
 	}
 
 	private void loadCourseDetail(CourseModel course) {
-		ResourceDetailResult dataDetail = gsonGetResourceDetail(course
-				.getId());
-		Map<String, Attribut> attribute = dataDetail
-				.getResult().getAttributeMap();
+		ResourceDetailResult dataDetail = gsonGetResourceDetail(course.getId());
+		Map<String, Attribut> attribute = dataDetail.getResult()
+				.getAttributeMap();
 
 		if (attribute.get("jahrgang") != null)
 			course.setVintage(attribute.get("jahrgang").getValue());
@@ -159,11 +166,11 @@ public class DataLoader implements DataLoaderSpec {
 
 	private void loadAllPersons() {
 		// Get all persons and all detail information
-		ResourcesResult resourcesResult = gsonGetResources(REQUEST_PERSONS);
+		ResourcesResult resourcesResult = gsonGetResources(REQUEST_PERSONS,
+				null);
 
 		if (resourcesResult != null)
-			for (ResourceModel personGet : resourcesResult
-					.getResult()) {
+			for (ResourceModel personGet : resourcesResult.getResult()) {
 				PersonModel person = new PersonModel(personGet.getName(),
 						personGet.getLink(), personGet.getId(),
 						personGet.getSearchTerms(), null, null, null, null,
@@ -176,10 +183,9 @@ public class DataLoader implements DataLoaderSpec {
 	}
 
 	private void loadPersonDetail(PersonModel person) {
-		ResourceDetailResult dataDetail = gsonGetResourceDetail(person
-				.getId());
-		Map<String, Attribut> attribute = dataDetail
-				.getResult().getAttributeMap();
+		ResourceDetailResult dataDetail = gsonGetResourceDetail(person.getId());
+		Map<String, Attribut> attribute = dataDetail.getResult()
+				.getAttributeMap();
 
 		if (attribute.get("abteilung") != null)
 			person.setDepartment(attribute.get("abteilung").getValue());
@@ -202,11 +208,10 @@ public class DataLoader implements DataLoaderSpec {
 
 	private void loadAllPois() {
 		// Get all pois and all detail information
-		ResourcesResult resourcesResult = gsonGetResources(REQUEST_POIS);
+		ResourcesResult resourcesResult = gsonGetResources(REQUEST_POIS, null);
 
 		if (resourcesResult != null)
-			for (ResourceModel poiGet : resourcesResult
-					.getResult()) {
+			for (ResourceModel poiGet : resourcesResult.getResult()) {
 				PoiModel poi = new PoiModel(poiGet.getName(), poiGet.getLink(),
 						poiGet.getId(), poiGet.getSearchTerms(), null, null);
 				poiContainer.addItem(poi);
@@ -217,10 +222,9 @@ public class DataLoader implements DataLoaderSpec {
 	}
 
 	private void loadPoiDetail(PoiModel poi) {
-		ResourceDetailResult dataDetail = gsonGetResourceDetail(poi
-				.getId());
-		Map<String, Attribut> attribute = dataDetail
-				.getResult().getAttributeMap();
+		ResourceDetailResult dataDetail = gsonGetResourceDetail(poi.getId());
+		Map<String, Attribut> attribute = dataDetail.getResult()
+				.getAttributeMap();
 
 		if (attribute.get("raumnr") != null)
 			poi.setRoomNr(attribute.get("raumnr").getValue());
@@ -229,11 +233,15 @@ public class DataLoader implements DataLoaderSpec {
 			poi.setPicture(attribute.get("bild").getValue());
 	}
 
-	private ResourcesResult gsonGetResources(String resource) {
+	private ResourcesResult gsonGetResources(String resource, String CategoryId) {
+
+		if (CategoryId == null)
+			CategoryId = URL_EMPTY_PARAMETER;
+
 		try {
 			br = new BufferedReader(new InputStreamReader(new URL(URL_RESOURCE
-					+ "['" + resource + "'" + URL_EMPTY_PARAMETER
-					+ URL_EMPTY_PARAMETER + "]").openStream()));
+					+ "['" + resource + "'" + CategoryId + URL_EMPTY_PARAMETER
+					+ "]").openStream()));
 		} catch (MalformedURLException e) {
 			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURCE + resource, e);
 			return null;
@@ -266,14 +274,66 @@ public class DataLoader implements DataLoaderSpec {
 			return null;
 		}
 
-		ResourceDetailResult ResourceDetailData = new Gson().fromJson(
-				br, ResourceDetailResult.class);
+		ResourceDetailResult ResourceDetailData = new Gson().fromJson(br,
+				ResourceDetailResult.class);
 
 		if (ResourceDetailData != null) {
 			return ResourceDetailData;
 		} else {
 			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURCE_DETAIL + id);
 			return null;
+		}
+	}
+
+	private CategoryResult gsonGetOrganigram() {
+
+		try {
+			br = new BufferedReader(new InputStreamReader(new URL(
+					URL_ORGANIGRAM + "%5B%22%22%5D").openStream()));
+		} catch (MalformedURLException e) {
+			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURCE
+					+ REQUEST_ORGANIGRAM);
+			e.printStackTrace();
+		} catch (IOException e) {
+			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURCE
+					+ REQUEST_ORGANIGRAM);
+			e.printStackTrace();
+		}
+
+		CategoryResult Organigram = new Gson().fromJson(br,
+				CategoryResult.class);
+
+		if (Organigram != null) {
+			logger.info("Resource: " + REQUEST_ORGANIGRAM + " is loaded");
+			return Organigram;
+		} else {
+			return null;
+		}
+
+	}
+
+	private void loadFaculty() {
+		// load the root facultys
+		List<Category> faculty = gsonGetOrganigram().getResult();
+		List<ResourceModel> ResourceData;
+
+		for (Category faculty_get : faculty) {
+
+			// get all room in an special faculty
+			ResourceData = gsonGetResources(REQUEST_COURSES,
+					faculty_get.getId()).getResult();
+			// look if there is any courses with the same id in the RAM
+			for (ResourceModel course_get : ResourceData) {
+				CourseModel course = courseContainer
+						.getItem(course_get.getId()).getBean();
+				if (course != null) {
+					// write the actualy category Information to the found item
+					course.setFaculty(faculty_get.getName());
+
+				}
+
+			}
+
 		}
 	}
 

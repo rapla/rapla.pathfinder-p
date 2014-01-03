@@ -5,20 +5,23 @@ public class CourseModel extends ResourceModel {
 	public static final String PROPERTY_DEPARTMENT = "department";
 	public static final String PROPERTY_COURSE = "course";
 	public static final String PROPERTY_PICTURE = "picture";
+	public static final String PROPERTY_FACULTY = "faculty";
 
 	private String vintage;
 	private String department;
 	private String course;
 	private String picture;
+	private String faculty;
 
-	public CourseModel(String name, String link, String id,
-			String[] searchTerms, String vintage, String department,
-			String course, String picture, String roomNr) {
+	public CourseModel(String id, String name, String link,
+			String[] searchTerms, String roomNr, String vintage,
+			String department, String course, String picture, String faculty) {
 		super(id, name, link, searchTerms, roomNr);
 		this.vintage = vintage;
 		this.department = department;
 		this.course = course;
 		this.picture = picture;
+		this.faculty = faculty;
 	}
 
 	public String getVintage() {
@@ -51,5 +54,13 @@ public class CourseModel extends ResourceModel {
 
 	public void setPicture(String picture) {
 		this.picture = picture;
+	}
+
+	public String getFaculty() {
+		return faculty;
+	}
+
+	public void setFaculty(String faculty) {
+		this.faculty = faculty;
 	}
 }
