@@ -61,7 +61,9 @@ public class DataLoader implements DataLoaderSpec {
 	private final String MASSAGE_ERROR_LOADING_URL_RESOURCE_DETAIL = "Error loading URL by loading ResourceDetail id: ";
 
 	private BufferedReader br;
-	// TODO Why does this not work without static oO?
+	// Static, because PathfinderServlet and PathfinderUI should have the same
+	// access to these containers without the possibility to sending the object
+	// from one class to the other one
 	private static BeanItemContainer<RoomModel> roomContainer = new BeanItemContainer<RoomModel>(
 			RoomModel.class);
 	private static BeanItemContainer<CourseModel> courseContainer = new BeanItemContainer<CourseModel>(
