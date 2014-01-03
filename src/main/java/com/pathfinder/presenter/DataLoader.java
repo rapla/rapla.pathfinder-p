@@ -51,7 +51,7 @@ public class DataLoader implements DataLoaderSpec {
 	private final String URL_EMPTY_PARAMETER = ",''";
 
 	private final String REQUEST_PERSONS = "persons";
-	private final String REQUEST_ROOMS = "raum";
+	private final String REQUEST_ROOMS = "rooms";
 	private final String REQUEST_POIS = "sonstiges";
 	private final String REQUEST_COURSES = "courses";
 	private final String REQUEST_ORGANIGRAM = "organigram";
