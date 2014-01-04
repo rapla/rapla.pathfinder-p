@@ -60,6 +60,6 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 
 	@Override
 	public void updateTranslations() {
-		// TODO Auto-generated method stub
+		// No translation to update
 	}
 }
