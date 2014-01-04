@@ -37,7 +37,9 @@ public class PathfinderErrorHandler extends DefaultErrorHandler {
 				event.getThrowable());
 
 		// Reload UI to restart application
-		UI.getCurrent().close();
-		JavaScript.getCurrent().execute("window.location.reload();");
+		if (UI.getCurrent() != null)
+			UI.getCurrent().close();
+		if (JavaScript.getCurrent() != null)
+			JavaScript.getCurrent().execute("window.location.reload();");
 	}
 }
