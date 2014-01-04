@@ -2,7 +2,6 @@ package com.pathfinder.view.components;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
@@ -34,7 +33,7 @@ public class FreeRoom extends CustomComponent implements FreeRoomSpec {
 	}
 
 	@Override
-	public void updateTranslations(Locale locale) {
+	public void updateTranslations() {
 		this.setCaption(translator
 				.translate(TranslationKeys.CURRENTLY_FREE_ROOMS));
 	}

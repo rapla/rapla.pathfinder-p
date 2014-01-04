@@ -6,8 +6,6 @@
 
 package com.pathfinder.presenter;
 
-import java.util.Locale;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -228,7 +226,7 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 	}
 
 	@Override
-	public void updateTranslations(Locale locale) {
-		searchPanel.updateTranslations(locale);
+	public void updateTranslations() {
+		searchPanel.updateTranslations();
 	}
 }

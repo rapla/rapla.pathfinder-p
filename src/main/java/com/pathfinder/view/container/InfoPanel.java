@@ -1,7 +1,5 @@
 package com.pathfinder.view.container;
 
-import java.util.Locale;
-
 import com.pathfinder.util.widgetset.DateTime;
 import com.pathfinder.view.components.FreeRoom;
 import com.vaadin.ui.CustomComponent;
@@ -36,8 +34,8 @@ public class InfoPanel extends CustomComponent implements InfoPanelSpec {
 	}
 
 	@Override
-	public void updateTranslations(Locale locale) {
-		dateTime.updateTranslations(locale);
-		freeRoom.updateTranslations(locale);
+	public void updateTranslations() {
+		dateTime.updateTranslations();
+		freeRoom.updateTranslations();
 	}
 }

@@ -1,7 +1,5 @@
 package com.pathfinder.view.layout;
 
-import java.util.Locale;
-
 import com.pathfinder.view.components.MenuBar;
 import com.pathfinder.view.container.DetailContainer;
 import com.pathfinder.view.container.InfoPanel;
@@ -61,7 +59,7 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	}
 
 	@Override
-	public void updateTranslations(Locale locale) {
+	public void updateTranslations() {
 		// TODO Auto-generated method stub
 	}
 }

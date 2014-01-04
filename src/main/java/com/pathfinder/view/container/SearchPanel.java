@@ -1,7 +1,5 @@
 package com.pathfinder.view.container;
 
-import java.util.Locale;
-
 import com.pathfinder.view.components.AccordionView;
 import com.pathfinder.view.components.Keyboard;
 import com.pathfinder.view.components.SearchField;
@@ -50,9 +48,9 @@ public class SearchPanel extends CustomComponent implements SearchPanelSpec {
 	}
 
 	@Override
-	public void updateTranslations(Locale locale) {
-		accordionView.updateTranslations(locale);
-		keyboard.updateTranslations(locale);
-		searchField.updateTranslations(locale);
+	public void updateTranslations() {
+		accordionView.updateTranslations();
+		keyboard.updateTranslations();
+		searchField.updateTranslations();
 	}
 }

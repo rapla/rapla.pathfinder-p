@@ -131,10 +131,10 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 
 	@Override
 	public void languageChanged(Locale locale) {
-		infoPanel.updateTranslations(locale);
+		infoPanel.updateTranslations();
 		// TODO detailContainer.updateTranslations(locale);
-		searchPanelPresenter.updateTranslations(locale);
-		menuBar.updateTranslations(locale);
+		searchPanelPresenter.updateTranslations();
+		menuBar.updateTranslations();
 		Page.getCurrent().setTitle(
 				Translator.getInstance().translate(TranslationKeys.APP_TITLE));
 	}

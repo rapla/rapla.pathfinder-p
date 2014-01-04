@@ -2,7 +2,6 @@ package com.pathfinder.view.components;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -206,7 +205,7 @@ public class AccordionView extends CustomComponent implements AccordionSpec {
 	}
 
 	@Override
-	public void updateTranslations(Locale locale) {
+	public void updateTranslations() {
 		accordionCaptionRooms = new String(
 				translator.translate(TranslationKeys.ROOMS));
 		accordionCaptionCourses = new String(

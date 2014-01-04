@@ -1,7 +1,5 @@
 package com.pathfinder.view.components;
 
-import java.util.Locale;
-
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
@@ -27,7 +25,7 @@ public class Appointment extends BrowserFrame implements AppointmentSpec {
 	}
 
 	@Override
-	public void updateTranslations(Locale locale) {
+	public void updateTranslations() {
 		this.setAlternateText(translator
 				.translate(TranslationKeys.NO_DATA_AVAILABLE));
 	}

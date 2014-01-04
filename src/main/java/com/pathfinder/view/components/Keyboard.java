@@ -11,7 +11,6 @@ import static com.pathfinder.view.components.KeyboardId.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
@@ -132,7 +131,7 @@ public class Keyboard extends CustomComponent implements KeyboardSpec,
 	}
 
 	@Override
-	public void updateTranslations(Locale locale) {
+	public void updateTranslations() {
 		deleteButton.setCaption(translator.translate(TranslationKeys.DELETE));
 		spaceButton.setCaption(translator.translate(TranslationKeys.SPACE));
 	}

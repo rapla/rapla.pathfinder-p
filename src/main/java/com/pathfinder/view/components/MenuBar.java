@@ -1,7 +1,5 @@
 package com.pathfinder.view.components;
 
-import java.util.Locale;
-
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
@@ -80,7 +78,7 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	}
 
 	@Override
-	public void updateTranslations(Locale locale) {
+	public void updateTranslations() {
 		appointmentButton.setCaption(translator
 				.translate(TranslationKeys.EVENT));
 	}

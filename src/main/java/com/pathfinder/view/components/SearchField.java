@@ -1,7 +1,5 @@
 package com.pathfinder.view.components;
 
-import java.util.Locale;
-
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
@@ -60,7 +58,7 @@ public class SearchField extends CustomComponent implements SearchFieldSpec {
 	}
 
 	@Override
-	public void updateTranslations(Locale locale) {
+	public void updateTranslations() {
 		searchField.setInputPrompt(translator
 				.translate(TranslationKeys.SEARCH_PROMP));
 	}

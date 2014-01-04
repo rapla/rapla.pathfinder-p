@@ -1,7 +1,5 @@
 package com.pathfinder.view.components;
 
-import java.util.Locale;
-
 import com.pathfinder.model.PoiModel;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.util.BeanItem;
@@ -26,7 +24,7 @@ public class DetailInfo<T> extends CustomComponent implements DetailInfoSpec {
 	}
 
 	@Override
-	public void updateTranslations(Locale locale) {
+	public void updateTranslations() {
 		// TODO Auto-generated method stub
 	}
 }

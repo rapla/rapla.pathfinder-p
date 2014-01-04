@@ -1,7 +1,6 @@
 package com.pathfinder.util.widgetset;
 
 import java.util.Date;
-import java.util.Locale;
 
 import com.pathfinder.util.widgetset.client.datetime.DateTimeServerRpc;
 import com.pathfinder.util.widgetset.client.datetime.DateTimeState;
@@ -42,7 +41,7 @@ public class DateTime extends AbstractComponent implements DateTimeSpec {
 	 * com.pathfinder.view.TranslatabelSpec#updateTranslations(java.util.Locale)
 	 */
 	@Override
-	public void updateTranslations(Locale locale) {
+	public void updateTranslations() {
 		// TODO: change format of date-time-representation (e.g. 12:45 am if
 		// English)
 	}

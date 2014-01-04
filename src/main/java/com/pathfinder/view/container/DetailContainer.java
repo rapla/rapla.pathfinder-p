@@ -1,7 +1,5 @@
 package com.pathfinder.view.container;
 
-import java.util.Locale;
-
 import com.pathfinder.model.CourseModel;
 import com.pathfinder.model.PersonModel;
 import com.pathfinder.model.PoiModel;
@@ -56,7 +54,7 @@ public class DetailContainer<T> extends CustomComponent implements
 	}
 
 	@Override
-	public void updateTranslations(Locale locale) {
+	public void updateTranslations() {
 		// TODO Auto-generated method stub
 	}
 }

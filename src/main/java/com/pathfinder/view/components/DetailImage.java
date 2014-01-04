@@ -1,7 +1,5 @@
 package com.pathfinder.view.components;
 
-import java.util.Locale;
-
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Image;
 
@@ -26,7 +24,7 @@ public class DetailImage extends Image implements DetailImageSpec {
 	}
 
 	@Override
-	public void updateTranslations(Locale locale) {
+	public void updateTranslations() {
 		// TODO Auto-generated method stub
 	}
 }
