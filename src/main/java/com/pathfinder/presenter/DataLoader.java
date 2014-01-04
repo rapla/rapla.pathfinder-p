@@ -17,10 +17,10 @@ import com.pathfinder.model.PersonModel;
 import com.pathfinder.model.PoiModel;
 import com.pathfinder.model.ResourceModel;
 import com.pathfinder.model.RoomModel;
+import com.pathfinder.model.gson.Attribut;
 import com.pathfinder.model.gson.Category;
 import com.pathfinder.model.gson.CategoryResult;
 import com.pathfinder.model.gson.ResourceDetailResult;
-import com.pathfinder.model.gson.Attribut;
 import com.pathfinder.model.gson.ResourcesResult;
 import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.PropertiesKey;
@@ -297,12 +297,12 @@ public class DataLoader implements DataLoaderSpec {
 							.openStream()));
 		} catch (MalformedURLException e) {
 			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURCE
-					+ REQUEST_ORGANIGRAM);
-			e.printStackTrace();
+					+ REQUEST_ORGANIGRAM, e);
+			return null;
 		} catch (IOException e) {
 			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURCE
-					+ REQUEST_ORGANIGRAM);
-			e.printStackTrace();
+					+ REQUEST_ORGANIGRAM, e);
+			return null;
 		}
 
 		CategoryResult Organigram = new Gson().fromJson(br,
@@ -319,52 +319,59 @@ public class DataLoader implements DataLoaderSpec {
 
 	private void loadFaculty() {
 		// load the root facultys
-		List<Category> faculty = gsonGetOrganigram().getResult();
+		CategoryResult categoryResult = gsonGetOrganigram();
 		List<ResourceModel> ResourceData;
 
-		for (Category faculty_get : faculty) {
+		if (categoryResult != null)
+			for (Category faculty_get : categoryResult.getResult()) {
 
-			try {
-				// get all courses in an special faculty
-				ResourceData = gsonGetResources(REQUEST_COURSES,
-						faculty_get.getId()).getResult();
-				// look if there is any courses with the same id in the RAM
-				for (ResourceModel course_get : ResourceData) {
-					CourseModel course = courseContainer.getItem(
-							course_get.getId()).getBean();
-					if (course != null) {
-						// add the actual category information to the found item
-						course.setFaculty(faculty_get.getName());
+				try {
+					// get all courses in an special faculty
+					ResourcesResult resourcesResult = gsonGetResources(
+							REQUEST_COURSES, faculty_get.getId());
+					if (resourcesResult != null)
+						// look if there is any courses with the same id in the
+						// RAM
+						for (ResourceModel course_get : resourcesResult
+								.getResult()) {
+							CourseModel course = courseContainer.getItem(
+									course_get.getId()).getBean();
+							if (course != null) {
+								// add the actual category information to the
+								// found
+								// item
+								course.setFaculty(faculty_get.getName());
+
+							}
+
+						}
+				} catch (Exception e) {
+					logger.error("Faculty " + faculty_get.getName()
+							+ " has no courses", e);
+				}
+
+				try {
+					// get all persons in an special faculty
+					ResourceData = gsonGetResources(REQUEST_PERSONS,
+							faculty_get.getId()).getResult();
+
+					// look if there is any persons with the same id in the RAM
+					for (ResourceModel person_get : ResourceData) {
+						PersonModel person = personContainer.getItem(
+								person_get.getId()).getBean();
+						if (person != null) {
+							// add the actual category information to the found
+							// item
+							person.setFaculty(faculty_get.getName());
+
+						}
 
 					}
-
+				} catch (Exception e) {
+					logger.error("Faculty " + faculty_get.getName()
+							+ " has no persons", e);
 				}
-			} catch (Exception e) {
-				logger.error("Faculty " + faculty_get.getName()
-						+ " has no courses");
 			}
-
-			try {
-				// get all persons in an special faculty
-				ResourceData = gsonGetResources(REQUEST_PERSONS,
-						faculty_get.getId()).getResult();
-
-				// look if there is any persons with the same id in the RAM
-				for (ResourceModel person_get : ResourceData) {
-					PersonModel person = personContainer.getItem(
-							person_get.getId()).getBean();
-					if (person != null) {
-						// add the actual category information to the found item
-						person.setFaculty(faculty_get.getName());
-
-					}
-
-				}
-			} catch (Exception e) {
-				logger.error("Faculty " + faculty_get.getName()
-						+ " has no persons");
-			}
-		}
 	}
 
 	@Override
