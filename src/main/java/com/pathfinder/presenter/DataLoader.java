@@ -57,8 +57,8 @@ public class DataLoader implements DataLoaderSpec {
 	private final String REQUEST_ORGANIGRAM = "organigram";
 
 	private final String MASSAGE_REQUST_DETAIL_LOADED = "Details are loaded";
-	private final String MASSAGE_ERROR_LOADING_URL_RESOURCE = "Error loading URL by loading resource: ";
-	private final String MASSAGE_ERROR_LOADING_URL_RESOURCE_DETAIL = "Error loading URL by loading ResourceDetail id: ";
+	private final String MASSAGE_ERROR_LOADING_URL_RESOURCE = "Error loading resource: ";
+	private final String MASSAGE_ERROR_LOADING_URL_RESOURCE_DETAIL = "Error loading resource detail - id: ";
 
 	private BufferedReader br;
 	// Static, because PathfinderServlet and PathfinderUI should have the same
