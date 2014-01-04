@@ -15,8 +15,8 @@ public class InfoPanel extends CustomComponent implements InfoPanelSpec {
 		this.dateTime = dateTime;
 		this.freeRoom = freeRoom;
 
-		this.buildLayout();
 		this.setCompositionRoot(horizontalLayout);
+		this.buildLayout();
 	}
 
 	@Override

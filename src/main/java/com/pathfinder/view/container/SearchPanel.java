@@ -27,8 +27,8 @@ public class SearchPanel extends CustomComponent implements SearchPanelSpec {
 		this.keyboard = keyboardView;
 		this.searchField = searchField;
 
-		this.buildLayout();
 		this.setCompositionRoot(layout);
+		this.buildLayout();
 	}
 
 	@Override
