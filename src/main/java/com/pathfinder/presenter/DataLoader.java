@@ -56,7 +56,6 @@ public class DataLoader implements DataLoaderSpec {
 	private final String REQUEST_COURSES = "courses";
 	private final String REQUEST_ORGANIGRAM = "organigram";
 
-	private final String MASSAGE_REQUST_DETAIL_LOADED = "Details are loaded";
 	private final String MASSAGE_ERROR_LOADING_URL_RESOURCE = "Error loading resource: ";
 	private final String MASSAGE_ERROR_LOADING_URL_RESOURCE_DETAIL = "Error loading resource detail - id: ";
 
@@ -105,8 +104,6 @@ public class DataLoader implements DataLoaderSpec {
 				loadRoomDetail(room);
 				roomContainer.addItem(room);
 			}
-
-		logger.info(MASSAGE_REQUST_DETAIL_LOADED);
 	}
 
 	private void loadRoomDetail(RoomModel room) {
@@ -141,8 +138,6 @@ public class DataLoader implements DataLoaderSpec {
 				courseContainer.addItem(course);
 				loadCourseDetail(course);
 			}
-
-		logger.info(MASSAGE_REQUST_DETAIL_LOADED);
 	}
 
 	private void loadCourseDetail(CourseModel course) {
@@ -180,8 +175,6 @@ public class DataLoader implements DataLoaderSpec {
 				personContainer.addItem(person);
 				loadPersonDetail(person);
 			}
-
-		logger.info(MASSAGE_REQUST_DETAIL_LOADED);
 	}
 
 	private void loadPersonDetail(PersonModel person) {
@@ -219,8 +212,6 @@ public class DataLoader implements DataLoaderSpec {
 				poiContainer.addItem(poi);
 				loadPoiDetail(poi);
 			}
-
-		logger.info(MASSAGE_REQUST_DETAIL_LOADED);
 	}
 
 	private void loadPoiDetail(PoiModel poi) {
@@ -258,7 +249,7 @@ public class DataLoader implements DataLoaderSpec {
 				ResourcesResult.class);
 
 		if (ResourceData != null) {
-			logger.info("Resource: " + resource + " is loaded");
+			logger.info(resource + " loaded");
 			return ResourceData;
 		} else {
 			return null;
@@ -309,7 +300,7 @@ public class DataLoader implements DataLoaderSpec {
 				CategoryResult.class);
 
 		if (Organigram != null) {
-			logger.info("Resource: " + REQUEST_ORGANIGRAM + " is loaded");
+			logger.info(REQUEST_ORGANIGRAM + " loaded");
 			return Organigram;
 		} else {
 			return null;
