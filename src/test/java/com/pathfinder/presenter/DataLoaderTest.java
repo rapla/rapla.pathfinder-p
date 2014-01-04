@@ -1,7 +1,6 @@
 package com.pathfinder.presenter;
 
-import static org.junit.Assert.assertNotEquals;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,30 +10,27 @@ public class DataLoaderTest {
 	@Before
 	public void setUp() {
 		dataloader = new DataLoader();
+		dataloader.loadAllResources();
 	}
 
 	@Test
-	public void roomsNotNullTest() {
-		dataloader.loadAllResources();
-		assertNotEquals(0, dataloader.getRoomContainer());
+	public void roomsLoadedTest() {
+		Assert.assertNotNull(dataloader.getRoomContainer());
 	}
 
 	@Test
-	public void coursesNotNullTest() {
-		dataloader.loadAllResources();
-		assertNotEquals(0, dataloader.getCourseContainer());
+	public void coursesLoadedTest() {
+		Assert.assertNotNull(dataloader.getCourseContainer());
 	}
 
 	@Test
-	public void personsNotNullTest() {
-		dataloader.loadAllResources();
-		assertNotEquals(0, dataloader.getPersonContainer());
+	public void personsLoadedTest() {
+		Assert.assertNotNull(dataloader.getPersonContainer());
 	}
 
 	@Test
-	public void poisNotNullTest() {
-		dataloader.loadAllResources();
-		assertNotEquals(0, dataloader.getPoiContainer());
+	public void poisLoadedTest() {
+		Assert.assertNotNull(dataloader.getPoiContainer());
 	}
 
 }
