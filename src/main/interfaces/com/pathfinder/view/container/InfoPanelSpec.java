@@ -9,4 +9,15 @@ import com.pathfinder.view.ViewSpec;
  * 
  */
 public interface InfoPanelSpec extends ViewSpec {
+	void hideDateTime();
+
+	void showDateTime();
+
+	void hideFreeRoom();
+
+	void showFreeRoom();
+
+	void hideInfoPanel();
+
+	void showInfoPanel();
 }

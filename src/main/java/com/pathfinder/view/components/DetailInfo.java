@@ -13,12 +13,12 @@ import com.vaadin.ui.CustomComponent;
  * @param <T>
  */
 public class DetailInfo<T> extends CustomComponent implements DetailInfoSpec {
-	//private BeanItem<T> beanItem = null;
+	// private BeanItem<T> beanItem = null;
 
 	public DetailInfo(Class<T> beanType, BeanItem<T> beanItem) {
-		PoiModel poi = new PoiModel("", "", "", new String[]{}, "", "");
+		PoiModel poi = new PoiModel("", "", "", new String[] {}, "", "");
 		BeanItem<PoiModel> beanItem1 = new BeanItem<PoiModel>(poi);
-	//	this.beanItem = beanItem;
+		// this.beanItem = beanItem;
 		BeanFieldGroup<T> binder = new BeanFieldGroup<T>(beanType);
 		binder.buildAndBindMemberFields(beanItem1);
 	}

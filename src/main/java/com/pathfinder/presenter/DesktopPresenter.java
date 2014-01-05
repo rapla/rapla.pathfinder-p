@@ -3,6 +3,9 @@ package com.pathfinder.presenter;
 import java.util.Locale;
 import java.util.TimerTask;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.pathfinder.model.CourseModel;
 import com.pathfinder.model.PersonModel;
 import com.pathfinder.model.PoiModel;
@@ -30,7 +33,6 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.Window;
 
 /**
  * The presenter for the desktop/stele view
@@ -40,10 +42,14 @@ import com.vaadin.ui.Window;
  */
 public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		DesktopPresenterSpec {
+	private static final Logger logger = LogManager
+			.getLogger(DesktopPresenter.class.getName());
+
 	// Needed components
 	private final DateTimeSpec dateTime = new DateTime();
 	private final FreeRoomSpec freeRoomView = new FreeRoom();
 	private final MenuBarSpec menuBar = new MenuBar();
+	private final AppointmentSpec appointment = new Appointment();
 
 	// Needed sub-presenters
 	private final SearchPanelPresenterSpec searchPanelPresenter = new SearchPanelPresenter();
@@ -53,7 +59,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 			(FreeRoom) freeRoomView);
 	private final DesktopLayoutSpec desktopLayout = new DesktopLayout(
 			(InfoPanel) infoPanel, (MenuBar) menuBar,
-			searchPanelPresenter.getSearchPanel());
+			searchPanelPresenter.getSearchPanel(), (Appointment) appointment);
 
 	public DesktopPresenter() {
 		menuBar.addClickListenerAppointmentButton(new AppointmentButtonClickListener());
@@ -86,16 +92,10 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	class AppointmentButtonClickListener implements ClickListener {
 		@Override
 		public void buttonClick(ClickEvent event) {
-			// TODO For testing. Should be integrated in the DesktopLayout
-			Window window = new Window("Appointment");
 			// TODO Should be variable URL - getResourceUrl();
-			AppointmentSpec appointment = new Appointment();
-			appointment
-					.setUrl("http://localhost:8051/rapla/rapla?page=calendar&user=stele&file=kurs&allocatable_id=2373");
-			window.setContent((Appointment) appointment);
-			window.setSizeFull();
-			((Appointment) appointment).setSizeFull();
-			UI.getCurrent().addWindow(window);
+			desktopLayout
+					.setAppointmentUrl("http://localhost:8051/rapla/rapla?page=calendar&user=stele&file=kurs&allocatable_id=2373");
+			desktopLayout.switchToAppointmentView();
 		}
 	}
 

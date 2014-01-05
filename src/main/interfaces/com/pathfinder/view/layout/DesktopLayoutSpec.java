@@ -9,7 +9,11 @@ import com.pathfinder.view.ViewSpec;
  * 
  */
 public interface DesktopLayoutSpec extends ViewSpec {
+	void switchToSearchView();
+
 	<T> void switchToDetailView();
 
-	void switchToSearchView();
+	void switchToAppointmentView();
+
+	void setAppointmentUrl(String url);
 }
