@@ -22,18 +22,12 @@ public class PathfinderErrorHandler extends DefaultErrorHandler {
 	/**
 	 * Logging instance of this class
 	 */
-	private final static Logger LOG = LogManager
+	private final static Logger LOGGER = LogManager
 			.getLogger(PathfinderErrorHandler.class);
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.vaadin.server.DefaultErrorHandler#error(com.vaadin.server.ErrorEvent)
-	 */
 	@Override
 	public void error(ErrorEvent event) {
-		LOG.error("An unknown Error occured; UI will be reloaded",
+		LOGGER.error("An unknown Error occured; UI will be reloaded",
 				event.getThrowable());
 
 		// Reload UI to restart application
