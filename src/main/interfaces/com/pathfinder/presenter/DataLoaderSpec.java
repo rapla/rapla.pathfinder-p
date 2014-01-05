@@ -24,5 +24,7 @@ public interface DataLoaderSpec {
 	@Pure
 	BeanItemContainer<PoiModel> getPoiContainer();
 
+	void reloadAllData();
+
 	void addDataListener(DataLoaderListenerSpec listener);
 }

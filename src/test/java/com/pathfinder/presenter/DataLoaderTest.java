@@ -10,7 +10,6 @@ public class DataLoaderTest {
 	@Before
 	public void setUp() {
 		dataloader = DataLoader.getInstance();
-		// dataloader.loadAllResources();
 	}
 
 	@Test
@@ -31,6 +30,24 @@ public class DataLoaderTest {
 	@Test
 	public void poisLoadedTest() {
 		Assert.assertNotNull(dataloader.getPoiContainer());
+	}
+
+	private boolean dataUpdated = false;
+
+	@Test
+	public void addDataListenerTest() {
+		dataloader.addDataListener(new DataLoaderListenerSpec() {
+
+			@Override
+			public void dataUpdated() {
+				dataUpdated = true;
+			}
+		});
+
+		dataloader.reloadAllData();
+
+		Assert.assertTrue(dataUpdated);
+
 	}
 
 }

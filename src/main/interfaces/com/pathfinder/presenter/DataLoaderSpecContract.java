@@ -5,6 +5,7 @@ package com.pathfinder.presenter;
 
 import static de.vksi.c4j.Condition.ignored;
 import static de.vksi.c4j.Condition.postCondition;
+import static de.vksi.c4j.Condition.preCondition;
 
 import com.pathfinder.model.CourseModel;
 import com.pathfinder.model.PersonModel;
@@ -89,8 +90,19 @@ public class DataLoaderSpecContract implements DataLoaderSpec {
 	 */
 	@Override
 	public void addDataListener(DataLoaderListenerSpec listener) {
-		// TODO Auto-generated method stub
+		if (preCondition()) {
+			assert listener != null : "listener not null";
+		}
+	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pathfinder.presenter.DataLoaderSpec#reloadAllData()
+	 */
+	@Override
+	public void reloadAllData() {
+		// Can be called at any time
 	}
 
 }

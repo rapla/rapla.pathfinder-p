@@ -434,11 +434,8 @@ public class DataLoader implements DataLoaderSpec {
 			@Override
 			public void run() {
 				logger.trace("Get new data from the RAPLA-Server");
-				loadAllResources();
+				reloadAllData();
 				logger.trace("Updated data from the RAPLA-Server");
-
-				// Notify all UIs
-				notifyDataLoaderListener();
 			}
 		};
 		return timerTask;
@@ -452,6 +449,14 @@ public class DataLoader implements DataLoaderSpec {
 				.getIntProperty(PropertiesKey.DATA_LOAD_INTERVALL);
 		new Timer().schedule(getTimerTask(), loadInterval, loadInterval);
 
+	}
+
+	@Override
+	public void reloadAllData() {
+		loadAllResources();
+
+		// Notify all UIs
+		notifyDataLoaderListener();
 	}
 
 }
