@@ -1,7 +1,5 @@
 package com.pathfinder;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +22,6 @@ import com.vaadin.server.VaadinServletRequest;
 import com.vaadin.server.WebBrowser;
 import com.vaadin.ui.UI;
 
-@SuppressWarnings("serial")
 @Theme("rapla_pathfinder_p")
 public class PathfinderUI extends UI implements DataLoaderListenerSpec {
 
@@ -41,8 +38,6 @@ public class PathfinderUI extends UI implements DataLoaderListenerSpec {
 
 		Page.getCurrent().setTitle(
 				Translator.getInstance().translate(TranslationKeys.APP_TITLE));
-
-		this.setPrimaryStyleName("main");
 
 		this.buildLayout(request);
 	}
@@ -75,24 +70,22 @@ public class PathfinderUI extends UI implements DataLoaderListenerSpec {
 			logger.trace("Mobile application initialized");
 		} else {
 			desktopPresenter = new DesktopPresenter();
+			setPrimaryStyleName("main");
 			setContent(desktopPresenter.getDesktopLayoutView());
 			logger.trace("Desktop application initialized");
-
-			setData();
-
-			// Register as DataListener to get notified if data changes
-			DataLoader.getInstance().addDataListener(this);
 		}
+
+		setData();
+		// Register as DataListener to get notified if data changes
+		// DataLoader.getInstance().addDataListener(this);
 	}
 
 	private boolean isMobileUserAgent(String userAgent) {
 		boolean mobileUserAgent = false;
 		String[] mobileAgents = new String[] { "ipad", "iphone", "mobile",
-				"android", "ios", "blackberry", "phone" };
-		ArrayList<String> mobileAgentList = new ArrayList<String>(
-				Arrays.asList(mobileAgents));
+				"android", "ios", "blackberry", "phone", "phone" };
 
-		for (String agent : mobileAgentList) {
+		for (String agent : mobileAgents) {
 			if (agent.equals(userAgent)) {
 				mobileUserAgent = true;
 			}
@@ -106,6 +99,8 @@ public class PathfinderUI extends UI implements DataLoaderListenerSpec {
 		desktopPresenter.setCourseContainer(dataLoader.getCourseContainer());
 		desktopPresenter.setPersonContainer(dataLoader.getPersonContainer());
 		desktopPresenter.setPoiContainer(dataLoader.getPoiContainer());
+		// Register as DataListener to get notified if data changes
+		DataLoader.getInstance().addDataListener(this);
 	}
 
 	/**
@@ -123,14 +118,8 @@ public class PathfinderUI extends UI implements DataLoaderListenerSpec {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.pathfinder.presenter.DataLoaderListenerSpec#dataUpdated()
-	 */
 	@Override
 	public void dataUpdated() {
 		setData();
 	}
-
 }
