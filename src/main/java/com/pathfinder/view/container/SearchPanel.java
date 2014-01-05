@@ -37,8 +37,8 @@ public class SearchPanel extends CustomComponent implements SearchPanelSpec {
 		this.keyboard.setSizeFull();
 		this.searchField.setSizeFull();
 		this.layout.addComponent(accordionView);
-		this.layout.addComponent(keyboard);
 		this.layout.addComponent(searchField);
+		this.layout.addComponent(keyboard);
 		this.layout.setSizeFull();
 	}
 
