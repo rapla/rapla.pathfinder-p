@@ -1,9 +1,12 @@
 package com.pathfinder.view.layout;
 
+import com.pathfinder.util.widgetset.DateTime;
 import com.pathfinder.view.components.Appointment;
+import com.pathfinder.view.components.DateTimeSpec;
+import com.pathfinder.view.components.FreeRoom;
+import com.pathfinder.view.components.FreeRoomSpec;
 import com.pathfinder.view.components.MenuBar;
 import com.pathfinder.view.container.DetailContainer;
-import com.pathfinder.view.container.InfoPanel;
 import com.pathfinder.view.container.SearchPanel;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
@@ -16,7 +19,8 @@ import com.vaadin.ui.VerticalLayout;
  * 
  */
 public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec {
-	private InfoPanel infoPanel = null;
+	private final DateTimeSpec dateTime = new DateTime();
+	private final FreeRoomSpec freeRoom = new FreeRoom();
 	private MenuBar menuBar = null;
 	private SearchPanel searchPanel = null;
 	private DetailContainer<?> detailContainer = null;
@@ -24,9 +28,8 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 
 	private final VerticalLayout layout = new VerticalLayout();
 
-	public DesktopLayout(InfoPanel infoPanel, MenuBar menuBar,
-			SearchPanel searchPanel, Appointment appointment) {
-		this.infoPanel = infoPanel;
+	public DesktopLayout(MenuBar menuBar, SearchPanel searchPanel,
+			Appointment appointment) {
 		this.menuBar = menuBar;
 		this.searchPanel = searchPanel;
 		this.appointment = appointment;
@@ -37,7 +40,8 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 
 	@Override
 	public void buildLayout() {
-		this.layout.addComponent(infoPanel);
+		this.layout.addComponent((DateTime) dateTime);
+		this.layout.addComponent((FreeRoom) freeRoom);
 		this.layout.addComponent(searchPanel);
 		this.layout.addComponent(menuBar);
 	}
@@ -74,6 +78,7 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 
 	@Override
 	public void updateTranslations() {
-		// No translation to update
+		dateTime.updateTranslations();
+		freeRoom.updateTranslations();
 	}
 }

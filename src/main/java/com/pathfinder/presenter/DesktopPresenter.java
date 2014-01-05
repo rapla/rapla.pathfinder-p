@@ -12,16 +12,10 @@ import com.pathfinder.model.PoiModel;
 import com.pathfinder.model.RoomModel;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
-import com.pathfinder.util.widgetset.DateTime;
 import com.pathfinder.view.components.Appointment;
 import com.pathfinder.view.components.AppointmentSpec;
-import com.pathfinder.view.components.DateTimeSpec;
-import com.pathfinder.view.components.FreeRoom;
-import com.pathfinder.view.components.FreeRoomSpec;
 import com.pathfinder.view.components.MenuBar;
 import com.pathfinder.view.components.MenuBarSpec;
-import com.pathfinder.view.container.InfoPanel;
-import com.pathfinder.view.container.InfoPanelSpec;
 import com.pathfinder.view.layout.DesktopLayout;
 import com.pathfinder.view.layout.DesktopLayoutSpec;
 import com.pathfinder.view.listener.DesktopLayoutViewListenerSpec;
@@ -46,20 +40,17 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 			.getLogger(DesktopPresenter.class.getName());
 
 	// Needed components
-	private final DateTimeSpec dateTime = new DateTime();
-	private final FreeRoomSpec freeRoomView = new FreeRoom();
 	private final MenuBarSpec menuBar = new MenuBar();
 	private final AppointmentSpec appointment = new Appointment();
 
-	// Needed sub-presenters
+	// Needed sub-presenter
 	private final SearchPanelPresenterSpec searchPanelPresenter = new SearchPanelPresenter();
 
 	// Layouts
-	private final InfoPanelSpec infoPanel = new InfoPanel((DateTime) dateTime,
-			(FreeRoom) freeRoomView);
+
 	private final DesktopLayoutSpec desktopLayout = new DesktopLayout(
-			(InfoPanel) infoPanel, (MenuBar) menuBar,
-			searchPanelPresenter.getSearchPanel(), (Appointment) appointment);
+			(MenuBar) menuBar, searchPanelPresenter.getSearchPanel(),
+			(Appointment) appointment);
 
 	public DesktopPresenter() {
 		menuBar.addClickListenerAppointmentButton(new AppointmentButtonClickListener());
@@ -131,7 +122,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 
 	@Override
 	public void languageChanged(Locale locale) {
-		infoPanel.updateTranslations();
+		desktopLayout.updateTranslations();
 		// TODO detailContainer.updateTranslations(locale);
 		searchPanelPresenter.updateTranslations();
 		menuBar.updateTranslations();

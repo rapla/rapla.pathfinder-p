@@ -27,6 +27,16 @@ public class FreeRoom extends CustomComponent implements FreeRoomSpec {
 	}
 
 	@Override
+	public void hideFreeRoom() {
+		this.setVisible(false);
+	}
+
+	@Override
+	public void showFreeRoom() {
+		this.setVisible(true);
+	}
+
+	@Override
 	public void updateTranslations() {
 		this.setCaption(translator
 				.translate(TranslationKeys.CURRENTLY_FREE_ROOMS));
