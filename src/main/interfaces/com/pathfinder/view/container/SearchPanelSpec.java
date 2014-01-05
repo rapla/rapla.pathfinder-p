@@ -9,4 +9,7 @@ import com.pathfinder.view.ViewSpec;
  * 
  */
 public interface SearchPanelSpec extends ViewSpec {
+	void hideSearchPanel();
+
+	void showSearchPanel();
 }

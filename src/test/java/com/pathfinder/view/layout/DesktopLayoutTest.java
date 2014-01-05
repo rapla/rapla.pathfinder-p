@@ -13,7 +13,7 @@ import org.junit.Test;
 
 import com.pathfinder.util.widgetset.DateTime;
 import com.pathfinder.view.components.AccordionView;
-import com.pathfinder.view.components.FreeRoom;
+import com.pathfinder.view.components.FreeRoomView;
 import com.pathfinder.view.components.Keyboard;
 import com.pathfinder.view.components.MenuBar;
 import com.pathfinder.view.components.SearchField;
@@ -35,8 +35,8 @@ public class DesktopLayoutTest {
 	@Before
 	public void initialize() {
 		DateTime dateTime = new DateTime();
-		FreeRoom freeRoom = new FreeRoom();
-		InfoPanel infoPanel = new InfoPanel(dateTime, freeRoom);
+		FreeRoomView freeRoomView = new FreeRoomView();
+		InfoPanel infoPanel = new InfoPanel(dateTime, freeRoomView);
 		MenuBar menuBar = new MenuBar();
 		AccordionView accordionView = new AccordionView();
 		Keyboard keyboard = new Keyboard();

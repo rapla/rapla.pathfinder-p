@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.pathfinder.util.widgetset.DateTime;
-import com.pathfinder.view.components.FreeRoom;
+import com.pathfinder.view.components.FreeRoomView;
 import com.vaadin.ui.AbstractOrderedLayout;
 import com.vaadin.ui.CustomComponent;
 
@@ -23,8 +23,8 @@ public class InfoPanelTest {
 	@Before
 	public void initialize() {
 		DateTime dateTime = new DateTime();
-		FreeRoom freeRoom = new FreeRoom();
-		infoPanel = new InfoPanel(dateTime, freeRoom);
+		FreeRoomView freeRoomView = new FreeRoomView();
+		infoPanel = new InfoPanel(dateTime, freeRoomView);
 	}
 
 	@Test

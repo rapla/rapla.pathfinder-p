@@ -7,6 +7,10 @@ import com.pathfinder.model.RoomModel;
 import com.pathfinder.view.components.ComponentSpec;
 
 public interface DetailContainerSpec extends ComponentSpec {
+	void hideDetailContainer();
+
+	void showDetailContainer();
+
 	void addRoomDetails(Class<RoomModel> clazz);
 
 	void addCourseDetails(Class<CourseModel> clazz);

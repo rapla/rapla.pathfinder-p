@@ -46,6 +46,16 @@ public class SearchPanel extends CustomComponent implements SearchPanelSpec {
 	public void destroyLayout() {
 		layout.removeAllComponents();
 	}
+	
+	@Override
+	public void hideSearchPanel() {
+		this.setVisible(false);
+	}
+
+	@Override
+	public void showSearchPanel() {
+		this.setVisible(true);
+	}
 
 	@Override
 	public void updateTranslations() {

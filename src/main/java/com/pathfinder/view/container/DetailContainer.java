@@ -32,6 +32,16 @@ public class DetailContainer<T> extends CustomComponent implements
 		this.vertical.addComponent(detailImage);
 		this.setCompositionRoot(vertical);
 	}
+	
+	@Override
+	public void hideDetailContainer() {
+		this.setVisible(false);
+	}
+
+	@Override
+	public void showDetailContainer() {
+		this.setVisible(true);
+	}
 
 	@Override
 	public void addRoomDetails(Class<RoomModel> clazz) {

@@ -6,6 +6,10 @@ package com.pathfinder.view.components;
  * @author alexh
  * 
  */
-public interface AppointmentSpec extends ComponentSpec {
+public interface AppointmentViewSpec extends ComponentSpec {
 	void setUrl(String url);
+
+	void hideAppointmentView();
+
+	void showAppointmentView();
 }

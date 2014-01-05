@@ -1,14 +1,17 @@
 package com.pathfinder.view.layout;
 
 import com.pathfinder.util.widgetset.DateTime;
-import com.pathfinder.view.components.Appointment;
+import com.pathfinder.view.components.AppointmentView;
+import com.pathfinder.view.components.AppointmentViewSpec;
 import com.pathfinder.view.components.DateTimeSpec;
-import com.pathfinder.view.components.FreeRoom;
-import com.pathfinder.view.components.FreeRoomSpec;
+import com.pathfinder.view.components.FreeRoomView;
+import com.pathfinder.view.components.FreeRoomViewSpec;
 import com.pathfinder.view.components.MenuBar;
+import com.pathfinder.view.components.MenuBarSpec;
 import com.pathfinder.view.container.DetailContainer;
 import com.pathfinder.view.container.SearchPanel;
-import com.vaadin.ui.Component;
+import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.VerticalLayout;
 
@@ -20,55 +23,86 @@ import com.vaadin.ui.VerticalLayout;
  */
 public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec {
 	private final DateTimeSpec dateTime = new DateTime();
-	private final FreeRoomSpec freeRoom = new FreeRoom();
-	private MenuBar menuBar = null;
+	private final FreeRoomViewSpec freeRoom = new FreeRoomView();
+	private final MenuBarSpec menuBar = new MenuBar();
 	private SearchPanel searchPanel = null;
 	private DetailContainer<?> detailContainer = null;
-	private Appointment appointment = null;
+	private final AppointmentViewSpec appointmentView = new AppointmentView();
 
 	private final VerticalLayout layout = new VerticalLayout();
 
-	public DesktopLayout(MenuBar menuBar, SearchPanel searchPanel,
-			Appointment appointment) {
-		this.menuBar = menuBar;
+	public DesktopLayout(SearchPanel searchPanel) {
 		this.searchPanel = searchPanel;
-		this.appointment = appointment;
 
-		this.setCompositionRoot(layout);
 		this.buildLayout();
+		this.setCompositionRoot(layout);
 	}
 
 	@Override
 	public void buildLayout() {
 		this.layout.addComponent((DateTime) dateTime);
-		this.layout.addComponent((FreeRoom) freeRoom);
+		this.layout.addComponent((FreeRoomView) freeRoom);
 		this.layout.addComponent(searchPanel);
-		this.layout.addComponent(menuBar);
+		// TODO
+		// this.layout.addComponent(detailContainer);
+		this.layout.addComponent((AppointmentView) appointmentView);
+		this.layout.addComponent((MenuBar) menuBar);
+	}
+
+	@Override
+	public void addClickListenerAppointmentButton(ClickListener listener) {
+		menuBar.addClickListenerAppointmentButton(listener);
+	}
+
+	@Override
+	public void addLanguageValueChangeListener(ValueChangeListener listener) {
+		menuBar.addValueChangeListener(listener);
+	}
+
+	@Override
+	public String[] getLanguages() {
+		return menuBar.getLanguages();
+	}
+
+	@Override
+	public void hideAppointmentButton() {
+		menuBar.hideAppointmentButton();
+	}
+
+	@Override
+	public void showAppointmentButton() {
+		menuBar.showAppointmentButton();
 	}
 
 	@Override
 	public void switchToSearchView() {
-		Component oldComponent = layout.getComponent(1);
-		layout.replaceComponent(oldComponent, searchPanel);
 		detailContainer = null;
+		appointmentView.hideAppointmentView();
+		// TODO
+		// detailContainer.hideDetailContainer();
+		searchPanel.showSearchPanel();
 	}
 
 	@Override
 	public <T> void switchToDetailView() {
-		Component oldComponent = layout.getComponent(1);
-		detailContainer = new DetailContainer<T>(null, null, null);
-		layout.replaceComponent(oldComponent, detailContainer);
+		// TODO
+		// detailContainer = new DetailContainer<T>(null, null, null);
+		appointmentView.hideAppointmentView();
+		searchPanel.hideSearchPanel();
+		// detailContainer.showDetailContainer();
 	}
 
 	@Override
 	public void switchToAppointmentView() {
-		Component oldComponent = layout.getComponent(1);
-		layout.replaceComponent(oldComponent, appointment);
+		// TODO
+		// detailContainer.hideDetailContainer();
+		searchPanel.hideSearchPanel();
+		appointmentView.showAppointmentView();
 	}
 
 	@Override
 	public void setAppointmentUrl(String url) {
-		appointment.setUrl(url);
+		appointmentView.setUrl(url);
 	}
 
 	@Override
@@ -80,5 +114,6 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	public void updateTranslations() {
 		dateTime.updateTranslations();
 		freeRoom.updateTranslations();
+		menuBar.updateTranslations();
 	}
 }

@@ -32,7 +32,7 @@ import com.vaadin.ui.Table.ColumnHeaderMode;
  * @author alexh
  * 
  */
-public class AccordionView extends CustomComponent implements AccordionSpec {
+public class AccordionView extends CustomComponent implements AccordionViewSpec {
 
 	private static final Logger logger = LogManager
 			.getLogger(AccordionView.class.getName());

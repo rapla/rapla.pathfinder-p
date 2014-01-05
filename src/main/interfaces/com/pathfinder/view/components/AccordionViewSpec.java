@@ -13,7 +13,7 @@ import com.vaadin.event.ItemClickEvent.ItemClickListener;
  * @author alexh
  * 
  */
-public interface AccordionSpec extends ComponentSpec {
+public interface AccordionViewSpec extends ComponentSpec {
 
 	void setRoomContainer(BeanItemContainer<RoomModel> beanItemContainer);
 

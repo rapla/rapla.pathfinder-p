@@ -6,12 +6,12 @@ import com.pathfinder.util.translation.TranslatorSpec;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.VerticalLayout;
 
-public class FreeRoom extends CustomComponent implements FreeRoomSpec {
+public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 	private final TranslatorSpec translator = Translator.getInstance();
 
 	private final VerticalLayout verticalLayout = new VerticalLayout();
 
-	public FreeRoom() {
+	public FreeRoomView() {
 		buildLayout();
 		setCompositionRoot(verticalLayout);
 	}

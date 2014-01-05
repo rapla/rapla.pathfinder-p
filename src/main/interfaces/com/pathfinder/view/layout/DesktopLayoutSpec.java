@@ -1,6 +1,8 @@
 package com.pathfinder.view.layout;
 
 import com.pathfinder.view.ViewSpec;
+import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.ui.Button.ClickListener;
 
 /**
  * MainLayoutSpec
@@ -9,6 +11,16 @@ import com.pathfinder.view.ViewSpec;
  * 
  */
 public interface DesktopLayoutSpec extends ViewSpec {
+	void addClickListenerAppointmentButton(ClickListener listener);
+
+	void addLanguageValueChangeListener(ValueChangeListener listener);
+
+	String[] getLanguages();
+
+	void hideAppointmentButton();
+
+	void showAppointmentButton();
+
 	void switchToSearchView();
 
 	<T> void switchToDetailView();

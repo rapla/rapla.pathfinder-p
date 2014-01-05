@@ -12,10 +12,6 @@ import com.pathfinder.model.PoiModel;
 import com.pathfinder.model.RoomModel;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
-import com.pathfinder.view.components.Appointment;
-import com.pathfinder.view.components.AppointmentSpec;
-import com.pathfinder.view.components.MenuBar;
-import com.pathfinder.view.components.MenuBarSpec;
 import com.pathfinder.view.layout.DesktopLayout;
 import com.pathfinder.view.layout.DesktopLayoutSpec;
 import com.pathfinder.view.listener.DesktopLayoutViewListenerSpec;
@@ -39,22 +35,18 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	private static final Logger logger = LogManager
 			.getLogger(DesktopPresenter.class.getName());
 
-	// Needed components
-	private final MenuBarSpec menuBar = new MenuBar();
-	private final AppointmentSpec appointment = new Appointment();
-
 	// Needed sub-presenter
 	private final SearchPanelPresenterSpec searchPanelPresenter = new SearchPanelPresenter();
 
-	// Layouts
-
+	// Layout
 	private final DesktopLayoutSpec desktopLayout = new DesktopLayout(
-			(MenuBar) menuBar, searchPanelPresenter.getSearchPanel(),
-			(Appointment) appointment);
+			searchPanelPresenter.getSearchPanel());
 
 	public DesktopPresenter() {
-		menuBar.addClickListenerAppointmentButton(new AppointmentButtonClickListener());
-		menuBar.addValueChangeListener(new LanguageValueChangeListener());
+		desktopLayout
+				.addClickListenerAppointmentButton(new AppointmentButtonClickListener());
+		desktopLayout
+				.addLanguageValueChangeListener(new LanguageValueChangeListener());
 	}
 
 	// TODO
@@ -66,7 +58,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 
 	class LanguageValueChangeListener implements ValueChangeListener {
 		public void valueChange(ValueChangeEvent event) {
-			String[] languages = menuBar.getLanguages();
+			String[] languages = desktopLayout.getLanguages();
 			Locale locale = Locale.GERMAN;
 			final Object valueString = event.getProperty().getValue();
 			if (valueString.equals(languages[0])) {
@@ -125,7 +117,6 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		desktopLayout.updateTranslations();
 		// TODO detailContainer.updateTranslations(locale);
 		searchPanelPresenter.updateTranslations();
-		menuBar.updateTranslations();
 		Page.getCurrent().setTitle(
 				Translator.getInstance().translate(TranslationKeys.APP_TITLE));
 	}

@@ -6,7 +6,7 @@ package com.pathfinder.view.components;
  * @author alexh
  * 
  */
-public interface FreeRoomSpec extends ComponentSpec {
+public interface FreeRoomViewSpec extends ComponentSpec {
 	void refreshFreeRooms();
 
 	void hideFreeRoom();
