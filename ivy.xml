@@ -44,6 +44,10 @@
 
 		<!-- Google-gson to handle JSON -->
 		<dependency org="com.google.code.gson" name="gson" rev="2.2.4" />
+		
+		<!-- Google-Json-Simple to handle JSON -->
+		<dependency org="com.googlecode.json-simple" name="json-simple"
+			rev="1.1" />
 
 		<!-- Log4J 2 -->
 		<dependency org="org.apache.logging.log4j" name="log4j-api"
