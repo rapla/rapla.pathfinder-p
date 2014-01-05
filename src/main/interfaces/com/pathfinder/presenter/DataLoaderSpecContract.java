@@ -27,21 +27,6 @@ public class DataLoaderSpecContract implements DataLoaderSpec {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.pathfinder.presenter.DataLoaderSpec#loadAllResources()
-	 */
-	@Override
-	public void loadAllResources() {
-		if (postCondition()) {
-			assert target.getRoomContainer() != null : "Room Container not null";
-			assert target.getCourseContainer() != null : "Course Container not null";
-			assert target.getPoiContainer() != null : "Poi Container not null";
-			assert target.getPersonContainer() != null : "Person Container not null";
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see com.pathfinder.presenter.DataLoaderSpec#getRoomContainer()
 	 */
 	@Override
@@ -93,6 +78,19 @@ public class DataLoaderSpecContract implements DataLoaderSpec {
 			assert result != null : "Result not null";
 		}
 		return ignored();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pathfinder.presenter.DataLoaderSpec#addDataListener(com.pathfinder
+	 * .presenter.DataLoaderListenerSpec)
+	 */
+	@Override
+	public void addDataListener(DataLoaderListenerSpec listener) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

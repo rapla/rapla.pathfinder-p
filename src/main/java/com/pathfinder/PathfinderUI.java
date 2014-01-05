@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.pathfinder.presenter.DataLoader;
+import com.pathfinder.presenter.DataLoaderListenerSpec;
 import com.pathfinder.presenter.DesktopPresenter;
 import com.pathfinder.presenter.DesktopPresenterSpec;
 import com.pathfinder.presenter.MobilePresenter;
@@ -25,7 +26,7 @@ import com.vaadin.ui.UI;
 
 @SuppressWarnings("serial")
 @Theme("rapla_pathfinder_p")
-public class PathfinderUI extends UI {
+public class PathfinderUI extends UI implements DataLoaderListenerSpec {
 
 	private static final Logger logger = LogManager
 			.getLogger(PathfinderUI.class.getName());
@@ -78,6 +79,9 @@ public class PathfinderUI extends UI {
 			logger.trace("Desktop application initialized");
 
 			setData();
+
+			// Register as DataListener to get notified if data changes
+			DataLoader.getInstance().addDataListener(this);
 		}
 	}
 
@@ -97,7 +101,7 @@ public class PathfinderUI extends UI {
 	}
 
 	private void setData() {
-		DataLoader dataLoader = new DataLoader();
+		DataLoader dataLoader = DataLoader.getInstance();
 		desktopPresenter.setRoomContainer(dataLoader.getRoomContainer());
 		desktopPresenter.setCourseContainer(dataLoader.getCourseContainer());
 		desktopPresenter.setPersonContainer(dataLoader.getPersonContainer());
@@ -118,4 +122,15 @@ public class PathfinderUI extends UI {
 			setLocale(Translator.getInstance().getFallbackLocale());
 		}
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pathfinder.presenter.DataLoaderListenerSpec#dataUpdated()
+	 */
+	@Override
+	public void dataUpdated() {
+		setData();
+	}
+
 }

@@ -9,8 +9,8 @@ public class DataLoaderTest {
 
 	@Before
 	public void setUp() {
-		dataloader = new DataLoader();
-		dataloader.loadAllResources();
+		dataloader = DataLoader.getInstance();
+		// dataloader.loadAllResources();
 	}
 
 	@Test

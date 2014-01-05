@@ -5,8 +5,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,6 +26,7 @@ import com.pathfinder.model.gson.CategoryResult;
 import com.pathfinder.model.gson.ResourceDetailResult;
 import com.pathfinder.model.gson.ResourcesResult;
 import com.pathfinder.util.properties.ApplicationProperties;
+import com.pathfinder.util.properties.ApplicationPropertiesSpec;
 import com.pathfinder.util.properties.PropertiesKey;
 import com.vaadin.data.util.BeanItemContainer;
 
@@ -60,20 +64,46 @@ public class DataLoader implements DataLoaderSpec {
 	private final String MASSAGE_ERROR_LOADING_URL_RESOURCE_DETAIL = "Error loading resource detail - id: ";
 
 	private BufferedReader br;
-	// Static, because PathfinderServlet and PathfinderUI should have the same
-	// access to these containers without the possibility to sending the object
-	// from one class to the other one
-	private static BeanItemContainer<RoomModel> roomContainer = new BeanItemContainer<RoomModel>(
+
+	private BeanItemContainer<RoomModel> roomContainer = new BeanItemContainer<RoomModel>(
 			RoomModel.class);
-	private static BeanItemContainer<CourseModel> courseContainer = new BeanItemContainer<CourseModel>(
+	private BeanItemContainer<CourseModel> courseContainer = new BeanItemContainer<CourseModel>(
 			CourseModel.class);
-	private static BeanItemContainer<PersonModel> personContainer = new BeanItemContainer<PersonModel>(
+	private BeanItemContainer<PersonModel> personContainer = new BeanItemContainer<PersonModel>(
 			PersonModel.class);
-	private static BeanItemContainer<PoiModel> poiContainer = new BeanItemContainer<PoiModel>(
+	private BeanItemContainer<PoiModel> poiContainer = new BeanItemContainer<PoiModel>(
 			PoiModel.class);
 
-	@Override
-	public void loadAllResources() {
+	/**
+	 * Consumer of data have to register themselves to this class, to get
+	 * notified, if data changes
+	 */
+	private List<DataLoaderListenerSpec> dataListener = new ArrayList<DataLoaderListenerSpec>();
+
+	private ApplicationPropertiesSpec properties = ApplicationProperties
+			.getInstance();
+
+	private static DataLoader instance;
+
+	private DataLoader() {
+
+		// Load data once synchronously
+		loadAllResources();
+
+		// Load all data after specific intervall again (see
+		// application.properties)
+		scheduleDataLoading();
+	}
+
+	public static DataLoader getInstance() {
+		if (instance == null) {
+			instance = new DataLoader();
+		}
+		return instance;
+	}
+
+	private synchronized void loadAllResources() {
+
 		/* Reset all resource data */
 		logger.info("Reset all resource data");
 		roomContainer.removeAllItems();
@@ -90,6 +120,14 @@ public class DataLoader implements DataLoaderSpec {
 
 		// load Faculty
 		this.loadFaculty();
+
+	}
+
+	private void notifyDataLoaderListener() {
+		logger.trace("Notify all UIs that data changed");
+		for (DataLoaderListenerSpec listener : dataListener) {
+			listener.dataUpdated();
+		}
 	}
 
 	private void loadAllRooms() {
@@ -384,4 +422,36 @@ public class DataLoader implements DataLoaderSpec {
 	public BeanItemContainer<PoiModel> getPoiContainer() {
 		return poiContainer;
 	}
+
+	@Override
+	public void addDataListener(DataLoaderListenerSpec listener) {
+		dataListener.add(listener);
+		logger.trace("DataLoaderListener added");
+	}
+
+	private TimerTask getTimerTask() {
+		TimerTask timerTask = new TimerTask() {
+			@Override
+			public void run() {
+				logger.trace("Get new data from the RAPLA-Server");
+				loadAllResources();
+				logger.trace("Updated data from the RAPLA-Server");
+
+				// Notify all UIs
+				notifyDataLoaderListener();
+			}
+		};
+		return timerTask;
+	}
+
+	private void scheduleDataLoading() {
+
+		// Starts after specified interval and repeats in the same interval (see
+		// application.properties)
+		long loadInterval = properties
+				.getIntProperty(PropertiesKey.DATA_LOAD_INTERVALL);
+		new Timer().schedule(getTimerTask(), loadInterval, loadInterval);
+
+	}
+
 }
