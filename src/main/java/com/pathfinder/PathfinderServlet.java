@@ -26,11 +26,6 @@ import com.vaadin.server.VaadinServletService;
 @VaadinServletConfiguration(productionMode = false, ui = PathfinderUI.class, widgetset = "com.pathfinder.util.widgetset.PathfinderWidgetset")
 public class PathfinderServlet extends VaadinServlet {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.vaadin.server.VaadinServlet#servletInitialized()
-	 */
 	@Override
 	protected void servletInitialized() throws ServletException {
 		super.servletInitialized();
@@ -38,7 +33,6 @@ public class PathfinderServlet extends VaadinServlet {
 		this.setDefaultSystemMessages(getService());
 		// TODO This method should only be called if the client is the Stele
 		this.addMetaTagForIE10Mode();
-
 	}
 
 	/**
@@ -81,8 +75,9 @@ public class PathfinderServlet extends VaadinServlet {
 	}
 
 	/**
-	 * Adds a meta tag to allow always the IE10 mode if client is the Stele TODO
-	 * Do we need this?
+	 * Adds a meta tag to allow always the IE10 mode if client is the Stele
+	 * 
+	 * TODO Do we need this?
 	 */
 	private void addMetaTagForIE10Mode() {
 		getService().addSessionInitListener(new SessionInitListener() {
@@ -108,5 +103,4 @@ public class PathfinderServlet extends VaadinServlet {
 			}
 		});
 	}
-
 }
