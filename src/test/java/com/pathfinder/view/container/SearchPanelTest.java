@@ -50,4 +50,17 @@ public class SearchPanelTest {
 				.iterator().next();
 		Assert.assertEquals(0, rootLayout.getComponentCount());
 	}
+
+	@Test
+	public void hideShowSearchPanelTest() {
+		searchPanel.hideSearchPanel();
+
+		Assert.assertFalse(((CustomComponent) searchPanel).isVisible());
+
+		searchPanel.showSearchPanel();
+
+		Assert.assertTrue(((CustomComponent) searchPanel).isVisible());
+
+	}
+
 }
