@@ -7,6 +7,7 @@ import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.ui.CustomComponent;
+import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Link;
@@ -15,7 +16,7 @@ import com.vaadin.ui.VerticalLayout;
 public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 	private final TranslatorSpec translator = Translator.getInstance();
 
-	private HorizontalLayout horizontalLayout;
+	private GridLayout gridLayout;
 	private final VerticalLayout verticalLayout = new VerticalLayout();
 
 	public FreeRoomView() {
@@ -24,8 +25,11 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 	}
 
 	private void buildLayout() {
-		this.setCaption(translator
-				.translate(TranslationKeys.CURRENTLY_FREE_ROOMS));
+		Label freeRoomView = new Label(
+				translator.translate(TranslationKeys.CURRENTLY_FREE_ROOMS));
+		freeRoomView.setPrimaryStyleName("freeRoomCaption");
+		verticalLayout.addComponent(freeRoomView);
+		verticalLayout.setPrimaryStyleName("freeRooms");
 	}
 
 	@Override
@@ -33,17 +37,23 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 			List<String> raumLinkList, List<String> raumIdList,
 			List<String> startList, List<String> endList) {
 
+		gridLayout = new GridLayout(2, raumNameList.size());
+
 		for (int i = 0; i < raumNameList.size(); i++) {
 
-			horizontalLayout = new HorizontalLayout();
+			Label roomLabel = new Label("Raum " + raumNameList.get(i) + " bis "
+					+ endList.get(i) + "Uhr");
 
-			horizontalLayout.addComponent(new Label("Raum "
-					+ raumNameList.get(i) + " bis " + endList.get(i) + "Uhr"));
+			Link roomLink = new Link("zum Raumplan", new ExternalResource(
+					raumLinkList.get(i)));
 
-			horizontalLayout.addComponent(new Link("zum Raumplan",
-					new ExternalResource(raumLinkList.get(i))));
+			roomLabel.setPrimaryStyleName("roomLabel");
+			roomLink.setPrimaryStyleName("roomLink");
 
-			verticalLayout.addComponent(horizontalLayout);
+			gridLayout.addComponent(roomLabel);
+			gridLayout.addComponent(roomLink);
+
+			verticalLayout.addComponent(gridLayout);
 
 		}
 	}

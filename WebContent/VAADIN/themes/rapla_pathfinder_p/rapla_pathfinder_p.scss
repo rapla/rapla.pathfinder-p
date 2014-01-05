@@ -176,9 +176,40 @@
 			display: block;
 			
 			.result-table-cell-wrapper {
-				color: #cccccc;
+				color: #cccccc; 
 				font: 20px Arial;
 				padding-left:35px;
 			}
+	}
+	
+	/* FreeRooms Styling */
+	
+	.freeRooms {
+		border-color: red;
+		border-style: solid;
+		width: 99% !important;
+		margin-left: 1em;
+		margin-top: 1em;
+		padding: 1%;
+		
+		.v-slot{
+			.freeRoomCaption{
+				font-size: 30px;
+			}
+			
+			.v-gridlayout {
+			
+				width: 100%;
+			
+				.v-gridlayout-slot {
+				
+					.roomLink	{ width: 100%; font-size: 15px; margin-left: 3%; }
+					.roomLabel	{ width: 100%; font-size: 15px; margin-left: 3%; }
+				}
+			
+			}
+		}
+		
+		
 	}
 }
