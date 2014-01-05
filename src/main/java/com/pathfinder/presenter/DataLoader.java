@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
@@ -29,6 +31,7 @@ import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.ApplicationPropertiesSpec;
 import com.pathfinder.util.properties.PropertiesKey;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.ui.UI;
 
 /**
  * Load data from the rapla server
@@ -90,9 +93,12 @@ public class DataLoader implements DataLoaderSpec {
 		// Load data once synchronously
 		loadAllResources();
 
-		// Load all data after specific intervall again (see
+		// Load all data after specific interval again (see
 		// application.properties)
 		scheduleDataLoading();
+
+		// Removes 'dead' UIs to avoid endless growth of listeners
+		scheduleListenerRemover();
 	}
 
 	public static DataLoader getInstance() {
@@ -459,4 +465,34 @@ public class DataLoader implements DataLoaderSpec {
 		notifyDataLoaderListener();
 	}
 
+	private void scheduleListenerRemover() {
+		TimerTask task = new TimerTask() {
+			@Override
+			public void run() {
+				removeDeadListener();
+			}
+		};
+
+		new Timer().schedule(task, 0, 5 * 60 * 1000);
+	}
+
+	private void removeDeadListener() {
+		long tenMinutesAgo = new Date().getTime() - 10 * 60 * 1000;
+		List<DataLoaderListenerSpec> listenerToBeRemoved = new ArrayList<DataLoaderListenerSpec>();
+
+		// Find all listener that are UIs and didn't send two consecutive
+		// heartbeats (UI sends a heartbeat every 5 Minutes if alive)
+		Iterator<DataLoaderListenerSpec> iterator = dataListener.iterator();
+		while (iterator.hasNext()) {
+			DataLoaderListenerSpec listener = iterator.next();
+			if (listener instanceof UI) {
+				long lastHeartbeat = ((UI) listener)
+						.getLastHeartbeatTimestamp();
+				if (lastHeartbeat < tenMinutesAgo)
+					listenerToBeRemoved.add(listener);
+			}
+		}
+
+		dataListener.removeAll(listenerToBeRemoved);
+	}
 }
