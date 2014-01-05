@@ -69,13 +69,13 @@ public class DataLoader implements DataLoaderSpec {
 
 	private BufferedReader br;
 
-	private BeanItemContainer<RoomModel> roomContainer = new BeanItemContainer<RoomModel>(
+	private final BeanItemContainer<RoomModel> roomContainer = new BeanItemContainer<RoomModel>(
 			RoomModel.class);
-	private BeanItemContainer<CourseModel> courseContainer = new BeanItemContainer<CourseModel>(
+	private final BeanItemContainer<CourseModel> courseContainer = new BeanItemContainer<CourseModel>(
 			CourseModel.class);
-	private BeanItemContainer<PersonModel> personContainer = new BeanItemContainer<PersonModel>(
+	private final BeanItemContainer<PersonModel> personContainer = new BeanItemContainer<PersonModel>(
 			PersonModel.class);
-	private BeanItemContainer<PoiModel> poiContainer = new BeanItemContainer<PoiModel>(
+	private final BeanItemContainer<PoiModel> poiContainer = new BeanItemContainer<PoiModel>(
 			PoiModel.class);
 
 	/**
@@ -373,7 +373,8 @@ public class DataLoader implements DataLoaderSpec {
 			logger.info(REQUEST_ORGANIGRAM + " loaded");
 			return Organigram;
 		} else {
-			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURCE + REQUEST_ORGANIGRAM);
+			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURCE
+					+ REQUEST_ORGANIGRAM);
 			return null;
 		}
 
