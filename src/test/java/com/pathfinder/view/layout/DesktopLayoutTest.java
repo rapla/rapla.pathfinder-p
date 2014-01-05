@@ -11,14 +11,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.pathfinder.util.widgetset.DateTime;
 import com.pathfinder.view.components.AccordionView;
-import com.pathfinder.view.components.FreeRoomView;
 import com.pathfinder.view.components.Keyboard;
-import com.pathfinder.view.components.MenuBar;
 import com.pathfinder.view.components.SearchField;
 import com.pathfinder.view.container.DetailContainer;
-import com.pathfinder.view.container.InfoPanel;
 import com.pathfinder.view.container.SearchPanel;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HasComponents;
@@ -34,16 +30,12 @@ public class DesktopLayoutTest {
 
 	@Before
 	public void initialize() {
-		DateTime dateTime = new DateTime();
-		FreeRoomView freeRoomView = new FreeRoomView();
-		InfoPanel infoPanel = new InfoPanel(dateTime, freeRoomView);
-		MenuBar menuBar = new MenuBar();
 		AccordionView accordionView = new AccordionView();
 		Keyboard keyboard = new Keyboard();
 		SearchField searchField = new SearchField();
 		SearchPanel searchPanel = new SearchPanel(accordionView, keyboard,
 				searchField);
-		this.desktopLayout = new DesktopLayout(infoPanel, menuBar, searchPanel);
+		this.desktopLayout = new DesktopLayout(searchPanel);
 	}
 
 	@Test
@@ -54,7 +46,7 @@ public class DesktopLayoutTest {
 		// Assure DesktopLayout has three Components: InfoPanel, SearchPanel and
 		// MenuBar
 		VerticalLayout layout = (VerticalLayout) iterator.next();
-		Assert.assertEquals(3, layout.getComponentCount());
+		Assert.assertEquals(5, layout.getComponentCount());
 	}
 
 	@Test
@@ -62,7 +54,7 @@ public class DesktopLayoutTest {
 		desktopLayout.buildLayout();
 		Iterator<Component> iterator = desktopLayout.iterator();
 		VerticalLayout layout = (VerticalLayout) iterator.next();
-		Assert.assertEquals(3, layout.getComponentCount());
+		Assert.assertEquals(5, layout.getComponentCount());
 
 		desktopLayout.destroyLayout();
 		Assert.assertEquals(0, layout.getComponentCount());
@@ -70,6 +62,8 @@ public class DesktopLayoutTest {
 
 	@Test
 	public void switchToDetailViewTest() {
+		// TODO: Update when method switchToDetailView finished
+
 		desktopLayout.buildLayout();
 		desktopLayout.switchToDetailView();
 
@@ -83,6 +77,8 @@ public class DesktopLayoutTest {
 
 	@Test
 	public void switchToSearchViewTest() {
+		// TODO: Update when method switchToSearchView finished
+
 		desktopLayout.buildLayout();
 		desktopLayout.switchToSearchView();
 

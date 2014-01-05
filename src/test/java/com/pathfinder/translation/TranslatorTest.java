@@ -40,7 +40,7 @@ public class TranslatorTest {
 
 		translation = translator.translate(TranslationKeys.COURSE,
 				Locale.ENGLISH);
-		assertEquals("Class", translation);
+		assertEquals("Course", translation);
 	}
 
 	@Test

@@ -34,8 +34,8 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	public DesktopLayout(SearchPanel searchPanel) {
 		this.searchPanel = searchPanel;
 
-		this.buildLayout();
 		this.setCompositionRoot(layout);
+		this.buildLayout();
 	}
 
 	@Override
