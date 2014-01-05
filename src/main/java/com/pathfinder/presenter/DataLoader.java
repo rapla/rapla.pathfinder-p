@@ -65,6 +65,7 @@ public class DataLoader implements DataLoaderSpec {
 
 	private final String MASSAGE_ERROR_LOADING_URL_RESOURCE = "Error loading resource: ";
 	private final String MASSAGE_ERROR_LOADING_URL_RESOURCE_DETAIL = "Error loading resource detail - id: ";
+	private final String MASSAGE_ERROR_LOADING_URL = "Resource is empty";
 
 	private BufferedReader br;
 
@@ -292,10 +293,19 @@ public class DataLoader implements DataLoaderSpec {
 		ResourcesResult ResourceData = new Gson().fromJson(br,
 				ResourcesResult.class);
 
+		// Force Error
+		try {
+			ResourceData.getResult();
+		} catch (NullPointerException ex) {
+			logger.error(MASSAGE_ERROR_LOADING_URL);
+			return null;
+		}
+
 		if (ResourceData != null) {
 			logger.info(resource + " loaded");
 			return ResourceData;
 		} else {
+			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURCE + resource);
 			return null;
 		}
 	}
@@ -315,6 +325,14 @@ public class DataLoader implements DataLoaderSpec {
 
 		ResourceDetailResult ResourceDetailData = new Gson().fromJson(br,
 				ResourceDetailResult.class);
+
+		// Force Error
+		try {
+			ResourceDetailData.getResult();
+		} catch (NullPointerException ex) {
+			logger.error(MASSAGE_ERROR_LOADING_URL);
+			return null;
+		}
 
 		if (ResourceDetailData != null) {
 			return ResourceDetailData;
@@ -343,10 +361,19 @@ public class DataLoader implements DataLoaderSpec {
 		CategoryResult Organigram = new Gson().fromJson(br,
 				CategoryResult.class);
 
+		// Force Error
+		try {
+			Organigram.getResult();
+		} catch (NullPointerException ex) {
+			logger.error(MASSAGE_ERROR_LOADING_URL);
+			return null;
+		}
+
 		if (Organigram != null) {
 			logger.info(REQUEST_ORGANIGRAM + " loaded");
 			return Organigram;
 		} else {
+			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURCE + REQUEST_ORGANIGRAM);
 			return null;
 		}
 
