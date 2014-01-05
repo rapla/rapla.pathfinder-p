@@ -18,6 +18,16 @@ import com.pathfinder.util.properties.PropertiesKey;
 
 import de.vksi.c4j.ContractReference;
 
+/**
+ * 
+ * GenericDataLoader will get the Data to the runtime
+ * 
+ * GenericDataLoader lädt die Dateien zur Laufzeit
+ * 
+ * @author Myracle
+ * 
+ */
+
 @ContractReference(GenericDataLoaderContract.class)
 public class GenericDataLoader implements GenericDataLoaderSpec {
 
