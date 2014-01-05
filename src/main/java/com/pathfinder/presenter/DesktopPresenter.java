@@ -3,9 +3,6 @@ package com.pathfinder.presenter;
 import java.util.Locale;
 import java.util.TimerTask;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.pathfinder.model.CourseModel;
 import com.pathfinder.model.PersonModel;
 import com.pathfinder.model.PoiModel;
@@ -32,8 +29,6 @@ import com.vaadin.ui.UI;
  */
 public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		DesktopPresenterSpec {
-	private static final Logger logger = LogManager
-			.getLogger(DesktopPresenter.class.getName());
 
 	// Needed sub-presenter
 	private final SearchPanelPresenterSpec searchPanelPresenter = new SearchPanelPresenter();
@@ -58,16 +53,9 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 
 	class LanguageValueChangeListener implements ValueChangeListener {
 		public void valueChange(ValueChangeEvent event) {
-			String[] languages = desktopLayout.getLanguages();
 			Locale locale = Locale.GERMAN;
-			final Object valueString = event.getProperty().getValue();
-			if (valueString.equals(languages[0])) {
-				locale = Locale.GERMAN;
-			} else if (valueString.equals(languages[1])) {
-				locale = Locale.ENGLISH;
-			}
-
-			UI.getCurrent().setLocale(locale);
+			Locale value = (Locale) event.getProperty().getValue();
+			UI.getCurrent().setLocale(value);
 			languageChanged(locale);
 		}
 	}

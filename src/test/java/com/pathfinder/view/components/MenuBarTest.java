@@ -101,11 +101,6 @@ public class MenuBarTest {
 	}
 
 	@Test
-	public void getLanguagesTest() {
-		Assert.assertTrue(menuBar.getLanguages().length > 0);
-	}
-
-	@Test
 	public void updateTranslationsTest() {
 		PathfinderUI ui = new PathfinderUI();
 		ui.setLocale(Locale.ENGLISH);

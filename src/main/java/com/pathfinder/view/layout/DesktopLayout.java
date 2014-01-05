@@ -60,11 +60,6 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	}
 
 	@Override
-	public String[] getLanguages() {
-		return menuBar.getLanguages();
-	}
-
-	@Override
 	public void hideAppointmentButton() {
 		menuBar.hideAppointmentButton();
 	}

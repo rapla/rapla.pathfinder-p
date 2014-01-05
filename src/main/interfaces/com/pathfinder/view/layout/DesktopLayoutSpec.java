@@ -15,8 +15,6 @@ public interface DesktopLayoutSpec extends ViewSpec {
 
 	void addLanguageValueChangeListener(ValueChangeListener listener);
 
-	String[] getLanguages();
-
 	void hideAppointmentButton();
 
 	void showAppointmentButton();

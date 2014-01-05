@@ -18,6 +18,4 @@ public interface MenuBarSpec extends ComponentSpec {
 	void showAppointmentButton();
 
 	void hideAppointmentButton();
-
-	String[] getLanguages();
 }

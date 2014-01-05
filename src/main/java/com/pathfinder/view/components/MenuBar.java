@@ -1,5 +1,9 @@
 package com.pathfinder.view.components;
 
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
@@ -9,6 +13,7 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.NativeSelect;
+import com.vaadin.ui.UI;
 
 /**
  * MenuBar with buttons for the language, appointment and wheelchair
@@ -20,7 +25,6 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	private final HorizontalLayout horizontalLayout = new HorizontalLayout();
 	private final TranslatorSpec translator = Translator.getInstance();
 
-	private final String[] languages = { "deutsch", "english" };
 	private final NativeSelect dropUpMenu = new NativeSelect();
 	private Button appointmentButton = new Button(
 			translator.translate(TranslationKeys.EVENT));
@@ -32,12 +36,21 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	}
 
 	private void buildLanguageMenu() {
-		for (int i = 0; i < languages.length; i++) {
-			dropUpMenu.addItem(languages[i]);
-			dropUpMenu.setItemCaption(i, languages[i]);
+
+		Map<String, Locale> languages = new HashMap<String, Locale>();
+		languages.put("deutsch", Locale.GERMAN);
+		languages.put("english", Locale.ENGLISH);
+		languages.put("español", new Locale("es"));
+		languages.put("français", Locale.FRENCH);
+
+		for (String language : languages.keySet()) {
+			Locale locale = languages.get(language);
+			dropUpMenu.addItem(languages.get(language));
+			dropUpMenu.setItemCaption(locale, language);
 		}
+
 		dropUpMenu.setNullSelectionAllowed(false);
-		dropUpMenu.setValue(languages[0]);
+		dropUpMenu.setValue(UI.getCurrent().getLocale());
 		dropUpMenu.setImmediate(true);
 		dropUpMenu.setPrimaryStyleName("languages");
 		buildMainLayout();
@@ -70,11 +83,6 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	@Override
 	public void hideAppointmentButton() {
 		this.appointmentButton.setVisible(false);
-	}
-
-	@Override
-	public String[] getLanguages() {
-		return languages;
 	}
 
 	@Override
