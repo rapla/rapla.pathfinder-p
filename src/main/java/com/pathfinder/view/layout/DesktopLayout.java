@@ -105,6 +105,10 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 		layout.removeAllComponents();
 	}
 
+	public FreeRoomViewSpec getFreeRoom() {
+		return freeRoom;
+	}
+
 	@Override
 	public void updateTranslations() {
 		dateTime.updateTranslations();

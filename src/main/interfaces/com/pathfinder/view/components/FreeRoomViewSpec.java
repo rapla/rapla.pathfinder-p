@@ -1,5 +1,7 @@
 package com.pathfinder.view.components;
 
+import java.util.List;
+
 /**
  * FreeRoomSpec
  * 
@@ -7,7 +9,9 @@ package com.pathfinder.view.components;
  * 
  */
 public interface FreeRoomViewSpec extends ComponentSpec {
-	void refreshFreeRooms();
+	void refreshFreeRooms(List<String> raumNameList, List<String> raumLinkList,
+			List<String> raumIdList, List<String> startList,
+			List<String> endList);
 
 	void hideFreeRoom();
 

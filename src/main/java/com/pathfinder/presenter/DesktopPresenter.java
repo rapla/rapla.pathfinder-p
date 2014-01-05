@@ -1,7 +1,11 @@
 package com.pathfinder.presenter;
 
+import java.util.List;
 import java.util.Locale;
+import java.util.Stack;
 import java.util.TimerTask;
+
+import org.json.simple.JSONObject;
 
 import com.pathfinder.model.CourseModel;
 import com.pathfinder.model.PersonModel;
@@ -32,6 +36,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 
 	// Needed sub-presenter
 	private final SearchPanelPresenterSpec searchPanelPresenter = new SearchPanelPresenter();
+	private final GenericDataLoader genericDataLoader = new GenericDataLoader();
 
 	// Layout
 	private final DesktopLayoutSpec desktopLayout = new DesktopLayout(
@@ -42,6 +47,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 				.addClickListenerAppointmentButton(new AppointmentButtonClickListener());
 		desktopLayout
 				.addLanguageValueChangeListener(new LanguageValueChangeListener());
+		this.freeRoomHandler();
 	}
 
 	// TODO
@@ -76,6 +82,42 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		public void run() {
 			desktopLayout.switchToSearchView();
 		}
+	}
+
+	public void freeRoomHandler() {
+
+		List<String> raumNameList = new Stack<String>();
+		List<String> raumLinkList = new Stack<String>();
+		List<String> raumIdList = new Stack<String>();
+		List<String> startList = new Stack<String>();
+		List<String> endList = new Stack<String>();
+
+		List<JSONObject> freeResourcesResult = genericDataLoader
+				.getFreeResourcesResult();
+
+		for (JSONObject result : freeResourcesResult) {
+
+			List<JSONObject> freeResourcesResources = genericDataLoader
+					.getFreeResourcesResources(result);
+
+			String raumName = (String) freeResourcesResources.get(0)
+					.get("name");
+			String raumLink = (String) freeResourcesResources.get(0)
+					.get("link");
+			String raumId = (String) freeResourcesResources.get(0).get("id");
+			String start = (String) result.get("start");
+			String end = (String) result.get("end");
+
+			raumNameList.add(raumName);
+			raumLinkList.add(raumLink);
+			raumIdList.add(raumId);
+			startList.add(start);
+			endList.add(end);
+		}
+
+		desktopLayout.getFreeRoom().refreshFreeRooms(raumNameList,
+				raumLinkList, raumIdList, startList, endList);
+
 	}
 
 	@Override
@@ -113,4 +155,5 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	public CustomComponent getDesktopLayoutView() {
 		return (DesktopLayout) desktopLayout;
 	}
+
 }
