@@ -26,5 +26,5 @@
 
     <inherits name="com.vaadin.addon.responsive.ResponsiveWidgetSet" />
 
-    <inherits name="com.github.wolfie.refresher.RefresherWidgetset" />
+    
 </module>
