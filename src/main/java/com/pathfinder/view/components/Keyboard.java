@@ -135,4 +135,14 @@ public class Keyboard extends CustomComponent implements KeyboardSpec,
 		deleteButton.setCaption(translator.translate(TranslationKeys.DELETE));
 		spaceButton.setCaption(translator.translate(TranslationKeys.SPACE));
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pathfinder.view.components.KeyboardSpec#getListener()
+	 */
+	@Override
+	public List<KeyboardViewListenerSpec> getListener() {
+		return listeners;
+	}
 }

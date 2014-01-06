@@ -108,4 +108,14 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 		res = new ThemeResource("icon/" + UI.getCurrent().getLocale() + ".png");
 		image.setSource(res);
 	}
+
+	@Override
+	public NativeSelect getDropUpMenu() {
+		return dropUpMenu;
+	}
+
+	@Override
+	public Button getAppointmentButton() {
+		return appointmentButton;
+	}
 }

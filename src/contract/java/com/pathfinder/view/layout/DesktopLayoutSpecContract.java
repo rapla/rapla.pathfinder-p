@@ -9,6 +9,7 @@ import static de.vksi.c4j.Condition.preCondition;
 
 import com.pathfinder.view.ViewSpecContract;
 import com.pathfinder.view.components.FreeRoomViewSpec;
+import com.pathfinder.view.components.MenuBarSpecContract;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.Button.ClickListener;
 
@@ -39,10 +40,16 @@ public class DesktopLayoutSpecContract extends ViewSpecContract implements
 		}
 	}
 
+	/**
+	 * See {@link MenuBarSpecContract} for Pre- and Post-Conditions
+	 */
 	@Override
 	public void hideAppointmentButton() {
 	}
 
+	/**
+	 * See {@link MenuBarSpecContract} for Pre- and Post-Conditions
+	 */
 	@Override
 	public void showAppointmentButton() {
 	}

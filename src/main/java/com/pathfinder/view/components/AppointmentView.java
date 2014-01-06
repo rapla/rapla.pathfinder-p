@@ -51,4 +51,9 @@ public class AppointmentView extends CustomComponent implements
 		browserFrame.setAlternateText(translator
 				.translate(TranslationKeys.NO_DATA_AVAILABLE));
 	}
+
+	@Override
+	public BrowserFrame getBrowserFrame() {
+		return browserFrame;
+	}
 }
