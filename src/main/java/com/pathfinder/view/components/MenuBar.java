@@ -10,11 +10,14 @@ import com.pathfinder.util.translation.TranslatorSpec;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.NativeSelect;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 
 /**
@@ -29,6 +32,7 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 
 	private ThemeResource res;
 	private Image image;
+	private Button wheelChairDriverButton = new Button();
 
 	private final NativeSelect dropUpMenu = new NativeSelect();
 	private Button appointmentButton = new Button(
@@ -37,8 +41,26 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	public MenuBar() {
 		buildLanguagePicture();
 		buildLanguageMenu();
+		buildWheelChairDriver();
 		buildMainLayout();
+
 		setCompositionRoot(horizontalLayout);
+	}
+
+	private void buildWheelChairDriver() {
+		wheelChairDriverButton.setStyleName(BaseTheme.BUTTON_LINK);
+		wheelChairDriverButton.setIcon(new ThemeResource(
+				"icon/wheelChairDriver.png"));
+		wheelChairDriverButton.setPrimaryStyleName("wheelChairButtonMan");
+		wheelChairDriverButton.addClickListener(new ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				Notification.show("You pressed the WheelchairMan!");
+
+			}
+		});
+
 	}
 
 	private void buildLanguagePicture() {
@@ -76,6 +98,7 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 		horizontalLayout.addComponent(image);
 		horizontalLayout.addComponent(dropUpMenu);
 		horizontalLayout.addComponent(appointmentButton);
+		horizontalLayout.addComponent(wheelChairDriverButton);
 
 		// TODO Only commented for testing
 		// this.appointmentButton.setVisible(false);
