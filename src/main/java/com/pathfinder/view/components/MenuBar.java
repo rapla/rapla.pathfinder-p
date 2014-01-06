@@ -67,18 +67,17 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 		String language = "" + UI.getCurrent().getLocale();
 		language = language.substring(0, 2);
 		res = new ThemeResource("icon/" + language + ".png");
-		image = new Image(null, res);
-		image.setPrimaryStyleName("language-Picture");
-
+		dropUpMenu.setIcon(res);
 	}
 
 	private void buildLanguageMenu() {
 
 		Map<String, Locale> languages = new HashMap<String, Locale>();
-		languages.put("deutsch", Locale.GERMAN);
-		languages.put("english", Locale.ENGLISH);
-		languages.put("español", new Locale("es"));
-		languages.put("français", Locale.FRENCH);
+		languages.put("deutsch", Locale.GERMANY);
+		languages.put("english", Locale.US);
+		languages.put("español", new Locale("es_ES"));
+		languages.put("français", Locale.FRANCE);
+		dropUpMenu.setPrimaryStyleName("languages");
 
 		for (String language : languages.keySet()) {
 			Locale locale = languages.get(language);
@@ -89,13 +88,14 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 		dropUpMenu.setNullSelectionAllowed(false);
 		dropUpMenu.setValue(UI.getCurrent().getLocale());
 		dropUpMenu.setImmediate(true);
-		dropUpMenu.setPrimaryStyleName("languages");
+		
+		
 		buildMainLayout();
 		setCompositionRoot(horizontalLayout);
+
 	}
 
 	private void buildMainLayout() {
-		horizontalLayout.addComponent(image);
 		horizontalLayout.addComponent(dropUpMenu);
 		horizontalLayout.addComponent(appointmentButton);
 		horizontalLayout.addComponent(wheelChairDriverButton);
@@ -128,8 +128,9 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	public void updateTranslations() {
 		appointmentButton.setCaption(translator
 				.translate(TranslationKeys.EVENT));
-		res = new ThemeResource("icon/" + UI.getCurrent().getLocale() + ".png");
-		image.setSource(res);
+		String language = "" + UI.getCurrent().getLocale();
+		res = new ThemeResource("icon/" + language.substring(0, 2) + ".png");
+		dropUpMenu.setIcon(res);
 	}
 
 	@Override
