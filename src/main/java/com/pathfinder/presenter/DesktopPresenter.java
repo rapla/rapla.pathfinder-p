@@ -115,7 +115,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 
 	}
 
-	public void freeRoomHandler() {
+	public synchronized void freeRoomHandler() {
 
 		List<String> raumNameList = new Stack<String>();
 		List<String> raumLinkList = new Stack<String>();
