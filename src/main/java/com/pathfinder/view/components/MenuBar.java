@@ -75,7 +75,7 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 		Map<String, Locale> languages = new HashMap<String, Locale>();
 		languages.put("deutsch", Locale.GERMANY);
 		languages.put("english", Locale.US);
-		languages.put("español", new Locale("es_ES"));
+		languages.put("español", new Locale("es"));
 		languages.put("français", Locale.FRANCE);
 		dropUpMenu.setPrimaryStyleName("languages");
 
@@ -88,8 +88,7 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 		dropUpMenu.setNullSelectionAllowed(false);
 		dropUpMenu.setValue(UI.getCurrent().getLocale());
 		dropUpMenu.setImmediate(true);
-		
-		
+
 		buildMainLayout();
 		setCompositionRoot(horizontalLayout);
 
