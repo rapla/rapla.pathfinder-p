@@ -12,13 +12,12 @@ import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Image;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.themes.BaseTheme;
 
 /**
  * MenuBar with buttons for the language, appointment and wheelchair
@@ -27,16 +26,16 @@ import com.vaadin.ui.UI;
  * 
  */
 public class MenuBar extends CustomComponent implements MenuBarSpec {
-	private final HorizontalLayout horizontalLayout = new HorizontalLayout();
+	private final HorizontalLayout layout = new HorizontalLayout();
 	private final TranslatorSpec translator = Translator.getInstance();
 
 	private ThemeResource res;
-	private Image image;
-	private Button wheelChairDriverButton = new Button();
-
 	private final NativeSelect dropUpMenu = new NativeSelect();
 	private Button appointmentButton = new Button(
 			translator.translate(TranslationKeys.EVENT));
+	private Button backButton = new Button(
+			translator.translate(TranslationKeys.BACK));
+	private Button wheelChairDriverButton = new Button();
 
 	public MenuBar() {
 		buildLanguagePicture();
@@ -44,23 +43,7 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 		buildWheelChairDriver();
 		buildMainLayout();
 
-		setCompositionRoot(horizontalLayout);
-	}
-
-	private void buildWheelChairDriver() {
-		wheelChairDriverButton.setStyleName(BaseTheme.BUTTON_LINK);
-		wheelChairDriverButton.setIcon(new ThemeResource(
-				"icon/wheelChairDriver.png"));
-		wheelChairDriverButton.setPrimaryStyleName("wheelChairButtonMan");
-		wheelChairDriverButton.addClickListener(new ClickListener() {
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				Notification.show("You pressed the WheelchairMan!");
-
-			}
-		});
-
+		setCompositionRoot(layout);
 	}
 
 	private void buildLanguagePicture() {
@@ -71,7 +54,6 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	}
 
 	private void buildLanguageMenu() {
-
 		Map<String, Locale> languages = new HashMap<String, Locale>();
 		languages.put("deutsch", Locale.GERMANY);
 		languages.put("english", Locale.US);
@@ -88,16 +70,19 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 		dropUpMenu.setNullSelectionAllowed(false);
 		dropUpMenu.setValue(UI.getCurrent().getLocale());
 		dropUpMenu.setImmediate(true);
+	}
 
-		buildMainLayout();
-		setCompositionRoot(horizontalLayout);
-
+	private void buildWheelChairDriver() {
+		wheelChairDriverButton.setStyleName(BaseTheme.BUTTON_LINK);
+		wheelChairDriverButton.setIcon(new ThemeResource(
+				"icon/wheelChairDriver.png"));
+		wheelChairDriverButton.setPrimaryStyleName("wheelChairButtonMan");
 	}
 
 	private void buildMainLayout() {
-		horizontalLayout.addComponent(dropUpMenu);
-		horizontalLayout.addComponent(appointmentButton);
-		horizontalLayout.addComponent(wheelChairDriverButton);
+		layout.addComponent(dropUpMenu);
+		layout.addComponent(appointmentButton);
+		layout.addComponent(wheelChairDriverButton);
 
 		// TODO Only commented for testing
 		// this.appointmentButton.setVisible(false);
@@ -114,6 +99,16 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	}
 
 	@Override
+	public void addClickListenerWheelChairButton(ClickListener listener) {
+		wheelChairDriverButton.addClickListener(listener);
+	}
+
+	@Override
+	public void addClickListenerBackButton(ClickListener listener) {
+		backButton.addClickListener(listener);
+	}
+
+	@Override
 	public void showAppointmentButton() {
 		this.appointmentButton.setVisible(true);
 	}
@@ -121,6 +116,16 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	@Override
 	public void hideAppointmentButton() {
 		this.appointmentButton.setVisible(false);
+	}
+
+	@Override
+	public void replaceAppointmentButtonWithBackButton() {
+		layout.replaceComponent(appointmentButton, backButton);
+	}
+
+	@Override
+	public void replaceBackButtonWithAppointmentButton() {
+		layout.replaceComponent(backButton, appointmentButton);
 	}
 
 	@Override

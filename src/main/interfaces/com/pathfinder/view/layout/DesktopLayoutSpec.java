@@ -16,9 +16,13 @@ import de.vksi.c4j.Pure;
  */
 @ContractReference(DesktopLayoutSpecContract.class)
 public interface DesktopLayoutSpec extends ViewSpec {
+	void addLanguageValueChangeListener(ValueChangeListener listener);
+
 	void addClickListenerAppointmentButton(ClickListener listener);
 
-	void addLanguageValueChangeListener(ValueChangeListener listener);
+	void addClickListenerWheelChairButton(ClickListener listener);
+
+	void addClickListenerBackButton(ClickListener listener);
 
 	void hideAppointmentButton();
 

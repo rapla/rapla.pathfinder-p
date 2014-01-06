@@ -21,9 +21,17 @@ public interface MenuBarSpec extends ComponentSpec {
 
 	void addClickListenerAppointmentButton(ClickListener listener);
 
+	void addClickListenerWheelChairButton(ClickListener listener);
+
+	void addClickListenerBackButton(ClickListener listener);
+
 	void showAppointmentButton();
 
 	void hideAppointmentButton();
+
+	void replaceAppointmentButtonWithBackButton();
+
+	void replaceBackButtonWithAppointmentButton();
 
 	@Pure
 	NativeSelect getDropUpMenu();

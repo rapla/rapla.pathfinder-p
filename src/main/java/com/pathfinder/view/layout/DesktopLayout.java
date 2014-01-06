@@ -50,13 +50,23 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	}
 
 	@Override
+	public void addLanguageValueChangeListener(ValueChangeListener listener) {
+		menuBar.addValueChangeListener(listener);
+	}
+
+	@Override
 	public void addClickListenerAppointmentButton(ClickListener listener) {
 		menuBar.addClickListenerAppointmentButton(listener);
 	}
 
 	@Override
-	public void addLanguageValueChangeListener(ValueChangeListener listener) {
-		menuBar.addValueChangeListener(listener);
+	public void addClickListenerWheelChairButton(ClickListener listener) {
+		menuBar.addClickListenerWheelChairButton(listener);
+	}
+
+	@Override
+	public void addClickListenerBackButton(ClickListener listener) {
+		menuBar.addClickListenerBackButton(listener);
 	}
 
 	@Override

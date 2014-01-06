@@ -29,6 +29,7 @@ import com.vaadin.server.Page;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomComponent;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 
 /**
@@ -47,7 +48,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	private ApplicationPropertiesSpec properties = ApplicationProperties
 			.getInstance();
 
-	private static final Logger logger = LogManager.getLogger(DataLoader.class);
+	private static final Logger LOGGER = LogManager.getLogger(DataLoader.class);
 
 	// Layout
 	private final DesktopLayoutSpec desktopLayout = new DesktopLayout(
@@ -55,9 +56,12 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 
 	public DesktopPresenter() {
 		desktopLayout
+				.addLanguageValueChangeListener(new LanguageValueChangeListener());
+		desktopLayout
 				.addClickListenerAppointmentButton(new AppointmentButtonClickListener());
 		desktopLayout
-				.addLanguageValueChangeListener(new LanguageValueChangeListener());
+				.addClickListenerWheelChairButton(new WheelChairButtonClickListener());
+		desktopLayout.addClickListenerBackButton(new BackButtonClickListener());
 		this.freeRoomHandler();
 		this.scheduleFreeRoomsLoading();
 	}
@@ -84,6 +88,20 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 			desktopLayout
 					.setAppointmentUrl("http://localhost:8051/rapla/rapla?page=calendar&user=stele&file=kurs&allocatable_id=2373");
 			desktopLayout.switchToAppointmentView();
+		}
+	}
+
+	class WheelChairButtonClickListener implements ClickListener {
+		@Override
+		public void buttonClick(ClickEvent event) {
+			Notification.show("You pressed the WheelchairMan!");
+		}
+	}
+
+	class BackButtonClickListener implements ClickListener {
+		@Override
+		public void buttonClick(ClickEvent event) {
+			// TODO Auto-generated method stub
 		}
 	}
 
