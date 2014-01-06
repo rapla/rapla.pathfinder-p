@@ -1,5 +1,7 @@
 package com.pathfinder.view;
 
+import com.vaadin.ui.Component;
+
 import de.vksi.c4j.ContractReference;
 
 /**
@@ -9,7 +11,7 @@ import de.vksi.c4j.ContractReference;
  * 
  */
 @ContractReference(ViewSpecContract.class)
-public interface ViewSpec extends TranslatabelSpec {
+public interface ViewSpec extends TranslatabelSpec, Component {
 	void buildLayout();
 
 	void destroyLayout();

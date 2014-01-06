@@ -6,6 +6,7 @@ package com.pathfinder.view;
 import static de.vksi.c4j.Condition.postCondition;
 import static de.vksi.c4j.Condition.preCondition;
 
+import com.pathfinder.AbstractComponentContract;
 import com.vaadin.ui.AbstractOrderedLayout;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
@@ -17,7 +18,8 @@ import de.vksi.c4j.Target;
  * @author tim
  * 
  */
-public class ViewSpecContract implements ViewSpec {
+public class ViewSpecContract extends AbstractComponentContract implements
+		ViewSpec {
 
 	@Target
 	private ViewSpec target;

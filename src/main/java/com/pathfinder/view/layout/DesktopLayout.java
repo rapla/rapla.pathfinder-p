@@ -9,7 +9,7 @@ import com.pathfinder.view.components.FreeRoomViewSpec;
 import com.pathfinder.view.components.MenuBar;
 import com.pathfinder.view.components.MenuBarSpec;
 import com.pathfinder.view.container.DetailContainer;
-import com.pathfinder.view.container.SearchPanel;
+import com.pathfinder.view.container.SearchPanelSpec;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomComponent;
@@ -25,13 +25,13 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	private final DateTimeSpec dateTime = new DateTime();
 	private final FreeRoomViewSpec freeRoom = new FreeRoomView();
 	private final MenuBarSpec menuBar = new MenuBar();
-	private SearchPanel searchPanel = null;
+	private SearchPanelSpec searchPanel = null;
 	private DetailContainer<?> detailContainer = null;
 	private final AppointmentViewSpec appointmentView = new AppointmentView();
 
 	private final VerticalLayout layout = new VerticalLayout();
 
-	public DesktopLayout(SearchPanel searchPanel) {
+	public DesktopLayout(SearchPanelSpec searchPanel) {
 		this.searchPanel = searchPanel;
 
 		this.setCompositionRoot(layout);
@@ -40,13 +40,13 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 
 	@Override
 	public void buildLayout() {
-		this.layout.addComponent((DateTime) dateTime);
-		this.layout.addComponent((FreeRoomView) freeRoom);
+		this.layout.addComponent(dateTime);
+		this.layout.addComponent(freeRoom);
 		this.layout.addComponent(searchPanel);
 		// TODO
 		// this.layout.addComponent(detailContainer);
-		this.layout.addComponent((AppointmentView) appointmentView);
-		this.layout.addComponent((MenuBar) menuBar);
+		this.layout.addComponent(appointmentView);
+		this.layout.addComponent(menuBar);
 	}
 
 	@Override

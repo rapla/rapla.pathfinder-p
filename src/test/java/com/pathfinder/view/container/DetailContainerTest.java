@@ -41,4 +41,13 @@ public class DetailContainerTest {
 				.iterator().next();
 		Assert.assertEquals(2, rootLayout.getComponentCount());
 	}
+
+	@Test
+	public void hideShowTest() {
+		Assert.assertTrue(detailContainer.isVisible());
+		detailContainer.hideDetailContainer();
+		Assert.assertFalse(detailContainer.isVisible());
+		detailContainer.showDetailContainer();
+		Assert.assertTrue(detailContainer.isVisible());
+	}
 }

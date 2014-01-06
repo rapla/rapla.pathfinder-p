@@ -82,4 +82,14 @@ public class SearchField extends CustomComponent implements SearchFieldSpec {
 	public TextField getSearchField() {
 		return searchField;
 	}
+
+	@Override
+	public Button getMagnifierButton() {
+		return magnifier;
+	}
+
+	@Override
+	public Button getDeleteAllButton() {
+		return deleteAll;
+	}
 }
