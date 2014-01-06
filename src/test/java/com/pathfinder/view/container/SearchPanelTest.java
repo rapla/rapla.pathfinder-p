@@ -19,7 +19,7 @@ import com.vaadin.ui.CustomComponent;
  */
 public class SearchPanelTest {
 
-	SearchPanelSpec searchPanel;
+	SearchPanel searchPanel;
 
 	@Before
 	public void initialize() {

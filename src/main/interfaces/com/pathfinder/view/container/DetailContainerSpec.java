@@ -6,6 +6,9 @@ import com.pathfinder.model.PoiModel;
 import com.pathfinder.model.RoomModel;
 import com.pathfinder.view.components.ComponentSpec;
 
+import de.vksi.c4j.ContractReference;
+
+@ContractReference(DetailContainerSpecContract.class)
 public interface DetailContainerSpec extends ComponentSpec {
 	void hideDetailContainer();
 

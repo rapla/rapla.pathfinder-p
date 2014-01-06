@@ -5,12 +5,16 @@ import com.pathfinder.view.components.FreeRoomViewSpec;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.Button.ClickListener;
 
+import de.vksi.c4j.ContractReference;
+import de.vksi.c4j.Pure;
+
 /**
  * MainLayoutSpec
  * 
  * @author alexh
  * 
  */
+@ContractReference(DesktopLayoutSpecContract.class)
 public interface DesktopLayoutSpec extends ViewSpec {
 	void addClickListenerAppointmentButton(ClickListener listener);
 
@@ -28,5 +32,6 @@ public interface DesktopLayoutSpec extends ViewSpec {
 
 	void setAppointmentUrl(String url);
 
+	@Pure
 	FreeRoomViewSpec getFreeRoom();
 }
