@@ -101,12 +101,11 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	class BackButtonClickListener implements ClickListener {
 		@Override
 		public void buttonClick(ClickEvent event) {
-			// TODO Auto-generated method stub
+			desktopLayout.switchToSearchView();
 		}
 	}
 
 	class RespawnDesktopLayoutTimer extends TimerTask {
-
 		@Override
 		public void run() {
 			desktopLayout.switchToSearchView();

@@ -129,15 +129,6 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	}
 
 	@Override
-	public void updateTranslations() {
-		appointmentButton.setCaption(translator
-				.translate(TranslationKeys.EVENT));
-		String language = "" + UI.getCurrent().getLocale();
-		res = new ThemeResource("icon/" + language.substring(0, 2) + ".png");
-		dropUpMenu.setIcon(res);
-	}
-
-	@Override
 	public NativeSelect getDropUpMenu() {
 		return dropUpMenu;
 	}
@@ -145,5 +136,15 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	@Override
 	public Button getAppointmentButton() {
 		return appointmentButton;
+	}
+
+	@Override
+	public void updateTranslations() {
+		appointmentButton.setCaption(translator
+				.translate(TranslationKeys.EVENT));
+		backButton.setCaption(translator.translate(TranslationKeys.BACK));
+		String language = "" + UI.getCurrent().getLocale();
+		res = new ThemeResource("icon/" + language.substring(0, 2) + ".png");
+		dropUpMenu.setIcon(res);
 	}
 }

@@ -98,10 +98,6 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 	public void updateTranslations() {
 		actualFreeRoomsLabel.setCaption(translator
 				.translate(TranslationKeys.CURRENTLY_FREE_ROOMS));
-		translateGridLayout();
-	}
-
-	private void translateGridLayout() {
 		room = translator.translate(TranslationKeys.ROOM);
 		time = translator.translate(TranslationKeys.TIME);
 		floorplan = translator.translate(TranslationKeys.TO_FLOOR_PLAN);

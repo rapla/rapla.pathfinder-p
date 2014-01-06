@@ -81,6 +81,7 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 
 	@Override
 	public void switchToSearchView() {
+		menuBar.replaceBackButtonWithAppointmentButton();
 		detailContainer = null;
 		appointmentView.hideAppointmentView();
 		// TODO
@@ -102,6 +103,7 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	@Override
 	public void switchToAppointmentView() {
 		// TODO
+		menuBar.replaceAppointmentButtonWithBackButton();
 		// detailContainer.hideDetailContainer();
 		freeRoom.hideFreeRoom();
 		searchPanel.hideSearchPanel();

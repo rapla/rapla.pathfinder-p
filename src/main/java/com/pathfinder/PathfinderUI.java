@@ -41,6 +41,7 @@ public class PathfinderUI extends UI implements DataLoaderListenerSpec {
 		Page page = Page.getCurrent();
 		getCurrent().getPage();
 		WebBrowser webBrowser = getPage().getWebBrowser();
+		//BrowserInfo is for client side - WebBrowser for server side 
 		// BrowserInfo browserInfo = BrowserInfo.get();
 		String userAgent = "";
 		if (request instanceof VaadinServletRequest) {
