@@ -116,6 +116,7 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	public void updateTranslations() {
 		dateTime.updateTranslations();
 		freeRoom.updateTranslations();
+		appointmentView.updateTranslations();
 		menuBar.updateTranslations();
 	}
 }

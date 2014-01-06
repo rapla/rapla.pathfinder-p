@@ -1,5 +1,6 @@
 package com.pathfinder.view.components;
 
+import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
 import com.vaadin.server.ExternalResource;
@@ -10,7 +11,6 @@ public class AppointmentView extends CustomComponent implements
 		AppointmentViewSpec {
 
 	private final TranslatorSpec translator = Translator.getInstance();
-
 	private final BrowserFrame browserFrame = new BrowserFrame();
 
 	public AppointmentView() {
@@ -18,11 +18,9 @@ public class AppointmentView extends CustomComponent implements
 	}
 
 	private void buildLayout() {
-		// browserFrame.setAlternateText(translator
-		// .translate(TranslationKeys.NO_DATA_AVAILABLE));
+		browserFrame.setAlternateText(translator
+				.translate(TranslationKeys.NO_DATA_AVAILABLE));
 		browserFrame.setSizeFull();
-		// TODO Fixed length (length of Stele)
-		// browserFrame.setHeight(900f, Unit.PIXELS);
 		this.setCompositionRoot(browserFrame);
 	}
 
@@ -37,17 +35,20 @@ public class AppointmentView extends CustomComponent implements
 
 	@Override
 	public void hideAppointmentView() {
+		this.setSizeFull();
 		this.setVisible(false);
 	}
 
 	@Override
 	public void showAppointmentView() {
+		browserFrame.setHeight(1000f, Unit.PIXELS);
 		this.setVisible(true);
 	}
 
 	@Override
 	public void updateTranslations() {
-		// browserFrame.setAlternateText(translator.translate(TranslationKeys.NO_DATA_AVAILABLE));
+		browserFrame.setAlternateText(translator
+				.translate(TranslationKeys.NO_DATA_AVAILABLE));
 	}
 
 	@Override
