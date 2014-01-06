@@ -95,6 +95,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		List<JSONObject> freeResourcesResult = genericDataLoader
 				.getFreeResourcesResult();
 
+		// TODO Add error handling to handle NullPointerException
 		for (JSONObject result : freeResourcesResult) {
 
 			List<JSONObject> freeResourcesResources = genericDataLoader

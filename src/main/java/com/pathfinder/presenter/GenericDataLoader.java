@@ -22,8 +22,6 @@ import de.vksi.c4j.ContractReference;
  * 
  * GenericDataLoader will get the Data to the runtime
  * 
- * GenericDataLoader lädt die Dateien zur Laufzeit
- * 
  * @author Myracle
  * 
  */
@@ -37,7 +35,6 @@ public class GenericDataLoader implements GenericDataLoaderSpec {
 			.getProperty(PropertiesKey.GSON_BASE_URL);
 
 	private final String FREE_RESOURCES = BASE_URL + "/getFreeResources";
-
 	private final String MASSAGE_ERROR_URL_NOT_READABLE = "Error loading URL: ";
 
 	private BufferedReader br;
@@ -84,7 +81,5 @@ public class GenericDataLoader implements GenericDataLoaderSpec {
 				.get("resources");
 
 		return resources;
-
 	}
-
 }

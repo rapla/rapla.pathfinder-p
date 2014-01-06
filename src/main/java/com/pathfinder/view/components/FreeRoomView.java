@@ -8,7 +8,6 @@ import com.pathfinder.util.translation.TranslatorSpec;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.VerticalLayout;
@@ -16,6 +15,8 @@ import com.vaadin.ui.VerticalLayout;
 public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 	private final TranslatorSpec translator = Translator.getInstance();
 
+	Label freeRoomView = new Label(
+			translator.translate(TranslationKeys.CURRENTLY_FREE_ROOMS));
 	private GridLayout gridLayout;
 	private final VerticalLayout verticalLayout = new VerticalLayout();
 
@@ -25,8 +26,8 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 	}
 
 	private void buildLayout() {
-		Label freeRoomView = new Label(
-				translator.translate(TranslationKeys.CURRENTLY_FREE_ROOMS));
+		// TODO Use the caption instead a dedicated label. In both cases remove
+		// label or caption don´t use both
 		freeRoomView.setPrimaryStyleName("freeRoomCaption");
 		verticalLayout.addComponent(freeRoomView);
 		verticalLayout.setPrimaryStyleName("freeRooms");
@@ -71,6 +72,8 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 	@Override
 	public void updateTranslations() {
 		this.setCaption(translator
+				.translate(TranslationKeys.CURRENTLY_FREE_ROOMS));
+		this.freeRoomView.setValue(translator
 				.translate(TranslationKeys.CURRENTLY_FREE_ROOMS));
 	}
 }

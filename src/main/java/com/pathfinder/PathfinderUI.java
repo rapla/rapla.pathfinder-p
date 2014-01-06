@@ -47,9 +47,8 @@ public class PathfinderUI extends UI implements DataLoaderListenerSpec {
 		logger.trace(">> Browser Data <<");
 
 		/* Returns the current width of the browser window */
-		Page.getCurrent().getBrowserWindowWidth();
-		logger.trace("Current window width: "
-				+ Page.getCurrent().getBrowserWindowWidth());
+		Page page = Page.getCurrent();
+		logger.trace("Current window width: " + page.getBrowserWindowWidth());
 
 		/* Returns the max width of the browser window */
 		WebBrowser browser = getPage().getWebBrowser();
