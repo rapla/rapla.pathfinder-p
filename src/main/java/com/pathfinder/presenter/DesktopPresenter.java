@@ -127,24 +127,26 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 				.getFreeResourcesResult();
 
 		// TODO Add error handling to handle NullPointerException
-		for (JSONObject result : freeResourcesResult) {
+		if (freeResourcesResult != null) {
+			for (JSONObject result : freeResourcesResult) {
+				List<JSONObject> freeResourcesResources = genericDataLoader
+						.getFreeResourcesResources(result);
 
-			List<JSONObject> freeResourcesResources = genericDataLoader
-					.getFreeResourcesResources(result);
+				String raumName = (String) freeResourcesResources.get(0).get(
+						"name");
+				String raumLink = (String) freeResourcesResources.get(0).get(
+						"link");
+				String raumId = (String) freeResourcesResources.get(0)
+						.get("id");
+				String start = (String) result.get("start");
+				String end = (String) result.get("end");
 
-			String raumName = (String) freeResourcesResources.get(0)
-					.get("name");
-			String raumLink = (String) freeResourcesResources.get(0)
-					.get("link");
-			String raumId = (String) freeResourcesResources.get(0).get("id");
-			String start = (String) result.get("start");
-			String end = (String) result.get("end");
-
-			raumNameList.add(raumName);
-			raumLinkList.add(raumLink);
-			raumIdList.add(raumId);
-			startList.add(start);
-			endList.add(end);
+				raumNameList.add(raumName);
+				raumLinkList.add(raumLink);
+				raumIdList.add(raumId);
+				startList.add(start);
+				endList.add(end);
+			}
 		}
 
 		desktopLayout.getFreeRoom().refreshFreeRooms(raumNameList,
