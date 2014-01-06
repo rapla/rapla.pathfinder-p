@@ -2,8 +2,6 @@ package com.pathfinder;
 
 import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -33,38 +31,27 @@ public class PathfinderUI extends UI implements DataLoaderListenerSpec {
 	@Override
 	protected void init(VaadinRequest request) {
 		setUiLocale(request.getLocale());
-
 		setErrorHandler(new PathfinderErrorHandler());
-
 		Page.getCurrent().setTitle(
 				Translator.getInstance().translate(TranslationKeys.APP_TITLE));
-
 		this.buildLayout(request);
-
 	}
 
 	private void buildLayout(VaadinRequest request) {
-		/* Browser data */
-		logger.trace(">> Browser Data <<");
-
-		/* Returns the current width of the browser window */
 		Page page = Page.getCurrent();
-		logger.trace("Current window width: " + page.getBrowserWindowWidth());
-
-		/* Returns the max width of the browser window */
-		WebBrowser browser = getPage().getWebBrowser();
-		logger.trace("Max browser width: " + browser.getScreenWidth());
-
-		/* Returns the user agent */
+		getCurrent().getPage();
+		WebBrowser webBrowser = getPage().getWebBrowser();
+		// BrowserInfo browserInfo = BrowserInfo.get();
 		String userAgent = "";
 		if (request instanceof VaadinServletRequest) {
-			HttpServletRequest httpRequest = ((VaadinServletRequest) request)
-					.getHttpServletRequest();
-			userAgent = httpRequest.getHeader("User-Agent").toLowerCase();
-			logger.trace("User Agent: " + userAgent);
+			userAgent = ((VaadinServletRequest) request)
+					.getHttpServletRequest().getHeader("User-Agent")
+					.toLowerCase();
 		}
+		// printBrowserInfo(page, webBrowser, browserInfo, userAgent);
+		printBrowserInfo(page, webBrowser, userAgent);
 
-		if (isMobileUserAgent(userAgent) || browser.getScreenWidth() < 768) {
+		if (isMobileUserAgent(userAgent) || webBrowser.getScreenWidth() < 768) {
 			mobilePresenter = new MobilePresenter();
 			setContent(mobilePresenter.getMobileLayoutView());
 			logger.trace("Mobile application initialized");
@@ -78,6 +65,17 @@ public class PathfinderUI extends UI implements DataLoaderListenerSpec {
 		setData();
 		// Register as DataListener to get notified if data changes
 		// DataLoader.getInstance().addDataListener(this);
+	}
+
+	private void printBrowserInfo(Page page, WebBrowser webBrowser,
+			String userAgent) {
+		// Page page, WebBrowser webBrowser,
+		// BrowserInfo browserInfo, String userAgent
+		logger.trace(">> Browser Data <<");
+		logger.trace("Current window width: " + page.getBrowserWindowWidth());
+		logger.trace("Max browser width: " + webBrowser.getScreenWidth());
+		// logger.trace("3: " + browserInfo.getScreenWidth());
+		logger.trace("User Agent: " + userAgent);
 	}
 
 	private boolean isMobileUserAgent(String userAgent) {
