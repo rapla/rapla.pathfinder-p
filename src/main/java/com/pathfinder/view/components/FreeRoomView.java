@@ -6,6 +6,7 @@ import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
 import com.vaadin.server.ExternalResource;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
@@ -14,19 +15,23 @@ import com.vaadin.ui.Link;
 public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 	private final TranslatorSpec translator = Translator.getInstance();
 
+	private Label actualFreeRoomsLabel = new Label();
+
+	private CssLayout cssLayout = new CssLayout();
 	private GridLayout gridLayout;
 
 	public FreeRoomView() {
 		buildLayout();
 
-		this.setCaption(translator
-				.translate(TranslationKeys.CURRENTLY_FREE_ROOMS));
-
-		setCompositionRoot(gridLayout);
+		setCompositionRoot(cssLayout);
 	}
 
 	private void buildLayout() {
-		this.setPrimaryStyleName("freeRooms");
+
+		actualFreeRoomsLabel.setCaption(translator
+				.translate(TranslationKeys.CURRENTLY_FREE_ROOMS));
+		cssLayout.addComponent(actualFreeRoomsLabel);
+		cssLayout.setPrimaryStyleName("freeRooms");
 	}
 
 	@Override
@@ -38,8 +43,8 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 
 		for (int i = 0; i < raumNameList.size(); i++) {
 
-			Label roomLabel = new Label("Raum " + raumNameList.get(i) + " bis "
-					+ startList.get(i) + "Uhr");
+			Label roomLabel = new Label("Raum " + raumNameList.get(i) + " von "
+					+ startList.get(i) + " bis " + endList.get(i) + " Uhr");
 
 			Link roomLink = new Link("zum Raumplan", new ExternalResource(
 					raumLinkList.get(i)));
@@ -50,7 +55,9 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 			gridLayout.addComponent(roomLabel);
 			gridLayout.addComponent(roomLink);
 
-			setCompositionRoot(gridLayout);
+			cssLayout.addComponent(gridLayout);
+
+			setCompositionRoot(cssLayout);
 		}
 	}
 
@@ -66,7 +73,7 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 
 	@Override
 	public void updateTranslations() {
-		this.setCaption(translator
+		actualFreeRoomsLabel.setCaption(translator
 				.translate(TranslationKeys.CURRENTLY_FREE_ROOMS));
 	}
 }
