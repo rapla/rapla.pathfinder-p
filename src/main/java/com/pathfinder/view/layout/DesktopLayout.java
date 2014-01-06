@@ -75,6 +75,7 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 		appointmentView.hideAppointmentView();
 		// TODO
 		// detailContainer.hideDetailContainer();
+		freeRoom.showFreeRoom();
 		searchPanel.showSearchPanel();
 	}
 
@@ -83,6 +84,7 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 		// TODO
 		// detailContainer = new DetailContainer<T>(null, null, null);
 		appointmentView.hideAppointmentView();
+		freeRoom.hideFreeRoom();
 		searchPanel.hideSearchPanel();
 		// detailContainer.showDetailContainer();
 	}
@@ -91,6 +93,7 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	public void switchToAppointmentView() {
 		// TODO
 		// detailContainer.hideDetailContainer();
+		freeRoom.hideFreeRoom();
 		searchPanel.hideSearchPanel();
 		appointmentView.showAppointmentView();
 	}
