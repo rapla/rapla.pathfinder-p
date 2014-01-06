@@ -10,27 +10,23 @@ import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Link;
-import com.vaadin.ui.VerticalLayout;
 
 public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 	private final TranslatorSpec translator = Translator.getInstance();
 
-	Label freeRoomView = new Label(
-			translator.translate(TranslationKeys.CURRENTLY_FREE_ROOMS));
 	private GridLayout gridLayout;
-	private final VerticalLayout verticalLayout = new VerticalLayout();
 
 	public FreeRoomView() {
 		buildLayout();
-		setCompositionRoot(verticalLayout);
+
+		this.setCaption(translator
+				.translate(TranslationKeys.CURRENTLY_FREE_ROOMS));
+
+		setCompositionRoot(gridLayout);
 	}
 
 	private void buildLayout() {
-		// TODO Use the caption instead a dedicated label. In both cases remove
-		// label or caption don´t use both
-		freeRoomView.setPrimaryStyleName("freeRoomCaption");
-		verticalLayout.addComponent(freeRoomView);
-		verticalLayout.setPrimaryStyleName("freeRooms");
+		this.setPrimaryStyleName("freeRooms");
 	}
 
 	@Override
@@ -43,7 +39,7 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 		for (int i = 0; i < raumNameList.size(); i++) {
 
 			Label roomLabel = new Label("Raum " + raumNameList.get(i) + " bis "
-					+ endList.get(i) + "Uhr");
+					+ startList.get(i) + "Uhr");
 
 			Link roomLink = new Link("zum Raumplan", new ExternalResource(
 					raumLinkList.get(i)));
@@ -54,8 +50,7 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 			gridLayout.addComponent(roomLabel);
 			gridLayout.addComponent(roomLink);
 
-			verticalLayout.addComponent(gridLayout);
-
+			setCompositionRoot(gridLayout);
 		}
 	}
 
@@ -72,8 +67,6 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 	@Override
 	public void updateTranslations() {
 		this.setCaption(translator
-				.translate(TranslationKeys.CURRENTLY_FREE_ROOMS));
-		this.freeRoomView.setValue(translator
 				.translate(TranslationKeys.CURRENTLY_FREE_ROOMS));
 	}
 }

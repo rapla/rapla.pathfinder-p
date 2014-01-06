@@ -3,14 +3,20 @@ package com.pathfinder.presenter;
 import java.util.List;
 import java.util.Locale;
 import java.util.Stack;
+import java.util.Timer;
 import java.util.TimerTask;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 
 import com.pathfinder.model.CourseModel;
 import com.pathfinder.model.PersonModel;
 import com.pathfinder.model.PoiModel;
 import com.pathfinder.model.RoomModel;
+import com.pathfinder.util.properties.ApplicationProperties;
+import com.pathfinder.util.properties.ApplicationPropertiesSpec;
+import com.pathfinder.util.properties.PropertiesKey;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.view.layout.DesktopLayout;
@@ -37,6 +43,11 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	// Needed sub-presenter
 	private final SearchPanelPresenterSpec searchPanelPresenter = new SearchPanelPresenter();
 	private final GenericDataLoader genericDataLoader = new GenericDataLoader();
+
+	private ApplicationPropertiesSpec properties = ApplicationProperties
+			.getInstance();
+
+	private static final Logger logger = LogManager.getLogger(DataLoader.class);
 
 	// Layout
 	private final DesktopLayoutSpec desktopLayout = new DesktopLayout(
@@ -82,6 +93,26 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		public void run() {
 			desktopLayout.switchToSearchView();
 		}
+	}
+
+	private TimerTask getTimerTask() {
+		TimerTask timerTask = new TimerTask() {
+			@Override
+			public void run() {
+				freeRoomHandler();
+			}
+		};
+		return timerTask;
+	}
+
+	private void scheduleFreeRoomsLoading() {
+
+		// Starts after specified interval and repeats in the same interval (see
+		// application.properties)
+		long loadInterval = properties
+				.getIntProperty(PropertiesKey.DATA_LOAD_INTERVAL_FREE_ROOMS);
+		new Timer().schedule(getTimerTask(), loadInterval, loadInterval);
+
 	}
 
 	public void freeRoomHandler() {

@@ -77,4 +77,10 @@ public class DesktopPresenterSpecContract implements DesktopPresenterSpec {
 		return ignored();
 	}
 
+	@Override
+	public void freeRoomHandler() {
+		// TODO Auto-generated method stub
+
+	}
+
 }

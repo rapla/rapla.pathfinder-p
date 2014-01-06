@@ -40,6 +40,7 @@ public class PathfinderUI extends UI implements DataLoaderListenerSpec {
 				Translator.getInstance().translate(TranslationKeys.APP_TITLE));
 
 		this.buildLayout(request);
+
 	}
 
 	private void buildLayout(VaadinRequest request) {
