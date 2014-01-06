@@ -59,6 +59,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		desktopLayout
 				.addLanguageValueChangeListener(new LanguageValueChangeListener());
 		this.freeRoomHandler();
+		this.scheduleFreeRoomsLoading();
 	}
 
 	// TODO

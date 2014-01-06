@@ -19,8 +19,8 @@ public class AppointmentView extends CustomComponent implements
 	}
 
 	private void buildLayout() {
-		browserFrame.setAlternateText(translator
-				.translate(TranslationKeys.NO_DATA_AVAILABLE));
+		// browserFrame.setAlternateText(translator
+		// .translate(TranslationKeys.NO_DATA_AVAILABLE));
 		browserFrame.setSizeFull();
 		// TODO Fixed length (length of Stele)
 		// browserFrame.setHeight(900f, Unit.PIXELS);

@@ -8,10 +8,12 @@ import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.UI;
 
@@ -25,14 +27,27 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	private final HorizontalLayout horizontalLayout = new HorizontalLayout();
 	private final TranslatorSpec translator = Translator.getInstance();
 
+	private ThemeResource res;
+	private Image image;
+
 	private final NativeSelect dropUpMenu = new NativeSelect();
 	private Button appointmentButton = new Button(
 			translator.translate(TranslationKeys.EVENT));
 
 	public MenuBar() {
+		buildLanguagePicture();
 		buildLanguageMenu();
 		buildMainLayout();
 		setCompositionRoot(horizontalLayout);
+	}
+
+	private void buildLanguagePicture() {
+		String language = "" + UI.getCurrent().getLocale();
+		language = language.substring(0, 2);
+		res = new ThemeResource("icon/" + language + ".png");
+		image = new Image(null, res);
+		image.setPrimaryStyleName("language-Picture");
+
 	}
 
 	private void buildLanguageMenu() {
@@ -58,6 +73,7 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	}
 
 	private void buildMainLayout() {
+		horizontalLayout.addComponent(image);
 		horizontalLayout.addComponent(dropUpMenu);
 		horizontalLayout.addComponent(appointmentButton);
 
@@ -89,5 +105,7 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	public void updateTranslations() {
 		appointmentButton.setCaption(translator
 				.translate(TranslationKeys.EVENT));
+		res = new ThemeResource("icon/" + UI.getCurrent().getLocale() + ".png");
+		image.setSource(res);
 	}
 }
