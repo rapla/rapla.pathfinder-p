@@ -39,6 +39,10 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 			List<String> raumLinkList, List<String> raumIdList,
 			List<String> startList, List<String> endList) {
 
+		// Remove old Grid Layout
+		if (gridLayout != null)
+			cssLayout.removeComponent(gridLayout);
+
 		gridLayout = new GridLayout(2, raumNameList.size());
 
 		for (int i = 0; i < raumNameList.size(); i++) {
@@ -56,8 +60,6 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 			gridLayout.addComponent(roomLink);
 
 			cssLayout.addComponent(gridLayout);
-
-			setCompositionRoot(cssLayout);
 		}
 	}
 
