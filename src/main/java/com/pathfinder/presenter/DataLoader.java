@@ -297,7 +297,7 @@ public class DataLoader implements DataLoaderSpec {
 		try {
 			ResourceData.getResult();
 		} catch (NullPointerException ex) {
-			logger.error(MASSAGE_ERROR_LOADING_URL);
+			logger.info(MASSAGE_ERROR_LOADING_URL);
 			return null;
 		}
 
@@ -330,7 +330,7 @@ public class DataLoader implements DataLoaderSpec {
 		try {
 			ResourceDetailData.getResult();
 		} catch (NullPointerException ex) {
-			logger.error(MASSAGE_ERROR_LOADING_URL);
+			logger.info(MASSAGE_ERROR_LOADING_URL);
 			return null;
 		}
 
@@ -365,7 +365,7 @@ public class DataLoader implements DataLoaderSpec {
 		try {
 			Organigram.getResult();
 		} catch (NullPointerException ex) {
-			logger.error(MASSAGE_ERROR_LOADING_URL);
+			logger.info(MASSAGE_ERROR_LOADING_URL);
 			return null;
 		}
 
@@ -409,8 +409,8 @@ public class DataLoader implements DataLoaderSpec {
 
 						}
 				} catch (Exception e) {
-					logger.error("Faculty " + faculty_get.getName()
-							+ " has no courses", e);
+					logger.info("Faculty " + faculty_get.getName()
+							+ " has no courses");
 				}
 
 				try {
@@ -431,8 +431,8 @@ public class DataLoader implements DataLoaderSpec {
 
 					}
 				} catch (Exception e) {
-					logger.error("Faculty " + faculty_get.getName()
-							+ " has no persons", e);
+					logger.info("Faculty " + faculty_get.getName()
+							+ " has no persons");
 				}
 			}
 	}
