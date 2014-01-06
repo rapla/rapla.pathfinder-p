@@ -76,4 +76,9 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 		actualFreeRoomsLabel.setCaption(translator
 				.translate(TranslationKeys.CURRENTLY_FREE_ROOMS));
 	}
+
+	@Override
+	public Label getFreeRoomLabel() {
+		return actualFreeRoomsLabel;
+	}
 }

@@ -71,10 +71,9 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 
 	class LanguageValueChangeListener implements ValueChangeListener {
 		public void valueChange(ValueChangeEvent event) {
-			Locale locale = Locale.GERMAN;
 			Locale value = (Locale) event.getProperty().getValue();
 			UI.getCurrent().setLocale(value);
-			languageChanged(locale);
+			languageChanged(value);
 		}
 	}
 

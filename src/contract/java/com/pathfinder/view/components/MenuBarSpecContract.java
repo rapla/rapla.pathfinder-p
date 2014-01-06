@@ -75,7 +75,7 @@ public class MenuBarSpecContract extends ComponentSpecContract implements
 
 	@Override
 	public NativeSelect getDropUpMenu() {
-		if (preCondition()) {
+		if (postCondition()) {
 			NativeSelect nativeSelect = Condition.result();
 			assert nativeSelect != null : "Result not null";
 		}
@@ -84,7 +84,7 @@ public class MenuBarSpecContract extends ComponentSpecContract implements
 
 	@Override
 	public Button getAppointmentButton() {
-		if (preCondition()) {
+		if (postCondition()) {
 			Button button = Condition.result();
 			assert button != null : "Result not null";
 		}

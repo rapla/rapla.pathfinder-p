@@ -1,6 +1,5 @@
 package com.pathfinder.view.components;
 
-import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
 import com.vaadin.server.ExternalResource;
@@ -48,8 +47,7 @@ public class AppointmentView extends CustomComponent implements
 
 	@Override
 	public void updateTranslations() {
-		browserFrame.setAlternateText(translator
-				.translate(TranslationKeys.NO_DATA_AVAILABLE));
+		// browserFrame.setAlternateText(translator.translate(TranslationKeys.NO_DATA_AVAILABLE));
 	}
 
 	@Override

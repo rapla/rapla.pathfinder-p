@@ -19,6 +19,7 @@ import com.pathfinder.util.translation.TranslatorSpec;
 import com.vaadin.server.ExternalResource;
 import com.vaadin.ui.AbstractLayout;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.UI;
@@ -55,14 +56,14 @@ public class FreeRoomViewTest {
 
 		String expectedTranslation = translator.translate(
 				TranslationKeys.CURRENTLY_FREE_ROOMS, Locale.ENGLISH);
-		String actualTranslation = freeRoomView.getCaption();
+		String actualTranslation = freeRoomView.getFreeRoomLabel().getCaption();
 		Assert.assertEquals(expectedTranslation, actualTranslation);
 
 		ui.setLocale(Locale.GERMAN);
 		freeRoomView.updateTranslations();
 		expectedTranslation = translator.translate(
 				TranslationKeys.CURRENTLY_FREE_ROOMS, Locale.GERMAN);
-		actualTranslation = freeRoomView.getCaption();
+		actualTranslation = freeRoomView.getFreeRoomLabel().getCaption();
 		Assert.assertEquals(expectedTranslation, actualTranslation);
 	}
 
@@ -86,18 +87,31 @@ public class FreeRoomViewTest {
 
 		AbstractLayout rootLayout = (AbstractLayout) freeRoomView.iterator()
 				.next();
+		Iterator<Component> rootLayoutIterator = rootLayout.iterator();
+		rootLayoutIterator.next();
+		GridLayout gridLayout = (GridLayout) rootLayoutIterator.next();
 
 		// Check that all Components are added to rootLayout
-		Iterator<Component> iterator = rootLayout.iterator();
+		Iterator<Component> iterator = gridLayout.iterator();
 		int zaehler = 0;
-		while (iterator.hasNext()) {
-			Label label1 = (Label) iterator.next();
-			ExternalResource link1 = (ExternalResource) ((Link) iterator.next())
-					.getResource();
-			Assert.assertTrue(label1.getValue().contains(
-					"Raum " + (zaehler + 1)));
-			Assert.assertEquals("Link " + (++zaehler), link1.getURL());
-		}
+		Label label1 = (Label) iterator.next();
+		ExternalResource link1 = (ExternalResource) ((Link) iterator.next())
+				.getResource();
+		Assert.assertTrue(label1.getValue().contains("Raum " + (zaehler + 1)));
+		Assert.assertEquals("Link " + (++zaehler), link1.getURL());
+
+		Label label2 = (Label) iterator.next();
+		ExternalResource link2 = (ExternalResource) ((Link) iterator.next())
+				.getResource();
+		Assert.assertTrue(label2.getValue().contains("Raum " + (zaehler + 1)));
+		Assert.assertEquals("Link " + (++zaehler), link2.getURL());
+
+		Label label3 = (Label) iterator.next();
+		ExternalResource link3 = (ExternalResource) ((Link) iterator.next())
+				.getResource();
+		Assert.assertTrue(label3.getValue().contains("Raum " + (zaehler + 1)));
+		Assert.assertEquals("Link " + (++zaehler), link3.getURL());
+
 		Assert.assertEquals(3, zaehler);
 
 	}

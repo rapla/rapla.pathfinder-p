@@ -3,7 +3,6 @@
  */
 package com.pathfinder.view.components;
 
-import java.util.Iterator;
 import java.util.Locale;
 
 import org.junit.Assert;
@@ -16,12 +15,9 @@ import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
-import com.vaadin.ui.AbstractOrderedLayout;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.UI;
 
@@ -32,19 +28,20 @@ import com.vaadin.ui.UI;
 public class MenuBarTest {
 
 	private MenuBar menuBar;
-	private NativeSelect dropDown;
 	private Button appointmentButton;
+	private NativeSelect dropDown;
+	private PathfinderUI ui = new PathfinderUI();
 	private TranslatorSpec translator = Translator.getInstance();
 
 	@Before
 	public void initialize() {
-		this.menuBar = new MenuBar();
+		ui = new PathfinderUI();
+		ui.setLocale(Locale.ENGLISH);
+		UI.setCurrent(ui);
 
-		AbstractOrderedLayout rootLayout = (AbstractOrderedLayout) ((CustomComponent) menuBar)
-				.iterator().next();
-		Iterator<Component> iterator = rootLayout.iterator();
-		dropDown = (NativeSelect) iterator.next();
-		appointmentButton = (Button) iterator.next();
+		menuBar = new MenuBar();
+		dropDown = menuBar.getDropUpMenu();
+		appointmentButton = menuBar.getAppointmentButton();
 	}
 
 	@Test
@@ -102,10 +99,6 @@ public class MenuBarTest {
 
 	@Test
 	public void updateTranslationsTest() {
-		PathfinderUI ui = new PathfinderUI();
-		ui.setLocale(Locale.ENGLISH);
-		UI.setCurrent(ui);
-		initialize();
 
 		String expectedTranslation = translator.translate(
 				TranslationKeys.EVENT, Locale.ENGLISH);
@@ -118,5 +111,6 @@ public class MenuBarTest {
 				Locale.GERMAN);
 		actualTranslation = appointmentButton.getCaption();
 		Assert.assertEquals(expectedTranslation, actualTranslation);
+
 	}
 }

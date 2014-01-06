@@ -8,7 +8,10 @@ import static de.vksi.c4j.Condition.preCondition;
 
 import java.util.List;
 
+import com.vaadin.ui.Label;
+
 import de.vksi.c4j.ClassInvariant;
+import de.vksi.c4j.Condition;
 import de.vksi.c4j.Target;
 
 /**
@@ -26,14 +29,6 @@ public class FreeRoomViewSpecContract extends ComponentSpecContract implements
 		// TODO: write invariants if required
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.pathfinder.view.components.FreeRoomViewSpec#refreshFreeRooms(java
-	 * .util.List, java.util.List, java.util.List, java.util.List,
-	 * java.util.List)
-	 */
 	@Override
 	public void refreshFreeRooms(List<String> raumNameList,
 			List<String> raumLinkList, List<String> raumIdList,
@@ -59,6 +54,15 @@ public class FreeRoomViewSpecContract extends ComponentSpecContract implements
 		if (postCondition()) {
 			assert target.isVisible() : "FreeRoomView is visible";
 		}
+	}
+
+	@Override
+	public Label getFreeRoomLabel() {
+		if (postCondition()) {
+			Label label = Condition.result();
+			assert label != null : "Result not null";
+		}
+		return Condition.ignored();
 	}
 
 }

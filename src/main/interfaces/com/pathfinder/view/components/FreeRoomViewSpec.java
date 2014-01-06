@@ -2,7 +2,10 @@ package com.pathfinder.view.components;
 
 import java.util.List;
 
+import com.vaadin.ui.Label;
+
 import de.vksi.c4j.ContractReference;
+import de.vksi.c4j.Pure;
 
 /**
  * FreeRoomSpec
@@ -19,4 +22,7 @@ public interface FreeRoomViewSpec extends ComponentSpec {
 	void hideFreeRoom();
 
 	void showFreeRoom();
+
+	@Pure
+	Label getFreeRoomLabel();
 }
