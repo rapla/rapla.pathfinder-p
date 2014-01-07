@@ -17,15 +17,15 @@ import com.vaadin.ui.CustomComponent;
  */
 public class DetailContainerTest {
 
-	private DetailContainer<?> detailContainer;
+	private DetailContainer detailContainer;
 
 	@Before
 	public void initialize() {
 		RoomModel model = new RoomModel("Name", "Link", "Id", new String[] {
 				"Searchfield 1", "Searchfield 2" }, "Room Number", "Room Type",
 				"Course", "Department");
-		detailContainer = new DetailContainer<RoomModel>(RoomModel.class,
-				new BeanItem<RoomModel>(model), "");
+		// detailContainer = new DetailContainer<RoomModel>(RoomModel.class,
+		// new BeanItem<RoomModel>(model), "");
 	}
 
 	// TODO: to be continued when DetailImage implemented

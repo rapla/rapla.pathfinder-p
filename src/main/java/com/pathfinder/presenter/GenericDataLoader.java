@@ -13,6 +13,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import com.pathfinder.model.RoomModel;
 import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.PropertiesKey;
 
@@ -81,5 +82,38 @@ public class GenericDataLoader implements GenericDataLoaderSpec {
 				.get("resources");
 
 		return resources;
+	}
+
+	@Override
+	public JSONObject getRoomModelDetails(String modelLink) {
+
+		JSONParser parser = new JSONParser();
+		Object obj;
+		JSONObject jsonObject;
+
+		try {
+
+			br = new BufferedReader(new InputStreamReader(new URL(BASE_URL
+					+ "/" + modelLink).openStream()));
+
+			obj = parser.parse(br);
+			jsonObject = (JSONObject) obj;
+
+			JSONObject attributMap = (JSONObject) ((JSONObject) jsonObject
+					.get("result")).get("attributeMap");
+
+			return attributMap;
+
+		} catch (MalformedURLException e) {
+			logger.error(MASSAGE_ERROR_URL_NOT_READABLE, e);
+			return null;
+		} catch (IOException e) {
+			logger.error(MASSAGE_ERROR_URL_NOT_READABLE, e);
+			return null;
+		} catch (ParseException e) {
+			logger.error(MASSAGE_ERROR_URL_NOT_READABLE, e);
+			return null;
+		}
+
 	}
 }

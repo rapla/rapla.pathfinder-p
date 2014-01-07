@@ -10,18 +10,17 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.VerticalLayout;
 
-public class DetailContainer<T> extends CustomComponent implements
+public class DetailContainer extends CustomComponent implements
 		DetailContainerSpec {
 
 	private final VerticalLayout vertical = new VerticalLayout();
-	private DetailInfo<?> detailInfo = null;
+	private DetailInfo detailInfo = null;
 	private DetailImage detailImage = null;
 
-	public DetailContainer(Class<T> beanType, BeanItem<T> beanItem,
-			String imageSource) {
-		this.detailInfo = new DetailInfo<T>(beanType, beanItem);
+	public DetailContainer(Object object, String imageSource) {
+		this.detailInfo = new DetailInfo(object);
 		// this.detailImage = new DetailImage(caption, imageSource);
-		this.buildLayout();
+		// this.buildLayout();
 	}
 
 	public void buildLayout() {
@@ -32,7 +31,7 @@ public class DetailContainer<T> extends CustomComponent implements
 		this.vertical.addComponent(detailImage);
 		this.setCompositionRoot(vertical);
 	}
-	
+
 	@Override
 	public void hideDetailContainer() {
 		this.setVisible(false);

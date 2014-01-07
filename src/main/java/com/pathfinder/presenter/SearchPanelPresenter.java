@@ -20,6 +20,7 @@ import com.pathfinder.view.components.AccordionView;
 import com.pathfinder.view.components.Keyboard;
 import com.pathfinder.view.components.KeyboardId;
 import com.pathfinder.view.components.SearchField;
+import com.pathfinder.view.container.DetailContainer;
 import com.pathfinder.view.container.SearchPanel;
 import com.pathfinder.view.listener.KeyboardViewListenerSpec;
 import com.pathfinder.view.listener.SearchFieldViewListenerSpec;
@@ -46,6 +47,7 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 	private final SearchField searchField = new SearchField();
 	private final SearchPanel searchPanel = new SearchPanel(accordionView,
 			keyboard, searchField);
+	private DetailContainer detailContainer = null;
 
 	private final BeanFieldGroup<KeyboardModel> binder = new BeanFieldGroup<KeyboardModel>(
 			KeyboardModel.class);
@@ -107,20 +109,23 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 		@Override
 		public void itemClick(ItemClickEvent event) {
 			Object object = event.getItemId();
-			if (object instanceof RoomModel) {
-				logger.trace("Room was clicked - ItemID: "
-						+ ((RoomModel) object).getName());
-				accordionView.deselectClickedItem((Table) event.getSource(),
-						event.getItemId());
-			} else if (object instanceof CourseModel) {
-				logger.trace("Course was clicked");
-			} else if (object instanceof PersonModel) {
-				logger.trace("Person was clicked");
-			} else if (object instanceof PoiModel) {
-				logger.trace("Poi was clicked");
-			} else {
-				logger.trace("Unknown item was clicked");
-			}
+
+			detailContainer = new DetailContainer(object, null);
+
+			// if (object instanceof RoomModel) {
+			// logger.trace("Room was clicked - ItemID: "
+			// + ((RoomModel) object).getName());
+			// accordionView.deselectClickedItem((Table) event.getSource(),
+			// event.getItemId());
+			// } else if (object instanceof CourseModel) {
+			// logger.trace("Course was clicked");
+			// } else if (object instanceof PersonModel) {
+			// logger.trace("Person was clicked");
+			// } else if (object instanceof PoiModel) {
+			// logger.trace("Poi was clicked");
+			// } else {
+			// logger.trace("Unknown item was clicked");
+			// }
 		}
 	}
 

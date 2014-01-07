@@ -47,4 +47,10 @@ public class GenericDataLoaderContract implements GenericDataLoaderSpec {
 		return ignored();
 	}
 
+	@Override
+	public JSONObject getRoomModelDetails(String roomModelLink) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

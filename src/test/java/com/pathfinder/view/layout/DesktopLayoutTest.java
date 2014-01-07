@@ -126,7 +126,7 @@ public class DesktopLayoutTest {
 		boolean searchPanelExists = false;
 		while (iterator.hasNext()) {
 			Component component = iterator.next();
-			if (component instanceof DetailContainer<?>) {
+			if (component instanceof DetailContainer) {
 				detailContainerExists = true;
 			} else if (component instanceof SearchPanel) {
 				searchPanelExists = true;

@@ -87,7 +87,7 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 
 				gridLayout.addComponent(roomLabel);
 				gridLayout.addComponent(roomTime);
-				
+
 				gridLayout.addComponent(roomLink);
 
 				cssLayout.addComponent(gridLayout);

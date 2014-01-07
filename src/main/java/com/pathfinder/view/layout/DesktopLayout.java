@@ -26,7 +26,7 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	private final FreeRoomViewSpec freeRoom = new FreeRoomView();
 	private final MenuBarSpec menuBar = new MenuBar();
 	private SearchPanelSpec searchPanel = null;
-	private DetailContainer<?> detailContainer = null;
+	private DetailContainer detailContainer = null;
 	private final AppointmentViewSpec appointmentView = new AppointmentView();
 
 	private final VerticalLayout layout = new VerticalLayout();
