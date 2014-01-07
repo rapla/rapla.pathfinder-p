@@ -24,6 +24,8 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 
 	private CssLayout cssLayout = new CssLayout();
 	private GridLayout gridLayout;
+	private final Label noRoomsLabel = new Label(
+			translator.translate(TranslationKeys.NO_FREE_ROOMS_AVAILABLE));
 
 	private List<String> raumNameList;
 	private List<String> raumLinkList;
@@ -85,18 +87,15 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 
 				gridLayout.addComponent(roomLabel);
 				gridLayout.addComponent(roomTime);
+				
 				gridLayout.addComponent(roomLink);
 
 				cssLayout.addComponent(gridLayout);
 			}
 		} else {
 			LOGGER.debug("No free Rooms - Freiraum online?");
-			Label noRoomsLabel = new Label(
-					translator
-							.translate(TranslationKeys.NO_FREE_ROOMS_AVAILABLE));
 
-			if (!cssLayout.getComponent(1).equals(noRoomsLabel))
-				cssLayout.addComponent(new Label(""));
+			cssLayout.addComponent(noRoomsLabel);
 		}
 	}
 
