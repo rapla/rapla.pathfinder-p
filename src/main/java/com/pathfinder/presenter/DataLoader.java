@@ -301,8 +301,12 @@ public class DataLoader implements DataLoaderSpec {
 			return null;
 		}
 
-		if (ResourceData != null) {
+		if (ResourceData != null && CategoryId.equals(URL_EMPTY_PARAMETER)) {
 			logger.info(resource + " loaded");
+			return ResourceData;
+
+		} else if (ResourceData != null
+				&& !CategoryId.equals(URL_EMPTY_PARAMETER)) {
 			return ResourceData;
 		} else {
 			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURCE + resource);
