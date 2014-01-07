@@ -79,4 +79,30 @@ public class DesktopLayoutSpecContract extends ViewSpecContract implements
 		return ignored();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pathfinder.view.layout.DesktopLayoutSpec#addClickListenerWheelChairButton
+	 * (com.vaadin.ui.Button.ClickListener)
+	 */
+	@Override
+	public void addClickListenerWheelChairButton(ClickListener listener) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pathfinder.view.layout.DesktopLayoutSpec#addClickListenerBackButton
+	 * (com.vaadin.ui.Button.ClickListener)
+	 */
+	@Override
+	public void addClickListenerBackButton(ClickListener listener) {
+		// TODO Auto-generated method stub
+
+	}
+
 }

@@ -91,4 +91,54 @@ public class MenuBarSpecContract extends ComponentSpecContract implements
 		return Condition.ignored();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pathfinder.view.components.MenuBarSpec#addClickListenerWheelChairButton
+	 * (com.vaadin.ui.Button.ClickListener)
+	 */
+	@Override
+	public void addClickListenerWheelChairButton(ClickListener listener) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pathfinder.view.components.MenuBarSpec#addClickListenerBackButton
+	 * (com.vaadin.ui.Button.ClickListener)
+	 */
+	@Override
+	public void addClickListenerBackButton(ClickListener listener) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pathfinder.view.components.MenuBarSpec#
+	 * replaceAppointmentButtonWithBackButton()
+	 */
+	@Override
+	public void replaceAppointmentButtonWithBackButton() {
+		// TODO Auto-generated method stub
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pathfinder.view.components.MenuBarSpec#
+	 * replaceBackButtonWithAppointmentButton()
+	 */
+	@Override
+	public void replaceBackButtonWithAppointmentButton() {
+		// TODO Auto-generated method stub
+
+	}
+
 }
