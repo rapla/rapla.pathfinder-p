@@ -2,6 +2,10 @@ package com.pathfinder.view.components;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.pathfinder.presenter.DataLoader;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
@@ -14,6 +18,7 @@ import com.vaadin.ui.Link;
 
 public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 	private final TranslatorSpec translator = Translator.getInstance();
+	private static final Logger LOGGER = LogManager.getLogger(DataLoader.class);
 
 	private Label actualFreeRoomsLabel = new Label();
 
@@ -60,27 +65,38 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 		if (gridLayout != null)
 			cssLayout.removeComponent(gridLayout);
 
-		gridLayout = new GridLayout(3, raumNameList.size());
+		if (raumNameList.size() != 0) {
+			gridLayout = new GridLayout(3, raumNameList.size());
 
-		for (int i = 0; i < raumNameList.size(); i++) {
+			for (int i = 0; i < raumNameList.size(); i++) {
 
-			Label roomLabel = new Label(room + " " + raumNameList.get(i) + ": ");
+				Label roomLabel = new Label(room + " " + raumNameList.get(i)
+						+ ": ");
 
-			Label roomTime = new Label(startList.get(i) + " - "
-					+ endList.get(i) + " " + time);
+				Label roomTime = new Label(startList.get(i) + " - "
+						+ endList.get(i) + " " + time);
 
-			Link roomLink = new Link(floorplan, new ExternalResource(
-					raumLinkList.get(i)));
+				Link roomLink = new Link(floorplan, new ExternalResource(
+						raumLinkList.get(i)));
 
-			roomLabel.setPrimaryStyleName("roomLabel");
-			roomTime.setPrimaryStyleName("roomTime");
-			roomLink.setPrimaryStyleName("roomLink");
+				roomLabel.setPrimaryStyleName("roomLabel");
+				roomTime.setPrimaryStyleName("roomTime");
+				roomLink.setPrimaryStyleName("roomLink");
 
-			gridLayout.addComponent(roomLabel);
-			gridLayout.addComponent(roomTime);
-			gridLayout.addComponent(roomLink);
+				gridLayout.addComponent(roomLabel);
+				gridLayout.addComponent(roomTime);
+				gridLayout.addComponent(roomLink);
 
-			cssLayout.addComponent(gridLayout);
+				cssLayout.addComponent(gridLayout);
+			}
+		} else {
+			LOGGER.debug("No free Rooms - Freiraum online?");
+			Label noRoomsLabel = new Label(
+					translator
+							.translate(TranslationKeys.NO_FREE_ROOMS_AVAILABLE));
+
+			if (!cssLayout.getComponent(1).equals(noRoomsLabel))
+				cssLayout.addComponent(new Label(""));
 		}
 	}
 
