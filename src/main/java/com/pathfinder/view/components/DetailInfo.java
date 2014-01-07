@@ -46,6 +46,8 @@ public class DetailInfo<T> extends CustomComponent implements DetailInfoSpec {
 	private static Label roomNrLabelLabel;
 	private static Label roomNrValueLabel;
 
+	private static Window w;
+
 	private static GenericDataLoader genericDataLoader = new GenericDataLoader();
 
 	public DetailInfo(Object object) {
@@ -94,7 +96,11 @@ public class DetailInfo<T> extends CustomComponent implements DetailInfoSpec {
 
 	private void buildRoomModel() {
 		if (verticalLayout != null) {
+			row1.removeAllComponents();
+			row2.removeAllComponents();
+			row3.removeAllComponents();
 			verticalLayout.removeAllComponents();
+			UI.getCurrent().removeWindow(w);
 		}
 
 		JSONObject roomModelDetails = genericDataLoader
@@ -125,9 +131,8 @@ public class DetailInfo<T> extends CustomComponent implements DetailInfoSpec {
 		verticalLayout.addComponent(row2);
 		verticalLayout.addComponent(row3);
 
-		Window w = new Window();
+		w = new Window();
 		w.setContent(verticalLayout);
-
 		UI.getCurrent().addWindow(w);
 
 	}
