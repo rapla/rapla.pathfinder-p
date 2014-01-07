@@ -85,8 +85,9 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		@Override
 		public void buttonClick(ClickEvent event) {
 			// TODO Should be variable URL - getResourceUrl();
-			desktopLayout
-					.setAppointmentUrl("http://localhost:8051/rapla/rapla?page=calendar&user=stele&file=kurs&allocatable_id=2373");
+			desktopLayout.setAppointmentUrl(properties
+					.getProperty(PropertiesKey.APPOINTMENT_BASE_URL)
+					+ "&allocatable_id=2373");
 			desktopLayout.switchToAppointmentView();
 		}
 	}

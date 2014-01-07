@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 
 /**
@@ -13,22 +14,38 @@ import com.google.gwt.user.client.ui.Label;
  * @author tim
  * 
  */
-public class DateTimeWidget extends Label {
+public class DateTimeWidget extends FlowPanel {
 
 	public static final String CLASSNAME = "datetime";
+	public static final String STYLENAME_DATE_LABEL = "dateLabel";
+	public static final String STYLENAME_TIME_LABEL = "timeLabel";
 	private Timer timer;
 	private Date time = new Date();
 	private long timeInMs;
-	private DateTimeFormat formatter = DateTimeFormat
-			.getFormat("dd.MM.yy HH:mm:ss");
+	private DateTimeFormat dateFormatter;
+	private DateTimeFormat timeFormatter;
+	private Label dateLabel = new Label();
+	private Label timeLabel = new Label();
+	private String dateFormat = "dd.MM.yy";
+	private String timeFormat = "HH:mm:ss";
 
 	public DateTimeWidget() {
 
 		addStyleName(CLASSNAME);
 
+		dateFormatter = DateTimeFormat.getFormat(dateFormat);
+		timeFormatter = DateTimeFormat.getFormat(timeFormat);
+
 		setTime(new Date().getTime());
 
-		setText(formatter.format(time));
+		dateLabel.setText(dateFormatter.format(time));
+		timeLabel.setText(timeFormatter.format(time));
+
+		add(dateLabel);
+		add(timeLabel);
+
+		dateLabel.setStyleName(STYLENAME_DATE_LABEL);
+		timeLabel.setStyleName(STYLENAME_TIME_LABEL);
 
 		timer = new Timer() {
 			@Override
@@ -46,7 +63,14 @@ public class DateTimeWidget extends Label {
 	private void updateDateTime() {
 		timeInMs += 1000;
 		time.setTime(timeInMs);
-		setText(formatter.format(time));
+		updateFormatter();
+	}
+
+	private void updateFormatter() {
+		this.dateFormatter = DateTimeFormat.getFormat(dateFormat);
+		dateLabel.setText(dateFormatter.format(time));
+		this.timeFormatter = DateTimeFormat.getFormat(timeFormat);
+		timeLabel.setText(timeFormatter.format(time));
 	}
 
 	/**
@@ -59,26 +83,19 @@ public class DateTimeWidget extends Label {
 		this.timeInMs = timeInMs;
 	}
 
-	// /**
-	// * Sets the current locale
-	// *
-	// * @param locale
-	// * current locale
-	// */
-	// public void setLocale(String locale) {
-	// this.updateLocale();
-	// this.locale = locale;
-	// this.formatter = DateTimeFormat
-	// .getFormat(PredefinedFormat.DATE_TIME_MEDIUM);
-	// }
-	//
-	// /**
-	// * Updating the locale in Window; necessary to get the right formatter for
-	// * date and time
-	// */
-	// private void updateLocale() {
-	// Window.Location.assign(Window.Location.createUrlBuilder()
-	// .setParameter(LocaleInfo.getLocaleQueryParam(), locale)
-	// .buildString());
-	// }
+	/**
+	 * @param dateFormat
+	 *            the dateFormat to set
+	 */
+	public void setDateFormat(String dateFormat) {
+		this.dateFormat = dateFormat;
+	}
+
+	/**
+	 * @param timeFormat
+	 *            the timeFormat to set
+	 */
+	public void setTimeFormat(String timeFormat) {
+		this.timeFormat = timeFormat;
+	}
 }

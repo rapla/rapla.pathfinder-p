@@ -16,4 +16,9 @@ public interface DateTimeServerRpc extends ServerRpc {
 	 */
 	public void synchronizeWithServertime();
 
+	/**
+	 * Updates format for date and time according to current locale
+	 */
+	public void updateDateTimeFormatter();
+
 }

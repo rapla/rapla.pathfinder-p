@@ -32,6 +32,8 @@ public class DateTimeConnector extends AbstractComponentConnector {
 	 */
 	private final static int SYNCHRONIZE_INTERVALL = 10 * 60 * 1000;
 
+	private long timeOld = 0;
+
 	public DateTimeConnector() {
 
 		synchronizeWithServerTimer = new Timer() {
@@ -63,7 +65,14 @@ public class DateTimeConnector extends AbstractComponentConnector {
 	public void onStateChanged(StateChangeEvent stateChangeEvent) {
 		super.onStateChanged(stateChangeEvent);
 
-		getWidget().setTime(getState().getTime());
+		if (getState().getDateFormat() != null)
+			getWidget().setDateFormat(getState().getDateFormat());
+		if (getState().getTimeFormat() != null)
+			getWidget().setTimeFormat(getState().getTimeFormat());
+		if (getState().getTime() != timeOld) {
+			timeOld = getState().getTime();
+			getWidget().setTime(getState().getTime());
+		}
 	}
 
 }

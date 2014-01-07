@@ -224,6 +224,16 @@
 	.datetime{
 		font-size: 30px;
 		color: red;
+		width: 100%;
+	}
+	
+	.dateLabel{
+		display: inline;
+	}
+	
+	.timeLabel {
+		display: inline;
+		float: right;
 	}
 	
 	/* Language Menu Styling */
