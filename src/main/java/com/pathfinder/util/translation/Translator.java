@@ -6,7 +6,11 @@ package com.pathfinder.util.translation;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.vaadin.ui.UI;
 
@@ -19,6 +23,11 @@ import com.vaadin.ui.UI;
  * 
  */
 public class Translator implements TranslatorSpec {
+
+	/**
+	 * Logging instance of this class
+	 */
+	private final static Logger LOG = LogManager.getLogger(Translator.class);
 
 	/**
 	 * Locale which will be taken, if no other locale specified
@@ -78,7 +87,13 @@ public class Translator implements TranslatorSpec {
 		String translation = "";
 		ResourceBundle bundle = bundles.get(locale.getLanguage());
 		if (bundle != null) {
-			translation = bundle.getString(key.toString());
+			try {
+				translation = bundle.getString(key.toString());
+			} catch (MissingResourceException mre) {
+				LOG.error("No translation key found! Key: " + key
+						+ "; Resource-File: " + TRANSLATION_FILE_PREFIX + "_"
+						+ locale.getLanguage() + ".properties");
+			}
 		}
 		return translation;
 	}

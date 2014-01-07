@@ -71,13 +71,12 @@ public class TranslatorTest {
 		assertEquals(true, translator.isLocaleSupported(Locale.ENGLISH));
 	}
 
-	@Test(expected = AssertionError.class)
 	public void tranlateMissingKey() {
-		translator.translate(TranslationKeys.INVALID_KEY);
+		assertEquals("", translator.translate(TranslationKeys.INVALID_KEY));
 	}
 
-	@Test(expected = AssertionError.class)
 	public void tranlateMissingKeyWhenLocaleSpecified() {
-		translator.translate(TranslationKeys.INVALID_KEY, Locale.ENGLISH);
+		assertEquals("", translator.translate(TranslationKeys.INVALID_KEY,
+				Locale.ENGLISH));
 	}
 }
