@@ -20,6 +20,7 @@ import com.pathfinder.view.components.KeyboardSpec;
 import com.pathfinder.view.components.SearchField;
 import com.pathfinder.view.components.SearchFieldSpec;
 import com.pathfinder.view.container.DetailContainer;
+import com.pathfinder.view.container.DetailContainerSpec;
 import com.pathfinder.view.container.SearchPanel;
 import com.pathfinder.view.container.SearchPanelSpec;
 import com.pathfinder.view.listener.KeyboardViewListenerSpec;
@@ -44,16 +45,16 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 	private final SearchPanelSpec searchPanel = new SearchPanel(
 			(AccordionView) accordionView, (Keyboard) keyboard,
 			(SearchField) searchField);
-	private DetailContainer detailContainer = null;
+	private DetailContainerSpec detailContainer = null;
 
-	private final BeanFieldGroup<KeyboardModel> binder = new BeanFieldGroup<KeyboardModel>(
+	private final BeanFieldGroup<KeyboardModel> keyboardBinder = new BeanFieldGroup<KeyboardModel>(
 			KeyboardModel.class);
 
 	public SearchPanelPresenter() {
 		this.keyboard.addListener(this);
-		this.binder.setBuffered(false);
-		this.binder.setItemDataSource(new KeyboardModel());
-		this.binder.bind(searchField.getSearchField(),
+		this.keyboardBinder.setBuffered(false);
+		this.keyboardBinder.setItemDataSource(new KeyboardModel());
+		this.keyboardBinder.bind(searchField.getSearchField(),
 				KeyboardModel.PROPERTY_SEARCHSTRING);
 
 		this.accordionView
@@ -69,7 +70,6 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 				.addDeleteAllClickListener(new DeleteAllClickListener());
 	}
 
-	// Keyboard ClickListener
 	@Override
 	public void buttonClick(KeyboardId keyId) {
 
@@ -189,7 +189,7 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 
 	@Override
 	public SearchPanel getSearchPanel() {
-		return (SearchPanel)searchPanel;
+		return (SearchPanel) searchPanel;
 	}
 
 	public int getChangePosCounter() {
@@ -203,7 +203,7 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 
 	@Override
 	public String getSearchString() {
-		String returnString = (String) binder.getItemDataSource()
+		String returnString = (String) keyboardBinder.getItemDataSource()
 				.getItemProperty(KeyboardModel.PROPERTY_SEARCHSTRING)
 				.getValue();
 		if (returnString == null)
@@ -211,17 +211,10 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 		return returnString;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.pathfinder.presenter.SearchPanelPresenterSpec#setSearchString(java
-	 * .lang.String)
-	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setSearchString(String value) {
-		binder.getItemDataSource()
+		keyboardBinder.getItemDataSource()
 				.getItemProperty(KeyboardModel.PROPERTY_SEARCHSTRING)
 				.setValue(value);
 		accordionView.useFiltersForAllTables(getSearchString());
