@@ -3,10 +3,10 @@ package com.pathfinder.view.container;
 import com.pathfinder.model.CourseModel;
 import com.pathfinder.model.PersonModel;
 import com.pathfinder.model.PoiModel;
+import com.pathfinder.model.ResourceModel;
 import com.pathfinder.model.RoomModel;
 import com.pathfinder.view.components.DetailImage;
 import com.pathfinder.view.components.DetailInfo;
-import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.VerticalLayout;
 
@@ -17,8 +17,8 @@ public class DetailContainer extends CustomComponent implements
 	private DetailInfo detailInfo = null;
 	private DetailImage detailImage = null;
 
-	public DetailContainer(Object object, String imageSource) {
-		this.detailInfo = new DetailInfo(object);
+	public DetailContainer(ResourceModel ressourceModel, String imageSource) {
+		this.detailInfo = new DetailInfo(ressourceModel);
 		// this.detailImage = new DetailImage(caption, imageSource);
 		// this.buildLayout();
 	}

@@ -12,6 +12,7 @@ import com.pathfinder.model.CourseModel;
 import com.pathfinder.model.KeyboardModel;
 import com.pathfinder.model.PersonModel;
 import com.pathfinder.model.PoiModel;
+import com.pathfinder.model.ResourceModel;
 import com.pathfinder.model.RoomModel;
 import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.ApplicationPropertiesSpec;
@@ -208,24 +209,10 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	class TableClickListener implements ItemClickListener {
 		@Override
 		public void itemClick(ItemClickEvent event) {
-			Object object = event.getItemId();
 
-			detailContainer = new DetailContainer(object, null);
+			detailContainer = new DetailContainer(
+					(ResourceModel) event.getItemId(), null);
 
-			// if (object instanceof RoomModel) {
-			// logger.trace("Room was clicked - ItemID: "
-			// + ((RoomModel) object).getName());
-			// accordionView.deselectClickedItem((Table) event.getSource(),
-			// event.getItemId());
-			// } else if (object instanceof CourseModel) {
-			// logger.trace("Course was clicked");
-			// } else if (object instanceof PersonModel) {
-			// logger.trace("Person was clicked");
-			// } else if (object instanceof PoiModel) {
-			// logger.trace("Poi was clicked");
-			// } else {
-			// logger.trace("Unknown item was clicked");
-			// }
 		}
 	}
 
