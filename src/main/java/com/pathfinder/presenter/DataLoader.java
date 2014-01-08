@@ -46,15 +46,6 @@ public class DataLoader implements DataLoaderSpec {
 	private final String BASE_URL = ApplicationProperties.getInstance()
 			.getProperty(PropertiesKey.RAPLA_BASE_URL);
 
-	private final String URL_RESOURCE = BASE_URL
-			+ "?method=getResources&jsonrpc=2.0&params=";
-
-	private final String URL_RESOURCE_DETAIL = BASE_URL
-			+ "?method=getResource&jsonrpc=2.0&params=";
-
-	private final String URL_ORGANIGRAM = BASE_URL
-			+ "?method=getOrganigram&jsonrpc=2.0&params=";
-
 	private final String RESOURCES_METHOD = BASE_URL + "/getResources?";
 	private final String RESOURCE_DETAIL_METHOD = BASE_URL + "/getResource?";
 	private final String ORGANIGRAM_METHOD = BASE_URL + "/getOrganigram";
@@ -143,7 +134,7 @@ public class DataLoader implements DataLoaderSpec {
 
 	private void loadAllRooms() {
 		// Get all rooms and all detail information
-		ResourcesResult resourcesResult = gsonGetResources(REQUEST_ROOMS, null);
+		ResourcesResult resourcesResult = gsonGetResources(REQUEST_ROOMS, "");
 
 		if (resourcesResult != null)
 			for (ResourceModel roomGet : resourcesResult.getResult()) {
@@ -175,8 +166,7 @@ public class DataLoader implements DataLoaderSpec {
 
 	private void loadAllCourses() {
 		// Get all courses and all detail information
-		ResourcesResult resourcesResult = gsonGetResources(REQUEST_COURSES,
-				null);
+		ResourcesResult resourcesResult = gsonGetResources(REQUEST_COURSES, "");
 
 		if (resourcesResult != null)
 			for (ResourceModel courseGet : resourcesResult.getResult()) {
@@ -212,8 +202,7 @@ public class DataLoader implements DataLoaderSpec {
 
 	private void loadAllPersons() {
 		// Get all persons and all detail information
-		ResourcesResult resourcesResult = gsonGetResources(REQUEST_PERSONS,
-				null);
+		ResourcesResult resourcesResult = gsonGetResources(REQUEST_PERSONS, "");
 
 		if (resourcesResult != null)
 			for (ResourceModel personGet : resourcesResult.getResult()) {
@@ -252,7 +241,7 @@ public class DataLoader implements DataLoaderSpec {
 
 	private void loadAllPois() {
 		// Get all pois and all detail information
-		ResourcesResult resourcesResult = gsonGetResources(REQUEST_POIS, null);
+		ResourcesResult resourcesResult = gsonGetResources(REQUEST_POIS, "");
 
 		if (resourcesResult != null)
 			for (ResourceModel poiGet : resourcesResult.getResult()) {
@@ -275,17 +264,14 @@ public class DataLoader implements DataLoaderSpec {
 			poi.setPicture(attribute.get("bild").getValue());
 	}
 
-	private ResourcesResult gsonGetResources(String resource, String CategoryId) {
-
-		if (CategoryId == null)
-			CategoryId = URL_EMPTY_PARAMETER;
-		else
-			CategoryId = ",'" + CategoryId + "'";
+	private ResourcesResult gsonGetResources(String resource, String categoryId) {
+		String url = RESOURCES_METHOD + "resourceType=" + resource
+				+ "&categoryId=" + categoryId;
+		// LOGGER.trace("URL: " + url);
 
 		try {
-			br = new BufferedReader(new InputStreamReader(new URL(URL_RESOURCE
-					+ "['" + resource + "'" + CategoryId + URL_EMPTY_PARAMETER
-					+ "]").openStream()));
+			br = new BufferedReader(new InputStreamReader(
+					new URL(url).openStream()));
 		} catch (MalformedURLException e) {
 			LOGGER.error(MASSAGE_ERROR_LOADING_URL_RESOURCE + resource, e);
 			return null;
@@ -305,12 +291,12 @@ public class DataLoader implements DataLoaderSpec {
 			return null;
 		}
 
-		if (ResourceData != null && CategoryId.equals(URL_EMPTY_PARAMETER)) {
+		if (ResourceData != null && categoryId.equals(URL_EMPTY_PARAMETER)) {
 			LOGGER.info(resource + " loaded");
 			return ResourceData;
 
 		} else if (ResourceData != null
-				&& !CategoryId.equals(URL_EMPTY_PARAMETER)) {
+				&& !categoryId.equals(URL_EMPTY_PARAMETER)) {
 			return ResourceData;
 		} else {
 			LOGGER.error(MASSAGE_ERROR_LOADING_URL_RESOURCE + resource);
@@ -318,16 +304,18 @@ public class DataLoader implements DataLoaderSpec {
 		}
 	}
 
-	private ResourceDetailResult gsonGetResourceDetail(String id) {
+	private ResourceDetailResult gsonGetResourceDetail(String resourceId) {
+		String url = RESOURCE_DETAIL_METHOD + "resourceId=" + resourceId;
 		try {
-			br = new BufferedReader(new InputStreamReader(new URL(
-					URL_RESOURCE_DETAIL + "['" + id + "'" + URL_EMPTY_PARAMETER
-							+ "]").openStream()));
+			br = new BufferedReader(new InputStreamReader(
+					new URL(url).openStream()));
 		} catch (MalformedURLException e) {
-			LOGGER.error(MASSAGE_ERROR_LOADING_URL_RESOURCE_DETAIL + id, e);
+			LOGGER.error(
+					MASSAGE_ERROR_LOADING_URL_RESOURCE_DETAIL + resourceId, e);
 			return null;
 		} catch (IOException e) {
-			LOGGER.error(MASSAGE_ERROR_LOADING_URL_RESOURCE_DETAIL + id, e);
+			LOGGER.error(
+					MASSAGE_ERROR_LOADING_URL_RESOURCE_DETAIL + resourceId, e);
 			return null;
 		}
 
@@ -337,15 +325,9 @@ public class DataLoader implements DataLoaderSpec {
 		// Force Error
 		try {
 			ResourceDetailData.getResult();
-		} catch (NullPointerException ex) {
-			LOGGER.info(MASSAGE_ERROR_LOADING_URL);
-			return null;
-		}
-
-		if (ResourceDetailData != null) {
 			return ResourceDetailData;
-		} else {
-			LOGGER.error(MASSAGE_ERROR_LOADING_URL_RESOURCE_DETAIL + id);
+		} catch (NullPointerException ex) {
+			LOGGER.error(MASSAGE_ERROR_LOADING_URL_RESOURCE_DETAIL + resourceId);
 			return null;
 		}
 	}
@@ -371,15 +353,9 @@ public class DataLoader implements DataLoaderSpec {
 		// Force Error
 		try {
 			organigramResult.getResult();
-		} catch (NullPointerException ex) {
-			LOGGER.info(MASSAGE_ERROR_LOADING_URL);
-			return null;
-		}
-
-		if (organigramResult != null) {
 			LOGGER.info(REQUEST_ORGANIGRAM + " loaded");
 			return organigramResult;
-		} else {
+		} catch (NullPointerException ex) {
 			LOGGER.error(MASSAGE_ERROR_LOADING_URL_RESOURCE
 					+ REQUEST_ORGANIGRAM);
 			return null;
