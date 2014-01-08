@@ -6,8 +6,6 @@ import java.util.Stack;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 
 import com.pathfinder.model.CourseModel;
@@ -43,12 +41,10 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 
 	// Needed sub-presenter
 	private final SearchPanelPresenterSpec searchPanelPresenter = new SearchPanelPresenter();
-	private final GenericDataLoader genericDataLoader = new GenericDataLoader();
+	private final GenericDataLoaderSpec genericDataLoader = new GenericDataLoader();
 
 	private ApplicationPropertiesSpec properties = ApplicationProperties
 			.getInstance();
-
-	private static final Logger LOGGER = LogManager.getLogger(DataLoader.class);
 
 	// Layout
 	private final DesktopLayoutSpec desktopLayout = new DesktopLayout(

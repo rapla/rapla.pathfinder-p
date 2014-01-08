@@ -6,10 +6,6 @@
 
 package com.pathfinder.presenter;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import com.pathfinder.PathfinderUI;
 import com.pathfinder.model.CourseModel;
 import com.pathfinder.model.KeyboardModel;
 import com.pathfinder.model.PersonModel;
@@ -17,11 +13,15 @@ import com.pathfinder.model.PoiModel;
 import com.pathfinder.model.RoomModel;
 import com.pathfinder.view.TranslatabelSpec;
 import com.pathfinder.view.components.AccordionView;
+import com.pathfinder.view.components.AccordionViewSpec;
 import com.pathfinder.view.components.Keyboard;
 import com.pathfinder.view.components.KeyboardId;
+import com.pathfinder.view.components.KeyboardSpec;
 import com.pathfinder.view.components.SearchField;
+import com.pathfinder.view.components.SearchFieldSpec;
 import com.pathfinder.view.container.DetailContainer;
 import com.pathfinder.view.container.SearchPanel;
+import com.pathfinder.view.container.SearchPanelSpec;
 import com.pathfinder.view.listener.KeyboardViewListenerSpec;
 import com.pathfinder.view.listener.SearchFieldViewListenerSpec;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
@@ -30,7 +30,6 @@ import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Table;
 
 /**
  * Presenter which handles keyboard and search logic
@@ -39,14 +38,12 @@ import com.vaadin.ui.Table;
 public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 		SearchFieldViewListenerSpec, SearchPanelPresenterSpec, TranslatabelSpec {
 
-	private static final Logger logger = LogManager
-			.getLogger(PathfinderUI.class.getName());
-
-	private final AccordionView accordionView = new AccordionView();
-	private final Keyboard keyboard = new Keyboard();
-	private final SearchField searchField = new SearchField();
-	private final SearchPanel searchPanel = new SearchPanel(accordionView,
-			keyboard, searchField);
+	private final AccordionViewSpec accordionView = new AccordionView();
+	private final KeyboardSpec keyboard = new Keyboard();
+	private final SearchFieldSpec searchField = new SearchField();
+	private final SearchPanelSpec searchPanel = new SearchPanel(
+			(AccordionView) accordionView, (Keyboard) keyboard,
+			(SearchField) searchField);
 	private DetailContainer detailContainer = null;
 
 	private final BeanFieldGroup<KeyboardModel> binder = new BeanFieldGroup<KeyboardModel>(
@@ -192,7 +189,7 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 
 	@Override
 	public SearchPanel getSearchPanel() {
-		return this.searchPanel;
+		return (SearchPanel)searchPanel;
 	}
 
 	public int getChangePosCounter() {

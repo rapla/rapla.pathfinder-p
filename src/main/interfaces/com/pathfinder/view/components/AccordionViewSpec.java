@@ -15,6 +15,8 @@ import com.vaadin.event.ItemClickEvent.ItemClickListener;
  */
 public interface AccordionViewSpec extends ComponentSpec {
 
+	void useFiltersForAllTables(String searchString);
+
 	void setRoomContainer(BeanItemContainer<RoomModel> beanItemContainer);
 
 	void setCourseContainer(BeanItemContainer<CourseModel> beanItemContainer);
