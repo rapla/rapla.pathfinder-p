@@ -41,10 +41,10 @@ import com.vaadin.ui.UI;
  */
 public class DataLoader implements DataLoaderSpec {
 
-	private static final Logger logger = LogManager.getLogger(DataLoader.class);
+	private static final Logger LOGGER = LogManager.getLogger(DataLoader.class);
 
 	private final String BASE_URL = ApplicationProperties.getInstance()
-			.getProperty(PropertiesKey.GSON_BASE_URL);
+			.getProperty(PropertiesKey.RAPLA_BASE_URL);
 
 	private final String URL_RESOURCE = BASE_URL
 			+ "?method=getResources&jsonrpc=2.0&params=";
@@ -54,6 +54,10 @@ public class DataLoader implements DataLoaderSpec {
 
 	private final String URL_ORGANIGRAM = BASE_URL
 			+ "?method=getOrganigram&jsonrpc=2.0&params=";
+
+	private final String RESOURCES_METHOD = BASE_URL + "/getResources?";
+	private final String RESOURCE_DETAIL_METHOD = BASE_URL + "/getResource?";
+	private final String ORGANIGRAM_METHOD = BASE_URL + "/getOrganigram";
 
 	private final String URL_EMPTY_PARAMETER = ",''";
 
@@ -112,14 +116,14 @@ public class DataLoader implements DataLoaderSpec {
 	private synchronized void loadAllResources() {
 
 		/* Reset all resource data */
-		logger.info("Reset all resource data");
+		LOGGER.info("Reset all resource data");
 		roomContainer.removeAllItems();
 		courseContainer.removeAllItems();
 		personContainer.removeAllItems();
 		poiContainer.removeAllItems();
 
 		/* Get the data */
-		logger.info("Begin loading all resource data");
+		LOGGER.info("Begin loading all resource data");
 		this.loadAllRooms();
 		this.loadAllCourses();
 		this.loadAllPersons();
@@ -131,7 +135,7 @@ public class DataLoader implements DataLoaderSpec {
 	}
 
 	private void notifyDataLoaderListener() {
-		logger.trace("Notify all UIs that data changed");
+		LOGGER.trace("Notify all UIs that data changed");
 		for (DataLoaderListenerSpec listener : dataListener) {
 			listener.dataUpdated();
 		}
@@ -283,10 +287,10 @@ public class DataLoader implements DataLoaderSpec {
 					+ "['" + resource + "'" + CategoryId + URL_EMPTY_PARAMETER
 					+ "]").openStream()));
 		} catch (MalformedURLException e) {
-			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURCE + resource, e);
+			LOGGER.error(MASSAGE_ERROR_LOADING_URL_RESOURCE + resource, e);
 			return null;
 		} catch (IOException e) {
-			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURCE + resource, e);
+			LOGGER.error(MASSAGE_ERROR_LOADING_URL_RESOURCE + resource, e);
 			return null;
 		}
 
@@ -297,19 +301,19 @@ public class DataLoader implements DataLoaderSpec {
 		try {
 			ResourceData.getResult();
 		} catch (NullPointerException ex) {
-			logger.info(MASSAGE_ERROR_LOADING_URL);
+			LOGGER.info(MASSAGE_ERROR_LOADING_URL);
 			return null;
 		}
 
 		if (ResourceData != null && CategoryId.equals(URL_EMPTY_PARAMETER)) {
-			logger.info(resource + " loaded");
+			LOGGER.info(resource + " loaded");
 			return ResourceData;
 
 		} else if (ResourceData != null
 				&& !CategoryId.equals(URL_EMPTY_PARAMETER)) {
 			return ResourceData;
 		} else {
-			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURCE + resource);
+			LOGGER.error(MASSAGE_ERROR_LOADING_URL_RESOURCE + resource);
 			return null;
 		}
 	}
@@ -320,10 +324,10 @@ public class DataLoader implements DataLoaderSpec {
 					URL_RESOURCE_DETAIL + "['" + id + "'" + URL_EMPTY_PARAMETER
 							+ "]").openStream()));
 		} catch (MalformedURLException e) {
-			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURCE_DETAIL + id, e);
+			LOGGER.error(MASSAGE_ERROR_LOADING_URL_RESOURCE_DETAIL + id, e);
 			return null;
 		} catch (IOException e) {
-			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURCE_DETAIL + id, e);
+			LOGGER.error(MASSAGE_ERROR_LOADING_URL_RESOURCE_DETAIL + id, e);
 			return null;
 		}
 
@@ -334,54 +338,52 @@ public class DataLoader implements DataLoaderSpec {
 		try {
 			ResourceDetailData.getResult();
 		} catch (NullPointerException ex) {
-			logger.info(MASSAGE_ERROR_LOADING_URL);
+			LOGGER.info(MASSAGE_ERROR_LOADING_URL);
 			return null;
 		}
 
 		if (ResourceDetailData != null) {
 			return ResourceDetailData;
 		} else {
-			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURCE_DETAIL + id);
+			LOGGER.error(MASSAGE_ERROR_LOADING_URL_RESOURCE_DETAIL + id);
 			return null;
 		}
 	}
 
 	private CategoryResult gsonGetOrganigram() {
-
+		String url = ORGANIGRAM_METHOD;
 		try {
 			br = new BufferedReader(new InputStreamReader(
-					new URL(URL_ORGANIGRAM + "[" + URL_EMPTY_PARAMETER + "]")
-							.openStream()));
+					new URL(url).openStream()));
 		} catch (MalformedURLException e) {
-			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURCE
+			LOGGER.error(MASSAGE_ERROR_LOADING_URL_RESOURCE
 					+ REQUEST_ORGANIGRAM, e);
 			return null;
 		} catch (IOException e) {
-			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURCE
+			LOGGER.error(MASSAGE_ERROR_LOADING_URL_RESOURCE
 					+ REQUEST_ORGANIGRAM, e);
 			return null;
 		}
 
-		CategoryResult Organigram = new Gson().fromJson(br,
+		CategoryResult organigramResult = new Gson().fromJson(br,
 				CategoryResult.class);
 
 		// Force Error
 		try {
-			Organigram.getResult();
+			organigramResult.getResult();
 		} catch (NullPointerException ex) {
-			logger.info(MASSAGE_ERROR_LOADING_URL);
+			LOGGER.info(MASSAGE_ERROR_LOADING_URL);
 			return null;
 		}
 
-		if (Organigram != null) {
-			logger.info(REQUEST_ORGANIGRAM + " loaded");
-			return Organigram;
+		if (organigramResult != null) {
+			LOGGER.info(REQUEST_ORGANIGRAM + " loaded");
+			return organigramResult;
 		} else {
-			logger.error(MASSAGE_ERROR_LOADING_URL_RESOURCE
+			LOGGER.error(MASSAGE_ERROR_LOADING_URL_RESOURCE
 					+ REQUEST_ORGANIGRAM);
 			return null;
 		}
-
 	}
 
 	private void loadFaculty() {
@@ -413,7 +415,7 @@ public class DataLoader implements DataLoaderSpec {
 
 						}
 				} catch (Exception e) {
-					logger.info("Faculty " + faculty_get.getName()
+					LOGGER.info("Faculty " + faculty_get.getName()
 							+ " has no courses");
 				}
 
@@ -435,7 +437,7 @@ public class DataLoader implements DataLoaderSpec {
 
 					}
 				} catch (Exception e) {
-					logger.info("Faculty " + faculty_get.getName()
+					LOGGER.info("Faculty " + faculty_get.getName()
 							+ " has no persons");
 				}
 			}
@@ -464,16 +466,16 @@ public class DataLoader implements DataLoaderSpec {
 	@Override
 	public void addDataListener(DataLoaderListenerSpec listener) {
 		dataListener.add(listener);
-		logger.trace("DataLoaderListener added");
+		LOGGER.trace("DataLoaderListener added");
 	}
 
 	private TimerTask getTimerTask() {
 		TimerTask timerTask = new TimerTask() {
 			@Override
 			public void run() {
-				logger.trace("Get new data from the RAPLA-Server");
+				LOGGER.trace("Get new data from the RAPLA-Server");
 				reloadAllData();
-				logger.trace("Updated data from the RAPLA-Server");
+				LOGGER.trace("Updated data from the RAPLA-Server");
 			}
 		};
 		return timerTask;

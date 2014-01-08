@@ -29,10 +29,11 @@ import de.vksi.c4j.ContractReference;
 @ContractReference(GenericDataLoaderContract.class)
 public class GenericDataLoader implements GenericDataLoaderSpec {
 
-	private static final Logger LOGGER = LogManager.getLogger(GenericDataLoader.class);
+	private static final Logger LOGGER = LogManager
+			.getLogger(GenericDataLoader.class);
 
 	private final String BASE_URL = ApplicationProperties.getInstance()
-			.getProperty(PropertiesKey.GSON_BASE_URL);
+			.getProperty(PropertiesKey.RAPLA_BASE_URL);
 
 	private final String FREE_RESOURCES = BASE_URL + "/getFreeResources";
 	private final String MASSAGE_ERROR_URL_NOT_READABLE = "Error loading URL: ";
