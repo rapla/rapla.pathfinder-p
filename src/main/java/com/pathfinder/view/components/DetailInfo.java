@@ -97,8 +97,6 @@ public class DetailInfo<T> extends CustomComponent implements DetailInfoSpec {
 	private void buildRoomModel() {
 		if (verticalLayout != null) {
 			row1.removeAllComponents();
-			row2.removeAllComponents();
-			row3.removeAllComponents();
 			verticalLayout.removeAllComponents();
 			UI.getCurrent().removeWindow(w);
 		}
@@ -123,13 +121,9 @@ public class DetailInfo<T> extends CustomComponent implements DetailInfoSpec {
 		roomLabelLabel = new Label(roomLabel + ": " + roomValue);
 		roomNrValueLabel = new Label(roomNrLabel + ": " + roomNrValue);
 
-		row1.addComponent(nameLabelLabel);
-		row2.addComponent(roomLabelLabel);
-		row3.addComponent(roomNrValueLabel);
-
-		verticalLayout.addComponent(row1);
-		verticalLayout.addComponent(row2);
-		verticalLayout.addComponent(row3);
+		verticalLayout.addComponent(nameLabelLabel);
+		verticalLayout.addComponent(roomLabelLabel);
+		verticalLayout.addComponent(roomNrValueLabel);
 
 		w = new Window();
 		w.setContent(verticalLayout);

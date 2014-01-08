@@ -234,4 +234,9 @@ public class SearchPanelPresenter implements KeyboardViewListenerSpec,
 	public void updateTranslations() {
 		searchPanel.updateTranslations();
 	}
+
+	@Override
+	public int getCursorPosition() {
+		return searchField.getSearchField().getCursorPosition();
+	}
 }

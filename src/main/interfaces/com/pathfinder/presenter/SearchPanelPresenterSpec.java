@@ -35,4 +35,8 @@ public interface SearchPanelPresenterSpec extends TranslatabelSpec{
 
 	@Pure
 	SearchPanel getSearchPanel();
+
+	@Pure
+	int getCursorPosition();
+	
 }

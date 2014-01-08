@@ -1,6 +1,6 @@
 package com.pathfinder.presenter;
 
-import static de.vksi.c4j.Condition.ignored;
+import static de.vksi.c4j.Condition.*;
 import static de.vksi.c4j.Condition.old;
 import static de.vksi.c4j.Condition.postCondition;
 import static de.vksi.c4j.Condition.preCondition;
@@ -22,7 +22,9 @@ public class SearchPanelPresenterContract implements SearchPanelPresenterSpec {
 
 	@ClassInvariant
 	public void classInvariant() {
-		// TODO: write invariants if required
+		// Cursor position between min and max search string length
+		assert target.getCursorPosition() >=0 : "Cursor position >= 0";
+		assert target.getCursorPosition() <= target.getSearchString().length();
 	}
 
 	@Override
@@ -42,6 +44,7 @@ public class SearchPanelPresenterContract implements SearchPanelPresenterSpec {
 		if (preCondition()) {
 		}
 		if (postCondition()) {
+			// ToDO
 		}
 	}
 
@@ -50,42 +53,35 @@ public class SearchPanelPresenterContract implements SearchPanelPresenterSpec {
 		if (preCondition()) {
 		}
 		if (postCondition()) {
-			assert target.getSearchString() == "" : "String have to be clean";
+			assert "".equals(target.getSearchString()) : "String have to be clean";
 		}
 	}
 
 	@Override
 	public String getSearchString() {
 		if (preCondition()) {
-			assert target.getSearchString() != null : "String have to be initiated";
 		}
 		if (postCondition()) {
+			String result = result();
+			assert result != null : "String have to be initiated";
 		}
 		return ignored();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.pathfinder.presenter.SearchPanelPresenterSpec#setSearchString(java
-	 * .lang.String)
-	 */
 	@Override
 	public void setSearchString(String value) {
 		if (preCondition()) {
 			assert value != null : "Value mustn't be null";
 		}
 		if (postCondition()) {
-			assert target.getSearchString().equals(value) : "Value wasn't updated";
+			assert target.getSearchString().equals(value) : "value set as search string";
 		}
 	}
 
 	@Override
 	public void setRoomContainer(BeanItemContainer<RoomModel> beanItemContainer) {
 		if (preCondition()) {
-		}
-		if (postCondition()) {
+			assert beanItemContainer != null : "Input not null";
 		}
 	}
 
@@ -93,8 +89,7 @@ public class SearchPanelPresenterContract implements SearchPanelPresenterSpec {
 	public void setCourseContainer(
 			BeanItemContainer<CourseModel> beanItemContainer) {
 		if (preCondition()) {
-		}
-		if (postCondition()) {
+			assert beanItemContainer != null : "Input not null";
 		}
 	}
 
@@ -102,16 +97,14 @@ public class SearchPanelPresenterContract implements SearchPanelPresenterSpec {
 	public void setPersonContainer(
 			BeanItemContainer<PersonModel> beanItemContainer) {
 		if (preCondition()) {
-		}
-		if (postCondition()) {
+			assert beanItemContainer != null : "Input not null";
 		}
 	}
 
 	@Override
 	public void setPoiContainer(BeanItemContainer<PoiModel> beanItemContainer) {
 		if (preCondition()) {
-		}
-		if (postCondition()) {
+			assert beanItemContainer != null : "Input not null";
 		}
 	}
 
@@ -120,13 +113,18 @@ public class SearchPanelPresenterContract implements SearchPanelPresenterSpec {
 		if (preCondition()) {
 		}
 		if (postCondition()) {
+			SearchPanel result = result();
+			assert result != null : "result not null";
 		}
-		return null;
+		return ignored();
 	}
 
 	@Override
-	public void updateTranslations() {
-		// TODO Auto-generated method stub
-		
+	public void updateTranslations() {		
+	}
+
+	@Override
+	public int getCursorPosition() {
+		return ignored();
 	}
 }
