@@ -23,22 +23,30 @@ import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * 
+ * @author max
+ * 
+ */
 public class Keyboard extends CustomComponent implements KeyboardSpec,
 		ClickListener {
 
 	private Button deleteButton;
 	private Button spaceButton;
-	private TranslatorSpec translator = Translator.getInstance();
+	private final TranslatorSpec translator = Translator.getInstance();
+
+	/* Only the presenter registers one listener... */
+	List<KeyboardViewListenerSpec> listeners = new ArrayList<KeyboardViewListenerSpec>();
 
 	public Keyboard() {
-		VerticalLayout layout = new VerticalLayout();
-		HorizontalLayout row1 = new HorizontalLayout();
+		final VerticalLayout layout = new VerticalLayout();
+		final HorizontalLayout row1 = new HorizontalLayout();
 		row1.setPrimaryStyleName("keyboard-row");
-		HorizontalLayout row2 = new HorizontalLayout();
+		final HorizontalLayout row2 = new HorizontalLayout();
 		row2.setPrimaryStyleName("keyboard-row");
-		HorizontalLayout row3 = new HorizontalLayout();
+		final HorizontalLayout row3 = new HorizontalLayout();
 		row3.setPrimaryStyleName("keyboard-row");
-		HorizontalLayout row4 = new HorizontalLayout();
+		final HorizontalLayout row4 = new HorizontalLayout();
 		row4.setPrimaryStyleName("keyboard-row");
 
 		// The operations for the Keyboard in the order they appear on the
@@ -81,9 +89,6 @@ public class Keyboard extends CustomComponent implements KeyboardSpec,
 
 		setCompositionRoot(layout);
 	}
-
-	/* Only the presenter registers one listener... */
-	List<KeyboardViewListenerSpec> listeners = new ArrayList<KeyboardViewListenerSpec>();
 
 	public void addListener(KeyboardViewListenerSpec listener) {
 		listeners.add(listener);
@@ -136,11 +141,6 @@ public class Keyboard extends CustomComponent implements KeyboardSpec,
 		spaceButton.setCaption(translator.translate(TranslationKeys.SPACE));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.pathfinder.view.components.KeyboardSpec#getListener()
-	 */
 	@Override
 	public List<KeyboardViewListenerSpec> getListener() {
 		return listeners;
