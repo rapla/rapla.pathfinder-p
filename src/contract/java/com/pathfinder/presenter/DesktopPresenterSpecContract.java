@@ -8,6 +8,7 @@ import com.pathfinder.model.CourseModel;
 import com.pathfinder.model.PersonModel;
 import com.pathfinder.model.PoiModel;
 import com.pathfinder.model.RoomModel;
+import com.pathfinder.view.container.SearchPanel;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.CustomComponent;
 
@@ -81,6 +82,48 @@ public class DesktopPresenterSpecContract implements DesktopPresenterSpec {
 	public void freeRoomHandler() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void addKeybordKeyToSearchString(String key) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteKeyFromSearchString() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void clearSearchString() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setSearchString(String value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getSearchString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public SearchPanel getSearchPanel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getCursorPosition() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
