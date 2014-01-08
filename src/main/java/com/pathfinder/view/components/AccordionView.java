@@ -59,8 +59,7 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 	private final String[] visibleRoomTableColumns = new String[] { ResourceModel.PROPERTY_NAME };
 	private final String[] visibleCourseTableColumns = new String[] { ResourceModel.PROPERTY_NAME };
 	private final String[] visiblePersonTableColumns = new String[] { ResourceModel.PROPERTY_NAME };
-	private final String[] visiblePoiTableColumns = new String[] {
-			ResourceModel.PROPERTY_NAME, ResourceModel.PROPERTY_ROOMNR };
+	private final String[] visiblePoiTableColumns = new String[] { ResourceModel.PROPERTY_NAME };
 
 	private final BeanItemContainer<RoomModel> roomContainer = new BeanItemContainer<RoomModel>(
 			RoomModel.class);
@@ -90,10 +89,7 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 		table.setColumnHeaderMode(ColumnHeaderMode.HIDDEN);
 		table.setVisibleColumns(vivisbleColumns);
 		table.setPageLength(5);
-		// TODO Use class property as property id instead of a string -->
-		// Vererbung bei den Models
-		// TODO Doesn´t work yet
-		table.setSortContainerPropertyId("name");
+		table.setSortContainerPropertyId(ResourceModel.PROPERTY_NAME);
 		table.setSortAscending(true);
 		table.setSelectable(true);
 		table.setSizeFull();
