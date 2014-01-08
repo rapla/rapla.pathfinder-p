@@ -26,6 +26,8 @@ public class AppointmentView extends CustomComponent implements
 
 	@Override
 	public void setUrl(String url) {
+		// TODO
+		// Better error handling
 		if (!"".equals(url)) {
 			browserFrame.setSource(new ExternalResource(url));
 		} else {
@@ -41,6 +43,8 @@ public class AppointmentView extends CustomComponent implements
 
 	@Override
 	public void showAppointmentView() {
+		// TODO
+		// get the actual height from the client and set it to nearly maximum
 		browserFrame.setHeight(1000f, Unit.PIXELS);
 		this.setVisible(true);
 	}

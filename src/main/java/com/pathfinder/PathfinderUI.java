@@ -20,6 +20,12 @@ import com.vaadin.server.VaadinServletRequest;
 import com.vaadin.server.WebBrowser;
 import com.vaadin.ui.UI;
 
+/**
+ * PathfinderUI - start point for every client
+ * 
+ * @author alexh
+ * 
+ */
 @Theme("rapla_pathfinder_p")
 public class PathfinderUI extends UI implements DataLoaderListenerSpec {
 
@@ -41,7 +47,7 @@ public class PathfinderUI extends UI implements DataLoaderListenerSpec {
 		Page page = Page.getCurrent();
 		getCurrent().getPage();
 		WebBrowser webBrowser = getPage().getWebBrowser();
-		//BrowserInfo is for client side - WebBrowser for server side 
+		// BrowserInfo is for client side - WebBrowser for server side
 		// BrowserInfo browserInfo = BrowserInfo.get();
 		String userAgent = "";
 		if (request instanceof VaadinServletRequest) {

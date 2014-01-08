@@ -1,11 +1,17 @@
 package com.pathfinder.model;
 
+/**
+ * Model for all resources
+ * 
+ * @author alexh
+ * 
+ */
 public class ResourceModel {
-	// TODO Events have to be implemented in the future
 	public static final String PROPERTY_ID = "id";
 	public static final String PROPERTY_NAME = "name";
 	public static final String PROPERTY_LINK = "link";
 	public static final String PROPERTY_SEARCHTERMS = "searchTerms";
+	@Deprecated
 	public static final String PROPERTY_ROOMNR = "roomNr";
 
 	private String id = "";
@@ -55,10 +61,12 @@ public class ResourceModel {
 		this.searchTerms = searchTerms;
 	}
 
+	@Deprecated
 	public String getRoomNr() {
 		return roomNr;
 	}
 
+	@Deprecated
 	public void setRoomNr(String roomNr) {
 		this.roomNr = roomNr;
 	}

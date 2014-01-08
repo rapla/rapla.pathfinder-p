@@ -2,6 +2,7 @@ package com.pathfinder.model;
 
 import java.util.Arrays;
 
+@Deprecated
 public class RoomModel extends ResourceModel {
 	public static final String PROPERTY_DEPARTMENT = "department";
 	public static final String PROPERTY_COURSE = "course";
@@ -11,6 +12,7 @@ public class RoomModel extends ResourceModel {
 	private String course;
 	private String roomType;
 
+	@Deprecated
 	public RoomModel(String name, String link, String id, String[] searchTerms,
 			String roomNr, String roomType, String course, String department) {
 		super(id, name, link, searchTerms, roomNr);

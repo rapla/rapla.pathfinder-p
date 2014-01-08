@@ -1,5 +1,6 @@
 package com.pathfinder.model;
 
+@Deprecated
 public class CourseModel extends ResourceModel {
 	public static final String PROPERTY_VINTAGE = "vintage";
 	public static final String PROPERTY_DEPARTMENT = "department";
@@ -13,6 +14,7 @@ public class CourseModel extends ResourceModel {
 	private String picture;
 	private String faculty;
 
+	@Deprecated
 	public CourseModel(String id, String name, String link,
 			String[] searchTerms, String roomNr, String vintage,
 			String department, String course, String picture, String faculty) {

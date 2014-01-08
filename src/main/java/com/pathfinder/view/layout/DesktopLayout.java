@@ -8,7 +8,7 @@ import com.pathfinder.view.components.FreeRoomView;
 import com.pathfinder.view.components.FreeRoomViewSpec;
 import com.pathfinder.view.components.MenuBar;
 import com.pathfinder.view.components.MenuBarSpec;
-import com.pathfinder.view.container.DetailContainer;
+import com.pathfinder.view.container.DetailContainerSpec;
 import com.pathfinder.view.container.SearchPanelSpec;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.Button.ClickListener;
@@ -16,7 +16,7 @@ import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.VerticalLayout;
 
 /**
- * Defines the main layout of the stele navigation
+ * Defines the main layout of the stele/desktop navigation
  * 
  * @author alexh
  * 
@@ -26,7 +26,7 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	private final FreeRoomViewSpec freeRoom = new FreeRoomView();
 	private final MenuBarSpec menuBar = new MenuBar();
 	private SearchPanelSpec searchPanel = null;
-	private DetailContainer detailContainer = null;
+	private DetailContainerSpec detailContainer = null;
 	private final AppointmentViewSpec appointmentView = new AppointmentView();
 
 	private final VerticalLayout layout = new VerticalLayout();
@@ -34,8 +34,8 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	public DesktopLayout(SearchPanelSpec searchPanel) {
 		this.searchPanel = searchPanel;
 
-		this.setCompositionRoot(layout);
 		this.buildLayout();
+		this.setCompositionRoot(layout);
 	}
 
 	@Override
@@ -82,9 +82,9 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	@Override
 	public void switchToSearchView() {
 		menuBar.replaceBackButtonWithAppointmentButton();
-		detailContainer = null;
 		appointmentView.hideAppointmentView();
 		// TODO
+		// detailContainer.removeDetails(...);
 		// detailContainer.hideDetailContainer();
 		freeRoom.showFreeRoom();
 		searchPanel.showSearchPanel();
@@ -93,7 +93,7 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	@Override
 	public <T> void switchToDetailView() {
 		// TODO
-		// detailContainer = new DetailContainer<T>(null, null, null);
+		// detailContainer.setDetails(...);
 		appointmentView.hideAppointmentView();
 		freeRoom.hideFreeRoom();
 		searchPanel.hideSearchPanel();
@@ -102,8 +102,9 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 
 	@Override
 	public void switchToAppointmentView() {
-		// TODO
 		menuBar.replaceAppointmentButtonWithBackButton();
+		// TODO
+		// detailContainer.removeDetails(...);
 		// detailContainer.hideDetailContainer();
 		freeRoom.hideFreeRoom();
 		searchPanel.hideSearchPanel();
