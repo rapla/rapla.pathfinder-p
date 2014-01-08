@@ -13,7 +13,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import com.pathfinder.model.RoomModel;
 import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.PropertiesKey;
 
@@ -30,7 +29,7 @@ import de.vksi.c4j.ContractReference;
 @ContractReference(GenericDataLoaderContract.class)
 public class GenericDataLoader implements GenericDataLoaderSpec {
 
-	private static final Logger logger = LogManager.getLogger(DataLoader.class);
+	private static final Logger LOGGER = LogManager.getLogger(GenericDataLoader.class);
 
 	private final String BASE_URL = ApplicationProperties.getInstance()
 			.getProperty(PropertiesKey.GSON_BASE_URL);
@@ -62,13 +61,13 @@ public class GenericDataLoader implements GenericDataLoaderSpec {
 			return result;
 
 		} catch (MalformedURLException e) {
-			logger.error(MASSAGE_ERROR_URL_NOT_READABLE, e);
+			LOGGER.error(MASSAGE_ERROR_URL_NOT_READABLE, e);
 			return null;
 		} catch (IOException e) {
-			logger.error(MASSAGE_ERROR_URL_NOT_READABLE, e);
+			LOGGER.error(MASSAGE_ERROR_URL_NOT_READABLE, e);
 			return null;
 		} catch (ParseException e) {
-			logger.error(MASSAGE_ERROR_URL_NOT_READABLE, e);
+			LOGGER.error(MASSAGE_ERROR_URL_NOT_READABLE, e);
 			return null;
 		}
 
@@ -105,13 +104,13 @@ public class GenericDataLoader implements GenericDataLoaderSpec {
 			return attributMap;
 
 		} catch (MalformedURLException e) {
-			logger.error(MASSAGE_ERROR_URL_NOT_READABLE, e);
+			LOGGER.error(MASSAGE_ERROR_URL_NOT_READABLE, e);
 			return null;
 		} catch (IOException e) {
-			logger.error(MASSAGE_ERROR_URL_NOT_READABLE, e);
+			LOGGER.error(MASSAGE_ERROR_URL_NOT_READABLE, e);
 			return null;
 		} catch (ParseException e) {
-			logger.error(MASSAGE_ERROR_URL_NOT_READABLE, e);
+			LOGGER.error(MASSAGE_ERROR_URL_NOT_READABLE, e);
 			return null;
 		}
 
