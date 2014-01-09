@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -17,15 +16,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.google.gson.Gson;
-import com.pathfinder.model.CourseModel;
-import com.pathfinder.model.PersonModel;
-import com.pathfinder.model.PoiModel;
 import com.pathfinder.model.ResourceModel;
-import com.pathfinder.model.RoomModel;
-import com.pathfinder.model.gson.Attribut;
 import com.pathfinder.model.gson.Category;
 import com.pathfinder.model.gson.CategoryResult;
-import com.pathfinder.model.gson.ResourceDetailResult;
 import com.pathfinder.model.gson.ResourcesResult;
 import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.ApplicationPropertiesSpec;
@@ -47,7 +40,6 @@ public class DataLoader implements DataLoaderSpec {
 			.getProperty(PropertiesKey.RAPLA_BASE_URL);
 
 	private final String RESOURCES_METHOD = BASE_URL + "/getResources?";
-	private final String RESOURCE_DETAIL_METHOD = BASE_URL + "/getResource?";
 	private final String ORGANIGRAM_METHOD = BASE_URL + "/getOrganigram";
 
 	private final String REQUEST_PERSONS = "persons";
@@ -95,7 +87,6 @@ public class DataLoader implements DataLoaderSpec {
 	}
 
 	private synchronized void loadAllResources() {
-
 		/* Reset all resource data */
 		LOGGER.info("Reset all resource data");
 		roomContainer.removeAllItems();
@@ -105,152 +96,26 @@ public class DataLoader implements DataLoaderSpec {
 
 		/* Get the data */
 		LOGGER.info("Begin loading all resource data");
-		this.loadAllRooms();
-		this.loadAllCourses();
-		this.loadAllPersons();
-		this.loadAllPois();
+		this.loadResource(REQUEST_COURSES, courseContainer);
+		this.loadResource(REQUEST_ROOMS, roomContainer);
+		this.loadResource(REQUEST_PERSONS, personContainer);
+		this.loadResource(REQUEST_POIS, poiContainer);
 
-		// load Faculty
+		// load Faculties
 		this.loadFaculty();
-
 	}
 
-	private void notifyDataLoaderListener() {
-		LOGGER.trace("Notify all UIs that data changed");
-		for (DataLoaderListenerSpec listener : dataListener) {
-			listener.dataUpdated();
-		}
-	}
+	private void loadResource(String resourceString,
+			BeanItemContainer<ResourceModel> resourceContainer) {
+		ResourcesResult resourceResult = gsonGetResources(resourceString, "");
 
-	private void loadAllRooms() {
-		// Get all rooms and all detail information
-		ResourcesResult resourcesResult = gsonGetResources(REQUEST_ROOMS, "");
-
-		if (resourcesResult != null)
-			for (ResourceModel roomGet : resourcesResult.getResult()) {
-				ResourceModel room = new ResourceModel(roomGet.getName(),
-						roomGet.getLink(), roomGet.getId(),
-						roomGet.getSearchTerms());
-				roomContainer.addItem(room);
+		if (resourceResult != null)
+			for (ResourceModel concreteResult : resourceResult.getResult()) {
+				ResourceModel resource = new ResourceModel(
+						concreteResult.getName(), concreteResult.getLink(),
+						concreteResult.getId(), concreteResult.getSearchTerms());
+				resourceContainer.addItem(resource);
 			}
-	}
-
-	private void loadAllCourses() {
-		// Get all courses and all detail information
-		ResourcesResult resourcesResult = gsonGetResources(REQUEST_COURSES, "");
-
-		if (resourcesResult != null)
-			for (ResourceModel courseGet : resourcesResult.getResult()) {
-				ResourceModel course = new ResourceModel(courseGet.getId(),
-						courseGet.getName(), courseGet.getLink(),
-						courseGet.getSearchTerms());
-				courseContainer.addItem(course);
-			}
-	}
-
-	private void loadAllPersons() {
-		// Get all persons and all detail information
-		ResourcesResult resourcesResult = gsonGetResources(REQUEST_PERSONS, "");
-
-		if (resourcesResult != null)
-			for (ResourceModel personGet : resourcesResult.getResult()) {
-				ResourceModel person = new ResourceModel(personGet.getId(),
-						personGet.getName(), personGet.getLink(),
-						personGet.getSearchTerms());
-				personContainer.addItem(person);
-			}
-	}
-
-	private void loadAllPois() {
-		// Get all pois and all detail information
-		ResourcesResult resourcesResult = gsonGetResources(REQUEST_POIS, "");
-
-		if (resourcesResult != null)
-			for (ResourceModel poiGet : resourcesResult.getResult()) {
-				ResourceModel poi = new ResourceModel(poiGet.getName(),
-						poiGet.getLink(), poiGet.getId(),
-						poiGet.getSearchTerms());
-				poiContainer.addItem(poi);
-			}
-	}
-
-	@Deprecated
-	private void loadRoomDetail(RoomModel room) {
-		ResourceDetailResult dataDetail = gsonGetResourceDetail(room.getId());
-		Map<String, Attribut> attribute = dataDetail.getResult()
-				.getAttributeMap();
-
-		if (attribute.get("abteilung") != null)
-			room.setDepartment(attribute.get("abteilung").getValue());
-
-		if (attribute.get("studiengang") != null)
-			room.setCourse(attribute.get("studiengang").getValue());
-
-		if (attribute.get("raumart") != null)
-			room.setRoomType(attribute.get("raumart").getValue());
-
-		if (attribute.get("raumnr") != null)
-			room.setRoomNr(attribute.get("raumnr").getValue());
-	}
-
-	@Deprecated
-	private void loadCourseDetail(CourseModel course) {
-		ResourceDetailResult dataDetail = gsonGetResourceDetail(course.getId());
-		Map<String, Attribut> attribute = dataDetail.getResult()
-				.getAttributeMap();
-
-		if (attribute.get("jahrgang") != null)
-			course.setVintage(attribute.get("jahrgang").getValue());
-
-		if (attribute.get("abteilung") != null)
-			course.setDepartment(attribute.get("abteilung").getValue());
-
-		if (attribute.get("studiengang") != null)
-			course.setCourse(attribute.get("studiengang").getValue());
-
-		if (attribute.get("bild") != null)
-			course.setPicture(attribute.get("bild").getValue());
-
-		if (attribute.get("raumnr") != null)
-			course.setRoomNr(attribute.get("raumnr").getValue());
-	}
-
-	@Deprecated
-	private void loadPersonDetail(PersonModel person) {
-		ResourceDetailResult dataDetail = gsonGetResourceDetail(person.getId());
-		Map<String, Attribut> attribute = dataDetail.getResult()
-				.getAttributeMap();
-
-		if (attribute.get("abteilung") != null)
-			person.setDepartment(attribute.get("abteilung").getValue());
-
-		if (attribute.get("studiengang") != null)
-			person.setCourse(attribute.get("studiengang").getValue());
-
-		if (attribute.get("email") != null)
-			person.setEmail(attribute.get("email").getValue());
-
-		if (attribute.get("bild") != null)
-			person.setPicture(attribute.get("bild").getValue());
-
-		if (attribute.get("telefon") != null)
-			person.setTelephone(attribute.get("telefon").getValue());
-
-		if (attribute.get("raumnr") != null)
-			person.setRoomNr(attribute.get("raumnr").getValue());
-	}
-
-	@Deprecated
-	private void loadPoiDetail(PoiModel poi) {
-		ResourceDetailResult dataDetail = gsonGetResourceDetail(poi.getId());
-		Map<String, Attribut> attribute = dataDetail.getResult()
-				.getAttributeMap();
-
-		if (attribute.get("raumnr") != null)
-			poi.setRoomNr(attribute.get("raumnr").getValue());
-
-		if (attribute.get("bild") != null)
-			poi.setPicture(attribute.get("bild").getValue());
 	}
 
 	private ResourcesResult gsonGetResources(String resource, String categoryId) {
@@ -285,32 +150,6 @@ public class DataLoader implements DataLoaderSpec {
 			}
 		} catch (NullPointerException ex) {
 			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE + resource);
-			return null;
-		}
-	}
-
-	private ResourceDetailResult gsonGetResourceDetail(String resourceId) {
-		String url = RESOURCE_DETAIL_METHOD + "resourceId=" + resourceId;
-		try {
-			br = new BufferedReader(new InputStreamReader(
-					new URL(url).openStream()));
-		} catch (MalformedURLException e) {
-			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE_DETAIL + resourceId, e);
-			return null;
-		} catch (IOException e) {
-			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE_DETAIL + resourceId, e);
-			return null;
-		}
-
-		ResourceDetailResult ResourceDetailData = new Gson().fromJson(br,
-				ResourceDetailResult.class);
-
-		// Force Error
-		try {
-			ResourceDetailData.getResult();
-			return ResourceDetailData;
-		} catch (NullPointerException ex) {
-			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE_DETAIL + resourceId);
 			return null;
 		}
 	}
@@ -396,32 +235,6 @@ public class DataLoader implements DataLoaderSpec {
 			}
 	}
 
-	@Override
-	public BeanItemContainer<ResourceModel> getRoomContainer() {
-		return roomContainer;
-	}
-
-	@Override
-	public BeanItemContainer<ResourceModel> getCourseContainer() {
-		return courseContainer;
-	}
-
-	@Override
-	public BeanItemContainer<ResourceModel> getPersonContainer() {
-		return personContainer;
-	}
-
-	@Override
-	public BeanItemContainer<ResourceModel> getPoiContainer() {
-		return poiContainer;
-	}
-
-	@Override
-	public void addDataListener(DataLoaderListenerSpec listener) {
-		dataListener.add(listener);
-		LOGGER.trace("DataLoaderListener added");
-	}
-
 	private TimerTask getTimerTask() {
 		TimerTask timerTask = new TimerTask() {
 			@Override
@@ -435,21 +248,18 @@ public class DataLoader implements DataLoaderSpec {
 	}
 
 	private void scheduleDataLoading() {
-
 		// Starts after specified interval and repeats in the same interval (see
 		// application.properties)
 		long loadInterval = properties
 				.getIntProperty(PropertiesKey.DATA_LOAD_INTERVALL);
 		new Timer().schedule(getTimerTask(), loadInterval, loadInterval);
-
 	}
 
-	@Override
-	public void reloadAllData() {
-		loadAllResources();
-
-		// Notify all UIs
-		notifyDataLoaderListener();
+	private void notifyDataLoaderListener() {
+		LOGGER.trace("Notify all UIs that data changed");
+		for (DataLoaderListenerSpec listener : dataListener) {
+			listener.dataUpdated();
+		}
 	}
 
 	private void scheduleListenerRemover() {
@@ -481,6 +291,40 @@ public class DataLoader implements DataLoaderSpec {
 		}
 
 		dataListener.removeAll(listenerToBeRemoved);
+	}
+
+	@Override
+	public void addDataListener(DataLoaderListenerSpec listener) {
+		dataListener.add(listener);
+		LOGGER.trace("DataLoaderListener added");
+	}
+
+	@Override
+	public void reloadAllData() {
+		loadAllResources();
+
+		// Notify all UIs
+		notifyDataLoaderListener();
+	}
+
+	@Override
+	public BeanItemContainer<ResourceModel> getRoomContainer() {
+		return roomContainer;
+	}
+
+	@Override
+	public BeanItemContainer<ResourceModel> getCourseContainer() {
+		return courseContainer;
+	}
+
+	@Override
+	public BeanItemContainer<ResourceModel> getPersonContainer() {
+		return personContainer;
+	}
+
+	@Override
+	public BeanItemContainer<ResourceModel> getPoiContainer() {
+		return poiContainer;
 	}
 
 	public static DataLoader getInstance() {
