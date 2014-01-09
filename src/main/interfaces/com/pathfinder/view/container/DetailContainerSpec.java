@@ -11,5 +11,5 @@ public interface DetailContainerSpec extends ComponentSpec {
 
 	void showDetailContainer();
 
-	void addDetails(Class<ResourceModel> clazz);
+	void addDetails(ResourceModel resourceModel);
 }

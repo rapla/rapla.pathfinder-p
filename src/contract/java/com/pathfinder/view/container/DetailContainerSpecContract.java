@@ -48,7 +48,7 @@ public class DetailContainerSpecContract extends ComponentSpecContract
 	}
 
 	@Override
-	public void addDetails(Class<ResourceModel> clazz) {
+	public void addDetails(ResourceModel resourceModel) {
 		if (preCondition()) {
 			// TODO: write preconditions if required
 		}
@@ -56,4 +56,5 @@ public class DetailContainerSpecContract extends ComponentSpecContract
 			// TODO: write postconditions if required
 		}
 	}
+
 }

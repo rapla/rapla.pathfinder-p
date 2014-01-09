@@ -1,5 +1,6 @@
 package com.pathfinder.view.components;
 
+import com.pathfinder.model.ResourceModel;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Image;
 
@@ -13,13 +14,13 @@ public class DetailImage extends Image implements DetailImageSpec {
 
 	private final String IMAGEPATH = "img/";
 
-	public DetailImage(String caption, String imageSource) {
-		init(caption, imageSource);
+	public DetailImage(ResourceModel resourceModel) {
+		init(resourceModel);
 	}
 
-	private void init(String caption, String imageSource) {
-		this.setCaption(caption);
-		this.setSource(new ThemeResource(IMAGEPATH + imageSource));
+	private void init(ResourceModel resourceModel) {
+		this.setCaption(resourceModel.getName());
+		this.setSource(new ThemeResource(IMAGEPATH + resourceModel));
 		this.setSizeFull();
 	}
 

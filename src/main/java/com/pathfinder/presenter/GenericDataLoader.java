@@ -54,6 +54,7 @@ public class GenericDataLoader implements GenericDataLoaderSpec {
 
 		BeanItemContainer<FreeRoomModel> freeRoomContainer = new BeanItemContainer<FreeRoomModel>(
 				FreeRoomModel.class);
+		int counter = 0;
 
 		try {
 			br = new BufferedReader(new InputStreamReader(new URL(
@@ -65,9 +66,20 @@ public class GenericDataLoader implements GenericDataLoaderSpec {
 			List<JSONObject> freeResourcesResult = (List<JSONObject>) jsonObject
 					.get("result");
 
+			if (freeResourcesResult.size() > 5) {
+				for (int i = 4; i < freeResourcesResult.size(); i++)
+					freeResourcesResult.remove(i);
+			}
+
+			Iterator<JSONObject> jsonIterator = freeResourcesResult.iterator();
+
 			if (!freeResourcesResult.isEmpty()) {
-				for (JSONObject result : freeResourcesResult) {
-					for (int i = 0; i == 5; i++) {
+
+				while (jsonIterator.hasNext()) {
+
+					JSONObject result = jsonIterator.next();
+
+					if (counter < 5) {
 
 						List<JSONObject> freeRoomResources = this
 								.getFreeResourcesResources(result);
@@ -79,7 +91,7 @@ public class GenericDataLoader implements GenericDataLoaderSpec {
 								(String) result.get("start"),
 								(String) result.get("end"));
 						freeRoomContainer.addItem(freeRoom);
-
+						counter++;
 					}
 				}
 
@@ -114,8 +126,6 @@ public class GenericDataLoader implements GenericDataLoaderSpec {
 
 	@Override
 	public List<Attribut> getModelDetails(String modelLink) {
-		String attributLabel;
-		String attributValue;
 		JSONObject attributMap;
 		Attribut attribut;
 
@@ -140,13 +150,10 @@ public class GenericDataLoader implements GenericDataLoaderSpec {
 
 				String nextKey = attributeMapKeys.next().toString();
 
-				attributLabel = (String) ((JSONObject) attributMap.get(nextKey))
-						.get("label");
-				attributValue = (String) ((JSONObject) attributMap.get(nextKey))
-						.get("value");
-
-				attribut.setLabel(attributLabel);
-				attribut.setValue(attributValue);
+				attribut.setLabel((String) ((JSONObject) attributMap
+						.get(nextKey)).get("label"));
+				attribut.setValue((String) ((JSONObject) attributMap
+						.get(nextKey)).get("value"));
 
 				attributList.add(attribut);
 

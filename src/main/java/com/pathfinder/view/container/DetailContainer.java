@@ -9,23 +9,23 @@ import com.vaadin.ui.VerticalLayout;
 public class DetailContainer extends CustomComponent implements
 		DetailContainerSpec {
 
-	private final VerticalLayout vertical = new VerticalLayout();
+	private final VerticalLayout layout = new VerticalLayout();
 	private DetailInfo detailInfo = null;
 	private DetailImage detailImage = null;
 
-	public DetailContainer(ResourceModel ressourceModel, String imageSource) {
-		this.detailInfo = new DetailInfo(ressourceModel);
-		// this.detailImage = new DetailImage(caption, imageSource);
-		// this.buildLayout();
+	public DetailContainer() {
+		this.buildLayout();
+		this.setCompositionRoot(layout);
+	}
+
+	@Override
+	public void addDetails(ResourceModel resourceModel) {
+		detailInfo = new DetailInfo<Object>(resourceModel);
+
+		// detailImage = new DetailImage(resourceModel);
 	}
 
 	public void buildLayout() {
-		this.detailInfo.setSizeFull();
-		this.detailImage.setSizeFull();
-		this.setSizeFull();
-		this.vertical.addComponent(detailInfo);
-		this.vertical.addComponent(detailImage);
-		this.setCompositionRoot(vertical);
 	}
 
 	@Override
@@ -36,11 +36,6 @@ public class DetailContainer extends CustomComponent implements
 	@Override
 	public void showDetailContainer() {
 		this.setVisible(true);
-	}
-
-	@Override
-	public void addDetails(Class<ResourceModel> clazz) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
