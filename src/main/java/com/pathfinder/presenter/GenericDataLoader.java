@@ -5,15 +5,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import com.pathfinder.model.Attribut;
 import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.PropertiesKey;
 
@@ -39,7 +42,6 @@ public class GenericDataLoader implements GenericDataLoaderSpec {
 
 	private final JSONParser parser = new JSONParser();
 	private JSONObject jsonObject = null;
-	private JSONArray jsonArray = null;
 
 	private BufferedReader br;
 
@@ -84,7 +86,11 @@ public class GenericDataLoader implements GenericDataLoaderSpec {
 	}
 
 	@Override
-	public JSONArray getModelDetails(String modelLink) {
+	public List<Attribut> getModelDetails(String modelLink) {
+		String attributLabel;
+		String attributValue;
+		JSONObject attributMap;
+		Attribut attribut = new Attribut();
 
 		try {
 			br = new BufferedReader(new InputStreamReader(new URL(BASE_URL
@@ -92,10 +98,29 @@ public class GenericDataLoader implements GenericDataLoaderSpec {
 
 			jsonObject = (JSONObject) parser.parse(br);
 
-			JSONArray attributMap = (JSONArray) ((JSONObject) jsonObject
-					.get("result")).get("attributeMap");
+			attributMap = (JSONObject) ((JSONObject) jsonObject.get("result"))
+					.get("attributeMap");
 
-			return attributMap;
+			Set<String> attributeMapSet = attributMap.keySet();
+			Iterator<String> attributeMapKeys = attributeMapSet.iterator();
+			List<Attribut> attributList = new ArrayList();
+
+			while (attributeMapKeys.hasNext()) {
+				String nextKey = attributeMapKeys.next().toString();
+
+				attributLabel = (String) ((JSONObject) attributMap.get(nextKey))
+						.get("label");
+				attributValue = (String) ((JSONObject) attributMap.get(nextKey))
+						.get("value");
+
+				attribut.setLabel(attributLabel);
+				attribut.setValue(attributValue);
+
+				attributList.add(attribut);
+
+			}
+
+			return attributList;
 
 		} catch (MalformedURLException e) {
 			LOGGER.error(MASSAGE_ERROR_URL_NOT_READABLE, e);

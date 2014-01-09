@@ -1,14 +1,11 @@
 package com.pathfinder.view.components;
 
-import java.util.Iterator;
-
-import org.json.simple.JSONArray;
+import java.util.List;
 
 import com.pathfinder.model.Attribut;
 import com.pathfinder.model.ResourceModel;
 import com.pathfinder.presenter.GenericDataLoader;
 import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.Window;
 
 /**
  * Defines the detail view for persons, courses, pois or rooms
@@ -18,9 +15,7 @@ import com.vaadin.ui.Window;
  * @param <T>
  */
 public class DetailInfo<T> extends CustomComponent implements DetailInfoSpec {
-	private JSONArray modelDetails = null;
-
-	private static Window w;
+	private List<Attribut> modelDetails = null;
 
 	private static GenericDataLoader genericDataLoader = new GenericDataLoader();
 
@@ -34,17 +29,6 @@ public class DetailInfo<T> extends CustomComponent implements DetailInfoSpec {
 
 		modelDetails = genericDataLoader.getModelDetails(resourceModel
 				.getLink());
-
-		Iterator<String> keys = modelDetails.iterator();
-
-		while (keys.hasNext()) {
-
-			Attribut attributObject = new Attribut();
-
-			attributObject.setLabel("");
-			attributObject.setValue("");
-
-		}
 
 		// Generic Build of the DetailInfo
 

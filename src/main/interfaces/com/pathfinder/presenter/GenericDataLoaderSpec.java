@@ -5,6 +5,8 @@ import java.util.List;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import com.pathfinder.model.Attribut;
+
 import de.vksi.c4j.ContractReference;
 import de.vksi.c4j.Pure;
 
@@ -18,6 +20,6 @@ public interface GenericDataLoaderSpec {
 	List<JSONObject> getFreeResourcesResources(JSONObject jsonObject);
 
 	@Pure
-	JSONArray getModelDetails(String modelLink);
+	List<Attribut> getModelDetails(String modelLink);
 
 }
