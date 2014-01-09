@@ -7,6 +7,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.pathfinder.model.ResourceModel;
+import com.pathfinder.util.properties.ApplicationProperties;
+import com.pathfinder.util.properties.PropertiesKey;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
@@ -30,7 +32,7 @@ import com.vaadin.ui.Table.ColumnHeaderMode;
  */
 public class AccordionView extends CustomComponent implements AccordionViewSpec {
 
-	private static final Logger logger = LogManager
+	private static final Logger LOGGER = LogManager
 			.getLogger(AccordionView.class.getName());
 
 	private final TranslatorSpec translator = Translator.getInstance();
@@ -85,7 +87,8 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 		table.setColumnHeaderMode(ColumnHeaderMode.HIDDEN);
 		table.setVisibleColumns(vivisbleColumns);
 		table.setPageLength(5);
-		table.setCacheRate(4);
+		table.setCacheRate(Double.parseDouble(ApplicationProperties
+				.getInstance().getProperty(PropertiesKey.TABLE_CACHE_RATE)));
 		table.setSortContainerPropertyId(ResourceModel.PROPERTY_NAME);
 		table.setSortAscending(true);
 		table.setSelectable(true);
@@ -152,7 +155,7 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 
 	private <T> void addFiltersToTables(List<Filter> filters,
 			BeanItemContainer<T> beanItemContainer, String type) {
-		logger.trace("Length of " + type + " filters: "
+		LOGGER.trace("Length of " + type + " filters: "
 				+ filters.toArray(new Filter[] {}).length);
 		beanItemContainer.addContainerFilter(new Or(filters
 				.toArray(new Filter[] {})));

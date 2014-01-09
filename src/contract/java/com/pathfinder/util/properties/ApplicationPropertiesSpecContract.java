@@ -25,13 +25,6 @@ public class ApplicationPropertiesSpecContract implements
 		assert Condition.unchanged(target) : "state didn't change";
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.pathfinder.util.properties.ApplicationPropertiesSpec#getProperty(
-	 * com.pathfinder.util.properties.PropertiesKey)
-	 */
 	@Override
 	public String getProperty(PropertiesKey key) {
 		if (preCondition()) {
@@ -44,13 +37,6 @@ public class ApplicationPropertiesSpecContract implements
 		return ignored();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.pathfinder.util.properties.ApplicationPropertiesSpec#getProperty(
-	 * com.pathfinder.util.properties.PropertiesKey, java.lang.String)
-	 */
 	@Override
 	public String getProperty(PropertiesKey key, String defaultValue) {
 		if (preCondition()) {
@@ -64,13 +50,6 @@ public class ApplicationPropertiesSpecContract implements
 		return ignored();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.pathfinder.util.properties.ApplicationPropertiesSpec#getIntProperty
-	 * (com.pathfinder.util.properties.PropertiesKey)
-	 */
 	@Override
 	public int getIntProperty(PropertiesKey key) {
 		if (preCondition()) {
@@ -79,13 +58,6 @@ public class ApplicationPropertiesSpecContract implements
 		return ignored();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.pathfinder.util.properties.ApplicationPropertiesSpec#getIntProperty
-	 * (com.pathfinder.util.properties.PropertiesKey, int)
-	 */
 	@Override
 	public int getIntProperty(PropertiesKey key, int defaultValue) {
 		if (preCondition()) {
@@ -93,5 +65,4 @@ public class ApplicationPropertiesSpecContract implements
 		}
 		return ignored();
 	}
-
 }
