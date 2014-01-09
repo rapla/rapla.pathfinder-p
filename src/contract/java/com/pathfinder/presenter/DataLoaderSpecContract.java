@@ -7,9 +7,6 @@ import static de.vksi.c4j.Condition.ignored;
 import static de.vksi.c4j.Condition.postCondition;
 import static de.vksi.c4j.Condition.preCondition;
 
-import com.pathfinder.model.CourseModel;
-import com.pathfinder.model.PersonModel;
-import com.pathfinder.model.PoiModel;
 import com.pathfinder.model.ResourceModel;
 import com.vaadin.data.util.BeanItemContainer;
 

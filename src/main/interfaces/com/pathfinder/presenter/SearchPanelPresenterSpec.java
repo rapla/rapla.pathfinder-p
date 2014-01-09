@@ -1,9 +1,6 @@
 package com.pathfinder.presenter;
 
-import com.pathfinder.model.CourseModel;
-import com.pathfinder.model.PersonModel;
-import com.pathfinder.model.PoiModel;
-import com.pathfinder.model.RoomModel;
+import com.pathfinder.model.ResourceModel;
 import com.pathfinder.view.TranslatabelSpec;
 import com.pathfinder.view.container.SearchPanel;
 import com.vaadin.data.util.BeanItemContainer;
@@ -12,7 +9,7 @@ import de.vksi.c4j.ContractReference;
 import de.vksi.c4j.Pure;
 
 @ContractReference(SearchPanelPresenterContract.class)
-public interface SearchPanelPresenterSpec extends TranslatabelSpec{
+public interface SearchPanelPresenterSpec extends TranslatabelSpec {
 
 	void addKeybordKeyToSearchString(String key);
 
@@ -20,13 +17,13 @@ public interface SearchPanelPresenterSpec extends TranslatabelSpec{
 
 	void clearSearchString();
 
-	void setRoomContainer(BeanItemContainer<RoomModel> beanItemContainer);
+	void setRoomContainer(BeanItemContainer<ResourceModel> beanItemContainer);
 
-	void setCourseContainer(BeanItemContainer<CourseModel> beanItemContainer);
+	void setCourseContainer(BeanItemContainer<ResourceModel> beanItemContainer);
 
-	void setPersonContainer(BeanItemContainer<PersonModel> beanItemContainer);
+	void setPersonContainer(BeanItemContainer<ResourceModel> beanItemContainer);
 
-	void setPoiContainer(BeanItemContainer<PoiModel> beanItemContainer);
+	void setPoiContainer(BeanItemContainer<ResourceModel> beanItemContainer);
 
 	void setSearchString(String value);
 
@@ -38,5 +35,5 @@ public interface SearchPanelPresenterSpec extends TranslatabelSpec{
 
 	@Pure
 	int getCursorPosition();
-	
+
 }

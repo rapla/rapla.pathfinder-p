@@ -8,12 +8,8 @@ import java.util.TimerTask;
 
 import org.json.simple.JSONObject;
 
-import com.pathfinder.model.CourseModel;
 import com.pathfinder.model.KeyboardModel;
-import com.pathfinder.model.PersonModel;
-import com.pathfinder.model.PoiModel;
 import com.pathfinder.model.ResourceModel;
-import com.pathfinder.model.RoomModel;
 import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.ApplicationPropertiesSpec;
 import com.pathfinder.util.properties.PropertiesKey;

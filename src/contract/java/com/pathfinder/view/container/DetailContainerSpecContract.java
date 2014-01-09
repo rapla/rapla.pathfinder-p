@@ -6,10 +6,7 @@ package com.pathfinder.view.container;
 import static de.vksi.c4j.Condition.postCondition;
 import static de.vksi.c4j.Condition.preCondition;
 
-import com.pathfinder.model.CourseModel;
-import com.pathfinder.model.PersonModel;
-import com.pathfinder.model.PoiModel;
-import com.pathfinder.model.RoomModel;
+import com.pathfinder.model.ResourceModel;
 import com.pathfinder.view.components.ComponentSpecContract;
 
 import de.vksi.c4j.ClassInvariant;
@@ -43,12 +40,6 @@ public class DetailContainerSpecContract extends ComponentSpecContract
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.pathfinder.view.container.DetailContainerSpec#showDetailContainer()
-	 */
 	@Override
 	public void showDetailContainer() {
 		if (postCondition()) {
@@ -56,15 +47,8 @@ public class DetailContainerSpecContract extends ComponentSpecContract
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.pathfinder.view.container.DetailContainerSpec#addRoomDetails(java
-	 * .lang.Class)
-	 */
 	@Override
-	public void addRoomDetails(Class<RoomModel> clazz) {
+	public void addDetails(Class<ResourceModel> clazz) {
 		if (preCondition()) {
 			// TODO: write preconditions if required
 		}
@@ -72,56 +56,4 @@ public class DetailContainerSpecContract extends ComponentSpecContract
 			// TODO: write postconditions if required
 		}
 	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.pathfinder.view.container.DetailContainerSpec#addCourseDetails(java
-	 * .lang.Class)
-	 */
-	@Override
-	public void addCourseDetails(Class<CourseModel> clazz) {
-		if (preCondition()) {
-			// TODO: write preconditions if required
-		}
-		if (postCondition()) {
-			// TODO: write postconditions if required
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.pathfinder.view.container.DetailContainerSpec#addPersonDetails(java
-	 * .lang.Class)
-	 */
-	@Override
-	public void addPersonDetails(Class<PersonModel> clazz) {
-		if (preCondition()) {
-			// TODO: write preconditions if required
-		}
-		if (postCondition()) {
-			// TODO: write postconditions if required
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.pathfinder.view.container.DetailContainerSpec#addPoiDetails(java.
-	 * lang.Class)
-	 */
-	@Override
-	public void addPoiDetails(Class<PoiModel> clazz) {
-		if (preCondition()) {
-			// TODO: write preconditions if required
-		}
-		if (postCondition()) {
-			// TODO: write postconditions if required
-		}
-	}
-
 }

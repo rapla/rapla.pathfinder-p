@@ -6,11 +6,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.pathfinder.model.CourseModel;
-import com.pathfinder.model.PersonModel;
-import com.pathfinder.model.PoiModel;
 import com.pathfinder.model.ResourceModel;
-import com.pathfinder.model.RoomModel;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;

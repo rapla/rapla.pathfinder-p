@@ -1,10 +1,6 @@
 package com.pathfinder.view.container;
 
-import com.pathfinder.model.CourseModel;
-import com.pathfinder.model.PersonModel;
-import com.pathfinder.model.PoiModel;
 import com.pathfinder.model.ResourceModel;
-import com.pathfinder.model.RoomModel;
 import com.pathfinder.view.components.DetailImage;
 import com.pathfinder.view.components.DetailInfo;
 import com.vaadin.ui.CustomComponent;
@@ -43,22 +39,7 @@ public class DetailContainer extends CustomComponent implements
 	}
 
 	@Override
-	public void addRoomDetails(Class<RoomModel> clazz) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void addCourseDetails(Class<CourseModel> clazz) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void addPersonDetails(Class<PersonModel> clazz) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void addPoiDetails(Class<PoiModel> clazz) {
+	public void addDetails(Class<ResourceModel> clazz) {
 		// TODO Auto-generated method stub
 	}
 

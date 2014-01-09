@@ -1,14 +1,12 @@
 package com.pathfinder.presenter;
 
-import static de.vksi.c4j.Condition.*;
+import static de.vksi.c4j.Condition.ignored;
 import static de.vksi.c4j.Condition.old;
 import static de.vksi.c4j.Condition.postCondition;
 import static de.vksi.c4j.Condition.preCondition;
+import static de.vksi.c4j.Condition.result;
 
-import com.pathfinder.model.CourseModel;
-import com.pathfinder.model.PersonModel;
-import com.pathfinder.model.PoiModel;
-import com.pathfinder.model.RoomModel;
+import com.pathfinder.model.ResourceModel;
 import com.pathfinder.view.container.SearchPanel;
 import com.vaadin.data.util.BeanItemContainer;
 
@@ -23,7 +21,7 @@ public class SearchPanelPresenterContract implements SearchPanelPresenterSpec {
 	@ClassInvariant
 	public void classInvariant() {
 		// Cursor position between min and max search string length
-		assert target.getCursorPosition() >=0 : "Cursor position >= 0";
+		assert target.getCursorPosition() >= 0 : "Cursor position >= 0";
 		assert target.getCursorPosition() <= target.getSearchString().length();
 	}
 
@@ -79,7 +77,8 @@ public class SearchPanelPresenterContract implements SearchPanelPresenterSpec {
 	}
 
 	@Override
-	public void setRoomContainer(BeanItemContainer<RoomModel> beanItemContainer) {
+	public void setRoomContainer(
+			BeanItemContainer<ResourceModel> beanItemContainer) {
 		if (preCondition()) {
 			assert beanItemContainer != null : "Input not null";
 		}
@@ -87,7 +86,7 @@ public class SearchPanelPresenterContract implements SearchPanelPresenterSpec {
 
 	@Override
 	public void setCourseContainer(
-			BeanItemContainer<CourseModel> beanItemContainer) {
+			BeanItemContainer<ResourceModel> beanItemContainer) {
 		if (preCondition()) {
 			assert beanItemContainer != null : "Input not null";
 		}
@@ -95,14 +94,15 @@ public class SearchPanelPresenterContract implements SearchPanelPresenterSpec {
 
 	@Override
 	public void setPersonContainer(
-			BeanItemContainer<PersonModel> beanItemContainer) {
+			BeanItemContainer<ResourceModel> beanItemContainer) {
 		if (preCondition()) {
 			assert beanItemContainer != null : "Input not null";
 		}
 	}
 
 	@Override
-	public void setPoiContainer(BeanItemContainer<PoiModel> beanItemContainer) {
+	public void setPoiContainer(
+			BeanItemContainer<ResourceModel> beanItemContainer) {
 		if (preCondition()) {
 			assert beanItemContainer != null : "Input not null";
 		}
@@ -120,7 +120,7 @@ public class SearchPanelPresenterContract implements SearchPanelPresenterSpec {
 	}
 
 	@Override
-	public void updateTranslations() {		
+	public void updateTranslations() {
 	}
 
 	@Override
