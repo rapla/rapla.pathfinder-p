@@ -112,8 +112,9 @@ public class DataLoader implements DataLoaderSpec {
 		if (resourceResult != null)
 			for (ResourceModel concreteResult : resourceResult.getResult()) {
 				ResourceModel resource = new ResourceModel(
-						concreteResult.getName(), concreteResult.getLink(),
-						concreteResult.getId(), concreteResult.getSearchTerms());
+						concreteResult.getId(), concreteResult.getName(),
+						concreteResult.getLink(),
+						concreteResult.getSearchTerms());
 				resourceContainer.addItem(resource);
 			}
 	}
