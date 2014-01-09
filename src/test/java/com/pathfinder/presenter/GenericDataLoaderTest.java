@@ -53,8 +53,7 @@ public class GenericDataLoaderTest {
 		List<Attribut> modelDetails = genericDataLoader
 				.getModelDetails("getResource?resourceId=org.rapla.entities.domain.Allocatable_1320");
 
-		for (Attribut a : modelDetails) {
-			System.out.println(a.toString());
-		}
+		Assert.assertNotNull(modelDetails);
+
 	}
 }
