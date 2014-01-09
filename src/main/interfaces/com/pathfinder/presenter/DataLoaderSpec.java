@@ -2,8 +2,6 @@ package com.pathfinder.presenter;
 
 import java.util.List;
 
-import org.json.simple.JSONObject;
-
 import com.pathfinder.model.Attribut;
 import com.pathfinder.model.FreeRoomModel;
 import com.pathfinder.model.ResourceModel;
@@ -25,9 +23,6 @@ public interface DataLoaderSpec {
 
 	@Pure
 	BeanItemContainer<ResourceModel> getPoiContainer();
-
-	@Pure
-	List<JSONObject> getFreeResourcesResources(JSONObject jsonObject);
 
 	@Pure
 	List<Attribut> getModelDetails(String modelLink);

@@ -102,14 +102,15 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 			BeanItemContainer<FreeRoomModel> freeRoomContainer) {
 		this.freeRoomTable.removeAllItems();
 
-		if (freeRoomContainer.size() != 0) {
-			// TODO Check if its already added
+		if (freeRoomContainer != null && freeRoomContainer.size() != 0) {
 			cssLayout.removeComponent(noRoomsLabel);
+			cssLayout.addComponent(freeRoomTable);
 
 			for (FreeRoomModel freeRoomItem : freeRoomContainer.getItemIds()) {
 				this.freeRoomTable.addItem(freeRoomItem);
 			}
 		} else {
+			cssLayout.removeComponent(freeRoomTable);
 			cssLayout.addComponent(noRoomsLabel);
 		}
 	}

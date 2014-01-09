@@ -48,7 +48,6 @@ public class DataLoader implements DataLoaderSpec {
 	private final String RESOURCES_METHOD = BASE_URL + "/getResources?";
 	private final String ORGANIGRAM_METHOD = BASE_URL + "/getOrganigram";
 	private final String FREE_RESOURCES = BASE_URL + "/getFreeResources";
-	private final String MASSAGE_ERROR_URL_NOT_READABLE = "Error loading URL: ";
 
 	private final String REQUEST_PERSONS = "persons";
 	private final String REQUEST_ROOMS = "rooms";
@@ -57,8 +56,10 @@ public class DataLoader implements DataLoaderSpec {
 	private final String REQUEST_ORGANIGRAM = "organigram";
 
 	private final String ERROR_MASSAGE_LOADING_RESOURCE = "Error loading resource: ";
+	private final String ERROR_MASSAGE_URL_NOT_READABLE = "Error loading URL: ";
 
-	// ToDo: Delete if not necessary
+	// TODO: Delete if not necessary, but should be necessary for better error
+	// handling
 	// private final String ERROR_MASSAGE_LOADING_RESOURCE_DETAIL =
 	// "Error loading resource detail - id: ";
 	// private final String ERROR_MESSAGE_EMPTY_RESSOURCE = "Resource is empty";
@@ -346,6 +347,7 @@ public class DataLoader implements DataLoaderSpec {
 		return poiContainer;
 	}
 
+	@SuppressWarnings("finally")
 	@Override
 	public BeanItemContainer<FreeRoomModel> getFreeResources() {
 
@@ -393,26 +395,19 @@ public class DataLoader implements DataLoaderSpec {
 						counter++;
 					}
 				}
-
-				return freeRoomContainer;
-
 			}
-			return null;
 		} catch (MalformedURLException e) {
-			LOGGER.error(MASSAGE_ERROR_URL_NOT_READABLE, e);
-			return null;
+			LOGGER.error(ERROR_MASSAGE_URL_NOT_READABLE, e);
 		} catch (IOException e) {
-			LOGGER.error(MASSAGE_ERROR_URL_NOT_READABLE, e);
-			return null;
+			LOGGER.error(ERROR_MASSAGE_URL_NOT_READABLE, e);
 		} catch (ParseException e) {
-			LOGGER.error(MASSAGE_ERROR_URL_NOT_READABLE, e);
-			return null;
+			LOGGER.error(ERROR_MASSAGE_URL_NOT_READABLE, e);
+		} finally {
+			return freeRoomContainer;
 		}
-
 	}
 
-	@Override
-	public List<JSONObject> getFreeResourcesResources(JSONObject jsonObject) {
+	private List<JSONObject> getFreeResourcesResources(JSONObject jsonObject) {
 
 		this.jsonObject = jsonObject;
 
@@ -461,13 +456,13 @@ public class DataLoader implements DataLoaderSpec {
 			return attributList;
 
 		} catch (MalformedURLException e) {
-			LOGGER.error(MASSAGE_ERROR_URL_NOT_READABLE, e);
+			LOGGER.error(ERROR_MASSAGE_URL_NOT_READABLE, e);
 			return null;
 		} catch (IOException e) {
-			LOGGER.error(MASSAGE_ERROR_URL_NOT_READABLE, e);
+			LOGGER.error(ERROR_MASSAGE_URL_NOT_READABLE, e);
 			return null;
 		} catch (ParseException e) {
-			LOGGER.error(MASSAGE_ERROR_URL_NOT_READABLE, e);
+			LOGGER.error(ERROR_MASSAGE_URL_NOT_READABLE, e);
 			return null;
 		}
 

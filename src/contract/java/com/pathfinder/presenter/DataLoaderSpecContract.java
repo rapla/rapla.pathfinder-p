@@ -9,8 +9,6 @@ import static de.vksi.c4j.Condition.preCondition;
 
 import java.util.List;
 
-import org.json.simple.JSONObject;
-
 import com.pathfinder.model.Attribut;
 import com.pathfinder.model.FreeRoomModel;
 import com.pathfinder.model.ResourceModel;
@@ -106,12 +104,6 @@ public class DataLoaderSpecContract implements DataLoaderSpec {
 	@Override
 	public void reloadAllData() {
 		// Can be called at any time
-	}
-
-	@Override
-	public List<JSONObject> getFreeResourcesResources(JSONObject jsonObject) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
