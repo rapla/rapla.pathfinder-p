@@ -7,9 +7,8 @@ public class PoiModel extends ResourceModel {
 	private String picture;
 
 	@Deprecated
-	public PoiModel(String name, String link, String id, String[] searchTerms,
-			String roomNr, String picture) {
-		super(id, name, link, searchTerms, roomNr);
+	public PoiModel(String name, String link, String id, String[] searchTerms, String picture) {
+		super(id, name, link, searchTerms);
 		this.setPicture(picture);
 	}
 

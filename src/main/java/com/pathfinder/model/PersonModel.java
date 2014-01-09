@@ -19,10 +19,10 @@ public class PersonModel extends ResourceModel {
 
 	@Deprecated
 	public PersonModel(String id, String name, String link,
-			String[] searchTerms, String roomNr, String department,
+			String[] searchTerms, String department,
 			String course, String email, String picture, String telephone,
 			String faculty) {
-		super(id, name, link, searchTerms, roomNr);
+		super(id, name, link, searchTerms);
 		this.department = department;
 		this.course = course;
 		this.email = email;

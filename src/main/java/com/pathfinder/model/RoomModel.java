@@ -13,9 +13,8 @@ public class RoomModel extends ResourceModel {
 	private String roomType;
 
 	@Deprecated
-	public RoomModel(String name, String link, String id, String[] searchTerms,
-			String roomNr, String roomType, String course, String department) {
-		super(id, name, link, searchTerms, roomNr);
+	public RoomModel(String name, String link, String id, String[] searchTerms, String roomType, String course, String department) {
+		super(id, name, link, searchTerms);
 		this.setRoomType(roomType);
 		this.setCourse(course);
 		this.setDepartment(department);

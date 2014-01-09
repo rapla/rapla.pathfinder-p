@@ -256,24 +256,26 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	}
 
 	@Override
-	public void setRoomContainer(BeanItemContainer<RoomModel> beanItemContainer) {
+	public void setRoomContainer(
+			BeanItemContainer<ResourceModel> beanItemContainer) {
 		accordionView.setRoomContainer(beanItemContainer);
 	}
 
 	@Override
 	public void setCourseContainer(
-			BeanItemContainer<CourseModel> beanItemContainer) {
+			BeanItemContainer<ResourceModel> beanItemContainer) {
 		accordionView.setCourseContainer(beanItemContainer);
 	}
 
 	@Override
 	public void setPersonContainer(
-			BeanItemContainer<PersonModel> beanItemContainer) {
+			BeanItemContainer<ResourceModel> beanItemContainer) {
 		accordionView.setPersonContainer(beanItemContainer);
 	}
 
 	@Override
-	public void setPoiContainer(BeanItemContainer<PoiModel> beanItemContainer) {
+	public void setPoiContainer(
+			BeanItemContainer<ResourceModel> beanItemContainer) {
 		accordionView.setPoiContainer(beanItemContainer);
 	}
 

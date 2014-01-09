@@ -168,7 +168,8 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 	}
 
 	@Override
-	public void setRoomContainer(BeanItemContainer<RoomModel> beanItemContainer) {
+	public void setRoomContainer(
+			BeanItemContainer<ResourceModel> beanItemContainer) {
 		this.roomTable.removeAllItems();
 		for (ResourceModel itemId : beanItemContainer.getItemIds()) {
 			this.roomTable.addItem(itemId);
@@ -177,20 +178,21 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 
 	@Override
 	public void setCourseContainer(
-			BeanItemContainer<CourseModel> beanItemContainer) {
+			BeanItemContainer<ResourceModel> beanItemContainer) {
 		this.courseContainer.removeAllItems();
 		this.courseContainer.addAll(beanItemContainer.getItemIds());
 	}
 
 	@Override
 	public void setPersonContainer(
-			BeanItemContainer<PersonModel> beanItemContainer) {
+			BeanItemContainer<ResourceModel> beanItemContainer) {
 		this.personContainer.removeAllItems();
 		this.personContainer.addAll(beanItemContainer.getItemIds());
 	}
 
 	@Override
-	public void setPoiContainer(BeanItemContainer<PoiModel> beanItemContainer) {
+	public void setPoiContainer(
+			BeanItemContainer<ResourceModel> beanItemContainer) {
 		this.poiContainer.removeAllItems();
 		this.poiContainer.addAll(beanItemContainer.getItemIds());
 	}

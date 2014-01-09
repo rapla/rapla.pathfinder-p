@@ -1,9 +1,6 @@
 package com.pathfinder.presenter;
 
-import com.pathfinder.model.CourseModel;
-import com.pathfinder.model.PersonModel;
-import com.pathfinder.model.PoiModel;
-import com.pathfinder.model.RoomModel;
+import com.pathfinder.model.ResourceModel;
 import com.vaadin.data.util.BeanItemContainer;
 
 import de.vksi.c4j.ContractReference;
@@ -12,16 +9,16 @@ import de.vksi.c4j.Pure;
 @ContractReference(DataLoaderSpecContract.class)
 public interface DataLoaderSpec {
 	@Pure
-	BeanItemContainer<RoomModel> getRoomContainer();
+	BeanItemContainer<ResourceModel> getRoomContainer();
 
 	@Pure
-	BeanItemContainer<CourseModel> getCourseContainer();
+	BeanItemContainer<ResourceModel> getCourseContainer();
 
 	@Pure
-	BeanItemContainer<PersonModel> getPersonContainer();
+	BeanItemContainer<ResourceModel> getPersonContainer();
 
 	@Pure
-	BeanItemContainer<PoiModel> getPoiContainer();
+	BeanItemContainer<ResourceModel> getPoiContainer();
 
 	void reloadAllData();
 

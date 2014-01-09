@@ -1,9 +1,6 @@
 package com.pathfinder.view.components;
 
-import com.pathfinder.model.CourseModel;
-import com.pathfinder.model.PersonModel;
-import com.pathfinder.model.PoiModel;
-import com.pathfinder.model.RoomModel;
+import com.pathfinder.model.ResourceModel;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 
@@ -17,13 +14,13 @@ public interface AccordionViewSpec extends ComponentSpec {
 
 	void useFiltersForAllTables(String searchString);
 
-	void setRoomContainer(BeanItemContainer<RoomModel> beanItemContainer);
+	void setRoomContainer(BeanItemContainer<ResourceModel> beanItemContainer);
 
-	void setCourseContainer(BeanItemContainer<CourseModel> beanItemContainer);
+	void setCourseContainer(BeanItemContainer<ResourceModel> beanItemContainer);
 
-	void setPersonContainer(BeanItemContainer<PersonModel> beanItemContainer);
+	void setPersonContainer(BeanItemContainer<ResourceModel> beanItemContainer);
 
-	void setPoiContainer(BeanItemContainer<PoiModel> beanItemContainer);
+	void setPoiContainer(BeanItemContainer<ResourceModel> beanItemContainer);
 
 	void addItemClickListenerRoomTable(ItemClickListener listener);
 

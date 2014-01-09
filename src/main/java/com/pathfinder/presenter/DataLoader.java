@@ -51,28 +51,26 @@ public class DataLoader implements DataLoaderSpec {
 	private final String RESOURCE_DETAIL_METHOD = BASE_URL + "/getResource?";
 	private final String ORGANIGRAM_METHOD = BASE_URL + "/getOrganigram";
 
-	private final String URL_EMPTY_PARAMETER = ",''";
-
 	private final String REQUEST_PERSONS = "persons";
 	private final String REQUEST_ROOMS = "rooms";
 	private final String REQUEST_POIS = "sonstiges";
 	private final String REQUEST_COURSES = "courses";
 	private final String REQUEST_ORGANIGRAM = "organigram";
 
-	private final String MASSAGE_ERROR_LOADING_URL_RESOURCE = "Error loading resource: ";
-	private final String MASSAGE_ERROR_LOADING_URL_RESOURCE_DETAIL = "Error loading resource detail - id: ";
-	private final String MASSAGE_ERROR_LOADING_URL = "Resource is empty";
+	private final String ERROR_MASSAGE_LOADING_RESOURCE = "Error loading resource: ";
+	private final String ERROR_MASSAGE_LOADING_RESOURCE_DETAIL = "Error loading resource detail - id: ";
+	private final String ERROR_MESSAGE_EMPTY_RESSOURCE = "Resource is empty";
 
 	private BufferedReader br;
 
-	private final BeanItemContainer<RoomModel> roomContainer = new BeanItemContainer<RoomModel>(
-			RoomModel.class);
-	private final BeanItemContainer<CourseModel> courseContainer = new BeanItemContainer<CourseModel>(
-			CourseModel.class);
-	private final BeanItemContainer<PersonModel> personContainer = new BeanItemContainer<PersonModel>(
-			PersonModel.class);
-	private final BeanItemContainer<PoiModel> poiContainer = new BeanItemContainer<PoiModel>(
-			PoiModel.class);
+	private final BeanItemContainer<ResourceModel> roomContainer = new BeanItemContainer<ResourceModel>(
+			ResourceModel.class);
+	private final BeanItemContainer<ResourceModel> courseContainer = new BeanItemContainer<ResourceModel>(
+			ResourceModel.class);
+	private final BeanItemContainer<ResourceModel> personContainer = new BeanItemContainer<ResourceModel>(
+			ResourceModel.class);
+	private final BeanItemContainer<ResourceModel> poiContainer = new BeanItemContainer<ResourceModel>(
+			ResourceModel.class);
 
 	/**
 	 * Consumer of data have to register themselves to this class, to get
@@ -86,7 +84,6 @@ public class DataLoader implements DataLoaderSpec {
 	private static DataLoader instance;
 
 	private DataLoader() {
-
 		// Load data once synchronously
 		loadAllResources();
 
@@ -132,14 +129,53 @@ public class DataLoader implements DataLoaderSpec {
 
 		if (resourcesResult != null)
 			for (ResourceModel roomGet : resourcesResult.getResult()) {
-				RoomModel room = new RoomModel(roomGet.getName(),
+				ResourceModel room = new ResourceModel(roomGet.getName(),
 						roomGet.getLink(), roomGet.getId(),
-						roomGet.getSearchTerms(), null, null, null, null);
-				loadRoomDetail(room);
+						roomGet.getSearchTerms());
 				roomContainer.addItem(room);
 			}
 	}
 
+	private void loadAllCourses() {
+		// Get all courses and all detail information
+		ResourcesResult resourcesResult = gsonGetResources(REQUEST_COURSES, "");
+
+		if (resourcesResult != null)
+			for (ResourceModel courseGet : resourcesResult.getResult()) {
+				ResourceModel course = new ResourceModel(courseGet.getId(),
+						courseGet.getName(), courseGet.getLink(),
+						courseGet.getSearchTerms());
+				courseContainer.addItem(course);
+			}
+	}
+
+	private void loadAllPersons() {
+		// Get all persons and all detail information
+		ResourcesResult resourcesResult = gsonGetResources(REQUEST_PERSONS, "");
+
+		if (resourcesResult != null)
+			for (ResourceModel personGet : resourcesResult.getResult()) {
+				ResourceModel person = new ResourceModel(personGet.getId(),
+						personGet.getName(), personGet.getLink(),
+						personGet.getSearchTerms());
+				personContainer.addItem(person);
+			}
+	}
+
+	private void loadAllPois() {
+		// Get all pois and all detail information
+		ResourcesResult resourcesResult = gsonGetResources(REQUEST_POIS, "");
+
+		if (resourcesResult != null)
+			for (ResourceModel poiGet : resourcesResult.getResult()) {
+				ResourceModel poi = new ResourceModel(poiGet.getName(),
+						poiGet.getLink(), poiGet.getId(),
+						poiGet.getSearchTerms());
+				poiContainer.addItem(poi);
+			}
+	}
+
+	@Deprecated
 	private void loadRoomDetail(RoomModel room) {
 		ResourceDetailResult dataDetail = gsonGetResourceDetail(room.getId());
 		Map<String, Attribut> attribute = dataDetail.getResult()
@@ -158,21 +194,7 @@ public class DataLoader implements DataLoaderSpec {
 			room.setRoomNr(attribute.get("raumnr").getValue());
 	}
 
-	private void loadAllCourses() {
-		// Get all courses and all detail information
-		ResourcesResult resourcesResult = gsonGetResources(REQUEST_COURSES, "");
-
-		if (resourcesResult != null)
-			for (ResourceModel courseGet : resourcesResult.getResult()) {
-				CourseModel course = new CourseModel(courseGet.getId(),
-						courseGet.getName(), courseGet.getLink(),
-						courseGet.getSearchTerms(), null, null, null, null,
-						null, null);
-				courseContainer.addItem(course);
-				loadCourseDetail(course);
-			}
-	}
-
+	@Deprecated
 	private void loadCourseDetail(CourseModel course) {
 		ResourceDetailResult dataDetail = gsonGetResourceDetail(course.getId());
 		Map<String, Attribut> attribute = dataDetail.getResult()
@@ -194,21 +216,7 @@ public class DataLoader implements DataLoaderSpec {
 			course.setRoomNr(attribute.get("raumnr").getValue());
 	}
 
-	private void loadAllPersons() {
-		// Get all persons and all detail information
-		ResourcesResult resourcesResult = gsonGetResources(REQUEST_PERSONS, "");
-
-		if (resourcesResult != null)
-			for (ResourceModel personGet : resourcesResult.getResult()) {
-				PersonModel person = new PersonModel(personGet.getId(),
-						personGet.getName(), personGet.getLink(),
-						personGet.getSearchTerms(), null, null, null, null,
-						null, null, null);
-				personContainer.addItem(person);
-				loadPersonDetail(person);
-			}
-	}
-
+	@Deprecated
 	private void loadPersonDetail(PersonModel person) {
 		ResourceDetailResult dataDetail = gsonGetResourceDetail(person.getId());
 		Map<String, Attribut> attribute = dataDetail.getResult()
@@ -233,19 +241,7 @@ public class DataLoader implements DataLoaderSpec {
 			person.setRoomNr(attribute.get("raumnr").getValue());
 	}
 
-	private void loadAllPois() {
-		// Get all pois and all detail information
-		ResourcesResult resourcesResult = gsonGetResources(REQUEST_POIS, "");
-
-		if (resourcesResult != null)
-			for (ResourceModel poiGet : resourcesResult.getResult()) {
-				PoiModel poi = new PoiModel(poiGet.getName(), poiGet.getLink(),
-						poiGet.getId(), poiGet.getSearchTerms(), null, null);
-				poiContainer.addItem(poi);
-				loadPoiDetail(poi);
-			}
-	}
-
+	@Deprecated
 	private void loadPoiDetail(PoiModel poi) {
 		ResourceDetailResult dataDetail = gsonGetResourceDetail(poi.getId());
 		Map<String, Attribut> attribute = dataDetail.getResult()
@@ -267,10 +263,10 @@ public class DataLoader implements DataLoaderSpec {
 			br = new BufferedReader(new InputStreamReader(
 					new URL(url).openStream()));
 		} catch (MalformedURLException e) {
-			LOGGER.error(MASSAGE_ERROR_LOADING_URL_RESOURCE + resource, e);
+			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE + resource, e);
 			return null;
 		} catch (IOException e) {
-			LOGGER.error(MASSAGE_ERROR_LOADING_URL_RESOURCE + resource, e);
+			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE + resource, e);
 			return null;
 		}
 
@@ -280,20 +276,16 @@ public class DataLoader implements DataLoaderSpec {
 		// Force Error
 		try {
 			ResourceData.getResult();
+			if ("".equals(categoryId)) {
+				LOGGER.info(resource + " loaded");
+				return ResourceData;
+			} else if (!"".equals(categoryId)) {
+				return ResourceData;
+			} else {
+				return null;
+			}
 		} catch (NullPointerException ex) {
-			LOGGER.info(MASSAGE_ERROR_LOADING_URL);
-			return null;
-		}
-
-		if (ResourceData != null && categoryId.equals(URL_EMPTY_PARAMETER)) {
-			LOGGER.info(resource + " loaded");
-			return ResourceData;
-
-		} else if (ResourceData != null
-				&& !categoryId.equals(URL_EMPTY_PARAMETER)) {
-			return ResourceData;
-		} else {
-			LOGGER.error(MASSAGE_ERROR_LOADING_URL_RESOURCE + resource);
+			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE + resource);
 			return null;
 		}
 	}
@@ -304,12 +296,10 @@ public class DataLoader implements DataLoaderSpec {
 			br = new BufferedReader(new InputStreamReader(
 					new URL(url).openStream()));
 		} catch (MalformedURLException e) {
-			LOGGER.error(
-					MASSAGE_ERROR_LOADING_URL_RESOURCE_DETAIL + resourceId, e);
+			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE_DETAIL + resourceId, e);
 			return null;
 		} catch (IOException e) {
-			LOGGER.error(
-					MASSAGE_ERROR_LOADING_URL_RESOURCE_DETAIL + resourceId, e);
+			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE_DETAIL + resourceId, e);
 			return null;
 		}
 
@@ -321,7 +311,7 @@ public class DataLoader implements DataLoaderSpec {
 			ResourceDetailData.getResult();
 			return ResourceDetailData;
 		} catch (NullPointerException ex) {
-			LOGGER.error(MASSAGE_ERROR_LOADING_URL_RESOURCE_DETAIL + resourceId);
+			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE_DETAIL + resourceId);
 			return null;
 		}
 	}
@@ -332,12 +322,10 @@ public class DataLoader implements DataLoaderSpec {
 			br = new BufferedReader(new InputStreamReader(
 					new URL(url).openStream()));
 		} catch (MalformedURLException e) {
-			LOGGER.error(MASSAGE_ERROR_LOADING_URL_RESOURCE
-					+ REQUEST_ORGANIGRAM, e);
+			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE + REQUEST_ORGANIGRAM, e);
 			return null;
 		} catch (IOException e) {
-			LOGGER.error(MASSAGE_ERROR_LOADING_URL_RESOURCE
-					+ REQUEST_ORGANIGRAM, e);
+			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE + REQUEST_ORGANIGRAM, e);
 			return null;
 		}
 
@@ -350,8 +338,7 @@ public class DataLoader implements DataLoaderSpec {
 			LOGGER.info(REQUEST_ORGANIGRAM + " loaded");
 			return organigramResult;
 		} catch (NullPointerException ex) {
-			LOGGER.error(MASSAGE_ERROR_LOADING_URL_RESOURCE
-					+ REQUEST_ORGANIGRAM);
+			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE + REQUEST_ORGANIGRAM);
 			return null;
 		}
 	}
@@ -373,14 +360,13 @@ public class DataLoader implements DataLoaderSpec {
 						// RAM
 						for (ResourceModel course_get : resourcesResult
 								.getResult()) {
-							CourseModel course = courseContainer.getItem(
+							ResourceModel course = courseContainer.getItem(
 									course_get.getId()).getBean();
 							if (course != null) {
 								// add the actual category information to the
 								// found
 								// item
 								course.setFaculty(faculty_get.getName());
-
 							}
 
 						}
@@ -396,15 +382,13 @@ public class DataLoader implements DataLoaderSpec {
 
 					// look if there is any persons with the same id in the RAM
 					for (ResourceModel person_get : ResourceData) {
-						PersonModel person = personContainer.getItem(
+						ResourceModel person = personContainer.getItem(
 								person_get.getId()).getBean();
 						if (person != null) {
 							// add the actual category information to the found
 							// item
 							person.setFaculty(faculty_get.getName());
-
 						}
-
 					}
 				} catch (Exception e) {
 					LOGGER.info("Faculty " + faculty_get.getName()
@@ -414,22 +398,22 @@ public class DataLoader implements DataLoaderSpec {
 	}
 
 	@Override
-	public BeanItemContainer<RoomModel> getRoomContainer() {
+	public BeanItemContainer<ResourceModel> getRoomContainer() {
 		return roomContainer;
 	}
 
 	@Override
-	public BeanItemContainer<CourseModel> getCourseContainer() {
+	public BeanItemContainer<ResourceModel> getCourseContainer() {
 		return courseContainer;
 	}
 
 	@Override
-	public BeanItemContainer<PersonModel> getPersonContainer() {
+	public BeanItemContainer<ResourceModel> getPersonContainer() {
 		return personContainer;
 	}
 
 	@Override
-	public BeanItemContainer<PoiModel> getPoiContainer() {
+	public BeanItemContainer<ResourceModel> getPoiContainer() {
 		return poiContainer;
 	}
 

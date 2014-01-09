@@ -16,9 +16,9 @@ public class CourseModel extends ResourceModel {
 
 	@Deprecated
 	public CourseModel(String id, String name, String link,
-			String[] searchTerms, String roomNr, String vintage,
+			String[] searchTerms, String vintage,
 			String department, String course, String picture, String faculty) {
-		super(id, name, link, searchTerms, roomNr);
+		super(id, name, link, searchTerms);
 		this.vintage = vintage;
 		this.department = department;
 		this.course = course;

@@ -14,6 +14,7 @@ public class ResourceModel {
 	@Deprecated
 	public static final String PROPERTY_ROOMNR = "roomNr";
 	public static final String PROPERTY_TYPE = "type";
+	public static final String PROPERTY_FACULTY = "faculty";
 
 	private String id = "";
 	private String name = "";
@@ -21,14 +22,14 @@ public class ResourceModel {
 	private String[] searchTerms;
 	private String roomNr = "";
 	private String type = "";
+	private String faculty = "";
 
 	public ResourceModel(String id, String name, String link,
-			String[] searchTerms, String roomNr) {
+			String[] searchTerms) {
 		this.setId(id);
 		this.setName(name);
 		this.setLink(link);
 		this.setSearchTerms(searchTerms);
-		this.setRoomNr(roomNr);
 	}
 
 	public String getId() {
@@ -79,5 +80,13 @@ public class ResourceModel {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getFaculty() {
+		return faculty;
+	}
+
+	public void setFaculty(String faculty) {
+		this.faculty = faculty;
 	}
 }
