@@ -22,6 +22,7 @@ import com.pathfinder.util.properties.PropertiesKey;
  * GenericDataLoader will get the Data to the runtime
  * 
  * @author Myracle
+ * @version 0.1
  * 
  */
 

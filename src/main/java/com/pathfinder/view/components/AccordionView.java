@@ -61,14 +61,14 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 	private final String[] visiblePersonTableColumns = new String[] { ResourceModel.PROPERTY_NAME };
 	private final String[] visiblePoiTableColumns = new String[] { ResourceModel.PROPERTY_NAME };
 
-	private final BeanItemContainer<RoomModel> roomContainer = new BeanItemContainer<RoomModel>(
-			RoomModel.class);
-	private final BeanItemContainer<CourseModel> courseContainer = new BeanItemContainer<CourseModel>(
-			CourseModel.class);
-	private final BeanItemContainer<PersonModel> personContainer = new BeanItemContainer<PersonModel>(
-			PersonModel.class);
-	private final BeanItemContainer<PoiModel> poiContainer = new BeanItemContainer<PoiModel>(
-			PoiModel.class);
+	private final BeanItemContainer<ResourceModel> roomContainer = new BeanItemContainer<ResourceModel>(
+			ResourceModel.class);
+	private final BeanItemContainer<ResourceModel> courseContainer = new BeanItemContainer<ResourceModel>(
+			ResourceModel.class);
+	private final BeanItemContainer<ResourceModel> personContainer = new BeanItemContainer<ResourceModel>(
+			ResourceModel.class);
+	private final BeanItemContainer<ResourceModel> poiContainer = new BeanItemContainer<ResourceModel>(
+			ResourceModel.class);
 
 	public AccordionView() {
 		this.createTable(roomTable, roomContainer, visibleRoomTableColumns);
@@ -170,14 +170,9 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 	@Override
 	public void setRoomContainer(BeanItemContainer<RoomModel> beanItemContainer) {
 		this.roomTable.removeAllItems();
-		for (RoomModel itemId : beanItemContainer.getItemIds()) {
+		for (ResourceModel itemId : beanItemContainer.getItemIds()) {
 			this.roomTable.addItem(itemId);
 		}
-
-		// TODO Table have to be refreshed to show the newest data
-		// roomTable.setContainerDataSource(roomTable.getContainerDataSource());
-		// roomTable.refreshRowCache();
-		// accordion.markAsDirty();
 	}
 
 	@Override
@@ -201,23 +196,6 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 	}
 
 	@Override
-	public void updateTranslations() {
-		accordionCaptionRooms = new String(
-				translator.translate(TranslationKeys.ROOMS));
-		accordionCaptionCourses = new String(
-				translator.translate(TranslationKeys.COURSES));
-		accordionCaptionPersons = new String(
-				translator.translate(TranslationKeys.PERSONS));
-		accordionCaptionPois = new String(
-				translator.translate(TranslationKeys.POI));
-
-		accordion.getTab(roomTable).setCaption(accordionCaptionRooms);
-		accordion.getTab(courseTable).setCaption(accordionCaptionCourses);
-		accordion.getTab(personTable).setCaption(accordionCaptionPersons);
-		accordion.getTab(poiTable).setCaption(accordionCaptionPois);
-	}
-
-	@Override
 	public void addItemClickListenerRoomTable(ItemClickListener listener) {
 		roomTable.addItemClickListener(listener);
 	}
@@ -235,5 +213,22 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 	@Override
 	public void addItemClickListenerPoiTable(ItemClickListener listener) {
 		poiTable.addItemClickListener(listener);
+	}
+
+	@Override
+	public void updateTranslations() {
+		accordionCaptionRooms = new String(
+				translator.translate(TranslationKeys.ROOMS));
+		accordionCaptionCourses = new String(
+				translator.translate(TranslationKeys.COURSES));
+		accordionCaptionPersons = new String(
+				translator.translate(TranslationKeys.PERSONS));
+		accordionCaptionPois = new String(
+				translator.translate(TranslationKeys.POI));
+
+		accordion.getTab(roomTable).setCaption(accordionCaptionRooms);
+		accordion.getTab(courseTable).setCaption(accordionCaptionCourses);
+		accordion.getTab(personTable).setCaption(accordionCaptionPersons);
+		accordion.getTab(poiTable).setCaption(accordionCaptionPois);
 	}
 }

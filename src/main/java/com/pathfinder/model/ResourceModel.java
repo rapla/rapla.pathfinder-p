@@ -13,12 +13,14 @@ public class ResourceModel {
 	public static final String PROPERTY_SEARCHTERMS = "searchTerms";
 	@Deprecated
 	public static final String PROPERTY_ROOMNR = "roomNr";
+	public static final String PROPERTY_TYPE = "type";
 
 	private String id = "";
-	private String name;
+	private String name = "";
 	private String link = "";
 	private String[] searchTerms;
-	private String roomNr;
+	private String roomNr = "";
+	private String type = "";
 
 	public ResourceModel(String id, String name, String link,
 			String[] searchTerms, String roomNr) {
@@ -69,5 +71,13 @@ public class ResourceModel {
 	@Deprecated
 	public void setRoomNr(String roomNr) {
 		this.roomNr = roomNr;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 }
