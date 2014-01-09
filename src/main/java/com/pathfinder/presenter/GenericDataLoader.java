@@ -55,9 +55,6 @@ public class GenericDataLoader implements GenericDataLoaderSpec {
 		BeanItemContainer<FreeRoomModel> freeRoomContainer = new BeanItemContainer<FreeRoomModel>(
 				FreeRoomModel.class);
 
-		boolean done = false;
-		int counter = 0;
-
 		try {
 			br = new BufferedReader(new InputStreamReader(new URL(
 					FREE_RESOURCES).openStream()));
@@ -70,7 +67,7 @@ public class GenericDataLoader implements GenericDataLoaderSpec {
 
 			if (!freeResourcesResult.isEmpty()) {
 				for (JSONObject result : freeResourcesResult) {
-					while (!done) {
+					for (int i = 0; i == 5; i++) {
 
 						List<JSONObject> freeRoomResources = this
 								.getFreeResourcesResources(result);
@@ -82,10 +79,7 @@ public class GenericDataLoader implements GenericDataLoaderSpec {
 								(String) result.get("start"),
 								(String) result.get("end"));
 						freeRoomContainer.addItem(freeRoom);
-						counter++;
 
-						if (counter == 5)
-							done = true;
 					}
 				}
 
@@ -136,7 +130,9 @@ public class GenericDataLoader implements GenericDataLoaderSpec {
 			attributMap = (JSONObject) ((JSONObject) jsonObject.get("result"))
 					.get("attributeMap");
 
+			@SuppressWarnings("unchecked")
 			Set<String> attributeMapSet = attributMap.keySet();
+
 			Iterator<String> attributeMapKeys = attributeMapSet.iterator();
 
 			while (attributeMapKeys.hasNext()) {
