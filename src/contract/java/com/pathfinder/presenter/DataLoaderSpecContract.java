@@ -10,7 +10,7 @@ import static de.vksi.c4j.Condition.preCondition;
 import com.pathfinder.model.CourseModel;
 import com.pathfinder.model.PersonModel;
 import com.pathfinder.model.PoiModel;
-import com.pathfinder.model.RoomModel;
+import com.pathfinder.model.ResourceModel;
 import com.vaadin.data.util.BeanItemContainer;
 
 import de.vksi.c4j.Condition;
@@ -31,9 +31,9 @@ public class DataLoaderSpecContract implements DataLoaderSpec {
 	 * @see com.pathfinder.presenter.DataLoaderSpec#getRoomContainer()
 	 */
 	@Override
-	public BeanItemContainer<RoomModel> getRoomContainer() {
+	public BeanItemContainer<ResourceModel> getRoomContainer() {
 		if (postCondition()) {
-			BeanItemContainer<RoomModel> result = Condition.result();
+			BeanItemContainer<ResourceModel> result = Condition.result();
 			assert result != null : "Result not null";
 		}
 		return ignored();
@@ -45,9 +45,9 @@ public class DataLoaderSpecContract implements DataLoaderSpec {
 	 * @see com.pathfinder.presenter.DataLoaderSpec#getCourseContainer()
 	 */
 	@Override
-	public BeanItemContainer<CourseModel> getCourseContainer() {
+	public BeanItemContainer<ResourceModel> getCourseContainer() {
 		if (postCondition()) {
-			BeanItemContainer<CourseModel> result = Condition.result();
+			BeanItemContainer<ResourceModel> result = Condition.result();
 			assert result != null : "Result not null";
 		}
 		return ignored();
@@ -59,9 +59,9 @@ public class DataLoaderSpecContract implements DataLoaderSpec {
 	 * @see com.pathfinder.presenter.DataLoaderSpec#getPersonContainer()
 	 */
 	@Override
-	public BeanItemContainer<PersonModel> getPersonContainer() {
+	public BeanItemContainer<ResourceModel> getPersonContainer() {
 		if (postCondition()) {
-			BeanItemContainer<PersonModel> result = Condition.result();
+			BeanItemContainer<ResourceModel> result = Condition.result();
 			assert result != null : "Result not null";
 		}
 		return ignored();
@@ -73,9 +73,9 @@ public class DataLoaderSpecContract implements DataLoaderSpec {
 	 * @see com.pathfinder.presenter.DataLoaderSpec#getPoiContainer()
 	 */
 	@Override
-	public BeanItemContainer<PoiModel> getPoiContainer() {
+	public BeanItemContainer<ResourceModel> getPoiContainer() {
 		if (postCondition()) {
-			BeanItemContainer<PoiModel> result = Condition.result();
+			BeanItemContainer<ResourceModel> result = Condition.result();
 			assert result != null : "Result not null";
 		}
 		return ignored();

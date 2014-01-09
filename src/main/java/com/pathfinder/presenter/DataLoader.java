@@ -39,7 +39,6 @@ import com.vaadin.ui.UI;
  * @author igor
  * 
  */
-@Deprecated
 public class DataLoader implements DataLoaderSpec {
 
 	private static final Logger LOGGER = LogManager.getLogger(DataLoader.class);

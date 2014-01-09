@@ -4,10 +4,7 @@ import static de.vksi.c4j.Condition.ignored;
 import static de.vksi.c4j.Condition.postCondition;
 import static de.vksi.c4j.Condition.preCondition;
 
-import com.pathfinder.model.CourseModel;
-import com.pathfinder.model.PersonModel;
-import com.pathfinder.model.PoiModel;
-import com.pathfinder.model.RoomModel;
+import com.pathfinder.model.ResourceModel;
 import com.pathfinder.view.container.SearchPanel;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.CustomComponent;
@@ -26,7 +23,7 @@ public class DesktopPresenterSpecContract implements DesktopPresenterSpec {
 	}
 
 	@Override
-	public void setRoomContainer(BeanItemContainer<RoomModel> beanItemContainer) {
+	public void setRoomContainer(BeanItemContainer<ResourceModel> beanItemContainer) {
 		if (preCondition()) {
 			// TODO: write preconditions if required
 		}
@@ -37,7 +34,7 @@ public class DesktopPresenterSpecContract implements DesktopPresenterSpec {
 
 	@Override
 	public void setCourseContainer(
-			BeanItemContainer<CourseModel> beanItemContainer) {
+			BeanItemContainer<ResourceModel> beanItemContainer) {
 		if (preCondition()) {
 			// TODO: write preconditions if required
 		}
@@ -48,7 +45,7 @@ public class DesktopPresenterSpecContract implements DesktopPresenterSpec {
 
 	@Override
 	public void setPersonContainer(
-			BeanItemContainer<PersonModel> beanItemContainer) {
+			BeanItemContainer<ResourceModel> beanItemContainer) {
 		if (preCondition()) {
 			// TODO: write preconditions if required
 		}
@@ -58,7 +55,7 @@ public class DesktopPresenterSpecContract implements DesktopPresenterSpec {
 	}
 
 	@Override
-	public void setPoiContainer(BeanItemContainer<PoiModel> beanItemContainer) {
+	public void setPoiContainer(BeanItemContainer<ResourceModel> beanItemContainer) {
 		if (preCondition()) {
 			// TODO: write preconditions if required
 		}
