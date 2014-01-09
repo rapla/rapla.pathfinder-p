@@ -13,21 +13,21 @@ import com.vaadin.data.util.BeanItemContainer;
 
 public class GenericDataLoaderTest {
 
-	GenericDataLoader genericDataLoader;
+	DataLoader dataLoader;
 
 	@Before
 	public void setUp() {
-		genericDataLoader = new GenericDataLoader();
+		dataLoader = new DataLoader("s");
 	}
 
 	@Test
 	public void getFreeRessources() {
-		Assert.assertNotNull(genericDataLoader.getFreeResources());
+		Assert.assertNotNull(dataLoader.getFreeResources());
 	}
 
 	@Test
 	public void readSomethingFromFreeResourcesResult() {
-		BeanItemContainer<FreeRoomModel> freeResourcesResult = genericDataLoader
+		BeanItemContainer<FreeRoomModel> freeResourcesResult = dataLoader
 				.getFreeResources();
 
 		Assert.assertNotNull(freeResourcesResult);
@@ -37,7 +37,7 @@ public class GenericDataLoaderTest {
 	@Test
 	public void getModelDetailsAndReadWithIterators() {
 
-		List<Attribut> modelDetails = genericDataLoader
+		List<Attribut> modelDetails = dataLoader
 				.getModelDetails("getResource?resourceId=org.rapla.entities.domain.Allocatable_1320");
 
 		Assert.assertNotNull(modelDetails);

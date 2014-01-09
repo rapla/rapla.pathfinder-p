@@ -7,6 +7,12 @@ import static de.vksi.c4j.Condition.ignored;
 import static de.vksi.c4j.Condition.postCondition;
 import static de.vksi.c4j.Condition.preCondition;
 
+import java.util.List;
+
+import org.json.simple.JSONObject;
+
+import com.pathfinder.model.Attribut;
+import com.pathfinder.model.FreeRoomModel;
 import com.pathfinder.model.ResourceModel;
 import com.vaadin.data.util.BeanItemContainer;
 
@@ -100,6 +106,24 @@ public class DataLoaderSpecContract implements DataLoaderSpec {
 	@Override
 	public void reloadAllData() {
 		// Can be called at any time
+	}
+
+	@Override
+	public List<JSONObject> getFreeResourcesResources(JSONObject jsonObject) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Attribut> getModelDetails(String modelLink) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BeanItemContainer<FreeRoomModel> getFreeResources() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -73,7 +73,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 			KeyboardModel.class);
 
 	// Needed sub-presenter
-	private final GenericDataLoaderSpec genericDataLoader = new GenericDataLoader();
+	private final DataLoader dataLoader = new DataLoader("s");
 
 	// Layout
 	private final DesktopLayoutSpec desktopLayout = new DesktopLayout(
@@ -316,7 +316,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	}
 
 	public synchronized void freeRoomHandler() {
-		desktopLayout.refreshFreeRooms(genericDataLoader.getFreeResources());
+		desktopLayout.refreshFreeRooms(dataLoader.getFreeResources());
 	}
 
 	@Override

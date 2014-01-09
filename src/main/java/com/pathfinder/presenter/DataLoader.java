@@ -9,14 +9,20 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import com.google.gson.Gson;
+import com.pathfinder.model.Attribut;
 import com.pathfinder.model.Category;
+import com.pathfinder.model.FreeRoomModel;
 import com.pathfinder.model.ResourceModel;
 import com.pathfinder.model.gson.CategoryResult;
 import com.pathfinder.model.gson.ResourcesResult;
@@ -41,6 +47,8 @@ public class DataLoader implements DataLoaderSpec {
 
 	private final String RESOURCES_METHOD = BASE_URL + "/getResources?";
 	private final String ORGANIGRAM_METHOD = BASE_URL + "/getOrganigram";
+	private final String FREE_RESOURCES = BASE_URL + "/getFreeResources";
+	private final String MASSAGE_ERROR_URL_NOT_READABLE = "Error loading URL: ";
 
 	private final String REQUEST_PERSONS = "persons";
 	private final String REQUEST_ROOMS = "rooms";
@@ -49,8 +57,14 @@ public class DataLoader implements DataLoaderSpec {
 	private final String REQUEST_ORGANIGRAM = "organigram";
 
 	private final String ERROR_MASSAGE_LOADING_RESOURCE = "Error loading resource: ";
-	private final String ERROR_MASSAGE_LOADING_RESOURCE_DETAIL = "Error loading resource detail - id: ";
-	private final String ERROR_MESSAGE_EMPTY_RESSOURCE = "Resource is empty";
+
+	// ToDo: Delete if not necessary
+	// private final String ERROR_MASSAGE_LOADING_RESOURCE_DETAIL =
+	// "Error loading resource detail - id: ";
+	// private final String ERROR_MESSAGE_EMPTY_RESSOURCE = "Resource is empty";
+
+	private final JSONParser parser = new JSONParser();
+	private JSONObject jsonObject = null;
 
 	private BufferedReader br;
 
@@ -73,6 +87,10 @@ public class DataLoader implements DataLoaderSpec {
 			.getInstance();
 
 	private static DataLoader instance;
+
+	public DataLoader(String s) {
+
+	}
 
 	private DataLoader() {
 		// Load data once synchronously
@@ -326,6 +344,133 @@ public class DataLoader implements DataLoaderSpec {
 	@Override
 	public BeanItemContainer<ResourceModel> getPoiContainer() {
 		return poiContainer;
+	}
+
+	@Override
+	public BeanItemContainer<FreeRoomModel> getFreeResources() {
+
+		FreeRoomModel freeRoom = null;
+
+		BeanItemContainer<FreeRoomModel> freeRoomContainer = new BeanItemContainer<FreeRoomModel>(
+				FreeRoomModel.class);
+		int counter = 0;
+
+		try {
+			br = new BufferedReader(new InputStreamReader(new URL(
+					FREE_RESOURCES).openStream()));
+
+			jsonObject = (JSONObject) parser.parse(br);
+
+			@SuppressWarnings("unchecked")
+			List<JSONObject> freeResourcesResult = (List<JSONObject>) jsonObject
+					.get("result");
+
+			if (freeResourcesResult.size() > 5) {
+				for (int i = 4; i < freeResourcesResult.size(); i++)
+					freeResourcesResult.remove(i);
+			}
+
+			Iterator<JSONObject> jsonIterator = freeResourcesResult.iterator();
+
+			if (!freeResourcesResult.isEmpty()) {
+
+				while (jsonIterator.hasNext()) {
+
+					JSONObject result = jsonIterator.next();
+
+					if (counter < 5) {
+
+						List<JSONObject> freeRoomResources = this
+								.getFreeResourcesResources(result);
+
+						freeRoom = new FreeRoomModel((String) freeRoomResources
+								.get(0).get("id"), (String) freeRoomResources
+								.get(0).get("name"), (String) freeRoomResources
+								.get(0).get("link"),
+								(String) result.get("start"),
+								(String) result.get("end"));
+						freeRoomContainer.addItem(freeRoom);
+						counter++;
+					}
+				}
+
+				return freeRoomContainer;
+
+			}
+			return null;
+		} catch (MalformedURLException e) {
+			LOGGER.error(MASSAGE_ERROR_URL_NOT_READABLE, e);
+			return null;
+		} catch (IOException e) {
+			LOGGER.error(MASSAGE_ERROR_URL_NOT_READABLE, e);
+			return null;
+		} catch (ParseException e) {
+			LOGGER.error(MASSAGE_ERROR_URL_NOT_READABLE, e);
+			return null;
+		}
+
+	}
+
+	@Override
+	public List<JSONObject> getFreeResourcesResources(JSONObject jsonObject) {
+
+		this.jsonObject = jsonObject;
+
+		@SuppressWarnings("unchecked")
+		List<JSONObject> resources = (List<JSONObject>) this.jsonObject
+				.get("resources");
+
+		return resources;
+	}
+
+	@Override
+	public List<Attribut> getModelDetails(String modelLink) {
+		JSONObject attributMap;
+		Attribut attribut;
+
+		List<Attribut> attributList = new ArrayList<Attribut>();
+
+		try {
+			br = new BufferedReader(new InputStreamReader(new URL(BASE_URL
+					+ "/" + modelLink).openStream()));
+
+			jsonObject = (JSONObject) parser.parse(br);
+
+			attributMap = (JSONObject) ((JSONObject) jsonObject.get("result"))
+					.get("attributeMap");
+
+			@SuppressWarnings("unchecked")
+			Set<String> attributeMapSet = attributMap.keySet();
+
+			Iterator<String> attributeMapKeys = attributeMapSet.iterator();
+
+			while (attributeMapKeys.hasNext()) {
+				attribut = new Attribut();
+
+				String nextKey = attributeMapKeys.next().toString();
+
+				attribut.setLabel((String) ((JSONObject) attributMap
+						.get(nextKey)).get("label"));
+				attribut.setValue((String) ((JSONObject) attributMap
+						.get(nextKey)).get("value"));
+
+				attributList.add(attribut);
+
+			}
+
+			return attributList;
+
+		} catch (MalformedURLException e) {
+			LOGGER.error(MASSAGE_ERROR_URL_NOT_READABLE, e);
+			return null;
+		} catch (IOException e) {
+			LOGGER.error(MASSAGE_ERROR_URL_NOT_READABLE, e);
+			return null;
+		} catch (ParseException e) {
+			LOGGER.error(MASSAGE_ERROR_URL_NOT_READABLE, e);
+			return null;
+		}
+
 	}
 
 	public static DataLoader getInstance() {
