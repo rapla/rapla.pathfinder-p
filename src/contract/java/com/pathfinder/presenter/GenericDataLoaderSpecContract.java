@@ -9,6 +9,9 @@ import java.util.List;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import com.pathfinder.model.FreeRoomModel;
+import com.vaadin.data.util.BeanItemContainer;
+
 import de.vksi.c4j.ClassInvariant;
 import de.vksi.c4j.Target;
 
@@ -23,7 +26,7 @@ public class GenericDataLoaderSpecContract implements GenericDataLoaderSpec {
 	}
 
 	@Override
-	public List<JSONObject> getFreeResourcesResult() {
+	public BeanItemContainer<FreeRoomModel> getFreeResources() {
 		if (preCondition()) {
 			// TODO: write preconditions if required
 		}

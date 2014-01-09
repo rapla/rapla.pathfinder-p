@@ -17,8 +17,10 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import com.pathfinder.model.Attribut;
+import com.pathfinder.model.FreeRoomModel;
 import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.PropertiesKey;
+import com.vaadin.data.util.BeanItemContainer;
 
 /**
  * 
@@ -46,7 +48,15 @@ public class GenericDataLoader implements GenericDataLoaderSpec {
 	private BufferedReader br;
 
 	@Override
-	public List<JSONObject> getFreeResourcesResult() {
+	public BeanItemContainer<FreeRoomModel> getFreeResources() {
+
+		FreeRoomModel freeRoom = null;
+
+		BeanItemContainer<FreeRoomModel> freeRoomContainer = new BeanItemContainer<FreeRoomModel>(
+				FreeRoomModel.class);
+
+		boolean done = false;
+		int counter = 0;
 
 		try {
 			br = new BufferedReader(new InputStreamReader(new URL(
@@ -55,11 +65,34 @@ public class GenericDataLoader implements GenericDataLoaderSpec {
 			jsonObject = (JSONObject) parser.parse(br);
 
 			@SuppressWarnings("unchecked")
-			List<JSONObject> result = (List<JSONObject>) jsonObject
+			List<JSONObject> freeResourcesResult = (List<JSONObject>) jsonObject
 					.get("result");
 
-			return result;
+			if (!freeResourcesResult.isEmpty()) {
+				for (JSONObject result : freeResourcesResult) {
+					while (!done) {
 
+						List<JSONObject> freeRoomResources = this
+								.getFreeResourcesResources(result);
+
+						freeRoom = new FreeRoomModel((String) freeRoomResources
+								.get(0).get("id"), (String) freeRoomResources
+								.get(0).get("name"), (String) freeRoomResources
+								.get(0).get("link"),
+								(String) result.get("start"),
+								(String) result.get("end"));
+						freeRoomContainer.addItem(freeRoom);
+						counter++;
+
+						if (counter == 5)
+							done = true;
+					}
+				}
+
+				return freeRoomContainer;
+
+			}
+			return null;
 		} catch (MalformedURLException e) {
 			LOGGER.error(MASSAGE_ERROR_URL_NOT_READABLE, e);
 			return null;

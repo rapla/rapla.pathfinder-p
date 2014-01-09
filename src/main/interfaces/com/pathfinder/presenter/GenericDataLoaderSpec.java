@@ -6,6 +6,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import com.pathfinder.model.Attribut;
+import com.pathfinder.model.FreeRoomModel;
+import com.vaadin.data.util.BeanItemContainer;
 
 import de.vksi.c4j.ContractReference;
 import de.vksi.c4j.Pure;
@@ -14,7 +16,7 @@ import de.vksi.c4j.Pure;
 public interface GenericDataLoaderSpec {
 
 	@Pure
-	List<JSONObject> getFreeResourcesResult();
+	BeanItemContainer<FreeRoomModel> getFreeResources();
 
 	@Pure
 	List<JSONObject> getFreeResourcesResources(JSONObject jsonObject);

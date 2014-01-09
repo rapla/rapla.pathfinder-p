@@ -316,40 +316,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	}
 
 	public synchronized void freeRoomHandler() {
-		List<JSONObject> freeResourcesResult = genericDataLoader
-				.getFreeResourcesResult();
-
-		if (freeResourcesResult.size() != 0) {
-			LOGGER.debug("Number of free room resources: "
-					+ freeResourcesResult.size());
-
-			BeanItemContainer<FreeRoomModel> freeRoomContainer = new BeanItemContainer<FreeRoomModel>(
-					FreeRoomModel.class);
-
-			FreeRoomModel freeRoom = null;
-
-			// TODO Only 5 elements should be added to the table in the
-			// FreeRoomView - Move to GenericDataLoader
-			for (int i = freeResourcesResult.size() - 1; i >= 5; i--) {
-				freeResourcesResult.remove(i);
-			}
-
-			for (JSONObject result : freeResourcesResult) {
-				List<JSONObject> freeRoomResources = genericDataLoader
-						.getFreeResourcesResources(result);
-
-				freeRoom = new FreeRoomModel((String) freeRoomResources.get(0)
-						.get("id"), (String) freeRoomResources.get(0).get(
-						"name"), (String) freeRoomResources.get(0).get("link"),
-						(String) result.get("start"),
-						(String) result.get("end"));
-				freeRoomContainer.addItem(freeRoom);
-			}
-
-			desktopLayout.refreshFreeRooms(freeRoomContainer);
-		} else {
-			LOGGER.debug("No free Rooms");
-		}
+		desktopLayout.refreshFreeRooms(genericDataLoader.getFreeResources());
 	}
 
 	@Override

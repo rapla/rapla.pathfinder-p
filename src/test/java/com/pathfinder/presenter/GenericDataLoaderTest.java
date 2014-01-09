@@ -8,6 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.pathfinder.model.Attribut;
+import com.pathfinder.model.FreeRoomModel;
+import com.vaadin.data.util.BeanItemContainer;
 
 public class GenericDataLoaderTest {
 
@@ -20,31 +22,16 @@ public class GenericDataLoaderTest {
 
 	@Test
 	public void getFreeRessources() {
-		Assert.assertNotNull(genericDataLoader.getFreeResourcesResult());
+		Assert.assertNotNull(genericDataLoader.getFreeResources());
 	}
 
 	@Test
 	public void readSomethingFromFreeResourcesResult() {
-		List<JSONObject> freeResourcesResult = genericDataLoader
-				.getFreeResourcesResult();
+		BeanItemContainer<FreeRoomModel> freeResourcesResult = genericDataLoader
+				.getFreeResources();
 
-		String free = (String) freeResourcesResult.get(0).get("name");
+		Assert.assertNotNull(freeResourcesResult);
 
-		Assert.assertTrue(free.equals("free"));
-
-	}
-
-	@Test
-	public void readSomethingFromFreeResourcesResources() {
-		List<JSONObject> freeResourcesResult = genericDataLoader
-				.getFreeResourcesResult();
-
-		List<JSONObject> freeResourcesResources = genericDataLoader
-				.getFreeResourcesResources(freeResourcesResult.get(0));
-
-		String name = (String) freeResourcesResources.get(0).get("name");
-
-		Assert.assertTrue(name.equals("XPZ1"));
 	}
 
 	@Test
