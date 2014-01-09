@@ -90,7 +90,9 @@ public class GenericDataLoader implements GenericDataLoaderSpec {
 		String attributLabel;
 		String attributValue;
 		JSONObject attributMap;
-		Attribut attribut = new Attribut();
+		Attribut attribut;
+
+		List<Attribut> attributList = new ArrayList<Attribut>();
 
 		try {
 			br = new BufferedReader(new InputStreamReader(new URL(BASE_URL
@@ -103,9 +105,10 @@ public class GenericDataLoader implements GenericDataLoaderSpec {
 
 			Set<String> attributeMapSet = attributMap.keySet();
 			Iterator<String> attributeMapKeys = attributeMapSet.iterator();
-			List<Attribut> attributList = new ArrayList();
 
 			while (attributeMapKeys.hasNext()) {
+				attribut = new Attribut();
+
 				String nextKey = attributeMapKeys.next().toString();
 
 				attributLabel = (String) ((JSONObject) attributMap.get(nextKey))
