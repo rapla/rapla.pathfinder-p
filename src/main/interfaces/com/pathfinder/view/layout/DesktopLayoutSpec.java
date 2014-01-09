@@ -1,12 +1,10 @@
 package com.pathfinder.view.layout;
 
+import com.pathfinder.model.FreeRoomModel;
 import com.pathfinder.view.ViewSpec;
-import com.pathfinder.view.components.FreeRoomViewSpec;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Button.ClickListener;
-
-import de.vksi.c4j.ContractReference;
-import de.vksi.c4j.Pure;
 
 /**
  * MainLayoutSpec
@@ -14,7 +12,6 @@ import de.vksi.c4j.Pure;
  * @author alexh
  * 
  */
-@ContractReference(DesktopLayoutSpecContract.class)
 public interface DesktopLayoutSpec extends ViewSpec {
 	void addLanguageValueChangeListener(ValueChangeListener listener);
 
@@ -36,6 +33,5 @@ public interface DesktopLayoutSpec extends ViewSpec {
 
 	void setAppointmentUrl(String url);
 
-	@Pure
-	FreeRoomViewSpec getFreeRoom();
+	void refreshFreeRooms(BeanItemContainer<FreeRoomModel> freeRoomContainer);
 }

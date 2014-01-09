@@ -54,7 +54,8 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 		this.freeRoomTable.setImmediate(true);
 		this.freeRoomTable.setColumnHeaderMode(ColumnHeaderMode.HIDDEN);
 		this.freeRoomTable.setVisibleColumns(visibleFreeRoomTableColumns);
-		this.freeRoomTable.setTableFieldFactory(new CustomTableFieldFactory());
+		// this.freeRoomTable.setTableFieldFactory(new
+		// CustomTableFieldFactory());
 		this.freeRoomTable.setPageLength(5);
 		this.freeRoomTable
 				.setSortContainerPropertyId(FreeRoomModel.PROPERTY_START);
@@ -105,7 +106,7 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 
 		if (freeRoomContainer.size() != 0) {
 			cssLayout.removeComponent(noRoomsLabel);
-			
+
 			this.freeRoomContainer = freeRoomContainer;
 			this.freeRoomTable.setContainerDataSource(this.freeRoomContainer);
 

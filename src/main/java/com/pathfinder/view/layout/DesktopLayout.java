@@ -1,5 +1,6 @@
 package com.pathfinder.view.layout;
 
+import com.pathfinder.model.FreeRoomModel;
 import com.pathfinder.util.widgetset.DateTime;
 import com.pathfinder.view.components.AppointmentView;
 import com.pathfinder.view.components.AppointmentViewSpec;
@@ -10,6 +11,7 @@ import com.pathfinder.view.components.MenuBar;
 import com.pathfinder.view.components.MenuBarSpec;
 import com.pathfinder.view.container.SearchPanelSpec;
 import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.VerticalLayout;
@@ -112,6 +114,12 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	}
 
 	@Override
+	public void refreshFreeRooms(
+			BeanItemContainer<FreeRoomModel> freeRoomContainer) {
+		freeRoom.refreshFreeRooms(freeRoomContainer);
+	}
+
+	@Override
 	public void setAppointmentUrl(String url) {
 		appointmentView.setUrl(url);
 	}
@@ -119,10 +127,6 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	@Override
 	public void destroyLayout() {
 		layout.removeAllComponents();
-	}
-
-	public FreeRoomViewSpec getFreeRoom() {
-		return freeRoom;
 	}
 
 	@Override

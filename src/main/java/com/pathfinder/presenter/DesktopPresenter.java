@@ -315,24 +315,20 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		List<JSONObject> freeResourcesResult = genericDataLoader
 				.getFreeResourcesResult();
 
-		// TODO Add error handling to handle NullPointerException
 		if (freeResourcesResult != null) {
 			BeanItemContainer<FreeRoomModel> freeRoomContainer = new BeanItemContainer<FreeRoomModel>(
 					FreeRoomModel.class);
 
+			FreeRoomModel freeRoom = null;
 			for (JSONObject result : freeResourcesResult) {
-				List<JSONObject> freeRoomResources = genericDataLoader
-						.getFreeResourcesResources(result);
-
-				FreeRoomModel freeRoom = new FreeRoomModel(
-						(String) freeRoomResources.get(0).get("id"),
-						(String) freeRoomResources.get(0).get("name"),
-						(String) freeRoomResources.get(0).get("link"),
+				freeRoom = new FreeRoomModel((String) result.get("id"),
+						(String) result.get("name"),
+						(String) result.get("link"),
 						(String) result.get("start"),
 						(String) result.get("end"));
 				freeRoomContainer.addItem(freeRoom);
 			}
-			desktopLayout.getFreeRoom().refreshFreeRooms(freeRoomContainer);
+			desktopLayout.refreshFreeRooms(freeRoomContainer);
 		}
 	}
 
@@ -349,5 +345,4 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	public CustomComponent getDesktopLayoutView() {
 		return (DesktopLayout) desktopLayout;
 	}
-
 }
