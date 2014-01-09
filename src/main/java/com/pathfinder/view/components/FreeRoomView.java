@@ -1,37 +1,42 @@
 package com.pathfinder.view.components;
 
-import java.util.List;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.pathfinder.presenter.DataLoader;
+import com.pathfinder.model.FreeRoomModel;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
+import com.vaadin.data.Container;
+import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.ExternalResource;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Link;
+import com.vaadin.ui.Table;
+import com.vaadin.ui.Table.ColumnHeaderMode;
+import com.vaadin.ui.TableFieldFactory;
 
 public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
-	private final TranslatorSpec translator = Translator.getInstance();
-	private static final Logger LOGGER = LogManager.getLogger(DataLoader.class);
+	private static final Logger LOGGER = LogManager
+			.getLogger(FreeRoomView.class);
 
-	private Label actualFreeRoomsLabel = new Label();
+	private final TranslatorSpec translator = Translator.getInstance();
+
+	private final Label actualFreeRoomsLabel = new Label();
 
 	private CssLayout cssLayout = new CssLayout();
-	private GridLayout gridLayout;
+	private BeanItemContainer<FreeRoomModel> freeRoomContainer = new BeanItemContainer<FreeRoomModel>(
+			FreeRoomModel.class);
+	private Table freeRoomTable = new Table();
+	private final Object[] visibleFreeRoomTableColumns = new String[] {
+			FreeRoomModel.PROPERTY_NAME, FreeRoomModel.PROPERTY_START,
+			FreeRoomModel.PROPERTY_END, FreeRoomModel.PROPERTY_LINK };
+
 	private final Label noRoomsLabel = new Label(
 			translator.translate(TranslationKeys.NO_FREE_ROOMS_AVAILABLE));
-
-	private List<String> raumNameList;
-	private List<String> raumLinkList;
-	private List<String> raumIdList;
-	private List<String> startList;
-	private List<String> endList;
 
 	private String room = translator.translate(TranslationKeys.ROOM);
 	private String time = translator.translate(TranslationKeys.TIME);
@@ -39,73 +44,87 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 			.translate(TranslationKeys.TO_FLOOR_PLAN);
 
 	public FreeRoomView() {
-		buildLayout();
+		this.createTable();
+		this.buildLayout();
+		this.setCompositionRoot(cssLayout);
+	}
 
-		setCompositionRoot(cssLayout);
+	private void createTable() {
+		this.freeRoomTable.setContainerDataSource(freeRoomContainer);
+		this.freeRoomTable.setImmediate(true);
+		this.freeRoomTable.setColumnHeaderMode(ColumnHeaderMode.HIDDEN);
+		this.freeRoomTable.setVisibleColumns(visibleFreeRoomTableColumns);
+		this.freeRoomTable.setTableFieldFactory(new CustomTableFieldFactory());
+		this.freeRoomTable.setPageLength(5);
+		this.freeRoomTable
+				.setSortContainerPropertyId(FreeRoomModel.PROPERTY_START);
+		this.freeRoomTable.setSortAscending(true);
+		// this.freeRoomTable.setSelectable(true);
+		this.freeRoomTable.setSizeFull();
+		// TODO
+		// this.freeRoomTable.setPrimaryStyleName("result-table");
+	}
+
+	class CustomTableFieldFactory implements TableFieldFactory {
+		@Override
+		public Field<?> createField(Container container, Object itemId,
+				Object propertyId, Component uiContext) {
+
+			if (FreeRoomModel.PROPERTY_NAME.equals(propertyId)) {
+				Label nameProperty = new Label(room + " " + itemId);
+				return (Field<?>) nameProperty;
+			} else if (FreeRoomModel.PROPERTY_START.equals(propertyId)) {
+				Label nameProperty = new Label(itemId + " - ");
+				return (Field<?>) nameProperty;
+			} else if (FreeRoomModel.PROPERTY_END.equals(propertyId)) {
+				Label nameProperty = new Label(itemId + " " + time);
+				return (Field<?>) nameProperty;
+			} else if (FreeRoomModel.PROPERTY_LINK.equals(propertyId)) {
+				Label nameProperty = new Label(floorplan + " "
+						+ new ExternalResource((String) itemId));
+				return (Field<?>) nameProperty;
+			} else {
+				return null;
+			}
+		}
 	}
 
 	private void buildLayout() {
-
 		actualFreeRoomsLabel.setCaption(translator
 				.translate(TranslationKeys.CURRENTLY_FREE_ROOMS));
 		cssLayout.addComponent(actualFreeRoomsLabel);
+		cssLayout.addComponent(freeRoomTable);
 		cssLayout.setPrimaryStyleName("freeRooms");
 	}
 
 	@Override
-	public void refreshFreeRooms(List<String> raumNameList,
-			List<String> raumLinkList, List<String> raumIdList,
-			List<String> startList, List<String> endList) {
+	public void refreshFreeRooms(
+			BeanItemContainer<FreeRoomModel> freeRoomContainer) {
 
-		this.raumNameList = raumNameList;
-		this.raumLinkList = raumLinkList;
-		this.raumIdList = raumIdList;
-		this.startList = startList;
-		this.endList = endList;
+		this.freeRoomContainer.removeAllItems();
 
-		// Remove old Grid Layout
-		if (gridLayout != null)
-			cssLayout.removeComponent(gridLayout);
+		if (freeRoomContainer.size() != 0) {
+			cssLayout.removeComponent(noRoomsLabel);
+			
+			this.freeRoomContainer = freeRoomContainer;
+			this.freeRoomTable.setContainerDataSource(this.freeRoomContainer);
 
-		if (raumNameList.size() != 0) {
-			gridLayout = new GridLayout(3, raumNameList.size());
-
-			for (int i = 0; i < raumNameList.size(); i++) {
-
-				Label roomLabel = new Label(room + " " + raumNameList.get(i)
-						+ ": ");
-
-				Label roomTime = new Label(startList.get(i) + " - "
-						+ endList.get(i) + " " + time);
-
-				Link roomLink = new Link(floorplan, new ExternalResource(
-						raumLinkList.get(i)));
-
-				roomLabel.setPrimaryStyleName("roomLabel");
-				roomTime.setPrimaryStyleName("roomTime");
-				roomLink.setPrimaryStyleName("roomLink");
-
-				gridLayout.addComponent(roomLabel);
-				gridLayout.addComponent(roomTime);
-
-				gridLayout.addComponent(roomLink);
-
-				cssLayout.addComponent(gridLayout);
-			}
+			// roomLabel.setPrimaryStyleName("roomLabel");
+			// roomTime.setPrimaryStyleName("roomTime");
+			// roomLink.setPrimaryStyleName("roomLink");
 		} else {
-			LOGGER.debug("No free Rooms - Freiraum online?");
-
+			LOGGER.debug("No free Rooms");
 			cssLayout.addComponent(noRoomsLabel);
 		}
 	}
 
 	@Override
-	public void hideFreeRoom() {
+	public void hideFreeRoomView() {
 		this.setVisible(false);
 	}
 
 	@Override
-	public void showFreeRoom() {
+	public void showFreeRoomView() {
 		this.setVisible(true);
 	}
 
@@ -117,12 +136,6 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 		time = translator.translate(TranslationKeys.TIME);
 		floorplan = translator.translate(TranslationKeys.TO_FLOOR_PLAN);
 
-		refreshFreeRooms(raumNameList, raumLinkList, raumIdList, startList,
-				endList);
-	}
-
-	@Override
-	public Label getFreeRoomLabel() {
-		return actualFreeRoomsLabel;
+		refreshFreeRooms(this.freeRoomContainer);
 	}
 }

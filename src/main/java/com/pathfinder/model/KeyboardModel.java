@@ -6,7 +6,6 @@ package com.pathfinder.model;
  * @author Myracle
  */
 public class KeyboardModel {
-
 	public static final String PROPERTY_SEARCHSTRING = "searchString";
 
 	private String searchString = "";

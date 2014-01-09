@@ -2,12 +2,12 @@ package com.pathfinder.presenter;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Stack;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import org.json.simple.JSONObject;
 
+import com.pathfinder.model.FreeRoomModel;
 import com.pathfinder.model.KeyboardModel;
 import com.pathfinder.model.ResourceModel;
 import com.pathfinder.util.properties.ApplicationProperties;
@@ -22,8 +22,6 @@ import com.pathfinder.view.components.KeyboardId;
 import com.pathfinder.view.components.KeyboardSpec;
 import com.pathfinder.view.components.SearchField;
 import com.pathfinder.view.components.SearchFieldSpec;
-import com.pathfinder.view.container.DetailContainer;
-import com.pathfinder.view.container.DetailContainerSpec;
 import com.pathfinder.view.container.SearchPanel;
 import com.pathfinder.view.container.SearchPanelSpec;
 import com.pathfinder.view.layout.DesktopLayout;
@@ -62,7 +60,8 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	private final SearchPanelSpec searchPanel = new SearchPanel(
 			(AccordionView) accordionView, (Keyboard) keyboard,
 			(SearchField) searchField);
-	private DetailContainerSpec detailContainer = null;
+	// TODO
+	// private DetailContainerSpec detailContainer = null;
 
 	private final BeanFieldGroup<KeyboardModel> keyboardBinder = new BeanFieldGroup<KeyboardModel>(
 			KeyboardModel.class);
@@ -205,10 +204,9 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	class TableClickListener implements ItemClickListener {
 		@Override
 		public void itemClick(ItemClickEvent event) {
-
-			detailContainer = new DetailContainer(
-					(ResourceModel) event.getItemId(), null);
-
+			// TODO
+			// detailContainer.setDetails((ResourceModel) event.getItemId(),
+			// null);
 		}
 	}
 
@@ -314,42 +312,28 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	}
 
 	public synchronized void freeRoomHandler() {
-
-		List<String> raumNameList = new Stack<String>();
-		List<String> raumLinkList = new Stack<String>();
-		List<String> raumIdList = new Stack<String>();
-		List<String> startList = new Stack<String>();
-		List<String> endList = new Stack<String>();
-
 		List<JSONObject> freeResourcesResult = genericDataLoader
 				.getFreeResourcesResult();
 
 		// TODO Add error handling to handle NullPointerException
 		if (freeResourcesResult != null) {
+			BeanItemContainer<FreeRoomModel> freeRoomContainer = new BeanItemContainer<FreeRoomModel>(
+					FreeRoomModel.class);
+
 			for (JSONObject result : freeResourcesResult) {
-				List<JSONObject> freeResourcesResources = genericDataLoader
+				List<JSONObject> freeRoomResources = genericDataLoader
 						.getFreeResourcesResources(result);
 
-				String raumName = (String) freeResourcesResources.get(0).get(
-						"name");
-				String raumLink = (String) freeResourcesResources.get(0).get(
-						"link");
-				String raumId = (String) freeResourcesResources.get(0)
-						.get("id");
-				String start = (String) result.get("start");
-				String end = (String) result.get("end");
-
-				raumNameList.add(raumName);
-				raumLinkList.add(raumLink);
-				raumIdList.add(raumId);
-				startList.add(start);
-				endList.add(end);
+				FreeRoomModel freeRoom = new FreeRoomModel(
+						(String) freeRoomResources.get(0).get("id"),
+						(String) freeRoomResources.get(0).get("name"),
+						(String) freeRoomResources.get(0).get("link"),
+						(String) result.get("start"),
+						(String) result.get("end"));
+				freeRoomContainer.addItem(freeRoom);
 			}
+			desktopLayout.getFreeRoom().refreshFreeRooms(freeRoomContainer);
 		}
-
-		desktopLayout.getFreeRoom().refreshFreeRooms(raumNameList,
-				raumLinkList, raumIdList, startList, endList);
-
 	}
 
 	@Override

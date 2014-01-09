@@ -8,7 +8,6 @@ import com.pathfinder.view.components.FreeRoomView;
 import com.pathfinder.view.components.FreeRoomViewSpec;
 import com.pathfinder.view.components.MenuBar;
 import com.pathfinder.view.components.MenuBarSpec;
-import com.pathfinder.view.container.DetailContainerSpec;
 import com.pathfinder.view.container.SearchPanelSpec;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.Button.ClickListener;
@@ -26,7 +25,8 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	private final FreeRoomViewSpec freeRoom = new FreeRoomView();
 	private final MenuBarSpec menuBar = new MenuBar();
 	private SearchPanelSpec searchPanel = null;
-	private DetailContainerSpec detailContainer = null;
+	// TODO
+	// private DetailContainerSpec detailContainer = null;
 	private final AppointmentViewSpec appointmentView = new AppointmentView();
 
 	private final VerticalLayout layout = new VerticalLayout();
@@ -86,7 +86,7 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 		// TODO
 		// detailContainer.removeDetails(...);
 		// detailContainer.hideDetailContainer();
-		freeRoom.showFreeRoom();
+		freeRoom.showFreeRoomView();
 		searchPanel.showSearchPanel();
 	}
 
@@ -95,7 +95,7 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 		// TODO
 		// detailContainer.setDetails(...);
 		appointmentView.hideAppointmentView();
-		freeRoom.hideFreeRoom();
+		freeRoom.hideFreeRoomView();
 		searchPanel.hideSearchPanel();
 		// detailContainer.showDetailContainer();
 	}
@@ -106,7 +106,7 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 		// TODO
 		// detailContainer.removeDetails(...);
 		// detailContainer.hideDetailContainer();
-		freeRoom.hideFreeRoom();
+		freeRoom.hideFreeRoomView();
 		searchPanel.hideSearchPanel();
 		appointmentView.showAppointmentView();
 	}
