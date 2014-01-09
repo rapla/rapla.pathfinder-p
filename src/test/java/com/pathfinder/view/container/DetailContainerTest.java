@@ -6,7 +6,6 @@ package com.pathfinder.view.container;
 import org.junit.Assert;
 import org.junit.Before;
 
-import com.pathfinder.model.ResourceModel;
 import com.vaadin.ui.AbstractOrderedLayout;
 import com.vaadin.ui.CustomComponent;
 
@@ -20,8 +19,9 @@ public class DetailContainerTest {
 
 	@Before
 	public void initialize() {
-		ResourceModel model = new ResourceModel("Name", "Link", "Id",
-				new String[] { "Searchfield 1", "Searchfield 2" });
+		// TODO
+		// ResourceModel model = new ResourceModel("Name", "Link", "Id",
+		// new String[] { "Searchfield 1", "Searchfield 2" });
 		// detailContainer = new DetailContainer<RoomModel>(RoomModel.class,
 		// new BeanItem<RoomModel>(model), "");
 	}

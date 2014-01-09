@@ -1,4 +1,4 @@
-package com.pathfinder.model.gson;
+package com.pathfinder.model;
 
 public class Category {
 

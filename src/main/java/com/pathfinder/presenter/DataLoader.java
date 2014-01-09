@@ -16,8 +16,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.google.gson.Gson;
+import com.pathfinder.model.Category;
 import com.pathfinder.model.ResourceModel;
-import com.pathfinder.model.gson.Category;
 import com.pathfinder.model.gson.CategoryResult;
 import com.pathfinder.model.gson.ResourcesResult;
 import com.pathfinder.util.properties.ApplicationProperties;

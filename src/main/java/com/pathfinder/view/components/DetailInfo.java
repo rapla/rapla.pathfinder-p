@@ -2,13 +2,10 @@ package com.pathfinder.view.components;
 
 import java.util.Iterator;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONArray;
 
-import com.pathfinder.PathfinderUI;
+import com.pathfinder.model.Attribut;
 import com.pathfinder.model.ResourceModel;
-import com.pathfinder.model.gson.Attribut;
 import com.pathfinder.presenter.GenericDataLoader;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Window;
@@ -21,10 +18,6 @@ import com.vaadin.ui.Window;
  * @param <T>
  */
 public class DetailInfo<T> extends CustomComponent implements DetailInfoSpec {
-	// private BeanItem<T> beanItem = null;
-	private static final Logger logger = LogManager
-			.getLogger(PathfinderUI.class.getName());
-
 	private JSONArray modelDetails = null;
 
 	private static Window w;
