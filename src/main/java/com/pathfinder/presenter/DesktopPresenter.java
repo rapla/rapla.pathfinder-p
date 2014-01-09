@@ -328,11 +328,12 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 
 			FreeRoomModel freeRoom = null;
 			for (JSONObject result : freeResourcesResult) {
-				freeRoom = new FreeRoomModel(
-						(String) result.get("id"),
-						// TODO The right "name" is one level below
-						(String) result.get("name"),
-						(String) result.get("link"),
+				List<JSONObject> freeRoomResources = genericDataLoader
+						.getFreeResourcesResources(result);
+
+				freeRoom = new FreeRoomModel((String) freeRoomResources.get(0)
+						.get("id"), (String) freeRoomResources.get(0).get(
+						"name"), (String) freeRoomResources.get(0).get("link"),
 						(String) result.get("start"),
 						(String) result.get("end"));
 				freeRoomContainer.addItem(freeRoom);
