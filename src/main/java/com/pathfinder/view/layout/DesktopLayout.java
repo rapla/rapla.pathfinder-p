@@ -52,6 +52,11 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	}
 
 	@Override
+	public void destroyLayout() {
+		layout.removeAllComponents();
+	}
+
+	@Override
 	public void addLanguageValueChangeListener(ValueChangeListener listener) {
 		menuBar.addValueChangeListener(listener);
 	}
@@ -122,11 +127,6 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	@Override
 	public void setAppointmentUrl(String url) {
 		appointmentView.setUrl(url);
-	}
-
-	@Override
-	public void destroyLayout() {
-		layout.removeAllComponents();
 	}
 
 	@Override

@@ -85,6 +85,7 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 		table.setColumnHeaderMode(ColumnHeaderMode.HIDDEN);
 		table.setVisibleColumns(vivisbleColumns);
 		table.setPageLength(5);
+		table.setCacheRate(4);
 		table.setSortContainerPropertyId(ResourceModel.PROPERTY_NAME);
 		table.setSortAscending(true);
 		table.setSelectable(true);

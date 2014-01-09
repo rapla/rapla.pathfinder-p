@@ -28,9 +28,9 @@ import com.vaadin.ui.UI;
  */
 @Theme("rapla_pathfinder_p")
 public class PathfinderUI extends UI implements DataLoaderListenerSpec {
-
-	private static final Logger logger = LogManager
+	private static final Logger LOGGER = LogManager
 			.getLogger(PathfinderUI.class.getName());
+	
 	private DesktopPresenterSpec desktopPresenter = null;
 	private MobilePresenterSpec mobilePresenter = null;
 
@@ -84,12 +84,12 @@ public class PathfinderUI extends UI implements DataLoaderListenerSpec {
 			String userAgent) {
 		// Page page, WebBrowser webBrowser,
 		// BrowserInfo browserInfo, String userAgent
-		logger.trace(">> Browser Data <<");
-		logger.trace("Current window width: " + page.getBrowserWindowWidth());
-		logger.trace("Current window height: " + page.getBrowserWindowHeight());
-		logger.trace("Max browser width: " + webBrowser.getScreenWidth());
-		logger.trace("Max browser height: " + webBrowser.getScreenHeight());
-		logger.trace("User Agent: " + userAgent);
+		LOGGER.trace(">> Browser Data <<");
+		LOGGER.trace("Current window width: " + page.getBrowserWindowWidth());
+		LOGGER.trace("Current window height: " + page.getBrowserWindowHeight());
+		LOGGER.trace("Max browser width: " + webBrowser.getScreenWidth());
+		LOGGER.trace("Max browser height: " + webBrowser.getScreenHeight());
+		LOGGER.trace("User Agent: " + userAgent);
 	}
 
 	private void buildLayout() {
@@ -98,12 +98,12 @@ public class PathfinderUI extends UI implements DataLoaderListenerSpec {
 				|| webBrowser.getScreenWidth() < 768) {
 			mobilePresenter = new MobilePresenter();
 			setContent(mobilePresenter.getMobileLayoutView());
-			logger.trace("Mobile application initialized");
+			LOGGER.trace("Mobile application initialized");
 		} else {
 			desktopPresenter = new DesktopPresenter();
 			setPrimaryStyleName("main");
 			setContent(desktopPresenter.getDesktopLayoutView());
-			logger.trace("Desktop application initialized");
+			LOGGER.trace("Desktop application initialized");
 		}
 	}
 

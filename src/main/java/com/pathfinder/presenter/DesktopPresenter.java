@@ -5,6 +5,8 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONObject;
 
 import com.pathfinder.model.FreeRoomModel;
@@ -49,6 +51,8 @@ import com.vaadin.ui.UI;
  */
 public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		DesktopPresenterSpec, KeyboardViewListenerSpec {
+	private static final Logger LOGGER = LogManager
+			.getLogger(DesktopPresenter.class.getName());
 
 	private final ApplicationPropertiesSpec properties = ApplicationProperties
 			.getInstance();
@@ -315,20 +319,28 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		List<JSONObject> freeResourcesResult = genericDataLoader
 				.getFreeResourcesResult();
 
-		if (freeResourcesResult != null) {
+		if (freeResourcesResult.size() != 0) {
+			LOGGER.debug("Number of free room resources: "
+					+ freeResourcesResult.size());
+
 			BeanItemContainer<FreeRoomModel> freeRoomContainer = new BeanItemContainer<FreeRoomModel>(
 					FreeRoomModel.class);
 
 			FreeRoomModel freeRoom = null;
 			for (JSONObject result : freeResourcesResult) {
-				freeRoom = new FreeRoomModel((String) result.get("id"),
+				freeRoom = new FreeRoomModel(
+						(String) result.get("id"),
+						// TODO The right "name" is one level below
 						(String) result.get("name"),
 						(String) result.get("link"),
 						(String) result.get("start"),
 						(String) result.get("end"));
 				freeRoomContainer.addItem(freeRoom);
 			}
+
 			desktopLayout.refreshFreeRooms(freeRoomContainer);
+		} else {
+			LOGGER.debug("No free Rooms");
 		}
 	}
 

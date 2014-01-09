@@ -187,10 +187,33 @@
 				}
 		}
 	}
+    
+    /* FreeRooms Styling */
+    .freeroom-table{
+		width: 100%;
+		display: block;
+		overflow: hidden;
+
+		.freeroom-table-row {
+				height: 40px;
+				background-color: #767676;
+				margin-top: 2px;
+				width: 98%;
+				display: block;
+				
+				.freeroom-table-wrapper {
+					color: #cccccc; 
+					font: 20px Arial;
+					padding-left:35px;
+				}
+		}
+	}
+   /* 
+    .freerooms .v-scrollable {
+    overflow: hidden;
+    }*/
 	
-	/* FreeRooms Styling */
-	
-	.freeRooms {
+	.freeroom-border {
 		border-color: red;
 		border-style: solid;
 		width: 100%;
