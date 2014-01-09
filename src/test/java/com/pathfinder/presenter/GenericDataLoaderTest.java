@@ -7,6 +7,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.pathfinder.model.Attribut;
+
 public class GenericDataLoaderTest {
 
 	GenericDataLoader genericDataLoader;
@@ -43,5 +45,16 @@ public class GenericDataLoaderTest {
 		String name = (String) freeResourcesResources.get(0).get("name");
 
 		Assert.assertTrue(name.equals("XPZ1"));
+	}
+
+	@Test
+	public void getModelDetailsAndReadWithIterators() {
+
+		List<Attribut> modelDetails = genericDataLoader
+				.getModelDetails("getResource?resourceId=org.rapla.entities.domain.Allocatable_1320");
+
+		for (Attribut a : modelDetails) {
+			System.out.println(a.toString());
+		}
 	}
 }
