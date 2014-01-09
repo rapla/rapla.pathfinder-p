@@ -21,7 +21,7 @@ import com.vaadin.server.WebBrowser;
 import com.vaadin.ui.UI;
 
 /**
- * PathfinderUI - start point for every client
+ * PathfinderUI - Entry point for every client
  * 
  * @author alexh
  * 
@@ -34,78 +34,35 @@ public class PathfinderUI extends UI implements DataLoaderListenerSpec {
 	private DesktopPresenterSpec desktopPresenter = null;
 	private MobilePresenterSpec mobilePresenter = null;
 
+	private Page page = null;
+	private WebBrowser webBrowser = null;
+	private String userAgent = "";
+
 	@Override
 	protected void init(VaadinRequest request) {
-		setUiLocale(request.getLocale());
 		setErrorHandler(new PathfinderErrorHandler());
 		Page.getCurrent().setTitle(
 				Translator.getInstance().translate(TranslationKeys.APP_TITLE));
-		this.buildLayout(request);
+		this.getBrowserData(request);
+		this.setUiLocale(request.getLocale());
+		this.printBrowserInfo(page, webBrowser, userAgent);
+		// printBrowserInfo(page, webBrowser, browserInfo, userAgent);
+		this.buildLayout();
+		this.setData();
 	}
 
-	private void buildLayout(VaadinRequest request) {
-		Page page = Page.getCurrent();
-		getCurrent().getPage();
-		WebBrowser webBrowser = getPage().getWebBrowser();
+	private void getBrowserData(VaadinRequest request) {
+		page = Page.getCurrent();
+		// TODO
+		// Difference between getCurrent().getPage();?
+		webBrowser = getPage().getWebBrowser();
 		// BrowserInfo is for client side - WebBrowser for server side
 		// BrowserInfo browserInfo = BrowserInfo.get();
-		String userAgent = "";
 		if (request instanceof VaadinServletRequest) {
 			userAgent = ((VaadinServletRequest) request)
 					.getHttpServletRequest().getHeader("User-Agent")
 					.toLowerCase();
 		}
-		// printBrowserInfo(page, webBrowser, browserInfo, userAgent);
-		printBrowserInfo(page, webBrowser, userAgent);
-
-		if (isMobileUserAgent(userAgent) || webBrowser.getScreenWidth() < 768) {
-			mobilePresenter = new MobilePresenter();
-			setContent(mobilePresenter.getMobileLayoutView());
-			logger.trace("Mobile application initialized");
-		} else {
-			desktopPresenter = new DesktopPresenter();
-			setPrimaryStyleName("main");
-			setContent(desktopPresenter.getDesktopLayoutView());
-			logger.trace("Desktop application initialized");
-		}
-
-		setData();
-		// Register as DataListener to get notified if data changes
-		// DataLoader.getInstance().addDataListener(this);
-	}
-
-	private void printBrowserInfo(Page page, WebBrowser webBrowser,
-			String userAgent) {
-		// Page page, WebBrowser webBrowser,
-		// BrowserInfo browserInfo, String userAgent
-		logger.trace(">> Browser Data <<");
-		logger.trace("Current window width: " + page.getBrowserWindowWidth());
-		logger.trace("Max browser width: " + webBrowser.getScreenWidth());
-		// logger.trace("3: " + browserInfo.getScreenWidth());
-		logger.trace("User Agent: " + userAgent);
-	}
-
-	private boolean isMobileUserAgent(String userAgent) {
-		boolean mobileUserAgent = false;
-		String[] mobileAgents = new String[] { "ipad", "iphone", "mobile",
-				"android", "ios", "blackberry", "phone", "phone" };
-
-		for (String agent : mobileAgents) {
-			if (agent.equals(userAgent)) {
-				mobileUserAgent = true;
-			}
-		}
-		return mobileUserAgent;
-	}
-
-	private void setData() {
-		DataLoader dataLoader = DataLoader.getInstance();
-		desktopPresenter.setRoomContainer(dataLoader.getRoomContainer());
-		desktopPresenter.setCourseContainer(dataLoader.getCourseContainer());
-		desktopPresenter.setPersonContainer(dataLoader.getPersonContainer());
-		desktopPresenter.setPoiContainer(dataLoader.getPoiContainer());
-		// Register as DataListener to get notified if data changes
-		DataLoader.getInstance().addDataListener(this);
 	}
 
 	/**
@@ -121,6 +78,43 @@ public class PathfinderUI extends UI implements DataLoaderListenerSpec {
 		} else {
 			setLocale(Translator.getInstance().getFallbackLocale());
 		}
+	}
+
+	private void printBrowserInfo(Page page, WebBrowser webBrowser,
+			String userAgent) {
+		// Page page, WebBrowser webBrowser,
+		// BrowserInfo browserInfo, String userAgent
+		logger.trace(">> Browser Data <<");
+		logger.trace("Current window width: " + page.getBrowserWindowWidth());
+		logger.trace("Current window height: " + page.getBrowserWindowHeight());
+		logger.trace("Max browser width: " + webBrowser.getScreenWidth());
+		logger.trace("Max browser height: " + webBrowser.getScreenHeight());
+		logger.trace("User Agent: " + userAgent);
+	}
+
+	private void buildLayout() {
+		if (webBrowser.isAndroid() || webBrowser.isIOS()
+				|| webBrowser.isTouchDevice()
+				|| webBrowser.getScreenWidth() < 768) {
+			mobilePresenter = new MobilePresenter();
+			setContent(mobilePresenter.getMobileLayoutView());
+			logger.trace("Mobile application initialized");
+		} else {
+			desktopPresenter = new DesktopPresenter();
+			setPrimaryStyleName("main");
+			setContent(desktopPresenter.getDesktopLayoutView());
+			logger.trace("Desktop application initialized");
+		}
+	}
+
+	private void setData() {
+		DataLoader dataLoader = DataLoader.getInstance();
+		desktopPresenter.setRoomContainer(dataLoader.getRoomContainer());
+		desktopPresenter.setCourseContainer(dataLoader.getCourseContainer());
+		desktopPresenter.setPersonContainer(dataLoader.getPersonContainer());
+		desktopPresenter.setPoiContainer(dataLoader.getPoiContainer());
+		// Register as DataListener to get notified if data changes
+		dataLoader.addDataListener(this);
 	}
 
 	@Override

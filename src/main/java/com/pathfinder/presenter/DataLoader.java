@@ -39,6 +39,7 @@ import com.vaadin.ui.UI;
  * @author igor
  * 
  */
+@Deprecated
 public class DataLoader implements DataLoaderSpec {
 
 	private static final Logger LOGGER = LogManager.getLogger(DataLoader.class);
@@ -95,13 +96,6 @@ public class DataLoader implements DataLoaderSpec {
 
 		// Removes 'dead' UIs to avoid endless growth of listeners
 		scheduleListenerRemover();
-	}
-
-	public static DataLoader getInstance() {
-		if (instance == null) {
-			instance = new DataLoader();
-		}
-		return instance;
 	}
 
 	private synchronized void loadAllResources() {
@@ -504,5 +498,12 @@ public class DataLoader implements DataLoaderSpec {
 		}
 
 		dataListener.removeAll(listenerToBeRemoved);
+	}
+
+	public static DataLoader getInstance() {
+		if (instance == null) {
+			instance = new DataLoader();
+		}
+		return instance;
 	}
 }

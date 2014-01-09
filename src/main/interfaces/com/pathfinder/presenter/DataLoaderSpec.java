@@ -11,7 +11,6 @@ import de.vksi.c4j.Pure;
 
 @ContractReference(DataLoaderSpecContract.class)
 public interface DataLoaderSpec {
-
 	@Pure
 	BeanItemContainer<RoomModel> getRoomContainer();
 
