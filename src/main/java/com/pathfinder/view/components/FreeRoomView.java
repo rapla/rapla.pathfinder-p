@@ -4,16 +4,11 @@ import com.pathfinder.model.FreeRoomModel;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
-import com.vaadin.data.Container;
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.server.ExternalResource;
-import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.DefaultFieldFactory;
-import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
@@ -22,25 +17,24 @@ import com.vaadin.ui.Table.ColumnHeaderMode;
 public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 	private final TranslatorSpec translator = Translator.getInstance();
 
-	private final Label actualFreeRoomsLabel = new Label();
+	// TODO Can we use the table / CustomComponent caption?
+	private final Label actualFreeRoomsLabel = new Label(
+			translator.translate(TranslationKeys.CURRENTLY_FREE_ROOMS));
 
-	private CssLayout cssLayout = new CssLayout();
-	private BeanItemContainer<FreeRoomModel> freeRoomContainer = new BeanItemContainer<FreeRoomModel>(
+	private final CssLayout cssLayout = new CssLayout();
+	private final BeanItemContainer<FreeRoomModel> freeRoomContainer = new BeanItemContainer<FreeRoomModel>(
 			FreeRoomModel.class);
-	private Table freeRoomTable = new Table();
 	private final Object[] visibleFreeRoomTableColumns = new String[] {
 			FreeRoomModel.PROPERTY_NAME, FreeRoomModel.PROPERTY_START,
-			FreeRoomModel.PROPERTY_END, FreeRoomModel.PROPERTY_LINK };
-	private final String[] headerFreeRoomTableCaptions = new String[] {
-			"Raumname", "Beginn", "Ende", "Link" };
+			FreeRoomModel.PROPERTY_END };
+	private String[] headerFreeRoomTableCaptions = new String[] {
+			translator.translate(TranslationKeys.ROOM),
+			translator.translate(TranslationKeys.BEGIN),
+			translator.translate(TranslationKeys.END) };
+	private final Table freeRoomTable = new Table();
 
 	private final Label noRoomsLabel = new Label(
 			translator.translate(TranslationKeys.NO_FREE_ROOMS_AVAILABLE));
-
-	private String room = translator.translate(TranslationKeys.ROOM);
-	private String time = translator.translate(TranslationKeys.TIME);
-	private String floorplan = translator
-			.translate(TranslationKeys.TO_FLOOR_PLAN);
 
 	public FreeRoomView() {
 		this.createTable();
@@ -67,6 +61,7 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 		this.freeRoomTable
 				.setSortContainerPropertyId(FreeRoomModel.PROPERTY_START);
 		this.freeRoomTable.setSortAscending(true);
+		this.freeRoomTable.setSortEnabled(false);
 		this.freeRoomTable.setWidth(100, Unit.PERCENTAGE);
 		// TODO
 		// this.freeRoomTable.setPrimaryStyleName("freeroom-table");
@@ -80,49 +75,16 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 			Property<?> prop = source.getItem(itemId).getItemProperty(columnId);
 
 			if (FreeRoomModel.PROPERTY_NAME.equals(columnId)) {
-				Label label = new Label(room + " " + prop.getValue());
+				Label label = new Label((String) prop.getValue());
 				return label;
 			} else if (FreeRoomModel.PROPERTY_START.equals(columnId)) {
-				Label label = new Label(prop.getValue() + " " + time);
+				Label label = new Label(prop.getValue() + " "
+						+ translator.translate(TranslationKeys.TIME));
 				return label;
 			} else if (FreeRoomModel.PROPERTY_END.equals(columnId)) {
-				Label label = new Label(prop.getValue() + " " + time);
+				Label label = new Label(prop.getValue() + " "
+						+ translator.translate(TranslationKeys.TIME));
 				return label;
-			}
-			// TODO
-			// else if (FreeRoomModel.PROPERTY_LINK.equals(columnId)) {
-			// Label label = new Label(floorplan + " "
-			// + new ExternalResource((String) prop.getValue()));
-			// return label;
-			// }
-			else {
-				return null;
-			}
-		}
-	}
-
-	class CustomTableFieldFactory extends DefaultFieldFactory {
-		@Override
-		public Field<?> createField(Container container, Object itemId,
-				Object propertyId, Component uiContext) {
-
-			final Field<?> field = super.createField(container, itemId,
-					propertyId, uiContext);
-
-			if (FreeRoomModel.PROPERTY_NAME.equals(propertyId)) {
-				((AbstractField<?>) field).setCaption(room + " " + itemId);
-				// Label nameProperty = new Label(room + " " + itemId);
-				return field;
-			} else if (FreeRoomModel.PROPERTY_START.equals(propertyId)) {
-				Label nameProperty = new Label(itemId + " - ");
-				return (Field<?>) nameProperty;
-			} else if (FreeRoomModel.PROPERTY_END.equals(propertyId)) {
-				Label nameProperty = new Label(itemId + " " + time);
-				return (Field<?>) nameProperty;
-			} else if (FreeRoomModel.PROPERTY_LINK.equals(propertyId)) {
-				Label nameProperty = new Label(floorplan + " "
-						+ new ExternalResource((String) itemId));
-				return (Field<?>) nameProperty;
 			} else {
 				return null;
 			}
@@ -130,8 +92,6 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 	}
 
 	private void buildLayout() {
-		actualFreeRoomsLabel.setCaption(translator
-				.translate(TranslationKeys.CURRENTLY_FREE_ROOMS));
 		cssLayout.addComponent(actualFreeRoomsLabel);
 		cssLayout.addComponent(freeRoomTable);
 		cssLayout.setPrimaryStyleName("freeroom-border");
@@ -166,14 +126,13 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 
 	@Override
 	public void updateTranslations() {
+		headerFreeRoomTableCaptions = new String[] {
+				translator.translate(TranslationKeys.ROOM),
+				translator.translate(TranslationKeys.BEGIN),
+				translator.translate(TranslationKeys.END) };
+		freeRoomTable.setColumnHeaders(headerFreeRoomTableCaptions);
+		this.freeRoomTable.markAsDirtyRecursive();
 		actualFreeRoomsLabel.setCaption(translator
 				.translate(TranslationKeys.CURRENTLY_FREE_ROOMS));
-		room = translator.translate(TranslationKeys.ROOM);
-		time = translator.translate(TranslationKeys.TIME);
-		floorplan = translator.translate(TranslationKeys.TO_FLOOR_PLAN);
-
-		// TODO Doesn´t work well
-		this.freeRoomTable.markAsDirtyRecursive();
-		// refreshFreeRooms(this.freeRoomContainer);
 	}
 }

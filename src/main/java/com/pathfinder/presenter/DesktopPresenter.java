@@ -327,6 +327,13 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 					FreeRoomModel.class);
 
 			FreeRoomModel freeRoom = null;
+
+			// TODO Only 5 elements should be added to the table in the
+			// FreeRoomView - Move to GenericDataLoader
+			for (int i = freeResourcesResult.size() - 1; i >= 5; i--) {
+				freeResourcesResult.remove(i);
+			}
+
 			for (JSONObject result : freeResourcesResult) {
 				List<JSONObject> freeRoomResources = genericDataLoader
 						.getFreeResourcesResources(result);
