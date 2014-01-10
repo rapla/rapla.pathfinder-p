@@ -42,13 +42,12 @@
 		<dependency org="com.vaadin" name="vaadin-client-compiler"
 			rev="&vaadin.version;" conf="widgetset-compile->default" />
 
-		<!-- Google-gson to handle JSON -->
+		<!-- Google-gson -->
 		<dependency org="com.google.code.gson" name="gson" rev="2.2.4" />
 
-		<!-- Google-Json-Simple to handle JSON -->
+		<!-- Google-Json-Simple -->
 		<dependency org="com.googlecode.json-simple" name="json-simple"
-			rev="1.1" />
-
+			rev="1.1.1" />
 
 		<!-- Log4J 2 -->
 		<dependency org="org.apache.logging.log4j" name="log4j-api"
@@ -60,6 +59,7 @@
 		<dependency org="com.vaadin.addon.responsive" name="responsive"
 			rev="1.0.0.alpha4" />
 
+		<!-- PopupButton -->
 		<dependency org="org.vaadin.addons" name="popupbutton" rev="2.3.0" />
 	</dependencies>
 </ivy-module>

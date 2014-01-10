@@ -30,7 +30,7 @@ import com.vaadin.ui.UI;
 public class PathfinderUI extends UI implements DataLoaderListenerSpec {
 	private static final Logger LOGGER = LogManager
 			.getLogger(PathfinderUI.class.getName());
-	
+
 	private DesktopPresenterSpec desktopPresenter = null;
 	private MobilePresenterSpec mobilePresenter = null;
 
@@ -40,6 +40,8 @@ public class PathfinderUI extends UI implements DataLoaderListenerSpec {
 
 	@Override
 	protected void init(VaadinRequest request) {
+		// TODO
+		// new Responsive(this);
 		setErrorHandler(new PathfinderErrorHandler());
 		Page.getCurrent().setTitle(
 				Translator.getInstance().translate(TranslationKeys.APP_TITLE));

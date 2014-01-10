@@ -6,9 +6,6 @@ package com.pathfinder.view.container;
 import org.junit.Assert;
 import org.junit.Before;
 
-import com.vaadin.ui.AbstractOrderedLayout;
-import com.vaadin.ui.CustomComponent;
-
 /**
  * @author tim
  * 
