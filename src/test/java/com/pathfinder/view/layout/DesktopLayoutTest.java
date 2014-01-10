@@ -48,17 +48,6 @@ public class DesktopLayoutTest {
 	}
 
 	@Test
-	public void buildLayoutTest() {
-		desktopLayout.buildLayout();
-		Iterator<Component> iterator = desktopLayout.iterator();
-
-		// Assure DesktopLayout has three Components: InfoPanel, SearchPanel and
-		// MenuBar
-		VerticalLayout layout = (VerticalLayout) iterator.next();
-		Assert.assertEquals(5, layout.getComponentCount());
-	}
-
-	@Test
 	public void addClickListenerAppointmentButtonTest() {
 		desktopLayout.addClickListenerAppointmentButton(new ClickListener() {
 
@@ -70,22 +59,9 @@ public class DesktopLayoutTest {
 		});
 	}
 
-	@Test
-	public void destroyLayoutTest() {
-		desktopLayout.buildLayout();
-		Iterator<Component> iterator = desktopLayout.iterator();
-		VerticalLayout layout = (VerticalLayout) iterator.next();
-		Assert.assertEquals(5, layout.getComponentCount());
-
-		desktopLayout.destroyLayout();
-		Assert.assertEquals(0, layout.getComponentCount());
-	}
-
 	// TODO: Update when method switchToDetailView finished
 	// @Test
 	public void switchToDetailViewTest() {
-
-		desktopLayout.buildLayout();
 		desktopLayout.switchToDetailView();
 
 		// Iterate over child components of DesktopLayout and assure there is a
@@ -100,7 +76,6 @@ public class DesktopLayoutTest {
 	public void switchToSearchViewTest() {
 		// TODO: Update when method switchToSearchView finished
 
-		desktopLayout.buildLayout();
 		desktopLayout.switchToSearchView();
 
 		// Iterate over child components of DesktopLayout and assure there is no

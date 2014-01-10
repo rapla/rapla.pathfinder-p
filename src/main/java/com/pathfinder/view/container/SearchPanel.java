@@ -31,8 +31,7 @@ public class SearchPanel extends CustomComponent implements SearchPanelSpec {
 		this.buildLayout();
 	}
 
-	@Override
-	public void buildLayout() {
+	private void buildLayout() {
 		this.accordionView.setSizeFull();
 		this.keyboard.setSizeFull();
 		this.searchField.setSizeFull();
@@ -42,11 +41,6 @@ public class SearchPanel extends CustomComponent implements SearchPanelSpec {
 		this.layout.setSizeFull();
 	}
 
-	@Override
-	public void destroyLayout() {
-		layout.removeAllComponents();
-	}
-	
 	@Override
 	public void hideSearchPanel() {
 		this.setVisible(false);

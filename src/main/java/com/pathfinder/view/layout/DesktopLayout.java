@@ -40,8 +40,7 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 		this.setCompositionRoot(layout);
 	}
 
-	@Override
-	public void buildLayout() {
+	private void buildLayout() {
 		this.layout.addComponent(dateTime);
 		this.layout.addComponent(freeRoom);
 		this.layout.addComponent(searchPanel);
@@ -49,11 +48,6 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 		// this.layout.addComponent(detailContainer);
 		this.layout.addComponent(appointmentView);
 		this.layout.addComponent(menuBar);
-	}
-
-	@Override
-	public void destroyLayout() {
-		layout.removeAllComponents();
 	}
 
 	@Override
