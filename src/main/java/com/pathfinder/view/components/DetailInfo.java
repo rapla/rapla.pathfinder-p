@@ -15,23 +15,21 @@ import com.vaadin.ui.VerticalLayout;
  * 
  * @author alexh
  * 
- * @param <T>
  */
-public class DetailInfo<T> extends CustomComponent implements DetailInfoSpec {
+public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 	private List<Attribut> modelDetails = null;
-	private VerticalLayout layout = new VerticalLayout();
+	private final VerticalLayout layout = new VerticalLayout();
 	private final DataLoader dataLoader = DataLoader.getInstance();
 	private Label label = new Label();
 
-	public DetailInfo(ResourceModel resourceModel) {
-
-		buildDetailInfo(resourceModel);
-
+	public DetailInfo() {
+		setCompositionRoot(layout);
 	}
 
-	private void buildDetailInfo(ResourceModel resourceModel) {
+	@Override
+	public void addDetails(ResourceModel resource) {
 
-		modelDetails = dataLoader.getModelDetails(resourceModel.getLink());
+		modelDetails = dataLoader.getModelDetails(resource.getLink());
 		Iterator<Attribut> modelDetailsIterator = modelDetails.iterator();
 
 		while (modelDetailsIterator.hasNext()) {
@@ -42,9 +40,11 @@ public class DetailInfo<T> extends CustomComponent implements DetailInfoSpec {
 
 			layout.addComponent(label);
 		}
+	}
 
-		setCompositionRoot(layout);
-
+	@Override
+	public void removeDetails() {
+		// TODO Auto-generated method stub
 	}
 
 	@Override

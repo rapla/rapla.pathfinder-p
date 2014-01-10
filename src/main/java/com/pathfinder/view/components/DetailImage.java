@@ -11,21 +11,27 @@ import com.vaadin.ui.Image;
  * 
  */
 public class DetailImage extends Image implements DetailImageSpec {
-
 	private final String IMAGEPATH = "img/";
 
-	public DetailImage(ResourceModel resourceModel) {
-		init(resourceModel);
+	public DetailImage() {
+		// TODO
+		this.setAlternateText("");
 	}
 
-	private void init(ResourceModel resourceModel) {
+	@Override
+	public void setImage(ResourceModel resourceModel) {
 		this.setCaption(resourceModel.getName());
 		this.setSource(new ThemeResource(IMAGEPATH + resourceModel));
 		this.setSizeFull();
 	}
 
 	@Override
+	public void removeImage() {
+		this.setSource(null);
+	}
+
+	@Override
 	public void updateTranslations() {
-		// TODO Auto-generated method stub
+		// Will be blank
 	}
 }

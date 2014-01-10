@@ -28,19 +28,6 @@ public class DetailContainerTest {
 
 	// TODO: to be continued when DetailImage implemented
 	// @Test
-	public void buildLayoutTest() {
-
-		detailContainer.buildLayout();
-
-		// Check if Root Layout has three components (AccordionView, Keyboard
-		// and Searchfield)
-		AbstractOrderedLayout rootLayout = (AbstractOrderedLayout) ((CustomComponent) detailContainer)
-				.iterator().next();
-		Assert.assertEquals(2, rootLayout.getComponentCount());
-	}
-
-	// TODO: to be continued when DetailImage implemented
-	// @Test
 	public void hideShowTest() {
 		Assert.assertTrue(detailContainer.isVisible());
 		detailContainer.hideDetailContainer();

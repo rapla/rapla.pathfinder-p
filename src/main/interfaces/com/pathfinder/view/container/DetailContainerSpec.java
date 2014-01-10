@@ -7,9 +7,11 @@ import de.vksi.c4j.ContractReference;
 
 @ContractReference(DetailContainerSpecContract.class)
 public interface DetailContainerSpec extends ComponentSpec {
+	void addDetails(ResourceModel resourceModel);
+
+	void removeDetails();
+
 	void hideDetailContainer();
 
 	void showDetailContainer();
-
-	void addDetails(ResourceModel resourceModel);
 }

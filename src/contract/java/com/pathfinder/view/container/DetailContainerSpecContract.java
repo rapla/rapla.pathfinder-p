@@ -57,4 +57,10 @@ public class DetailContainerSpecContract extends ComponentSpecContract
 		}
 	}
 
+	@Override
+	public void removeDetails() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
