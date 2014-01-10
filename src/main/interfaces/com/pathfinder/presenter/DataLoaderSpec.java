@@ -1,6 +1,7 @@
 package com.pathfinder.presenter;
 
 import java.util.List;
+import java.util.Locale;
 
 import com.pathfinder.model.Attribut;
 import com.pathfinder.model.FreeRoomModel;
@@ -25,7 +26,7 @@ public interface DataLoaderSpec {
 	BeanItemContainer<ResourceModel> getPoiContainer();
 
 	@Pure
-	List<Attribut> getModelDetails(String modelLink);
+	List<Attribut> getResourceDetails(String resourceId, Locale locale);
 
 	void reloadAllData();
 

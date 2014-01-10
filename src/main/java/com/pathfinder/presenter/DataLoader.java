@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -46,6 +47,7 @@ public class DataLoader implements DataLoaderSpec {
 			.getProperty(PropertiesKey.RAPLA_BASE_URL);
 
 	private final String RESOURCES_METHOD = BASE_URL + "/getResources?";
+	private final String RESOURCE_DETAIL_METHOD = BASE_URL + "/getResource?";
 	private final String ORGANIGRAM_METHOD = BASE_URL + "/getOrganigram";
 	private final String FREE_RESOURCES = BASE_URL + "/getFreeResources";
 
@@ -346,7 +348,6 @@ public class DataLoader implements DataLoaderSpec {
 	@SuppressWarnings("finally")
 	@Override
 	public BeanItemContainer<FreeRoomModel> getFreeResources() {
-
 		FreeRoomModel freeRoom = null;
 
 		BeanItemContainer<FreeRoomModel> freeRoomContainer = new BeanItemContainer<FreeRoomModel>(
@@ -382,10 +383,13 @@ public class DataLoader implements DataLoaderSpec {
 								.getFreeResourcesResources(result);
 
 						freeRoom = new FreeRoomModel((String) freeRoomResources
-								.get(0).get(FreeRoomModel.PROPERTY_ID), (String) freeRoomResources
-								.get(0).get(FreeRoomModel.PROPERTY_NAME), (String) freeRoomResources
-								.get(0).get(FreeRoomModel.PROPERTY_LINK),
-								(String) result.get(FreeRoomModel.PROPERTY_START),
+								.get(0).get(FreeRoomModel.PROPERTY_ID),
+								(String) freeRoomResources.get(0).get(
+										FreeRoomModel.PROPERTY_NAME),
+								(String) freeRoomResources.get(0).get(
+										FreeRoomModel.PROPERTY_LINK),
+								(String) result
+										.get(FreeRoomModel.PROPERTY_START),
 								(String) result.get(FreeRoomModel.PROPERTY_END));
 						freeRoomContainer.addItem(freeRoom);
 						counter++;
@@ -415,15 +419,20 @@ public class DataLoader implements DataLoaderSpec {
 	}
 
 	@Override
-	public List<Attribut> getModelDetails(String modelLink) {
+	public List<Attribut> getResourceDetails(String resourceId, Locale locale) {
+		String url = RESOURCE_DETAIL_METHOD + "resourceId=" + resourceId;
+		if (locale != null) {
+			url += "&language=" + locale.getLanguage();
+		}
+
 		JSONObject attributMap;
 		Attribut attribut;
 
 		List<Attribut> attributList = new ArrayList<Attribut>();
 
 		try {
-			br = new BufferedReader(new InputStreamReader(new URL(BASE_URL
-					+ "/" + modelLink).openStream()));
+			br = new BufferedReader(new InputStreamReader(
+					new URL(url).openStream()));
 
 			jsonObject = (JSONObject) parser.parse(br);
 
@@ -446,7 +455,6 @@ public class DataLoader implements DataLoaderSpec {
 						.get(nextKey)).get(Attribut.PROPERTY_VALUE));
 
 				attributList.add(attribut);
-
 			}
 
 			return attributList;
@@ -461,7 +469,6 @@ public class DataLoader implements DataLoaderSpec {
 			LOGGER.error(ERROR_MASSAGE_URL_NOT_READABLE, e);
 			return null;
 		}
-
 	}
 
 	public static DataLoader getInstance() {

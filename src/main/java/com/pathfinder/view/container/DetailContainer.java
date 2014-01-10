@@ -14,6 +14,7 @@ public class DetailContainer extends CustomComponent implements
 	private final VerticalLayout layout = new VerticalLayout();
 	private final DetailInfoSpec detailInfo = new DetailInfo();
 	private final DetailImageSpec detailImage = new DetailImage();
+	private ResourceModel resource = null;
 
 	public DetailContainer() {
 		this.buildLayout();
@@ -27,7 +28,8 @@ public class DetailContainer extends CustomComponent implements
 
 	@Override
 	public void addDetails(ResourceModel resource) {
-		detailInfo.addDetails(resource);
+		this.resource = resource;
+		detailInfo.addDetails(this.resource);
 		if ("room".equals(resource.getType())) {
 			detailImage.setImage(resource);
 		}
@@ -37,6 +39,7 @@ public class DetailContainer extends CustomComponent implements
 	public void removeDetails() {
 		detailInfo.removeDetails();
 		detailImage.removeImage();
+		this.resource = null;
 	}
 
 	@Override
@@ -51,7 +54,7 @@ public class DetailContainer extends CustomComponent implements
 
 	@Override
 	public void updateTranslations() {
-		// TODO Auto-generated method stub
-		// detailInfo.
+		detailInfo.removeDetails();
+		detailInfo.addDetails(this.resource);
 	}
 }

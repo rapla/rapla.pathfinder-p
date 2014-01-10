@@ -1,6 +1,7 @@
 package com.pathfinder.presenter;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -73,10 +74,10 @@ public class DataLoaderTest {
 	@Test
 	public void getModelDetailsAndReadWithIterators() {
 
-		List<Attribut> modelDetails = dataLoader
-				.getModelDetails("getResource?resourceId=org.rapla.entities.domain.Allocatable_1320");
+		List<Attribut> modelDetails = dataLoader.getResourceDetails(
+				"org.rapla.entities.domain.Allocatable_1320", new Locale(
+						"DE_de"));
 
 		Assert.assertNotNull(modelDetails);
-
 	}
 }

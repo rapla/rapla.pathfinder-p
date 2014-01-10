@@ -27,12 +27,6 @@ public class DetailContainerSpecContract extends ComponentSpecContract
 		// TODO: write invariants if required
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.pathfinder.view.container.DetailContainerSpec#hideDetailContainer()
-	 */
 	@Override
 	public void hideDetailContainer() {
 		if (postCondition()) {
@@ -60,7 +54,5 @@ public class DetailContainerSpecContract extends ComponentSpecContract
 	@Override
 	public void removeDetails() {
 		// TODO Auto-generated method stub
-		
 	}
-
 }

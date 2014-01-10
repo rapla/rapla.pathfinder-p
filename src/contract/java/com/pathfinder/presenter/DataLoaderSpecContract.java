@@ -8,6 +8,7 @@ import static de.vksi.c4j.Condition.postCondition;
 import static de.vksi.c4j.Condition.preCondition;
 
 import java.util.List;
+import java.util.Locale;
 
 import com.pathfinder.model.Attribut;
 import com.pathfinder.model.FreeRoomModel;
@@ -107,7 +108,7 @@ public class DataLoaderSpecContract implements DataLoaderSpec {
 	}
 
 	@Override
-	public List<Attribut> getModelDetails(String modelLink) {
+	public List<Attribut> getResourceDetails(String modelLink, Locale locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -117,5 +118,4 @@ public class DataLoaderSpecContract implements DataLoaderSpec {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }
