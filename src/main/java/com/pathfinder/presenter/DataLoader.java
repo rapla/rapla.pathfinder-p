@@ -382,11 +382,11 @@ public class DataLoader implements DataLoaderSpec {
 								.getFreeResourcesResources(result);
 
 						freeRoom = new FreeRoomModel((String) freeRoomResources
-								.get(0).get("id"), (String) freeRoomResources
-								.get(0).get("name"), (String) freeRoomResources
-								.get(0).get("link"),
-								(String) result.get("start"),
-								(String) result.get("end"));
+								.get(0).get(FreeRoomModel.PROPERTY_ID), (String) freeRoomResources
+								.get(0).get(FreeRoomModel.PROPERTY_NAME), (String) freeRoomResources
+								.get(0).get(FreeRoomModel.PROPERTY_LINK),
+								(String) result.get(FreeRoomModel.PROPERTY_START),
+								(String) result.get(FreeRoomModel.PROPERTY_END));
 						freeRoomContainer.addItem(freeRoom);
 						counter++;
 					}
