@@ -31,6 +31,8 @@ public interface DesktopPresenterSpec {
 
 	void setSearchString(String value);
 
+	void startBackToHomeTimer();
+
 	@Pure
 	String getSearchString();
 

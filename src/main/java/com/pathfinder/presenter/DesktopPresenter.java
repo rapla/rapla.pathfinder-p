@@ -1,5 +1,6 @@
 package com.pathfinder.presenter;
 
+import java.util.Date;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -32,6 +33,7 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.server.Page;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomComponent;
@@ -66,6 +68,9 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	private final DesktopLayoutSpec desktopLayout = new DesktopLayout(
 			searchPanel);
 
+	private final int goBackHomeIntervall = properties
+			.getIntProperty(PropertiesKey.BACK_TO_HOME_TIMER);
+
 	public DesktopPresenter() {
 		this.keyboard.addListener(this);
 		this.keyboardBinder.setBuffered(false);
@@ -99,6 +104,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 
 		this.refreshFreeRooms();
 		this.scheduleFreeRoomsLoading();
+		this.startBackToHomeTimer();
 	}
 
 	// TODO
@@ -204,10 +210,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 			// If clicked language different than current language, then update
 			// translations
 			desktopLayout.hideOpenLanguagePopup();
-			if (!UI.getCurrent().getLocale().equals(locale)) {
-				UI.getCurrent().setLocale(locale);
-				languageChanged(locale);
-			}
+			languageChanged(locale);
 		}
 
 	}
@@ -338,14 +341,56 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 
 	@Override
 	public void languageChanged(Locale locale) {
-		desktopLayout.updateTranslations();
-		searchPanel.updateTranslations();
-		Page.getCurrent().setTitle(
-				Translator.getInstance().translate(TranslationKeys.APP_TITLE));
+		if (!UI.getCurrent().getLocale().equals(locale)) {
+			UI.getCurrent().setLocale(locale);
+			desktopLayout.updateTranslations();
+			searchPanel.updateTranslations();
+			Page.getCurrent().setTitle(
+					Translator.getInstance().translate(
+							TranslationKeys.APP_TITLE));
+		}
 	}
 
 	@Override
 	public CustomComponent getDesktopLayoutView() {
 		return (DesktopLayout) desktopLayout;
+	}
+
+	@Override
+	public void startBackToHomeTimer() {
+		Timer backToHomeTimer = new Timer();
+		TimerTask backToHomeTimerTask = new TimerTask() {
+
+			@Override
+			public void run() {
+				if (isTimeToGoHome()) {
+					goBackToHomeScreenAndRestoreDefaultSettings();
+				}
+			}
+		};
+
+		backToHomeTimer.schedule(backToHomeTimerTask, 0, 1000);
+	}
+
+	private void goBackToHomeScreenAndRestoreDefaultSettings() {
+		desktopLayout.switchToSearchView();
+		clearSearchString();
+		languageChanged(VaadinSession.getCurrent().getLocale());
+		UI.getCurrent().push();
+	}
+
+	private boolean isTimeToGoHome() {
+		boolean result = false;
+
+		long lastRequest = VaadinSession.getCurrent().getLastRequestTimestamp();
+		long millisecondsSinceLastRequest = new Date().getTime() - lastRequest;
+
+		if (millisecondsSinceLastRequest >= goBackHomeIntervall) {
+			VaadinSession.getCurrent().setLastRequestTimestamp(
+					new Date().getTime());
+			result = true;
+		}
+
+		return result;
 	}
 }

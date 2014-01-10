@@ -23,7 +23,8 @@ public class DesktopPresenterSpecContract implements DesktopPresenterSpec {
 	}
 
 	@Override
-	public void setRoomContainer(BeanItemContainer<ResourceModel> beanItemContainer) {
+	public void setRoomContainer(
+			BeanItemContainer<ResourceModel> beanItemContainer) {
 		if (preCondition()) {
 			// TODO: write preconditions if required
 		}
@@ -55,7 +56,8 @@ public class DesktopPresenterSpecContract implements DesktopPresenterSpec {
 	}
 
 	@Override
-	public void setPoiContainer(BeanItemContainer<ResourceModel> beanItemContainer) {
+	public void setPoiContainer(
+			BeanItemContainer<ResourceModel> beanItemContainer) {
 		if (preCondition()) {
 			// TODO: write preconditions if required
 		}
@@ -84,25 +86,25 @@ public class DesktopPresenterSpecContract implements DesktopPresenterSpec {
 	@Override
 	public void addKeybordKeyToSearchString(String key) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void deleteKeyFromSearchString() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void clearSearchString() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setSearchString(String value) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -121,6 +123,17 @@ public class DesktopPresenterSpecContract implements DesktopPresenterSpec {
 	public int getCursorPosition() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pathfinder.presenter.DesktopPresenterSpec#startBackToHomeTimer()
+	 */
+	@Override
+	public void startBackToHomeTimer() {
+		// TODO Auto-generated method stub
+
 	}
 
 }

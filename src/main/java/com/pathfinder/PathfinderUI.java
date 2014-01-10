@@ -13,11 +13,13 @@ import com.pathfinder.presenter.MobilePresenter;
 import com.pathfinder.presenter.MobilePresenterSpec;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
+import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServletRequest;
 import com.vaadin.server.WebBrowser;
+import com.vaadin.shared.communication.PushMode;
 import com.vaadin.ui.UI;
 
 /**
@@ -27,6 +29,7 @@ import com.vaadin.ui.UI;
  * 
  */
 @Theme("rapla_pathfinder_p")
+@Push(value = PushMode.MANUAL)
 public class PathfinderUI extends UI implements DataLoaderListenerSpec {
 	private static final Logger LOGGER = LogManager
 			.getLogger(PathfinderUI.class.getName());
