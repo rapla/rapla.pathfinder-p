@@ -1,42 +1,48 @@
 package com.pathfinder.presenter;
 
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.pathfinder.model.Attribut;
+import com.pathfinder.model.FreeRoomModel;
+import com.vaadin.data.util.BeanItemContainer;
+
 public class DataLoaderTest {
-	DataLoader dataloader;
+	DataLoader dataLoader;
 
 	@Before
 	public void setUp() {
-		dataloader = DataLoader.getInstance();
+		dataLoader = DataLoader.getInstance();
 	}
 
 	@Test
 	public void roomsLoadedTest() {
-		Assert.assertNotNull(dataloader.getRoomContainer());
+		Assert.assertNotNull(dataLoader.getRoomContainer());
 	}
 
 	@Test
 	public void coursesLoadedTest() {
-		Assert.assertNotNull(dataloader.getCourseContainer());
+		Assert.assertNotNull(dataLoader.getCourseContainer());
 	}
 
 	@Test
 	public void personsLoadedTest() {
-		Assert.assertNotNull(dataloader.getPersonContainer());
+		Assert.assertNotNull(dataLoader.getPersonContainer());
 	}
 
 	@Test
 	public void poisLoadedTest() {
-		Assert.assertNotNull(dataloader.getPoiContainer());
+		Assert.assertNotNull(dataLoader.getPoiContainer());
 	}
 
 	private boolean dataUpdated = false;
 
 	@Test
 	public void addDataListenerTest() {
-		dataloader.addDataListener(new DataLoaderListenerSpec() {
+		dataLoader.addDataListener(new DataLoaderListenerSpec() {
 
 			@Override
 			public void dataUpdated() {
@@ -44,10 +50,33 @@ public class DataLoaderTest {
 			}
 		});
 
-		dataloader.reloadAllData();
+		dataLoader.reloadAllData();
 
 		Assert.assertTrue(dataUpdated);
 
 	}
 
+	@Test
+	public void getFreeRessources() {
+		Assert.assertNotNull(dataLoader.getFreeResources());
+	}
+
+	@Test
+	public void readSomethingFromFreeResourcesResult() {
+		BeanItemContainer<FreeRoomModel> freeResourcesResult = dataLoader
+				.getFreeResources();
+
+		Assert.assertNotNull(freeResourcesResult);
+
+	}
+
+	@Test
+	public void getModelDetailsAndReadWithIterators() {
+
+		List<Attribut> modelDetails = dataLoader
+				.getModelDetails("getResource?resourceId=org.rapla.entities.domain.Allocatable_1320");
+
+		Assert.assertNotNull(modelDetails);
+
+	}
 }

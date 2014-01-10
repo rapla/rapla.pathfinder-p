@@ -19,7 +19,7 @@ public interface DesktopPresenterSpec {
 
 	void setPoiContainer(BeanItemContainer<ResourceModel> beanItemContainer);
 
-	void freeRoomHandler();
+	void refreshFreeRooms();
 
 	CustomComponent getDesktopLayoutView();
 

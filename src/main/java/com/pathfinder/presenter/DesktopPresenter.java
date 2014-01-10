@@ -103,7 +103,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		desktopLayout
 				.addClickListenerWheelChairButton(new WheelChairButtonClickListener());
 		desktopLayout.addClickListenerBackButton(new BackButtonClickListener());
-		this.freeRoomHandler();
+		this.refreshFreeRooms();
 		this.scheduleFreeRoomsLoading();
 	}
 
@@ -189,7 +189,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		TimerTask timerTask = new TimerTask() {
 			@Override
 			public void run() {
-				freeRoomHandler();
+				refreshFreeRooms();
 			}
 		};
 		return timerTask;
@@ -312,7 +312,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		return searchField.getSearchField().getCursorPosition();
 	}
 
-	public synchronized void freeRoomHandler() {
+	public synchronized void refreshFreeRooms() {
 		desktopLayout.refreshFreeRooms(dataLoader.getFreeResources());
 	}
 

@@ -76,7 +76,7 @@ public class DesktopPresenterSpecContract implements DesktopPresenterSpec {
 	}
 
 	@Override
-	public void freeRoomHandler() {
+	public void refreshFreeRooms() {
 		// TODO Auto-generated method stub
 
 	}
