@@ -47,8 +47,7 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 		this.layout.addComponent(dateTime);
 		this.layout.addComponent(freeRoom);
 		this.layout.addComponent(searchPanel);
-		// TODO
-		// this.layout.addComponent(detailContainer);
+		this.layout.addComponent(detailContainer);
 		this.layout.addComponent(appointmentView);
 		this.layout.addComponent(menuBar);
 	}
@@ -120,8 +119,8 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 		}
 
 		// Showing
-		 detailContainer.addDetails(resource);
-		 detailContainer.showDetailContainer();
+		detailContainer.addDetails(resource);
+		detailContainer.showDetailContainer();
 	}
 
 	@Override
@@ -155,6 +154,7 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	public void updateTranslations() {
 		dateTime.updateTranslations();
 		freeRoom.updateTranslations();
+		detailContainer.updateTranslations();
 		appointmentView.updateTranslations();
 		menuBar.updateTranslations();
 	}

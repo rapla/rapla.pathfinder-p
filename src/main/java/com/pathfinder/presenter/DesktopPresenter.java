@@ -50,11 +50,13 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		DesktopPresenterSpec, KeyboardViewListenerSpec {
 	private static final Logger LOGGER = LogManager
 			.getLogger(DesktopPresenter.class.getName());
-
 	private final ApplicationPropertiesSpec properties = ApplicationProperties
 			.getInstance();
+	private final DataLoader dataLoader = DataLoader.getInstance();
+	private final BeanFieldGroup<KeyboardModel> keyboardBinder = new BeanFieldGroup<KeyboardModel>(
+			KeyboardModel.class);
 
-	// Added from SearchPanelPresenter
+	// TODO Move this inizialitations to DesktopLayout
 	private final AccordionViewSpec accordionView = new AccordionView();
 	private final KeyboardSpec keyboard = new Keyboard();
 	private final SearchFieldSpec searchField = new SearchField();
@@ -62,18 +64,11 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 			(AccordionView) accordionView, (Keyboard) keyboard,
 			(SearchField) searchField);
 
-	private final BeanFieldGroup<KeyboardModel> keyboardBinder = new BeanFieldGroup<KeyboardModel>(
-			KeyboardModel.class);
-
-	// Needed sub-presenter
-	private final DataLoader dataLoader = DataLoader.getInstance();
-
-	// Layout
+	// TODO Remove SearchPanel from DesktopLayout constructor
 	private final DesktopLayoutSpec desktopLayout = new DesktopLayout(
 			searchPanel);
 
 	public DesktopPresenter() {
-		// Added from SearchPanelPresenter
 		this.keyboard.addListener(this);
 		this.keyboardBinder.setBuffered(false);
 		this.keyboardBinder.setItemDataSource(new KeyboardModel());
@@ -131,6 +126,16 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		default:
 			addKeybordKeyToSearchString(keyId.getLabel());
 			break;
+		}
+	}
+
+	class TableClickListener implements ItemClickListener {
+		@Override
+		public void itemClick(ItemClickEvent event) {
+			ResourceModel resource = (ResourceModel) event.getItemId();
+			LOGGER.trace(resource.getType() + " element was clicked: "
+					+ resource.getName());
+			desktopLayout.switchToDetailView(resource);
 		}
 	}
 
@@ -208,16 +213,6 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		long loadInterval = properties
 				.getIntProperty(PropertiesKey.DATA_LOAD_INTERVAL_FREE_ROOMS);
 		new Timer().schedule(getTimerTask(), loadInterval, loadInterval);
-	}
-
-	class TableClickListener implements ItemClickListener {
-		@Override
-		public void itemClick(ItemClickEvent event) {
-			ResourceModel resource = (ResourceModel) event.getItemId();
-			LOGGER.trace(resource.getType() + " element was clicked: "
-					+ resource.getName());
-			desktopLayout.switchToDetailView(resource);
-		}
 	}
 
 	public void addKeybordKeyToSearchString(String key) {
@@ -328,7 +323,6 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	@Override
 	public void languageChanged(Locale locale) {
 		desktopLayout.updateTranslations();
-		// TODO detailContainer.updateTranslations(locale);
 		searchPanel.updateTranslations();
 		Page.getCurrent().setTitle(
 				Translator.getInstance().translate(TranslationKeys.APP_TITLE));
