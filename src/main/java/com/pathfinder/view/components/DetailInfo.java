@@ -20,8 +20,7 @@ import com.vaadin.ui.VerticalLayout;
 public class DetailInfo<T> extends CustomComponent implements DetailInfoSpec {
 	private List<Attribut> modelDetails = null;
 	private VerticalLayout layout = new VerticalLayout();
-
-	private static DataLoader DataLoader = new DataLoader("s");
+	private final DataLoader dataLoader = DataLoader.getInstance();
 	private Label label = new Label();
 
 	public DetailInfo(ResourceModel resourceModel) {
@@ -32,7 +31,7 @@ public class DetailInfo<T> extends CustomComponent implements DetailInfoSpec {
 
 	private void buildDetailInfo(ResourceModel resourceModel) {
 
-		modelDetails = DataLoader.getModelDetails(resourceModel.getLink());
+		modelDetails = dataLoader.getModelDetails(resourceModel.getLink());
 		Iterator<Attribut> modelDetailsIterator = modelDetails.iterator();
 
 		while (modelDetailsIterator.hasNext()) {

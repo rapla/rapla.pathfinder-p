@@ -1,15 +1,12 @@
 package com.pathfinder.presenter;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.json.simple.JSONObject;
 
-import com.pathfinder.model.FreeRoomModel;
 import com.pathfinder.model.KeyboardModel;
 import com.pathfinder.model.ResourceModel;
 import com.pathfinder.util.properties.ApplicationProperties;
@@ -73,7 +70,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 			KeyboardModel.class);
 
 	// Needed sub-presenter
-	private final DataLoader dataLoader = new DataLoader("s");
+	private final DataLoader dataLoader = DataLoader.getInstance();
 
 	// Layout
 	private final DesktopLayoutSpec desktopLayout = new DesktopLayout(

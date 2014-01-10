@@ -2,7 +2,6 @@ package com.pathfinder.presenter;
 
 import java.util.List;
 
-import org.json.simple.JSONObject;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +16,7 @@ public class GenericDataLoaderTest {
 
 	@Before
 	public void setUp() {
-		dataLoader = new DataLoader("s");
+		dataLoader = DataLoader.getInstance();
 	}
 
 	@Test

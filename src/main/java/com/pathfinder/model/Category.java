@@ -1,6 +1,14 @@
 package com.pathfinder.model;
 
+/**
+ * Model for the category
+ * 
+ * @author alexh
+ * 
+ */
 public class Category {
+	public static final String PROPERTY_ID = "id";
+	public static final String PROPERTY_NAME = "name";
 
 	private String name;
 	private String id;
@@ -25,5 +33,4 @@ public class Category {
 	public String toString() {
 		return "Category [name=" + name + ", id=" + id + "]";
 	}
-
 }

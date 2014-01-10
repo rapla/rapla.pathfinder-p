@@ -11,8 +11,6 @@ public class ResourceModel {
 	public static final String PROPERTY_NAME = "name";
 	public static final String PROPERTY_LINK = "link";
 	public static final String PROPERTY_SEARCHTERMS = "searchTerms";
-	@Deprecated
-	public static final String PROPERTY_ROOMNR = "roomNr";
 	public static final String PROPERTY_TYPE = "type";
 	public static final String PROPERTY_FACULTY = "faculty";
 
@@ -20,7 +18,6 @@ public class ResourceModel {
 	private String name = "";
 	private String link = "";
 	private String[] searchTerms;
-	private String roomNr = "";
 	private String type = "";
 	private String faculty = "";
 
@@ -62,16 +59,6 @@ public class ResourceModel {
 
 	public void setSearchTerms(String[] searchTerms) {
 		this.searchTerms = searchTerms;
-	}
-
-	@Deprecated
-	public String getRoomNr() {
-		return roomNr;
-	}
-
-	@Deprecated
-	public void setRoomNr(String roomNr) {
-		this.roomNr = roomNr;
 	}
 
 	public String getType() {

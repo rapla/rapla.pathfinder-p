@@ -1,6 +1,15 @@
 package com.pathfinder.model;
 
+/**
+ * Model for attributes
+ * 
+ * @author alexh
+ * 
+ */
 public class Attribut {
+	public static final String PROPERTY_LABEL = "label";
+	public static final String PROPERTY_VALUE = "value";
+
 	private String label;
 	private String value;
 

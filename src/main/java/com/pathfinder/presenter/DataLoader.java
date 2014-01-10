@@ -89,10 +89,6 @@ public class DataLoader implements DataLoaderSpec {
 
 	private static DataLoader instance;
 
-	public DataLoader(String s) {
-
-	}
-
 	private DataLoader() {
 		// Load data once synchronously
 		loadAllResources();
@@ -445,9 +441,9 @@ public class DataLoader implements DataLoaderSpec {
 				String nextKey = attributeMapKeys.next().toString();
 
 				attribut.setLabel((String) ((JSONObject) attributMap
-						.get(nextKey)).get("label"));
+						.get(nextKey)).get(Attribut.PROPERTY_LABEL));
 				attribut.setValue((String) ((JSONObject) attributMap
-						.get(nextKey)).get("value"));
+						.get(nextKey)).get(Attribut.PROPERTY_VALUE));
 
 				attributList.add(attribut);
 
