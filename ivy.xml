@@ -59,5 +59,7 @@
 		<!-- Responsive addon -->
 		<dependency org="com.vaadin.addon.responsive" name="responsive"
 			rev="1.0.0.alpha4" />
+
+		<dependency org="org.vaadin.addons" name="popupbutton" rev="2.3.0" />
 	</dependencies>
 </ivy-module>

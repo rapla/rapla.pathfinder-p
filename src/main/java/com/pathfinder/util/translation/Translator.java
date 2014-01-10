@@ -3,7 +3,9 @@
  */
 package com.pathfinder.util.translation;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
@@ -50,18 +52,20 @@ public class Translator implements TranslatorSpec {
 	private Map<String, ResourceBundle> bundles = new HashMap<String, ResourceBundle>();
 
 	/**
+	 * List of all supported languages
+	 */
+	private List<Locale> supportedLocales;
+
+	/**
 	 * Private constructor; when singleton is instantiated, all the resource
 	 * bundles will be loaded once
 	 */
 	private Translator() {
-		bundles.put(Locale.GERMAN.getLanguage(), ResourceBundle.getBundle(
-				TRANSLATION_FILE_PREFIX, Locale.GERMAN));
-		bundles.put(Locale.ENGLISH.getLanguage(), ResourceBundle.getBundle(
-				TRANSLATION_FILE_PREFIX, Locale.ENGLISH));
-		bundles.put(Locale.FRENCH.getLanguage(), ResourceBundle.getBundle(
-				TRANSLATION_FILE_PREFIX, Locale.FRENCH));
-		bundles.put("es", ResourceBundle.getBundle(TRANSLATION_FILE_PREFIX,
-				new Locale("es")));
+
+		for (Locale locale : getSupportedLocales()) {
+			bundles.put(locale.getLanguage(),
+					ResourceBundle.getBundle(TRANSLATION_FILE_PREFIX, locale));
+		}
 	}
 
 	/**
@@ -136,6 +140,23 @@ public class Translator implements TranslatorSpec {
 	@Override
 	public boolean isLocaleSupported(Locale locale) {
 		return locale != null && bundles.containsKey(locale.getLanguage());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pathfinder.util.translation.TranslatorSpec#getSupportedLocales()
+	 */
+	@Override
+	public List<Locale> getSupportedLocales() {
+		if (supportedLocales == null) {
+			supportedLocales = new ArrayList<Locale>();
+			supportedLocales.add(Locale.GERMAN);
+			supportedLocales.add(Locale.ENGLISH);
+			supportedLocales.add(new Locale("es"));
+			supportedLocales.add(Locale.FRENCH);
+		}
+		return supportedLocales;
 	}
 
 }

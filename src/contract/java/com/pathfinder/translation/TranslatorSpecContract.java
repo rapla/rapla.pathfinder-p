@@ -8,6 +8,7 @@ import static de.vksi.c4j.Condition.postCondition;
 import static de.vksi.c4j.Condition.preCondition;
 import static de.vksi.c4j.Condition.unchanged;
 
+import java.util.List;
 import java.util.Locale;
 
 import com.pathfinder.util.translation.TranslationKeys;
@@ -101,6 +102,18 @@ public class TranslatorSpecContract implements TranslatorSpec {
 	 */
 	@Override
 	public boolean isLocaleSupported(Locale locale) {
+		return ignored();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pathfinder.util.translation.TranslatorSpec#getSupportedLocales()
+	 */
+	@Override
+	public List<Locale> getSupportedLocales() {
+		List<Locale> result = Condition.result();
+		assert result != null : "result not null";
 		return ignored();
 	}
 

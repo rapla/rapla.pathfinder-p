@@ -13,8 +13,6 @@ import com.pathfinder.PathfinderUI;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -40,26 +38,8 @@ public class MenuBarTest {
 		UI.setCurrent(ui);
 
 		menuBar = new MenuBar();
-		dropDown = menuBar.getDropUpMenu();
-		appointmentButton = menuBar.getAppointmentButton();
-	}
-
-	@Test
-	public void addValueChangeListenerTest() {
-		ValueChangeListener listener = new ValueChangeListener() {
-
-			@Override
-			public void valueChange(ValueChangeEvent event) {
-				// Dummy method
-			}
-		};
-
-		menuBar.addValueChangeListener(listener);
-
-		// Check if above defined listener is the same as Dropdown's listener
-		Assert.assertEquals(listener,
-				dropDown.getListeners(ValueChangeEvent.class).iterator().next());
-
+		// dropDown = menuBar.getDropUpMenu();
+		// appointmentButton = menuBar.getAppointmentButton();
 	}
 
 	private boolean buttonclicked = false;

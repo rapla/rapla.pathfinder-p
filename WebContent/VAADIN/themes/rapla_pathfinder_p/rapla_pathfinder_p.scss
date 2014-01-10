@@ -255,24 +255,14 @@
 		float: right;
 	}
 	
-	/* Language Menu Styling */
+	/* Language Popup and menu bar buttons */
 	
-	.v-icon{
-		width: 20%;
+	.flagImage, .v-icon {
 		height: 5em;
-	}
+	}	
 	
-	.languages{
-		background: transparent;
-		width: 20%;
-		height: 3em;
-	
-		.v-select-select{
-			background-image: -webkit-linear-gradient(top, #666666 0%, #494949 100%);
-			background-image: -moz-linear-gradient(top, #666666 0%, #494949 100%);
-			background-image: -ms-linear-gradient(top, #666666 0%, #494949 100%);
-			width: 100%;
-			height: 100%;
-		}
+	.flagImage {
+		width: 7.5em;
+		margin: 0.2em;
 	}
 }

@@ -3,7 +3,6 @@ package com.pathfinder.view.layout;
 import com.pathfinder.model.FreeRoomModel;
 import com.pathfinder.model.ResourceModel;
 import com.pathfinder.view.ViewSpec;
-import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Button.ClickListener;
 
@@ -13,8 +12,7 @@ import com.vaadin.ui.Button.ClickListener;
  * @author alexh
  * 
  */
-public interface DesktopLayoutSpec extends ViewSpec {
-	void addLanguageValueChangeListener(ValueChangeListener listener);
+public interface DesktopLayoutSpec extends ViewSpec, MenuBarLayoutSpec {
 
 	void addClickListenerHomeButton(ClickListener listener);
 

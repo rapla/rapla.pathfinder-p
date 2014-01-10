@@ -27,8 +27,6 @@ import com.pathfinder.view.layout.DesktopLayout;
 import com.pathfinder.view.layout.DesktopLayoutSpec;
 import com.pathfinder.view.listener.DesktopLayoutViewListenerSpec;
 import com.pathfinder.view.listener.KeyboardViewListenerSpec;
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent;
@@ -87,14 +85,18 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		this.searchField
 				.addDeleteAllClickListener(new DeleteAllClickListener());
 
-		desktopLayout
-				.addLanguageValueChangeListener(new LanguageValueChangeListener());
 		desktopLayout.addClickListenerHomeButton(new HomeButtonClickListener());
 		desktopLayout
 				.addClickListenerAppointmentButton(new AppointmentButtonClickListener());
 		desktopLayout
 				.addClickListenerWheelChairButton(new WheelChairButtonClickListener());
 		desktopLayout.addClickListenerBackButton(new BackButtonClickListener());
+
+		for (Locale locale : Translator.getInstance().getSupportedLocales()) {
+			desktopLayout.addClickListenerFlagPopup(locale,
+					new FlagImageClickListener(locale));
+		}
+
 		this.refreshFreeRooms();
 		this.scheduleFreeRoomsLoading();
 	}
@@ -147,14 +149,6 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		}
 	}
 
-	class LanguageValueChangeListener implements ValueChangeListener {
-		public void valueChange(ValueChangeEvent event) {
-			Locale value = (Locale) event.getProperty().getValue();
-			UI.getCurrent().setLocale(value);
-			languageChanged(value);
-		}
-	}
-
 	class HomeButtonClickListener implements ClickListener {
 		@Override
 		public void buttonClick(ClickEvent event) {
@@ -194,6 +188,28 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		public void run() {
 			desktopLayout.switchToSearchView();
 		}
+	}
+
+	class FlagImageClickListener implements
+			com.vaadin.event.MouseEvents.ClickListener {
+
+		private Locale locale;
+
+		public FlagImageClickListener(Locale locale) {
+			this.locale = locale;
+		}
+
+		@Override
+		public void click(com.vaadin.event.MouseEvents.ClickEvent event) {
+			// If clicked language different than current language, then update
+			// translations
+			desktopLayout.hideOpenLanguagePopup();
+			if (!UI.getCurrent().getLocale().equals(locale)) {
+				UI.getCurrent().setLocale(locale);
+				languageChanged(locale);
+			}
+		}
+
 	}
 
 	private TimerTask getTimerTask() {

@@ -3,10 +3,10 @@
  */
 package com.pathfinder.util.translation;
 
+import java.util.List;
 import java.util.Locale;
 
 import com.pathfinder.translation.TranslatorSpecContract;
-import com.pathfinder.util.translation.TranslationKeys;
 
 import de.vksi.c4j.ContractReference;
 import de.vksi.c4j.Pure;
@@ -62,5 +62,12 @@ public interface TranslatorSpec {
 	 */
 	@Pure
 	boolean isLocaleSupported(Locale locale);
+
+	/**
+	 * 
+	 * @return list of all supported locales
+	 */
+	@Pure
+	List<Locale> getSupportedLocales();
 
 }

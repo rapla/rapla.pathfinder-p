@@ -1,5 +1,7 @@
 package com.pathfinder.view.layout;
 
+import java.util.Locale;
+
 import com.pathfinder.model.FreeRoomModel;
 import com.pathfinder.model.ResourceModel;
 import com.pathfinder.util.widgetset.DateTime;
@@ -13,7 +15,6 @@ import com.pathfinder.view.components.MenuBarSpec;
 import com.pathfinder.view.container.DetailContainer;
 import com.pathfinder.view.container.DetailContainerSpec;
 import com.pathfinder.view.container.SearchPanelSpec;
-import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomComponent;
@@ -50,11 +51,6 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 		this.layout.addComponent(detailContainer);
 		this.layout.addComponent(appointmentView);
 		this.layout.addComponent(menuBar);
-	}
-
-	@Override
-	public void addLanguageValueChangeListener(ValueChangeListener listener) {
-		menuBar.addValueChangeListener(listener);
 	}
 
 	@Override
@@ -157,5 +153,16 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 		detailContainer.updateTranslations();
 		appointmentView.updateTranslations();
 		menuBar.updateTranslations();
+	}
+
+	@Override
+	public void addClickListenerFlagPopup(Locale locale,
+			com.vaadin.event.MouseEvents.ClickListener listener) {
+		menuBar.addClickListenerFlagPopup(locale, listener);
+	}
+
+	@Override
+	public void hideOpenLanguagePopup() {
+		menuBar.hideOpenLanguagePopup();
 	}
 }
