@@ -21,8 +21,6 @@ import com.pathfinder.view.components.KeyboardId;
 import com.pathfinder.view.components.KeyboardSpec;
 import com.pathfinder.view.components.SearchField;
 import com.pathfinder.view.components.SearchFieldSpec;
-import com.pathfinder.view.container.DetailContainer;
-import com.pathfinder.view.container.DetailContainerSpec;
 import com.pathfinder.view.container.SearchPanel;
 import com.pathfinder.view.container.SearchPanelSpec;
 import com.pathfinder.view.layout.DesktopLayout;
@@ -64,8 +62,6 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 			(AccordionView) accordionView, (Keyboard) keyboard,
 			(SearchField) searchField);
 
-	private final DetailContainerSpec detailContainer = new DetailContainer();
-
 	private final BeanFieldGroup<KeyboardModel> keyboardBinder = new BeanFieldGroup<KeyboardModel>(
 			KeyboardModel.class);
 
@@ -98,6 +94,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 
 		desktopLayout
 				.addLanguageValueChangeListener(new LanguageValueChangeListener());
+		desktopLayout.addClickListenerHomeButton(new HomeButtonClickListener());
 		desktopLayout
 				.addClickListenerAppointmentButton(new AppointmentButtonClickListener());
 		desktopLayout
@@ -153,10 +150,19 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		}
 	}
 
+	class HomeButtonClickListener implements ClickListener {
+		@Override
+		public void buttonClick(ClickEvent event) {
+			desktopLayout.switchToSearchView();
+		}
+	}
+
 	class AppointmentButtonClickListener implements ClickListener {
 		@Override
 		public void buttonClick(ClickEvent event) {
 			// TODO Should be variable URL - getResourceUrl();
+			// ResourceModel resource = (ResourceModel) event.getComponent();
+			// desktopLayout.setAppointmentUrl(resource.getLink());
 			desktopLayout.setAppointmentUrl(properties
 					.getProperty(PropertiesKey.APPOINTMENT_BASE_URL)
 					+ "&allocatable_id=2373");
@@ -207,7 +213,10 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	class TableClickListener implements ItemClickListener {
 		@Override
 		public void itemClick(ItemClickEvent event) {
-			detailContainer.addDetails((ResourceModel) event.getItemId());
+			ResourceModel resource = (ResourceModel) event.getItemId();
+			LOGGER.trace(resource.getType() + " element was clicked: "
+					+ resource.getName());
+			desktopLayout.switchToDetailView(resource);
 		}
 	}
 

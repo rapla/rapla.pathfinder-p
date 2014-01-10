@@ -141,4 +141,46 @@ public class MenuBarSpecContract extends ComponentSpecContract implements
 
 	}
 
+	@Override
+	public void addClickListenerHomeButton(ClickListener listener) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void showHomeButton() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void hideHomeButton() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void showWheelChairButton() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void hideWheelChairButton() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void replaceWheelChairButtonWithHomeButton() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void replaceHomeButtonWithWheelChairButton() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

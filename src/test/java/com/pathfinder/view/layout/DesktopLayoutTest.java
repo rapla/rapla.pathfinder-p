@@ -23,7 +23,6 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HasComponents;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
 
 /**
  * @author tim
@@ -62,7 +61,7 @@ public class DesktopLayoutTest {
 	// TODO: Update when method switchToDetailView finished
 	// @Test
 	public void switchToDetailViewTest() {
-		desktopLayout.switchToDetailView();
+		// desktopLayout.switchToDetailView();
 
 		// Iterate over child components of DesktopLayout and assure there is a
 		// DetailContainer, but no SearchPanel

@@ -1,6 +1,7 @@
 package com.pathfinder.view.layout;
 
 import com.pathfinder.model.FreeRoomModel;
+import com.pathfinder.model.ResourceModel;
 import com.pathfinder.view.ViewSpec;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
@@ -15,6 +16,8 @@ import com.vaadin.ui.Button.ClickListener;
 public interface DesktopLayoutSpec extends ViewSpec {
 	void addLanguageValueChangeListener(ValueChangeListener listener);
 
+	void addClickListenerHomeButton(ClickListener listener);
+
 	void addClickListenerAppointmentButton(ClickListener listener);
 
 	void addClickListenerWheelChairButton(ClickListener listener);
@@ -27,7 +30,7 @@ public interface DesktopLayoutSpec extends ViewSpec {
 
 	void switchToSearchView();
 
-	<T> void switchToDetailView();
+	void switchToDetailView(ResourceModel resource);
 
 	void switchToAppointmentView();
 

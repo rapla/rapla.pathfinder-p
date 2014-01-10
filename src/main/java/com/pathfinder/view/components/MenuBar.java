@@ -15,7 +15,6 @@ import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.NativeSelect;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.themes.BaseTheme;
 
 /**
  * MenuBar with buttons for the language, appointment and wheelchair
@@ -29,29 +28,27 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 
 	private ThemeResource res;
 	private final NativeSelect dropUpMenu = new NativeSelect();
-	private Button appointmentButton = new Button(
+	private final Button homeButton = new Button("Home");
+	private final Button appointmentButton = new Button(
 			translator.translate(TranslationKeys.EVENT));
-	private Button backButton = new Button(
+	private final Button backButton = new Button(
 			translator.translate(TranslationKeys.BACK));
-	private Button wheelChairDriverButton = new Button();
+	private final Button wheelChairDriverButton = new Button();
 
 	public MenuBar() {
-		buildLanguagePicture();
 		buildLanguageMenu();
 		buildWheelChairDriver();
 		buildMainLayout();
-
 		setCompositionRoot(layout);
 	}
 
-	private void buildLanguagePicture() {
+	private void buildLanguageMenu() {
 		String language = "" + UI.getCurrent().getLocale();
 		language = language.substring(0, 2);
 		res = new ThemeResource("icon/" + language + ".png");
 		dropUpMenu.setIcon(res);
-	}
 
-	private void buildLanguageMenu() {
+		// TODO Deprecated?
 		Map<String, Locale> languages = new HashMap<String, Locale>();
 		languages.put("deutsch", Locale.GERMANY);
 		languages.put("english", Locale.US);
@@ -59,10 +56,10 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 		languages.put("français", Locale.FRANCE);
 		dropUpMenu.setPrimaryStyleName("languages");
 
-		for (String language : languages.keySet()) {
-			Locale locale = languages.get(language);
-			dropUpMenu.addItem(languages.get(language));
-			dropUpMenu.setItemCaption(locale, language);
+		for (String languageKey : languages.keySet()) {
+			Locale locale = languages.get(languageKey);
+			dropUpMenu.addItem(languages.get(languageKey));
+			dropUpMenu.setItemCaption(locale, languageKey);
 		}
 
 		dropUpMenu.setNullSelectionAllowed(false);
@@ -71,7 +68,6 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	}
 
 	private void buildWheelChairDriver() {
-		wheelChairDriverButton.setStyleName(BaseTheme.BUTTON_LINK);
 		wheelChairDriverButton.setIcon(new ThemeResource(
 				"icon/wheelChairDriver.png"));
 		wheelChairDriverButton.setPrimaryStyleName("wheelChairButtonMan");
@@ -83,12 +79,17 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 		layout.addComponent(wheelChairDriverButton);
 
 		// TODO Only commented for testing
-		// this.appointmentButton.setVisible(false);
+		// this.hideAppointmentButton();
 	}
 
 	@Override
 	public void addValueChangeListener(ValueChangeListener listener) {
 		this.dropUpMenu.addValueChangeListener(listener);
+	}
+
+	@Override
+	public void addClickListenerHomeButton(ClickListener listener) {
+		homeButton.addClickListener(listener);
 	}
 
 	@Override
@@ -107,6 +108,16 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	}
 
 	@Override
+	public void showHomeButton() {
+		this.homeButton.setVisible(true);
+	}
+
+	@Override
+	public void hideHomeButton() {
+		this.homeButton.setVisible(false);
+	}
+
+	@Override
 	public void showAppointmentButton() {
 		this.appointmentButton.setVisible(true);
 	}
@@ -117,6 +128,16 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	}
 
 	@Override
+	public void showWheelChairButton() {
+		this.wheelChairDriverButton.setVisible(true);
+	}
+
+	@Override
+	public void hideWheelChairButton() {
+		this.wheelChairDriverButton.setVisible(false);
+	}
+
+	@Override
 	public void replaceAppointmentButtonWithBackButton() {
 		layout.replaceComponent(appointmentButton, backButton);
 	}
@@ -124,6 +145,16 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	@Override
 	public void replaceBackButtonWithAppointmentButton() {
 		layout.replaceComponent(backButton, appointmentButton);
+	}
+
+	@Override
+	public void replaceWheelChairButtonWithHomeButton() {
+		layout.replaceComponent(wheelChairDriverButton, homeButton);
+	}
+
+	@Override
+	public void replaceHomeButtonWithWheelChairButton() {
+		layout.replaceComponent(homeButton, wheelChairDriverButton);
 	}
 
 	@Override

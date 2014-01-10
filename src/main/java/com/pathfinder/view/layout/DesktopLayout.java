@@ -1,6 +1,7 @@
 package com.pathfinder.view.layout;
 
 import com.pathfinder.model.FreeRoomModel;
+import com.pathfinder.model.ResourceModel;
 import com.pathfinder.util.widgetset.DateTime;
 import com.pathfinder.view.components.AppointmentView;
 import com.pathfinder.view.components.AppointmentViewSpec;
@@ -9,6 +10,8 @@ import com.pathfinder.view.components.FreeRoomView;
 import com.pathfinder.view.components.FreeRoomViewSpec;
 import com.pathfinder.view.components.MenuBar;
 import com.pathfinder.view.components.MenuBarSpec;
+import com.pathfinder.view.container.DetailContainer;
+import com.pathfinder.view.container.DetailContainerSpec;
 import com.pathfinder.view.container.SearchPanelSpec;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
@@ -28,7 +31,7 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	private final MenuBarSpec menuBar = new MenuBar();
 	private SearchPanelSpec searchPanel = null;
 	// TODO
-	// private DetailContainerSpec detailContainer = null;
+	private final DetailContainerSpec detailContainer = new DetailContainer();
 	private final AppointmentViewSpec appointmentView = new AppointmentView();
 
 	private final VerticalLayout layout = new VerticalLayout();
@@ -53,6 +56,11 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	@Override
 	public void addLanguageValueChangeListener(ValueChangeListener listener) {
 		menuBar.addValueChangeListener(listener);
+	}
+
+	@Override
+	public void addClickListenerHomeButton(ClickListener listener) {
+		menuBar.addClickListenerHomeButton(listener);
 	}
 
 	@Override
@@ -82,33 +90,53 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 
 	@Override
 	public void switchToSearchView() {
-		menuBar.replaceBackButtonWithAppointmentButton();
+		// Hiding
 		appointmentView.hideAppointmentView();
 		// TODO
-		// detailContainer.removeDetails(...);
 		// detailContainer.hideDetailContainer();
+		// detailContainer.removeDetails(...);
+
+		// Adapting MenuBar
+		menuBar.replaceHomeButtonWithWheelChairButton();
+		menuBar.replaceBackButtonWithAppointmentButton();
+		menuBar.hideAppointmentButton();
+
+		// Showing
 		freeRoom.showFreeRoomView();
 		searchPanel.showSearchPanel();
 	}
 
 	@Override
-	public <T> void switchToDetailView() {
-		// TODO
-		// detailContainer.setDetails(...);
+	public void switchToDetailView(ResourceModel resource) {
+		// Hiding
 		appointmentView.hideAppointmentView();
 		freeRoom.hideFreeRoomView();
 		searchPanel.hideSearchPanel();
-		// detailContainer.showDetailContainer();
+
+		// Adapting MenuBar
+		menuBar.replaceWheelChairButtonWithHomeButton();
+		if (resource.getLink() != null && !"".equals(resource.getLink())) {
+			menuBar.showAppointmentButton();
+		}
+
+		// Showing
+		 detailContainer.addDetails(resource);
+		 detailContainer.showDetailContainer();
 	}
 
 	@Override
 	public void switchToAppointmentView() {
-		menuBar.replaceAppointmentButtonWithBackButton();
-		// TODO
-		// detailContainer.removeDetails(...);
-		// detailContainer.hideDetailContainer();
+		// Hiding
 		freeRoom.hideFreeRoomView();
 		searchPanel.hideSearchPanel();
+		// TODO
+		// detailContainer.hideDetailContainer();
+		// detailContainer.removeDetails(...);
+
+		// Adapting MenuBar
+		menuBar.replaceAppointmentButtonWithBackButton();
+
+		// Showing
 		appointmentView.showAppointmentView();
 	}
 
