@@ -3,6 +3,7 @@
  */
 package com.pathfinder.view.components;
 
+import java.util.Iterator;
 import java.util.Locale;
 
 import org.junit.Assert;
@@ -16,7 +17,8 @@ import com.pathfinder.util.translation.TranslatorSpec;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.NativeSelect;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.HasComponents;
 import com.vaadin.ui.UI;
 
 /**
@@ -27,7 +29,6 @@ public class MenuBarTest {
 
 	private MenuBar menuBar;
 	private Button appointmentButton;
-	private NativeSelect dropDown;
 	private PathfinderUI ui = new PathfinderUI();
 	private TranslatorSpec translator = Translator.getInstance();
 
@@ -38,8 +39,12 @@ public class MenuBarTest {
 		UI.setCurrent(ui);
 
 		menuBar = new MenuBar();
-		// dropDown = menuBar.getDropUpMenu();
-		// appointmentButton = menuBar.getAppointmentButton();
+
+		Component rootLayout = menuBar.iterator().next();
+
+		Iterator<Component> iterator = ((HasComponents) rootLayout).iterator();
+		iterator.next();
+		appointmentButton = (Button) iterator.next();
 	}
 
 	private boolean buttonclicked = false;
