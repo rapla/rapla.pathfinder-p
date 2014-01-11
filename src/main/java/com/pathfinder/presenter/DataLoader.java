@@ -40,8 +40,9 @@ import com.vaadin.ui.UI;
  * 
  */
 public class DataLoader implements DataLoaderSpec {
-
 	private static final Logger LOGGER = LogManager.getLogger(DataLoader.class);
+	private ApplicationPropertiesSpec properties = ApplicationProperties
+			.getInstance();
 
 	private final String BASE_URL = ApplicationProperties.getInstance()
 			.getProperty(PropertiesKey.RAPLA_BASE_URL);
@@ -49,27 +50,19 @@ public class DataLoader implements DataLoaderSpec {
 	private final String RESOURCES_METHOD = BASE_URL + "/getResources?";
 	private final String RESOURCE_DETAIL_METHOD = BASE_URL + "/getResource?";
 	private final String ORGANIGRAM_METHOD = BASE_URL + "/getOrganigram";
-	private final String FREE_RESOURCES = BASE_URL + "/getFreeResources";
+	private final String FREE_RESOURCES_METHOD = BASE_URL + "/getFreeResources";
 
-	private final String REQUEST_PERSONS = "persons";
-	private final String REQUEST_ROOMS = "rooms";
-	private final String REQUEST_POIS = "sonstiges";
-	private final String REQUEST_COURSES = "courses";
-	private final String REQUEST_ORGANIGRAM = "organigram";
+	private final String REQUEST_PARAMETER_PERSONS = "persons";
+	private final String REQUEST_PARAMETER_ROOMS = "rooms";
+	private final String REQUEST_PARAMETER_POIS = "sonstiges";
+	private final String REQUEST_PARAMETER_COURSES = "courses";
+	private final String REQUEST_PARAMETER_ORGANIGRAM = "organigram";
 
 	private final String ERROR_MASSAGE_LOADING_RESOURCE = "Error loading resource: ";
 	private final String ERROR_MASSAGE_URL_NOT_READABLE = "Error loading URL: ";
-
-	// TODO: Delete if not necessary, but should be necessary for better error
-	// handling
-	// private final String ERROR_MASSAGE_LOADING_RESOURCE_DETAIL =
-	// "Error loading resource detail - id: ";
-	// private final String ERROR_MESSAGE_EMPTY_RESSOURCE = "Resource is empty";
-
-	private final JSONParser parser = new JSONParser();
-	private JSONObject jsonObject = null;
-
-	private BufferedReader br;
+	// TODO: Use for better errorhandling
+	private final String ERROR_MASSAGE_LOADING_RESOURCE_DETAIL = "Error loading resource detail - id: ";
+	private final String ERROR_MESSAGE_EMPTY_RESSOURCE = "Resource is empty";
 
 	private final BeanItemContainer<ResourceModel> roomContainer = new BeanItemContainer<ResourceModel>(
 			ResourceModel.class);
@@ -80,14 +73,16 @@ public class DataLoader implements DataLoaderSpec {
 	private final BeanItemContainer<ResourceModel> poiContainer = new BeanItemContainer<ResourceModel>(
 			ResourceModel.class);
 
+	private final JSONParser parser = new JSONParser();
+	private JSONObject jsonObject = null;
+
+	private BufferedReader br;
+
 	/**
 	 * Consumer of data have to register themselves to this class, to get
 	 * notified, if data changes
 	 */
 	private List<DataLoaderListenerSpec> dataListener = new ArrayList<DataLoaderListenerSpec>();
-
-	private ApplicationPropertiesSpec properties = ApplicationProperties
-			.getInstance();
 
 	private static DataLoader instance;
 
@@ -113,25 +108,41 @@ public class DataLoader implements DataLoaderSpec {
 
 		/* Get the data */
 		LOGGER.info("Begin loading all resource data");
-		this.loadResource(REQUEST_COURSES, courseContainer);
-		this.loadResource(REQUEST_ROOMS, roomContainer);
-		this.loadResource(REQUEST_PERSONS, personContainer);
-		this.loadResource(REQUEST_POIS, poiContainer);
+		this.loadResource(REQUEST_PARAMETER_COURSES, courseContainer);
+		this.loadResource(REQUEST_PARAMETER_ROOMS, roomContainer);
+		this.loadResource(REQUEST_PARAMETER_PERSONS, personContainer);
+		this.loadResource(REQUEST_PARAMETER_POIS, poiContainer);
 
 		// load Faculties
 		this.loadFaculty();
 	}
 
-	private void loadResource(String resourceString,
+	private void loadResource(String resourceParameter,
 			BeanItemContainer<ResourceModel> resourceContainer) {
-		ResourcesResult resourceResult = gsonGetResources(resourceString, "");
+		ResourcesResult resourceResult = gsonGetResources(resourceParameter, "");
+
+		String type = "";
+		switch (type) {
+		case REQUEST_PARAMETER_COURSES:
+			type = "course";
+			break;
+		case REQUEST_PARAMETER_ROOMS:
+			type = "room";
+			break;
+		case REQUEST_PARAMETER_PERSONS:
+			type = "person";
+			break;
+		case REQUEST_PARAMETER_POIS:
+			type = "poi";
+			break;
+		}
 
 		if (resourceResult != null)
 			for (ResourceModel concreteResult : resourceResult.getResult()) {
 				ResourceModel resource = new ResourceModel(
 						concreteResult.getId(), concreteResult.getName(),
 						concreteResult.getLink(),
-						concreteResult.getSearchTerms());
+						concreteResult.getSearchTerms(), type);
 				resourceContainer.addItem(resource);
 			}
 	}
@@ -178,10 +189,12 @@ public class DataLoader implements DataLoaderSpec {
 			br = new BufferedReader(new InputStreamReader(
 					new URL(url).openStream()));
 		} catch (MalformedURLException e) {
-			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE + REQUEST_ORGANIGRAM, e);
+			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE
+					+ REQUEST_PARAMETER_ORGANIGRAM, e);
 			return null;
 		} catch (IOException e) {
-			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE + REQUEST_ORGANIGRAM, e);
+			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE
+					+ REQUEST_PARAMETER_ORGANIGRAM, e);
 			return null;
 		}
 
@@ -191,10 +204,11 @@ public class DataLoader implements DataLoaderSpec {
 		// Force Error
 		try {
 			organigramResult.getResult();
-			LOGGER.info(REQUEST_ORGANIGRAM + " loaded");
+			LOGGER.info(REQUEST_PARAMETER_ORGANIGRAM + " loaded");
 			return organigramResult;
 		} catch (NullPointerException ex) {
-			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE + REQUEST_ORGANIGRAM);
+			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE
+					+ REQUEST_PARAMETER_ORGANIGRAM);
 			return null;
 		}
 	}
@@ -210,7 +224,7 @@ public class DataLoader implements DataLoaderSpec {
 				try {
 					// get all courses in an special faculty
 					ResourcesResult resourcesResult = gsonGetResources(
-							REQUEST_COURSES, faculty_get.getId());
+							REQUEST_PARAMETER_COURSES, faculty_get.getId());
 					if (resourcesResult != null)
 						// look if there is any courses with the same id in the
 						// RAM
@@ -233,7 +247,7 @@ public class DataLoader implements DataLoaderSpec {
 
 				try {
 					// get all persons in an special faculty
-					ResourceData = gsonGetResources(REQUEST_PERSONS,
+					ResourceData = gsonGetResources(REQUEST_PARAMETER_PERSONS,
 							faculty_get.getId()).getResult();
 
 					// look if there is any persons with the same id in the RAM
@@ -356,7 +370,7 @@ public class DataLoader implements DataLoaderSpec {
 
 		try {
 			br = new BufferedReader(new InputStreamReader(new URL(
-					FREE_RESOURCES).openStream()));
+					FREE_RESOURCES_METHOD).openStream()));
 
 			jsonObject = (JSONObject) parser.parse(br);
 
