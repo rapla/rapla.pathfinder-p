@@ -404,9 +404,6 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		switchToSearchView();
 		clearSearchString();
 		languageChanged(VaadinSession.getCurrent().getLocale());
-		if (UI.getCurrent().isAttached()) {
-			UI.getCurrent().push();
-		}
 	}
 
 	private boolean isTimeToGoHome() {
