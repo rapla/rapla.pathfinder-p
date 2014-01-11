@@ -26,11 +26,15 @@ public class DateTimeConnector extends AbstractComponentConnector {
 	 */
 	private Timer synchronizeWithServerTimer;
 
+	private Timer backToHomeScreenTimer;
+
 	/**
 	 * Intervall in which the current widget's time will be synchronized with
 	 * the server time
 	 */
 	private final static int SYNCHRONIZE_INTERVALL = 10 * 60 * 1000;
+
+	private final static int CHECK_IF_TIME_TO_GO_HOME_INTERVALL = 5 * 1000;
 
 	private long timeOld = 0;
 
@@ -44,6 +48,17 @@ public class DateTimeConnector extends AbstractComponentConnector {
 			}
 		};
 		synchronizeWithServerTimer.scheduleRepeating(SYNCHRONIZE_INTERVALL);
+
+		backToHomeScreenTimer = new Timer() {
+
+			@Override
+			public void run() {
+				rpc.goBackToHomeScreen();
+			}
+		};
+		backToHomeScreenTimer
+				.scheduleRepeating(CHECK_IF_TIME_TO_GO_HOME_INTERVALL);
+
 	}
 
 	@Override

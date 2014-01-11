@@ -101,6 +101,7 @@ public class PathfinderUI extends UI implements DataLoaderListenerSpec {
 			desktopPresenter = new DesktopPresenter();
 			setPrimaryStyleName("main");
 			setContent(desktopPresenter.getDesktopLayoutView());
+			addClickListener(desktopPresenter.getUiClickListener());
 			LOGGER.trace("Desktop application initialized");
 		}
 	}

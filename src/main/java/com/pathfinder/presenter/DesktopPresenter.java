@@ -15,6 +15,7 @@ import com.pathfinder.util.properties.ApplicationPropertiesSpec;
 import com.pathfinder.util.properties.PropertiesKey;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
+import com.pathfinder.util.widgetset.BackToHomeScreenListenerSpec;
 import com.pathfinder.view.components.KeyboardId;
 import com.pathfinder.view.layout.DesktopLayout;
 import com.pathfinder.view.layout.DesktopLayoutSpec;
@@ -53,6 +54,8 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	private final int goBackHomeIntervall = properties
 			.getIntProperty(PropertiesKey.BACK_TO_HOME_TIMER);
 
+	private long lastUserInteractionTimestamp;
+
 	public DesktopPresenter() {
 		this.desktopLayout.addKeyboardListener(this);
 		this.keyboardBinder.setBuffered(false);
@@ -84,17 +87,11 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 					new FlagImageClickListener(locale));
 		}
 
+		desktopLayout.addBackToHomeListener(new BackToHomeListener());
+
 		this.refreshFreeRooms();
 		this.scheduleFreeRoomsLoading();
-		this.startBackToHomeTimer();
 	}
-
-	// TODO
-	// class ResourceClickListener extends
-	// {
-	// Timer timer = new Timer();
-	// timer.schedule(new RespawnDesktopLayoutTimer(), 60000);
-	// }
 
 	@Override
 	public void buttonClick(KeyboardId keyId) {
@@ -384,20 +381,15 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		return (DesktopLayout) desktopLayout;
 	}
 
-	@Override
-	public void startBackToHomeTimer() {
-		Timer backToHomeTimer = new Timer();
-		TimerTask backToHomeTimerTask = new TimerTask() {
+	class BackToHomeListener implements BackToHomeScreenListenerSpec {
 
-			@Override
-			public void run() {
-				if (isTimeToGoHome()) {
-					goBackToHomeScreenAndRestoreDefaultSettings();
-				}
+		@Override
+		public void timeToGoHome() {
+			if (isTimeToGoHome()) {
+				goBackToHomeScreenAndRestoreDefaultSettings();
 			}
-		};
+		}
 
-		backToHomeTimer.schedule(backToHomeTimerTask, 0, 1000);
 	}
 
 	private void goBackToHomeScreenAndRestoreDefaultSettings() {
@@ -409,15 +401,26 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	private boolean isTimeToGoHome() {
 		boolean result = false;
 
-		long lastRequest = VaadinSession.getCurrent().getLastRequestTimestamp();
-		long millisecondsSinceLastRequest = new Date().getTime() - lastRequest;
+		long millisecondsSinceLastRequest = new Date().getTime()
+				- lastUserInteractionTimestamp;
 
 		if (millisecondsSinceLastRequest >= goBackHomeIntervall) {
-			VaadinSession.getCurrent().setLastRequestTimestamp(
-					new Date().getTime());
+			lastUserInteractionTimestamp = new Date().getTime();
 			result = true;
 		}
 
 		return result;
 	}
+
+	@Override
+	public com.vaadin.event.MouseEvents.ClickListener getUiClickListener() {
+		return new com.vaadin.event.MouseEvents.ClickListener() {
+
+			@Override
+			public void click(com.vaadin.event.MouseEvents.ClickEvent event) {
+				lastUserInteractionTimestamp = new Date().getTime();
+			}
+		};
+	}
+
 }

@@ -1,5 +1,7 @@
 package com.pathfinder.view.components;
 
+import com.pathfinder.util.widgetset.BackToHomeScreenListenerSpec;
+
 /**
  * TimeDateSpec
  * 
@@ -7,5 +9,5 @@ package com.pathfinder.view.components;
  * 
  */
 public interface DateTimeSpec extends ComponentSpec {
-
+	void addBackToHomeListener(BackToHomeScreenListenerSpec listener);
 }

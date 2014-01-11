@@ -5,6 +5,7 @@ import java.util.Locale;
 
 import com.pathfinder.model.FreeRoomModel;
 import com.pathfinder.model.ResourceModel;
+import com.pathfinder.util.widgetset.BackToHomeScreenListenerSpec;
 import com.pathfinder.util.widgetset.DateTime;
 import com.pathfinder.view.components.AccordionView;
 import com.pathfinder.view.components.AccordionViewSpec;
@@ -327,5 +328,10 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 		detailContainer.updateTranslations();
 		appointmentView.updateTranslations();
 		menuBar.updateTranslations();
+	}
+
+	@Override
+	public void addBackToHomeListener(BackToHomeScreenListenerSpec listener) {
+		dateTime.addBackToHomeListener(listener);
 	}
 }

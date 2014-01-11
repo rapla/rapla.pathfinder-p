@@ -1,6 +1,8 @@
 package com.pathfinder.util.widgetset;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
@@ -21,6 +23,8 @@ public class DateTime extends AbstractComponent implements DateTimeSpec {
 
 	private TranslatorSpec translator = Translator.getInstance();
 
+	private List<BackToHomeScreenListenerSpec> backToHomeListener = new ArrayList<>();
+
 	private DateTimeServerRpc rpc = new DateTimeServerRpc() {
 
 		@Override
@@ -34,6 +38,13 @@ public class DateTime extends AbstractComponent implements DateTimeSpec {
 					translator.translate(TranslationKeys.DATE_FORMAT));
 			getState().setTimeFormat(
 					translator.translate(TranslationKeys.TIME_FORMAT));
+		}
+
+		@Override
+		public void goBackToHomeScreen() {
+			for (BackToHomeScreenListenerSpec listener : backToHomeListener) {
+				listener.timeToGoHome();
+			}
 		}
 
 	};
@@ -52,6 +63,11 @@ public class DateTime extends AbstractComponent implements DateTimeSpec {
 	@Override
 	public void updateTranslations() {
 		rpc.updateDateTimeFormatter();
+	}
+
+	@Override
+	public void addBackToHomeListener(BackToHomeScreenListenerSpec listener) {
+		this.backToHomeListener.add(listener);
 	}
 
 }

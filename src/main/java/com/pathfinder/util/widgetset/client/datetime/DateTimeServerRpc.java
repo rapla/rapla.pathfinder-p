@@ -14,11 +14,13 @@ public interface DateTimeServerRpc extends ServerRpc {
 	/**
 	 * Synchronizing current time in the widget with the current server time
 	 */
-	public void synchronizeWithServertime();
+	void synchronizeWithServertime();
 
 	/**
 	 * Updates format for date and time according to current locale
 	 */
-	public void updateDateTimeFormatter();
+	void updateDateTimeFormatter();
+
+	void goBackToHomeScreen();
 
 }

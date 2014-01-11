@@ -6,6 +6,7 @@ import static de.vksi.c4j.Condition.preCondition;
 
 import com.pathfinder.model.ResourceModel;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.event.MouseEvents.ClickListener;
 import com.vaadin.ui.CustomComponent;
 
 import de.vksi.c4j.ClassInvariant;
@@ -119,25 +120,31 @@ public class DesktopPresenterSpecContract implements DesktopPresenterSpec {
 	}
 
 	@Override
-	public void startBackToHomeTimer() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
 	public void switchToSearchView() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void switchToDetailView(ResourceModel resource) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void switchToAppointmentView() {
 		// TODO Auto-generated method stub
-		
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.pathfinder.presenter.DesktopPresenterSpec#getUiClickListener()
+	 */
+	@Override
+	public ClickListener getUiClickListener() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

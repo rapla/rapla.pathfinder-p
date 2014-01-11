@@ -2,6 +2,7 @@ package com.pathfinder.presenter;
 
 import com.pathfinder.model.ResourceModel;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.event.MouseEvents.ClickListener;
 import com.vaadin.ui.CustomComponent;
 
 import de.vksi.c4j.ContractReference;
@@ -36,11 +37,12 @@ public interface DesktopPresenterSpec {
 
 	void setSearchString(String value);
 
-	void startBackToHomeTimer();
-
 	@Pure
 	String getSearchString();
 
 	@Pure
 	int getCursorPosition();
+
+	@Pure
+	ClickListener getUiClickListener();
 }
