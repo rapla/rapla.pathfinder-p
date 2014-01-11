@@ -29,7 +29,6 @@ import com.vaadin.server.Page;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 
@@ -377,8 +376,8 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	}
 
 	@Override
-	public CustomComponent getDesktopLayoutView() {
-		return (DesktopLayout) desktopLayout;
+	public DesktopLayoutSpec getDesktopLayoutView() {
+		return desktopLayout;
 	}
 
 	class BackToHomeListener implements BackToHomeScreenListenerSpec {

@@ -1,9 +1,9 @@
 package com.pathfinder.presenter;
 
 import com.pathfinder.model.ResourceModel;
+import com.pathfinder.view.layout.DesktopLayoutSpec;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.MouseEvents.ClickListener;
-import com.vaadin.ui.CustomComponent;
 
 import de.vksi.c4j.ContractReference;
 import de.vksi.c4j.Pure;
@@ -27,7 +27,7 @@ public interface DesktopPresenterSpec {
 
 	void refreshFreeRooms();
 
-	CustomComponent getDesktopLayoutView();
+	DesktopLayoutSpec getDesktopLayoutView();
 
 	void addKeybordKeyToSearchString(String key);
 

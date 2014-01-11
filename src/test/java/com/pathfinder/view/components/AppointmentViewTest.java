@@ -37,11 +37,11 @@ public class AppointmentViewTest {
 				.iterator().next();
 
 		appointmentView.setAppointmentUrl("TestUrl");
-		Assert.assertEquals("TestUrl",
+		Assert.assertEquals("about:blank",
 				((ExternalResource) browserFrame.getSource()).getURL());
 
-		appointmentView.setAppointmentUrl("");
-		Assert.assertEquals("about:blank",
+		appointmentView.setAppointmentUrl("http://www.google.de");
+		Assert.assertEquals("http://www.google.de",
 				((ExternalResource) browserFrame.getSource()).getURL());
 
 	}

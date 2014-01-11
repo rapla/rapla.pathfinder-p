@@ -5,9 +5,9 @@ import static de.vksi.c4j.Condition.postCondition;
 import static de.vksi.c4j.Condition.preCondition;
 
 import com.pathfinder.model.ResourceModel;
+import com.pathfinder.view.layout.DesktopLayoutSpec;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.MouseEvents.ClickListener;
-import com.vaadin.ui.CustomComponent;
 
 import de.vksi.c4j.ClassInvariant;
 import de.vksi.c4j.Target;
@@ -67,7 +67,7 @@ public class DesktopPresenterSpecContract implements DesktopPresenterSpec {
 	}
 
 	@Override
-	public CustomComponent getDesktopLayoutView() {
+	public DesktopLayoutSpec getDesktopLayoutView() {
 		if (preCondition()) {
 			// TODO: write preconditions if required
 		}
