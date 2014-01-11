@@ -81,8 +81,10 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 
 		languagePopupButton.setContent(popupLayout);
 		languagePopupButton.setPrimaryStyleName(STYLE_CLASS_LANGUAGE_BUTTON);
-		languagePopupButton.setIcon(flagResources.get(UI.getCurrent()
-				.getLocale()));
+		String flagFilename = THEME_RESOURCES_FOLDER
+				+ UI.getCurrent().getLocale().getLanguage()
+				+ THEME_RESOURCES_SUFFIX;
+		languagePopupButton.setIcon(new ThemeResource(flagFilename));
 	}
 
 	private void buildWheelChairDriver() {
