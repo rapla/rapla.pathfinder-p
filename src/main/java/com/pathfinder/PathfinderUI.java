@@ -48,18 +48,14 @@ public class PathfinderUI extends UI implements DataLoaderListenerSpec {
 		this.getBrowserData(request);
 		this.setUiLocale(request.getLocale());
 		this.printBrowserInfo(page, webBrowser, userAgent);
-		// printBrowserInfo(page, webBrowser, browserInfo, userAgent);
 		this.buildLayout();
 		this.setData();
 	}
 
 	private void getBrowserData(VaadinRequest request) {
+		// TODO Difference between getCurrent().getPage();?
 		page = Page.getCurrent();
-		// TODO
-		// Difference between getCurrent().getPage();?
 		webBrowser = getPage().getWebBrowser();
-		// BrowserInfo is for client side - WebBrowser for server side
-		// BrowserInfo browserInfo = BrowserInfo.get();
 		if (request instanceof VaadinServletRequest) {
 			userAgent = ((VaadinServletRequest) request)
 					.getHttpServletRequest().getHeader("User-Agent")
@@ -84,19 +80,19 @@ public class PathfinderUI extends UI implements DataLoaderListenerSpec {
 
 	private void printBrowserInfo(Page page, WebBrowser webBrowser,
 			String userAgent) {
-		// Page page, WebBrowser webBrowser,
-		// BrowserInfo browserInfo, String userAgent
 		LOGGER.trace(">> Browser Data <<");
 		LOGGER.trace("Current window width: " + page.getBrowserWindowWidth());
 		LOGGER.trace("Current window height: " + page.getBrowserWindowHeight());
 		LOGGER.trace("Max browser width: " + webBrowser.getScreenWidth());
 		LOGGER.trace("Max browser height: " + webBrowser.getScreenHeight());
 		LOGGER.trace("User Agent: " + userAgent);
+		LOGGER.trace("Is Android device: " + webBrowser.isAndroid());
+		LOGGER.trace("Is iOS device: " + webBrowser.isIOS());
+		LOGGER.trace("Is touch device: " + webBrowser.isTouchDevice());
 	}
 
 	private void buildLayout() {
 		if (webBrowser.isAndroid() || webBrowser.isIOS()
-				|| webBrowser.isTouchDevice()
 				|| webBrowser.getScreenWidth() < 768) {
 			mobilePresenter = new MobilePresenter();
 			setContent(mobilePresenter.getMobileLayoutView());
