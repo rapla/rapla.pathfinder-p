@@ -109,4 +109,22 @@ public class SearchFieldSpecContract extends ComponentSpecContract implements
 		return ignored();
 	}
 
+	@Override
+	public void focusSearchField() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getCursorPosition() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setCursorPosition(int cursorPosition) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

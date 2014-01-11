@@ -13,9 +13,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.pathfinder.PathfinderUI;
-import com.pathfinder.view.components.AccordionView;
-import com.pathfinder.view.components.Keyboard;
-import com.pathfinder.view.components.SearchField;
 import com.pathfinder.view.container.DetailContainer;
 import com.pathfinder.view.container.SearchPanel;
 import com.vaadin.ui.Button.ClickEvent;
@@ -38,12 +35,7 @@ public class DesktopLayoutTest {
 		ui.setLocale(Locale.GERMAN);
 		UI.setCurrent(ui);
 
-		AccordionView accordionView = new AccordionView();
-		Keyboard keyboard = new Keyboard();
-		SearchField searchField = new SearchField();
-		SearchPanel searchPanel = new SearchPanel(accordionView, keyboard,
-				searchField);
-		this.desktopLayout = new DesktopLayout(searchPanel);
+		this.desktopLayout = new DesktopLayout();
 	}
 
 	@Test

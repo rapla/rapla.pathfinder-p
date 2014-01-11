@@ -1,7 +1,6 @@
 package com.pathfinder.presenter;
 
 import com.pathfinder.model.ResourceModel;
-import com.pathfinder.view.container.SearchPanel;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.CustomComponent;
 
@@ -35,9 +34,6 @@ public interface DesktopPresenterSpec {
 
 	@Pure
 	String getSearchString();
-
-	@Pure
-	SearchPanel getSearchPanel();
 
 	@Pure
 	int getCursorPosition();

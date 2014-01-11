@@ -15,15 +15,7 @@ import com.pathfinder.util.properties.ApplicationPropertiesSpec;
 import com.pathfinder.util.properties.PropertiesKey;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
-import com.pathfinder.view.components.AccordionView;
-import com.pathfinder.view.components.AccordionViewSpec;
-import com.pathfinder.view.components.Keyboard;
 import com.pathfinder.view.components.KeyboardId;
-import com.pathfinder.view.components.KeyboardSpec;
-import com.pathfinder.view.components.SearchField;
-import com.pathfinder.view.components.SearchFieldSpec;
-import com.pathfinder.view.container.SearchPanel;
-import com.pathfinder.view.container.SearchPanelSpec;
 import com.pathfinder.view.layout.DesktopLayout;
 import com.pathfinder.view.layout.DesktopLayoutSpec;
 import com.pathfinder.view.listener.DesktopLayoutViewListenerSpec;
@@ -56,38 +48,28 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	private final BeanFieldGroup<KeyboardModel> keyboardBinder = new BeanFieldGroup<KeyboardModel>(
 			KeyboardModel.class);
 
-	// TODO Move this inizialitations to DesktopLayout
-	private final AccordionViewSpec accordionView = new AccordionView();
-	private final KeyboardSpec keyboard = new Keyboard();
-	private final SearchFieldSpec searchField = new SearchField();
-	private final SearchPanelSpec searchPanel = new SearchPanel(
-			(AccordionView) accordionView, (Keyboard) keyboard,
-			(SearchField) searchField);
-
-	// TODO Remove SearchPanel from DesktopLayout constructor
-	private final DesktopLayoutSpec desktopLayout = new DesktopLayout(
-			searchPanel);
+	private final DesktopLayoutSpec desktopLayout = new DesktopLayout();
 
 	private final int goBackHomeIntervall = properties
 			.getIntProperty(PropertiesKey.BACK_TO_HOME_TIMER);
 
 	public DesktopPresenter() {
-		this.keyboard.addListener(this);
+		this.desktopLayout.addKeyboardListener(this);
 		this.keyboardBinder.setBuffered(false);
 		this.keyboardBinder.setItemDataSource(new KeyboardModel());
-		this.keyboardBinder.bind(searchField.getSearchField(),
+		this.keyboardBinder.bind(desktopLayout.getSearchField(),
 				KeyboardModel.PROPERTY_SEARCHSTRING);
 
-		this.accordionView
+		this.desktopLayout
 				.addItemClickListenerRoomTable(new TableClickListener());
-		this.accordionView
+		this.desktopLayout
 				.addItemClickListenerCourseTable(new TableClickListener());
-		this.accordionView
+		this.desktopLayout
 				.addItemClickListenerPersonTable(new TableClickListener());
-		this.accordionView
+		this.desktopLayout
 				.addItemClickListenerPoiTable(new TableClickListener());
 
-		this.searchField
+		this.desktopLayout
 				.addDeleteAllClickListener(new DeleteAllClickListener());
 
 		desktopLayout.addClickListenerHomeButton(new HomeButtonClickListener());
@@ -247,7 +229,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		}
 		setSearchString(newSearchString.toString());
 
-		searchField.getSearchField().focus();
+		desktopLayout.focusSearchField();
 		setChangePosCounter(oldCursorPosition + 1);
 	}
 
@@ -262,10 +244,10 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 
 			setSearchString(newSearchString.toString());
 
-			searchField.getSearchField().focus();
+			desktopLayout.focusSearchField();
 			setChangePosCounter(oldCursorPosition - 1);
 		} else {
-			searchField.getSearchField().focus();
+			desktopLayout.focusSearchField();
 		}
 	}
 
@@ -276,39 +258,34 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	@Override
 	public void setRoomContainer(
 			BeanItemContainer<ResourceModel> beanItemContainer) {
-		accordionView.setRoomContainer(beanItemContainer);
+		desktopLayout.setRoomContainer(beanItemContainer);
 	}
 
 	@Override
 	public void setCourseContainer(
 			BeanItemContainer<ResourceModel> beanItemContainer) {
-		accordionView.setCourseContainer(beanItemContainer);
+		desktopLayout.setCourseContainer(beanItemContainer);
 	}
 
 	@Override
 	public void setPersonContainer(
 			BeanItemContainer<ResourceModel> beanItemContainer) {
-		accordionView.setPersonContainer(beanItemContainer);
+		desktopLayout.setPersonContainer(beanItemContainer);
 	}
 
 	@Override
 	public void setPoiContainer(
 			BeanItemContainer<ResourceModel> beanItemContainer) {
-		accordionView.setPoiContainer(beanItemContainer);
-	}
-
-	@Override
-	public SearchPanel getSearchPanel() {
-		return (SearchPanel) searchPanel;
+		desktopLayout.setPoiContainer(beanItemContainer);
 	}
 
 	public int getChangePosCounter() {
-		return searchField.getSearchField().getCursorPosition();
+		return desktopLayout.getCursorPosition();
 	}
 
 	public void setChangePosCounter(int cursorPosition) {
 		if (cursorPosition >= 0 && cursorPosition <= getSearchString().length())
-			searchField.getSearchField().setCursorPosition(cursorPosition);
+			desktopLayout.setCursorPosition(cursorPosition);
 	}
 
 	@Override
@@ -327,12 +304,12 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		keyboardBinder.getItemDataSource()
 				.getItemProperty(KeyboardModel.PROPERTY_SEARCHSTRING)
 				.setValue(value);
-		accordionView.useFiltersForAllTables(getSearchString());
+		desktopLayout.useFiltersForAllTables(getSearchString());
 	}
 
 	@Override
 	public int getCursorPosition() {
-		return searchField.getSearchField().getCursorPosition();
+		return desktopLayout.getCursorPosition();
 	}
 
 	public synchronized void refreshFreeRooms() {
@@ -344,7 +321,6 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		if (!UI.getCurrent().getLocale().equals(locale)) {
 			UI.getCurrent().setLocale(locale);
 			desktopLayout.updateTranslations();
-			searchPanel.updateTranslations();
 			Page.getCurrent().setTitle(
 					Translator.getInstance().translate(
 							TranslationKeys.APP_TITLE));

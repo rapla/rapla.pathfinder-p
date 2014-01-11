@@ -13,8 +13,8 @@ import com.vaadin.ui.TextField;
 
 public class SearchField extends CustomComponent implements SearchFieldSpec {
 
-	private final Button magnifier = new Button();
-	private final Button deleteAll = new Button();
+	private final Button magnifierButton = new Button();
+	private final Button deleteAllButton = new Button();
 	private final TextField searchField = new TextField();
 
 	private final ThemeResource deleteResource = new ThemeResource(
@@ -31,10 +31,10 @@ public class SearchField extends CustomComponent implements SearchFieldSpec {
 	}
 
 	private void init() {
-		magnifier.setEnabled(false);
-		magnifier.setIcon(magnifierResource);
+		magnifierButton.setEnabled(false);
+		magnifierButton.setIcon(magnifierResource);
 
-		deleteAll.setIcon(deleteResource);
+		deleteAllButton.setIcon(deleteResource);
 
 		searchField.setInputPrompt(translator
 				.translate(TranslationKeys.SEARCH_PROMP));
@@ -45,22 +45,36 @@ public class SearchField extends CustomComponent implements SearchFieldSpec {
 	}
 
 	private void buildLayout() {
-		horizontal.addComponent(magnifier);
+		horizontal.addComponent(magnifierButton);
 		horizontal.addComponent(searchField);
-		horizontal.addComponent(deleteAll);
+		horizontal.addComponent(deleteAllButton);
 	}
 
 	private void setStyles() {
 		horizontal.setPrimaryStyleName("search");
 		searchField.setPrimaryStyleName("searchfield");
-		magnifier.setPrimaryStyleName("search-icon");
-		deleteAll.setPrimaryStyleName("delete-icon");
+		magnifierButton.setPrimaryStyleName("search-icon");
+		deleteAllButton.setPrimaryStyleName("delete-icon");
 	}
 
 	@Override
-	public void updateTranslations() {
-		searchField.setInputPrompt(translator
-				.translate(TranslationKeys.SEARCH_PROMP));
+	public void focusSearchField() {
+		searchField.focus();
+	}
+
+	@Override
+	public int getCursorPosition() {
+		return searchField.getCursorPosition();
+	}
+
+	@Override
+	public void setCursorPosition(int cursorPosition) {
+		searchField.setCursorPosition(cursorPosition);
+	}
+
+	@Override
+	public TextField getSearchField() {
+		return searchField;
 	}
 
 	@Override
@@ -70,26 +84,27 @@ public class SearchField extends CustomComponent implements SearchFieldSpec {
 
 	@Override
 	public void addMagnifierClickListener(ClickListener listener) {
-		magnifier.addClickListener(listener);
+		magnifierButton.addClickListener(listener);
 	}
 
 	@Override
 	public void addDeleteAllClickListener(ClickListener listener) {
-		deleteAll.addClickListener(listener);
+		deleteAllButton.addClickListener(listener);
 	}
 
 	@Override
-	public TextField getSearchField() {
-		return searchField;
+	public void updateTranslations() {
+		searchField.setInputPrompt(translator
+				.translate(TranslationKeys.SEARCH_PROMP));
 	}
 
 	@Override
 	public Button getMagnifierButton() {
-		return magnifier;
+		return magnifierButton;
 	}
 
 	@Override
 	public Button getDeleteAllButton() {
-		return deleteAll;
+		return deleteAllButton;
 	}
 }

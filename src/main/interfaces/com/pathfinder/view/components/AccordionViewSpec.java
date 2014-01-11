@@ -12,7 +12,13 @@ import com.vaadin.event.ItemClickEvent.ItemClickListener;
  */
 public interface AccordionViewSpec extends ComponentSpec {
 
-	void useFiltersForAllTables(String searchString);
+	void addItemClickListenerRoomTable(ItemClickListener listener);
+
+	void addItemClickListenerCourseTable(ItemClickListener listener);
+
+	void addItemClickListenerPersonTable(ItemClickListener listener);
+
+	void addItemClickListenerPoiTable(ItemClickListener listener);
 
 	void setRoomContainer(BeanItemContainer<ResourceModel> beanItemContainer);
 
@@ -22,11 +28,5 @@ public interface AccordionViewSpec extends ComponentSpec {
 
 	void setPoiContainer(BeanItemContainer<ResourceModel> beanItemContainer);
 
-	void addItemClickListenerRoomTable(ItemClickListener listener);
-
-	void addItemClickListenerCourseTable(ItemClickListener listener);
-
-	void addItemClickListenerPersonTable(ItemClickListener listener);
-
-	void addItemClickListenerPoiTable(ItemClickListener listener);
+	void useFiltersForAllTables(String searchString);
 }

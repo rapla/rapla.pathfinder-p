@@ -6,7 +6,6 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.TextField;
 
 import de.vksi.c4j.ContractReference;
-import de.vksi.c4j.Pure;
 
 /**
  * SearchFieldSpec
@@ -22,12 +21,15 @@ public interface SearchFieldSpec extends ComponentSpec {
 
 	void addDeleteAllClickListener(ClickListener listener);
 
-	@Pure
+	void focusSearchField();
+
+	int getCursorPosition();
+
+	void setCursorPosition(int cursorPosition);
+
 	TextField getSearchField();
 
-	@Pure
 	Button getMagnifierButton();
 
-	@Pure
 	Button getDeleteAllButton();
 }

@@ -5,7 +5,6 @@ import static de.vksi.c4j.Condition.postCondition;
 import static de.vksi.c4j.Condition.preCondition;
 
 import com.pathfinder.model.ResourceModel;
-import com.pathfinder.view.container.SearchPanel;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.CustomComponent;
 
@@ -114,26 +113,13 @@ public class DesktopPresenterSpecContract implements DesktopPresenterSpec {
 	}
 
 	@Override
-	public SearchPanel getSearchPanel() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public int getCursorPosition() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.pathfinder.presenter.DesktopPresenterSpec#startBackToHomeTimer()
-	 */
 	@Override
 	public void startBackToHomeTimer() {
 		// TODO Auto-generated method stub
-
 	}
-
 }
