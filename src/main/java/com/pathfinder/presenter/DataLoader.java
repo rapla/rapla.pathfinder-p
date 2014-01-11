@@ -122,7 +122,7 @@ public class DataLoader implements DataLoaderSpec {
 		ResourcesResult resourceResult = gsonGetResources(resourceParameter, "");
 
 		String type = "";
-		switch (type) {
+		switch (resourceParameter) {
 		case REQUEST_PARAMETER_COURSES:
 			type = "course";
 			break;
