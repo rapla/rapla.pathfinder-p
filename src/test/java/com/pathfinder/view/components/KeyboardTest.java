@@ -105,7 +105,7 @@ public class KeyboardTest {
 			}
 		};
 
-		keyboard.addListener(listener);
+		keyboard.addKeyboardViewListener(listener);
 
 		Assert.assertEquals(listener, keyboard.listeners.get(0));
 
@@ -192,5 +192,4 @@ public class KeyboardTest {
 		}
 		return returnButton;
 	}
-
 }

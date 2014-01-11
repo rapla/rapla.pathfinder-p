@@ -29,6 +29,7 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 
 	@Override
 	public void addDetails(ResourceModel resource) {
+		// Should we use a table instead labels?
 		modelDetails = dataLoader.getResourceDetails(resource.getId(), UI
 				.getCurrent().getLocale());
 		Iterator<Attribut> modelDetailsIterator = modelDetails.iterator();
@@ -49,5 +50,6 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 
 	@Override
 	public void updateTranslations() {
+		// Will be blank
 	}
 }

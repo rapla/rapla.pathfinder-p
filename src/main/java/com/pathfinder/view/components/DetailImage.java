@@ -14,13 +14,15 @@ public class DetailImage extends Image implements DetailImageSpec {
 	private final String IMAGEPATH = "img/";
 
 	public DetailImage() {
-		// TODO
+		buildLayout();
+	}
+
+	private void buildLayout() {
 		this.setAlternateText("");
 	}
 
 	@Override
 	public void setImage(ResourceModel resourceModel) {
-		this.setCaption(resourceModel.getName());
 		this.setSource(new ThemeResource(IMAGEPATH + resourceModel));
 		this.setSizeFull();
 	}

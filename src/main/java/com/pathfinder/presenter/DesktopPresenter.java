@@ -125,7 +125,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 			ResourceModel resource = (ResourceModel) event.getItemId();
 			LOGGER.trace(resource.getType() + " element was clicked: "
 					+ resource.getName());
-			desktopLayout.switchToDetailView(resource);
+			switchToDetailView(resource);
 		}
 	}
 
@@ -140,7 +140,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	class HomeButtonClickListener implements ClickListener {
 		@Override
 		public void buttonClick(ClickEvent event) {
-			desktopLayout.switchToSearchView();
+			switchToSearchView();
 		}
 	}
 
@@ -153,7 +153,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 			desktopLayout.setAppointmentUrl(properties
 					.getProperty(PropertiesKey.APPOINTMENT_BASE_URL)
 					+ "&allocatable_id=2373");
-			desktopLayout.switchToAppointmentView();
+			switchToAppointmentView();
 		}
 	}
 
@@ -167,14 +167,14 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	class BackButtonClickListener implements ClickListener {
 		@Override
 		public void buttonClick(ClickEvent event) {
-			desktopLayout.switchToSearchView();
+			switchToSearchView();
 		}
 	}
 
 	class RespawnDesktopLayoutTimer extends TimerTask {
 		@Override
 		public void run() {
-			desktopLayout.switchToSearchView();
+			switchToSearchView();
 		}
 	}
 
@@ -214,6 +214,58 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		long loadInterval = properties
 				.getIntProperty(PropertiesKey.DATA_LOAD_INTERVAL_FREE_ROOMS);
 		new Timer().schedule(getTimerTask(), loadInterval, loadInterval);
+	}
+
+	@Override
+	public void switchToSearchView() {
+		// Hiding
+		desktopLayout.hideAppointmentView();
+		// TODO
+		// detailContainer.hideDetailContainer();
+		// detailContainer.removeDetails(...);
+
+		// Adapting MenuBar
+		desktopLayout.replaceHomeButtonWithWheelChairButton();
+		desktopLayout.replaceBackButtonWithAppointmentButton();
+		desktopLayout.hideAppointmentButton();
+
+		// Showing
+		desktopLayout.showFreeRoomView();
+		desktopLayout.showSearchPanel();
+	}
+
+	@Override
+	public void switchToDetailView(ResourceModel resource) {
+		// Hiding
+		desktopLayout.hideAppointmentView();
+		desktopLayout.hideFreeRoomView();
+		desktopLayout.hideSearchPanel();
+
+		// Adapting MenuBar
+		desktopLayout.replaceWheelChairButtonWithHomeButton();
+		if (resource.getLink() != null && !"".equals(resource.getLink())) {
+			desktopLayout.showAppointmentButton();
+		}
+
+		// Showing
+		desktopLayout.addDetails(resource);
+		desktopLayout.showDetailContainer();
+	}
+
+	@Override
+	public void switchToAppointmentView() {
+		// Hiding
+		desktopLayout.hideFreeRoomView();
+		desktopLayout.hideSearchPanel();
+		// TODO
+		// detailContainer.hideDetailContainer();
+		// detailContainer.removeDetails(...);
+
+		// Adapting MenuBar
+		desktopLayout.replaceAppointmentButtonWithBackButton();
+
+		// Showing
+		desktopLayout.showAppointmentView();
 	}
 
 	public void addKeybordKeyToSearchString(String key) {
@@ -349,7 +401,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	}
 
 	private void goBackToHomeScreenAndRestoreDefaultSettings() {
-		desktopLayout.switchToSearchView();
+		switchToSearchView();
 		clearSearchString();
 		languageChanged(VaadinSession.getCurrent().getLocale());
 		UI.getCurrent().push();

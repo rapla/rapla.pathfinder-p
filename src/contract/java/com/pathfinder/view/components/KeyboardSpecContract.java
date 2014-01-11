@@ -25,20 +25,20 @@ public class KeyboardSpecContract extends ComponentSpecContract implements
 	private int listenerCountBefore = -5;
 
 	@Override
-	public void addListener(KeyboardViewListenerSpec listener) {
+	public void addKeyboardViewListener(KeyboardViewListenerSpec listener) {
 		if (preCondition()) {
 			assert listener != null : "Listener not null";
-			listenerCountBefore = target.getListener().size();
+			listenerCountBefore = target.getKeyboardViewListener().size();
 		}
 		if (postCondition()) {
-			int listenerCountAfter = target.getListener().size();
+			int listenerCountAfter = target.getKeyboardViewListener().size();
 			assert listenerCountAfter == listenerCountBefore + 1 : "One more listener added";
 			listenerCountBefore = -5;
 		}
 	}
 
 	@Override
-	public List<KeyboardViewListenerSpec> getListener() {
+	public List<KeyboardViewListenerSpec> getKeyboardViewListener() {
 		if (postCondition()) {
 			List<KeyboardViewListenerSpec> resultList = Condition.result();
 			assert resultList != null : "Result list not null";

@@ -8,7 +8,6 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -50,33 +49,6 @@ public class DesktopLayoutTest {
 		});
 	}
 
-	// TODO: Update when method switchToDetailView finished
-	// @Test
-	public void switchToDetailViewTest() {
-		// desktopLayout.switchToDetailView();
-
-		// Iterate over child components of DesktopLayout and assure there is a
-		// DetailContainer, but no SearchPanel
-		Map<String, Boolean> returnMap = checkIfSearchPanelOrDetailContainerExists();
-
-		Assert.assertTrue(returnMap.get("detailContainerExists"));
-		Assert.assertFalse(returnMap.get("searchPanelExists"));
-	}
-
-	// TODO: Update when method switchToSearchView finished
-	// @Test
-	public void switchToSearchViewTest() {
-
-		desktopLayout.switchToSearchView();
-
-		// Iterate over child components of DesktopLayout and assure there is no
-		// DetailContainer, but a SearchPanel
-		Map<String, Boolean> returnMap = checkIfSearchPanelOrDetailContainerExists();
-
-		Assert.assertFalse(returnMap.get("detailContainerExists"));
-		Assert.assertTrue(returnMap.get("searchPanelExists"));
-	}
-
 	/**
 	 * Utility method to check if DesktopLayout contains a SearchPanel or a
 	 * DetailContainer
@@ -104,5 +76,4 @@ public class DesktopLayoutTest {
 		returnMap.put("searchPanelExists", searchPanelExists);
 		return returnMap;
 	}
-
 }

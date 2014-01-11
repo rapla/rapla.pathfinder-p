@@ -12,7 +12,9 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 
 public class SearchField extends CustomComponent implements SearchFieldSpec {
+	private final TranslatorSpec translator = Translator.getInstance();
 
+	private final HorizontalLayout layout = new HorizontalLayout();
 	private final Button magnifierButton = new Button();
 	private final Button deleteAllButton = new Button();
 	private final TextField searchField = new TextField();
@@ -22,12 +24,11 @@ public class SearchField extends CustomComponent implements SearchFieldSpec {
 	private final ThemeResource magnifierResource = new ThemeResource(
 			"icon/Magnifier.png");
 
-	private final HorizontalLayout horizontal = new HorizontalLayout();
-
-	private final TranslatorSpec translator = Translator.getInstance();
-
 	public SearchField() {
 		this.init();
+		this.setStyles();
+		this.buildLayout();
+		setCompositionRoot(layout);
 	}
 
 	private void init() {
@@ -38,43 +39,19 @@ public class SearchField extends CustomComponent implements SearchFieldSpec {
 
 		searchField.setInputPrompt(translator
 				.translate(TranslationKeys.SEARCH_PROMP));
-
-		this.setStyles();
-		this.buildLayout();
-		setCompositionRoot(horizontal);
 	}
 
 	private void buildLayout() {
-		horizontal.addComponent(magnifierButton);
-		horizontal.addComponent(searchField);
-		horizontal.addComponent(deleteAllButton);
+		layout.addComponent(magnifierButton);
+		layout.addComponent(searchField);
+		layout.addComponent(deleteAllButton);
 	}
 
 	private void setStyles() {
-		horizontal.setPrimaryStyleName("search");
+		layout.setPrimaryStyleName("search");
 		searchField.setPrimaryStyleName("searchfield");
 		magnifierButton.setPrimaryStyleName("search-icon");
 		deleteAllButton.setPrimaryStyleName("delete-icon");
-	}
-
-	@Override
-	public void focusSearchField() {
-		searchField.focus();
-	}
-
-	@Override
-	public int getCursorPosition() {
-		return searchField.getCursorPosition();
-	}
-
-	@Override
-	public void setCursorPosition(int cursorPosition) {
-		searchField.setCursorPosition(cursorPosition);
-	}
-
-	@Override
-	public TextField getSearchField() {
-		return searchField;
 	}
 
 	@Override
@@ -93,9 +70,18 @@ public class SearchField extends CustomComponent implements SearchFieldSpec {
 	}
 
 	@Override
-	public void updateTranslations() {
-		searchField.setInputPrompt(translator
-				.translate(TranslationKeys.SEARCH_PROMP));
+	public void focusSearchField() {
+		searchField.focus();
+	}
+
+	@Override
+	public int getCursorPosition() {
+		return searchField.getCursorPosition();
+	}
+
+	@Override
+	public void setCursorPosition(int cursorPosition) {
+		searchField.setCursorPosition(cursorPosition);
 	}
 
 	@Override
@@ -106,5 +92,16 @@ public class SearchField extends CustomComponent implements SearchFieldSpec {
 	@Override
 	public Button getDeleteAllButton() {
 		return deleteAllButton;
+	}
+
+	@Override
+	public TextField getSearchField() {
+		return searchField;
+	}
+
+	@Override
+	public void updateTranslations() {
+		searchField.setInputPrompt(translator
+				.translate(TranslationKeys.SEARCH_PROMP));
 	}
 }

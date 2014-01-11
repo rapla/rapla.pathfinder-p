@@ -9,8 +9,8 @@ import de.vksi.c4j.Pure;
 
 @ContractReference(KeyboardSpecContract.class)
 public interface KeyboardSpec extends ComponentSpec {
-	void addListener(KeyboardViewListenerSpec listener);
+	void addKeyboardViewListener(KeyboardViewListenerSpec listener);
 
 	@Pure
-	List<KeyboardViewListenerSpec> getListener();
+	List<KeyboardViewListenerSpec> getKeyboardViewListener();
 }

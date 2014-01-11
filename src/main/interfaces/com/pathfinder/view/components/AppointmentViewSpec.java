@@ -1,9 +1,6 @@
 package com.pathfinder.view.components;
 
-import com.vaadin.ui.BrowserFrame;
-
 import de.vksi.c4j.ContractReference;
-import de.vksi.c4j.Pure;
 
 /**
  * AppointmentSpec
@@ -13,12 +10,9 @@ import de.vksi.c4j.Pure;
  */
 @ContractReference(AppointmentViewSpecContract.class)
 public interface AppointmentViewSpec extends ComponentSpec {
-	void setUrl(String url);
+	void setAppointmentUrl(String url);
 
 	void hideAppointmentView();
 
 	void showAppointmentView();
-
-	@Pure
-	BrowserFrame getBrowserFrame();
 }

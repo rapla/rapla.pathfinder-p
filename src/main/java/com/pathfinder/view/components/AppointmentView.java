@@ -1,5 +1,13 @@
 package com.pathfinder.view.components;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
@@ -9,27 +17,47 @@ import com.vaadin.ui.CustomComponent;
 
 public class AppointmentView extends CustomComponent implements
 		AppointmentViewSpec {
-
+	private static final Logger LOGGER = LogManager
+			.getLogger(AppointmentView.class.getName());
 	private final TranslatorSpec translator = Translator.getInstance();
+
 	private final BrowserFrame browserFrame = new BrowserFrame();
 
 	public AppointmentView() {
 		buildLayout();
+		this.setCompositionRoot(browserFrame);
 	}
 
 	private void buildLayout() {
 		browserFrame.setAlternateText(translator
 				.translate(TranslationKeys.NO_DATA_AVAILABLE));
 		browserFrame.setSizeFull();
-		this.setCompositionRoot(browserFrame);
 	}
 
 	@Override
-	public void setUrl(String url) {
-		// TODO
-		// Better error handling
+	public void setAppointmentUrl(String url) {
 		if (!"".equals(url)) {
-			browserFrame.setSource(new ExternalResource(url));
+			int code = 0;
+			try {
+				URL u = new URL(url);
+				HttpURLConnection huc = (HttpURLConnection) u.openConnection();
+				huc.setRequestMethod("GET"); // OR huc.setRequestMethod
+												// ("HEAD");
+				huc.connect();
+				code = huc.getResponseCode();
+
+				if (code != 404) {
+					browserFrame.setSource(new ExternalResource(url));
+				} else {
+					browserFrame.setSource(new ExternalResource("about:blank"));
+				}
+			} catch (MalformedURLException e) {
+				browserFrame.setSource(new ExternalResource("about:blank"));
+				LOGGER.error("Event url was malformed");
+			} catch (IOException e) {
+				browserFrame.setSource(new ExternalResource("about:blank"));
+				LOGGER.error("Problem to load event");
+			}
 		} else {
 			browserFrame.setSource(new ExternalResource("about:blank"));
 		}
@@ -43,9 +71,7 @@ public class AppointmentView extends CustomComponent implements
 
 	@Override
 	public void showAppointmentView() {
-		// TODO
-		// get the actual height from the client and set it to nearly maximum
-		browserFrame.setHeight(1000f, Unit.PIXELS);
+		browserFrame.setHeight(90f, Unit.PERCENTAGE);
 		this.setVisible(true);
 	}
 
@@ -53,10 +79,5 @@ public class AppointmentView extends CustomComponent implements
 	public void updateTranslations() {
 		browserFrame.setAlternateText(translator
 				.translate(TranslationKeys.NO_DATA_AVAILABLE));
-	}
-
-	@Override
-	public BrowserFrame getBrowserFrame() {
-		return browserFrame;
 	}
 }

@@ -20,16 +20,16 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 /**
- * MenuBar with buttons for the language, appointment and wheelchair
+ * MenuBar with buttons for language, appointment, home and wheelchair-mode
  * 
  * @author alexh
  * 
  */
 public class MenuBar extends CustomComponent implements MenuBarSpec {
+	private final TranslatorSpec translator = Translator.getInstance();
 
 	private final HorizontalLayout layout = new HorizontalLayout();
 	private final VerticalLayout popupLayout = new VerticalLayout();
-	private final TranslatorSpec translator = Translator.getInstance();
 	private final PopupButton languagePopupButton = new PopupButton();
 	private final Button homeButton = new Button("Home");
 	private final Button appointmentButton = new Button(
@@ -38,15 +38,10 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 			translator.translate(TranslationKeys.BACK));
 	private final Button wheelChairDriverButton = new Button();
 
-	/**
-	 * Saves all flag image resources to avoid unnecessary reloading of
-	 * resources
-	 */
+	// Saves all flag image resources to avoid unnecessary reloading of
+	// resources
 	private Map<Locale, Resource> flagResources = new HashMap<Locale, Resource>();
-
-	/**
-	 * Saves all flag images to allow adding of listeners in presenter class
-	 */
+	// Saves all flag images to allow adding of listeners in presenter class
 	private Map<Locale, Image> flagImages = new HashMap<Locale, Image>();
 
 	private final String THEME_RESOURCES_FOLDER = "icon/";
@@ -71,7 +66,6 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	}
 
 	private void buildLanguagePopup() {
-
 		popupLayout.setPrimaryStyleName(STYLE_CLASS_LANGUAGE_BUTTON);
 
 		loadFlagResources();
@@ -89,7 +83,6 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 		languagePopupButton.setPrimaryStyleName(STYLE_CLASS_LANGUAGE_BUTTON);
 		languagePopupButton.setIcon(flagResources.get(UI.getCurrent()
 				.getLocale()));
-
 	}
 
 	private void buildWheelChairDriver() {
@@ -105,6 +98,12 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 
 		// TODO Only commented for testing
 		// this.hideAppointmentButton();
+	}
+
+	@Override
+	public void addClickListenerFlagPopup(Locale locale,
+			com.vaadin.event.MouseEvents.ClickListener listener) {
+		flagImages.get(locale).addClickListener(listener);
 	}
 
 	@Override
@@ -125,6 +124,11 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	@Override
 	public void addClickListenerBackButton(ClickListener listener) {
 		backButton.addClickListener(listener);
+	}
+
+	@Override
+	public void hideOpenLanguagePopup() {
+		languagePopupButton.setPopupVisible(false);
 	}
 
 	@Override
@@ -185,16 +189,4 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 		languagePopupButton.setIcon(flagResources.get(UI.getCurrent()
 				.getLocale()));
 	}
-
-	@Override
-	public void addClickListenerFlagPopup(Locale locale,
-			com.vaadin.event.MouseEvents.ClickListener listener) {
-		flagImages.get(locale).addClickListener(listener);
-	}
-
-	@Override
-	public void hideOpenLanguagePopup() {
-		languagePopupButton.setPopupVisible(false);
-	}
-
 }

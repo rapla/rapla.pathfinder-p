@@ -219,12 +219,13 @@ public class DataLoader implements DataLoaderSpec {
 		List<ResourceModel> ResourceData;
 
 		if (categoryResult != null)
-			for (Category faculty_get : categoryResult.getResult()) {
+			for (Category faculty : categoryResult.getResult()) {
 
 				try {
 					// get all courses in an special faculty
+					// TODO Use courseContainer - don´t call rapla again
 					ResourcesResult resourcesResult = gsonGetResources(
-							REQUEST_PARAMETER_COURSES, faculty_get.getId());
+							REQUEST_PARAMETER_COURSES, faculty.getId());
 					if (resourcesResult != null)
 						// look if there is any courses with the same id in the
 						// RAM
@@ -236,19 +237,20 @@ public class DataLoader implements DataLoaderSpec {
 								// add the actual category information to the
 								// found
 								// item
-								course.setFaculty(faculty_get.getName());
+								course.setFaculty(faculty.getName());
 							}
 
 						}
 				} catch (Exception e) {
-					LOGGER.info("Faculty " + faculty_get.getName()
+					LOGGER.info("Faculty " + faculty.getName()
 							+ " has no courses");
 				}
 
 				try {
 					// get all persons in an special faculty
+					// TODO Use personContainer - don´t call rapla again
 					ResourceData = gsonGetResources(REQUEST_PARAMETER_PERSONS,
-							faculty_get.getId()).getResult();
+							faculty.getId()).getResult();
 
 					// look if there is any persons with the same id in the RAM
 					for (ResourceModel person_get : ResourceData) {
@@ -257,11 +259,11 @@ public class DataLoader implements DataLoaderSpec {
 						if (person != null) {
 							// add the actual category information to the found
 							// item
-							person.setFaculty(faculty_get.getName());
+							person.setFaculty(faculty.getName());
 						}
 					}
 				} catch (Exception e) {
-					LOGGER.info("Faculty " + faculty_get.getName()
+					LOGGER.info("Faculty " + faculty.getName()
 							+ " has no persons");
 				}
 			}

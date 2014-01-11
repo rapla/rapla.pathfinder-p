@@ -29,6 +29,7 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 			FreeRoomModel.PROPERTY_END };
 	private String[] headerFreeRoomTableCaptions = new String[] {
 			translator.translate(TranslationKeys.ROOM),
+			// TODO Should be removed?
 			translator.translate(TranslationKeys.BEGIN),
 			translator.translate(TranslationKeys.END) };
 	private final Table freeRoomTable = new Table();

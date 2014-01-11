@@ -10,6 +10,12 @@ import de.vksi.c4j.Pure;
 @ContractReference(DesktopPresenterSpecContract.class)
 public interface DesktopPresenterSpec {
 
+	void switchToSearchView();
+
+	void switchToDetailView(ResourceModel resource);
+
+	void switchToAppointmentView();
+
 	void setRoomContainer(BeanItemContainer<ResourceModel> beanItemContainer);
 
 	void setCourseContainer(BeanItemContainer<ResourceModel> beanItemContainer);

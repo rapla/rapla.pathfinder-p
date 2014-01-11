@@ -8,9 +8,14 @@ import com.pathfinder.view.components.DetailInfoSpec;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * Defines the layout for the DetailContainer: DetailInfo and DetailImage
+ * 
+ * @author alexh
+ * 
+ */
 public class DetailContainer extends CustomComponent implements
 		DetailContainerSpec {
-
 	private final VerticalLayout layout = new VerticalLayout();
 	private final DetailInfoSpec detailInfo = new DetailInfo();
 	private final DetailImageSpec detailImage = new DetailImage();
@@ -30,9 +35,10 @@ public class DetailContainer extends CustomComponent implements
 	public void addDetails(ResourceModel resource) {
 		this.resource = resource;
 		detailInfo.addDetails(this.resource);
-		if ("room".equals(resource.getType())) {
-			detailImage.setImage(resource);
-		}
+		// TODO
+		// if (!"".equals(dataloader.getImage(resource.getId()))) {
+		// detailImage.setImage(dataloader.getImage(resource.getId()));
+		// }
 	}
 
 	@Override

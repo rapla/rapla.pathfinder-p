@@ -122,4 +122,22 @@ public class DesktopPresenterSpecContract implements DesktopPresenterSpec {
 	public void startBackToHomeTimer() {
 		// TODO Auto-generated method stub
 	}
+
+	@Override
+	public void switchToSearchView() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void switchToDetailView(ResourceModel resource) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void switchToAppointmentView() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -1,5 +1,6 @@
 package com.pathfinder.view.layout;
 
+import java.util.List;
 import java.util.Locale;
 
 import com.pathfinder.model.FreeRoomModel;
@@ -24,14 +25,16 @@ import com.pathfinder.view.container.SearchPanel;
 import com.pathfinder.view.container.SearchPanelSpec;
 import com.pathfinder.view.listener.KeyboardViewListenerSpec;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 /**
- * Defines the main layout of the stele/desktop navigation
+ * Defines the main layout of the stele/desktop view
  * 
  * @author alexh
  * 
@@ -67,7 +70,7 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 
 	@Override
 	public void addKeyboardListener(KeyboardViewListenerSpec listener) {
-		this.keyboard.addListener(listener);
+		this.keyboard.addKeyboardViewListener(listener);
 	}
 
 	@Override
@@ -155,58 +158,6 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	}
 
 	@Override
-	public void switchToSearchView() {
-		// Hiding
-		appointmentView.hideAppointmentView();
-		// TODO
-		// detailContainer.hideDetailContainer();
-		// detailContainer.removeDetails(...);
-
-		// Adapting MenuBar
-		menuBar.replaceHomeButtonWithWheelChairButton();
-		menuBar.replaceBackButtonWithAppointmentButton();
-		menuBar.hideAppointmentButton();
-
-		// Showing
-		freeRoom.showFreeRoomView();
-		searchPanel.showSearchPanel();
-	}
-
-	@Override
-	public void switchToDetailView(ResourceModel resource) {
-		// Hiding
-		appointmentView.hideAppointmentView();
-		freeRoom.hideFreeRoomView();
-		searchPanel.hideSearchPanel();
-
-		// Adapting MenuBar
-		menuBar.replaceWheelChairButtonWithHomeButton();
-		if (resource.getLink() != null && !"".equals(resource.getLink())) {
-			menuBar.showAppointmentButton();
-		}
-
-		// Showing
-		detailContainer.addDetails(resource);
-		detailContainer.showDetailContainer();
-	}
-
-	@Override
-	public void switchToAppointmentView() {
-		// Hiding
-		freeRoom.hideFreeRoomView();
-		searchPanel.hideSearchPanel();
-		// TODO
-		// detailContainer.hideDetailContainer();
-		// detailContainer.removeDetails(...);
-
-		// Adapting MenuBar
-		menuBar.replaceAppointmentButtonWithBackButton();
-
-		// Showing
-		appointmentView.showAppointmentView();
-	}
-
-	@Override
 	public void refreshFreeRooms(
 			BeanItemContainer<FreeRoomModel> freeRoomContainer) {
 		freeRoom.refreshFreeRooms(freeRoomContainer);
@@ -214,7 +165,7 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 
 	@Override
 	public void setAppointmentUrl(String url) {
-		appointmentView.setUrl(url);
+		appointmentView.setAppointmentUrl(url);
 	}
 
 	@Override
@@ -246,6 +197,126 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	@Override
 	public void setCursorPosition(int cursorPosition) {
 		searchField.setCursorPosition(cursorPosition);
+	}
+
+	@Override
+	public void hideFreeRoomView() {
+		freeRoom.hideFreeRoomView();
+	}
+
+	@Override
+	public void showFreeRoomView() {
+		freeRoom.showFreeRoomView();
+	}
+
+	@Override
+	public void hideAppointmentView() {
+		appointmentView.hideAppointmentView();
+	}
+
+	@Override
+	public void showAppointmentView() {
+		appointmentView.showAppointmentView();
+	}
+
+	@Override
+	public void showHomeButton() {
+		menuBar.showHomeButton();
+	}
+
+	@Override
+	public void hideHomeButton() {
+		menuBar.hideHomeButton();
+	}
+
+	@Override
+	public void showWheelChairButton() {
+		menuBar.showWheelChairButton();
+	}
+
+	@Override
+	public void hideWheelChairButton() {
+		menuBar.hideWheelChairButton();
+	}
+
+	@Override
+	public void replaceAppointmentButtonWithBackButton() {
+		menuBar.replaceAppointmentButtonWithBackButton();
+	}
+
+	@Override
+	public void replaceBackButtonWithAppointmentButton() {
+		menuBar.replaceBackButtonWithAppointmentButton();
+	}
+
+	@Override
+	public void replaceWheelChairButtonWithHomeButton() {
+		menuBar.replaceWheelChairButtonWithHomeButton();
+	}
+
+	@Override
+	public void replaceHomeButtonWithWheelChairButton() {
+		menuBar.replaceHomeButtonWithWheelChairButton();
+	}
+
+	@Override
+	public void addSearchFieldListener(TextChangeListener listener) {
+		searchField.addSearchFieldListener(listener);
+	}
+
+	@Override
+	public void addMagnifierClickListener(ClickListener listener) {
+		searchField.addMagnifierClickListener(listener);
+	}
+
+	@Override
+	public Button getMagnifierButton() {
+		return searchField.getMagnifierButton();
+	}
+
+	@Override
+	public Button getDeleteAllButton() {
+		return searchField.getDeleteAllButton();
+	}
+
+	@Override
+	public void addKeyboardViewListener(KeyboardViewListenerSpec listener) {
+		keyboard.addKeyboardViewListener(listener);
+	}
+
+	@Override
+	public List<KeyboardViewListenerSpec> getKeyboardViewListener() {
+		return keyboard.getKeyboardViewListener();
+	}
+
+	@Override
+	public void hideSearchPanel() {
+		searchPanel.hideSearchPanel();
+	}
+
+	@Override
+	public void showSearchPanel() {
+		searchPanel.showSearchPanel();
+	}
+
+	@Override
+	public void addDetails(ResourceModel resourceModel) {
+		detailContainer.addDetails(resourceModel);
+	}
+
+	@Override
+	public void removeDetails() {
+		detailContainer.removeDetails();
+	}
+
+	@Override
+	public void hideDetailContainer() {
+		detailContainer.hideDetailContainer();
+	}
+
+	@Override
+	public void showDetailContainer() {
+		detailContainer.showDetailContainer();
 	}
 
 	@Override

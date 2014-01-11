@@ -3,9 +3,6 @@ package com.pathfinder.view.components;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.pathfinder.model.ResourceModel;
 import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.PropertiesKey;
@@ -31,10 +28,6 @@ import com.vaadin.ui.Table.ColumnHeaderMode;
  * 
  */
 public class AccordionView extends CustomComponent implements AccordionViewSpec {
-
-	private static final Logger LOGGER = LogManager
-			.getLogger(AccordionView.class.getName());
-
 	private final TranslatorSpec translator = Translator.getInstance();
 
 	private final ThemeResource orderlines = new ThemeResource(
@@ -53,11 +46,7 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 	private final Table courseTable = new Table();
 	private final Table personTable = new Table();
 	private final Table poiTable = new Table();
-
-	private final String[] visibleRoomTableColumns = new String[] { ResourceModel.PROPERTY_NAME };
-	private final String[] visibleCourseTableColumns = new String[] { ResourceModel.PROPERTY_NAME };
-	private final String[] visiblePersonTableColumns = new String[] { ResourceModel.PROPERTY_NAME };
-	private final String[] visiblePoiTableColumns = new String[] { ResourceModel.PROPERTY_NAME };
+	private final String[] visibleTableColumns = new String[] { ResourceModel.PROPERTY_NAME };
 
 	private final BeanItemContainer<ResourceModel> roomContainer = new BeanItemContainer<ResourceModel>(
 			ResourceModel.class);
@@ -69,12 +58,10 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 			ResourceModel.class);
 
 	public AccordionView() {
-		this.createTable(roomTable, roomContainer, visibleRoomTableColumns);
-		this.createTable(courseTable, courseContainer,
-				visibleCourseTableColumns);
-		this.createTable(personTable, personContainer,
-				visiblePersonTableColumns);
-		this.createTable(poiTable, poiContainer, visiblePoiTableColumns);
+		this.createTable(roomTable, roomContainer, visibleTableColumns);
+		this.createTable(courseTable, courseContainer, visibleTableColumns);
+		this.createTable(personTable, personContainer, visibleTableColumns);
+		this.createTable(poiTable, poiContainer, visibleTableColumns);
 
 		this.buildLayout();
 		this.setCompositionRoot(accordion);
@@ -118,12 +105,10 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 		List<Filter> poiFilters = new ArrayList<Filter>();
 
 		/* Create the filters */
-		roomFilters = this.createFilters(visibleRoomTableColumns, filterString);
-		courseFilters = this.createFilters(visibleCourseTableColumns,
-				filterString);
-		personFilters = this.createFilters(visiblePersonTableColumns,
-				filterString);
-		poiFilters = this.createFilters(visiblePoiTableColumns, filterString);
+		roomFilters = this.createFilters(visibleTableColumns, filterString);
+		courseFilters = this.createFilters(visibleTableColumns, filterString);
+		personFilters = this.createFilters(visibleTableColumns, filterString);
+		poiFilters = this.createFilters(visibleTableColumns, filterString);
 
 		/* Remove the old filters */
 		this.removeAllFiltersFromContainers();
@@ -155,15 +140,11 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 
 	private <T> void addFiltersToTables(List<Filter> filters,
 			BeanItemContainer<T> beanItemContainer, String type) {
-		LOGGER.trace("Length of " + type + " filters: "
-				+ filters.toArray(new Filter[] {}).length);
 		beanItemContainer.addContainerFilter(new Or(filters
 				.toArray(new Filter[] {})));
 	}
 
 	public void deselectClickedItem(Table table, Object itemId) {
-		// TODO Doesn´t work yet
-		table.sanitizeSelection();
 		table.unselect(itemId);
 	}
 
@@ -171,29 +152,27 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 	public void setRoomContainer(
 			BeanItemContainer<ResourceModel> beanItemContainer) {
 		this.roomTable.removeAllItems();
-		for (ResourceModel itemId : beanItemContainer.getItemIds()) {
-			this.roomTable.addItem(itemId);
-		}
+		this.roomContainer.addAll(beanItemContainer.getItemIds());
 	}
 
 	@Override
 	public void setCourseContainer(
 			BeanItemContainer<ResourceModel> beanItemContainer) {
-		this.courseContainer.removeAllItems();
+		this.courseTable.removeAllItems();
 		this.courseContainer.addAll(beanItemContainer.getItemIds());
 	}
 
 	@Override
 	public void setPersonContainer(
 			BeanItemContainer<ResourceModel> beanItemContainer) {
-		this.personContainer.removeAllItems();
+		this.personTable.removeAllItems();
 		this.personContainer.addAll(beanItemContainer.getItemIds());
 	}
 
 	@Override
 	public void setPoiContainer(
 			BeanItemContainer<ResourceModel> beanItemContainer) {
-		this.poiContainer.removeAllItems();
+		this.poiTable.removeAllItems();
 		this.poiContainer.addAll(beanItemContainer.getItemIds());
 	}
 

@@ -1,10 +1,3 @@
-/**
- * View for the Keyboard
- * 
- * @author Myracle
- * 
- */
-
 package com.pathfinder.view.components;
 
 import static com.pathfinder.view.components.KeyboardId.*;
@@ -24,29 +17,35 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
 /**
+ * View for the Keyboard
  * 
  * @author max
  * 
  */
 public class Keyboard extends CustomComponent implements KeyboardSpec,
 		ClickListener {
-
-	private Button deleteButton;
-	private Button spaceButton;
 	private final TranslatorSpec translator = Translator.getInstance();
+
+	private final Button deleteButton = createButton(DELETE);
+	private final Button spaceButton = createButton(SPACE);
+
+	final VerticalLayout layout = new VerticalLayout();
+	final HorizontalLayout row1 = new HorizontalLayout();
+	final HorizontalLayout row2 = new HorizontalLayout();
+	final HorizontalLayout row3 = new HorizontalLayout();
+	final HorizontalLayout row4 = new HorizontalLayout();
 
 	/* Only the presenter registers one listener... */
 	List<KeyboardViewListenerSpec> listeners = new ArrayList<KeyboardViewListenerSpec>();
 
 	public Keyboard() {
-		final VerticalLayout layout = new VerticalLayout();
-		final HorizontalLayout row1 = new HorizontalLayout();
+		buildLayout();
+	}
+
+	private void buildLayout() {
 		row1.setPrimaryStyleName("keyboard-row");
-		final HorizontalLayout row2 = new HorizontalLayout();
 		row2.setPrimaryStyleName("keyboard-row");
-		final HorizontalLayout row3 = new HorizontalLayout();
 		row3.setPrimaryStyleName("keyboard-row");
-		final HorizontalLayout row4 = new HorizontalLayout();
 		row4.setPrimaryStyleName("keyboard-row");
 
 		// The operations for the Keyboard in the order they appear on the
@@ -59,11 +58,6 @@ public class Keyboard extends CustomComponent implements KeyboardSpec,
 				OE, AE, RIGHT };
 		KeyboardId[] fourthRow = new KeyboardId[] { Y, X, C, V, B, N, M };
 
-		deleteButton = createButton(DELETE);
-		spaceButton = createButton(SPACE);
-
-		// Add buttons and have them send click events
-		// to this class
 		for (KeyboardId id : firstRow) {
 			row1.addComponent(createButton(id));
 		}
@@ -88,10 +82,6 @@ public class Keyboard extends CustomComponent implements KeyboardSpec,
 		layout.addComponent(row4);
 
 		setCompositionRoot(layout);
-	}
-
-	public void addListener(KeyboardViewListenerSpec listener) {
-		listeners.add(listener);
 	}
 
 	/**
@@ -125,6 +115,11 @@ public class Keyboard extends CustomComponent implements KeyboardSpec,
 		return newButton;
 	}
 
+	@Override
+	public void addKeyboardViewListener(KeyboardViewListenerSpec listener) {
+		listeners.add(listener);
+	}
+
 	/**
 	 * Relay button clicks to the presenter with an implementation-independent
 	 * event
@@ -136,13 +131,13 @@ public class Keyboard extends CustomComponent implements KeyboardSpec,
 	}
 
 	@Override
-	public void updateTranslations() {
-		deleteButton.setCaption(translator.translate(TranslationKeys.DELETE));
-		spaceButton.setCaption(translator.translate(TranslationKeys.SPACE));
+	public List<KeyboardViewListenerSpec> getKeyboardViewListener() {
+		return listeners;
 	}
 
 	@Override
-	public List<KeyboardViewListenerSpec> getListener() {
-		return listeners;
+	public void updateTranslations() {
+		deleteButton.setCaption(translator.translate(TranslationKeys.DELETE));
+		spaceButton.setCaption(translator.translate(TranslationKeys.SPACE));
 	}
 }
