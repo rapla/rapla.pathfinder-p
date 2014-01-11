@@ -60,8 +60,9 @@ public class DetailContainer extends CustomComponent implements
 
 	@Override
 	public void updateTranslations() {
-		detailInfo.removeDetails();
-		// TODO: Not working, please fix
-		// detailInfo.addDetails(this.resource);
+		if (resource != null) {
+			detailInfo.removeDetails();
+			detailInfo.addDetails(this.resource);
+		}
 	}
 }
