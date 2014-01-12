@@ -29,6 +29,7 @@ public class AppointmentView extends CustomComponent implements
 	}
 
 	private void buildLayout() {
+		this.hideAppointmentView();
 		browserFrame.setAlternateText(translator
 				.translate(TranslationKeys.NO_DATA_AVAILABLE));
 		browserFrame.setSizeFull();
@@ -65,7 +66,6 @@ public class AppointmentView extends CustomComponent implements
 
 	@Override
 	public void hideAppointmentView() {
-		this.setSizeFull();
 		this.setVisible(false);
 	}
 
