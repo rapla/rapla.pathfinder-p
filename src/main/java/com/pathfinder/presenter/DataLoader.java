@@ -3,6 +3,7 @@ package com.pathfinder.presenter;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.ConnectException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -61,6 +62,7 @@ public class DataLoader implements DataLoaderSpec {
 
 	private final String ERROR_MASSAGE_LOADING_RESOURCE = "Error loading resource: ";
 	private final String ERROR_MASSAGE_URL_NOT_READABLE = "Error loading URL: ";
+	private final String ERROR_MASSAGE_SERVER_NOT_AVAILABLE = "No connection to the server";
 	// TODO: Use for better errorhandling
 	private final String ERROR_MASSAGE_LOADING_RESOURCE_DETAIL = "Error loading resource detail - id: ";
 	private final String ERROR_MESSAGE_EMPTY_RESSOURCE = "Resource is empty";
@@ -156,19 +158,11 @@ public class DataLoader implements DataLoaderSpec {
 		try {
 			br = new BufferedReader(new InputStreamReader(
 					new URL(url).openStream()));
-		} catch (MalformedURLException e) {
-			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE + resource, e);
-			return null;
-		} catch (IOException e) {
-			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE + resource, e);
-			return null;
-		}
 
-		// Create a standard Jackson mapper object.
-		ObjectMapper mapper = new ObjectMapper();
-		JsonNode node;
+			// Create a standard Jackson mapper object.
+			ObjectMapper mapper = new ObjectMapper();
+			JsonNode node;
 
-		try {
 			node = mapper.readTree(br);
 			node = node.path("result");
 
@@ -180,12 +174,20 @@ public class DataLoader implements DataLoaderSpec {
 				return null;
 			else
 				return list;
+
+		} catch (ConnectException e) {
+			LOGGER.info(ERROR_MASSAGE_SERVER_NOT_AVAILABLE);
+			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE + resource, e);
+			return null;
+		} catch (MalformedURLException e) {
+			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE + resource, e);
+			return null;
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE + resource, e);
+			return null;
 		}
 
 		return null;
@@ -197,21 +199,11 @@ public class DataLoader implements DataLoaderSpec {
 		try {
 			br = new BufferedReader(new InputStreamReader(
 					new URL(url).openStream()));
-		} catch (MalformedURLException e) {
-			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE
-					+ REQUEST_PARAMETER_ORGANIGRAM, e);
-			return null;
-		} catch (IOException e) {
-			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE
-					+ REQUEST_PARAMETER_ORGANIGRAM, e);
-			return null;
-		}
 
-		// Create a standard Jackson mapper object.
-		ObjectMapper mapper = new ObjectMapper();
-		JsonNode node;
+			// Create a standard Jackson mapper object.
+			ObjectMapper mapper = new ObjectMapper();
+			JsonNode node;
 
-		try {
 			node = mapper.readTree(br);
 			node = node.path("result");
 
@@ -223,26 +215,25 @@ public class DataLoader implements DataLoaderSpec {
 				return null;
 			else
 				return list;
+		} catch (ConnectException e) {
+			LOGGER.info(ERROR_MASSAGE_SERVER_NOT_AVAILABLE);
+			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE
+					+ REQUEST_PARAMETER_ORGANIGRAM, e);
+			return null;
+		} catch (MalformedURLException e) {
+			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE
+					+ REQUEST_PARAMETER_ORGANIGRAM, e);
+			return null;
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE
+					+ REQUEST_PARAMETER_ORGANIGRAM, e);
+			return null;
 		}
 
 		return null;
-
-		// // Force Error
-		// try {
-		// organigramResult.getResult();
-		// LOGGER.info(REQUEST_PARAMETER_ORGANIGRAM + " loaded");
-		// return organigramResult;
-		// } catch (NullPointerException ex) {
-		// LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE
-		// + REQUEST_PARAMETER_ORGANIGRAM);
-		// return null;
-		// }
 	}
 
 	private void loadFaculty() {
