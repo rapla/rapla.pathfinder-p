@@ -277,6 +277,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		// Adapting MenuBar
 		desktopLayout.replaceWheelChairButtonWithHomeButton();
 
+		// TODO
 		// for (Attribut attribut : resourceDetails) {
 		// if ("resourceUrl".equals(attribut.getLabel())) {
 		// desktopLayout.showAppointmentButton();

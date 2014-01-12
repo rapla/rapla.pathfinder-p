@@ -41,12 +41,13 @@ public class DetailContainer extends CustomComponent implements
 	public void addDetails(ResourceModel resource,
 			List<Attribut> resourceDetails) {
 		this.removeDetails();
+
 		detailInfo.addDetails(resourceDetails);
 		if ("room".equals(resource.getType())) {
 			for (Attribut attribut : resourceDetails) {
-				if ("roomNr".equals(attribut.getLabel())) {
-					detailImage.setImage(dataLoader.getDhbwEntryPoint()
-							+ attribut.getLabel());
+				if ("Raum".equals(attribut.getLabel())) {
+					// TODO dataLoader.getDhbwEntryPoint() +
+					detailImage.setImage(attribut.getValue());
 				}
 			}
 		}

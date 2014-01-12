@@ -10,20 +10,21 @@ import com.vaadin.ui.Image;
  * 
  */
 public class DetailImage extends Image implements DetailImageSpec {
-	private final String IMAGEPATH = "img/";
+	private final String IMAGE_PATH = "img/";
+	private final String IMAGE_ENDING = ".png";
 
 	public DetailImage() {
 		buildLayout();
 	}
 
 	private void buildLayout() {
-		this.setAlternateText("");
+		this.setAlternateText("Wegbeschreibung ist leider nicht verfügbar");
 	}
 
 	@Override
 	public void setImage(String imageDescription) {
-		// TODO Check if image is available
-		this.setSource(new ThemeResource(IMAGEPATH + imageDescription + ".png"));
+		this.setSource(new ThemeResource(IMAGE_PATH + imageDescription
+				+ IMAGE_ENDING));
 		this.setSizeFull();
 	}
 
