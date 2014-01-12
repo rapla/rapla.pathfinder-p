@@ -40,8 +40,7 @@ public class PathfinderUI extends UI implements DataLoaderListenerSpec {
 
 	@Override
 	protected void init(VaadinRequest request) {
-		// TODO
-		// new Responsive(this);
+		// TODO new Responsive(this);
 		setErrorHandler(new PathfinderErrorHandler());
 		Page.getCurrent().setTitle(
 				Translator.getInstance().translate(TranslationKeys.APP_TITLE));
@@ -92,18 +91,25 @@ public class PathfinderUI extends UI implements DataLoaderListenerSpec {
 	}
 
 	private void buildLayout() {
-		if (webBrowser.isAndroid() || webBrowser.isIOS()
-				|| webBrowser.getScreenWidth() < 768) {
-			mobilePresenter = new MobilePresenter();
-			setContent(mobilePresenter.getMobileLayoutView());
-			LOGGER.trace("Mobile application initialized");
-		} else {
-			desktopPresenter = new DesktopPresenter();
-			setPrimaryStyleName("main");
-			setContent(desktopPresenter.getDesktopLayoutView());
-			addClickListener(desktopPresenter.getUiClickListener());
-			LOGGER.trace("Desktop application initialized");
-		}
+		desktopPresenter = new DesktopPresenter();
+		setPrimaryStyleName("main");
+		setContent(desktopPresenter.getDesktopLayoutView());
+		addClickListener(desktopPresenter.getUiClickListener());
+
+		// TODO
+		// LOGGER.trace("Desktop application initialized");
+		// if (webBrowser.isAndroid() || webBrowser.isIOS()
+		// || webBrowser.getScreenWidth() < 768) {
+		// mobilePresenter = new MobilePresenter();
+		// setContent(mobilePresenter.getMobileLayoutView());
+		// LOGGER.trace("Mobile application initialized");
+		// } else {
+		// desktopPresenter = new DesktopPresenter();
+		// setPrimaryStyleName("main");
+		// setContent(desktopPresenter.getDesktopLayoutView());
+		// addClickListener(desktopPresenter.getUiClickListener());
+		// LOGGER.trace("Desktop application initialized");
+		// }
 	}
 
 	private void setData() {
