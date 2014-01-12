@@ -48,8 +48,7 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	private final KeyboardSpec keyboard = new Keyboard();
 	private final SearchFieldSpec searchField = new SearchField();
 	private final SearchPanelSpec searchPanel = new SearchPanel(
-			(AccordionView) accordionView, (Keyboard) keyboard,
-			(SearchField) searchField);
+			(AccordionView) accordionView, (SearchField) searchField);
 	private final MenuBarSpec menuBar = new MenuBar();
 	private final DetailContainerSpec detailContainer = new DetailContainer();
 	private final AppointmentViewSpec appointmentView = new AppointmentView();
@@ -66,6 +65,7 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	private void buildLayout() {
 		// For the wheel chair button / view
 		this.layoutNormal.addComponent(searchPanel);
+		this.layoutNormal.addComponent(keyboard);
 
 		this.layout.addComponent(dateTime);
 		this.layout.addComponent(freeRoom);
@@ -123,6 +123,11 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	@Override
 	public void addDeleteAllClickListener(ClickListener listener) {
 		this.searchField.addDeleteAllClickListener(listener);
+	}
+
+	@Override
+	public void addBackToHomeListener(BackToHomeScreenListenerSpec listener) {
+		dateTime.addBackToHomeListener(listener);
 	}
 
 	@Override
@@ -249,12 +254,14 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	@Override
 	public void changeWheelChairView() {
 		if (layout.getComponentIndex(layoutNormal) >= 0) {
+			layoutWheelChair.addComponent(keyboard);
 			layoutWheelChair.addComponent(searchPanel);
 			layoutWheelChair.setSizeFull();
 			this.layout.replaceComponent(layoutNormal, layoutWheelChair);
 			this.layoutNormal.removeAllComponents();
 		} else {
 			layoutNormal.addComponent(searchPanel);
+			layoutNormal.addComponent(keyboard);
 			layoutNormal.setSizeFull();
 			this.layout.replaceComponent(layoutWheelChair, layoutNormal);
 			layoutWheelChair.removeAllComponents();
@@ -342,17 +349,23 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	}
 
 	@Override
+	public void hideKeyboard() {
+		keyboard.hideKeyboard();
+	}
+
+	@Override
+	public void showKeyboard() {
+		keyboard.showKeyboard();
+	}
+
+	@Override
 	public void updateTranslations() {
 		dateTime.updateTranslations();
 		freeRoom.updateTranslations();
 		searchPanel.updateTranslations();
+		keyboard.updateTranslations();
 		detailContainer.updateTranslations();
 		appointmentView.updateTranslations();
 		menuBar.updateTranslations();
-	}
-
-	@Override
-	public void addBackToHomeListener(BackToHomeScreenListenerSpec listener) {
-		dateTime.addBackToHomeListener(listener);
 	}
 }

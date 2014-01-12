@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.pathfinder.view.components.AccordionView;
-import com.pathfinder.view.components.Keyboard;
 import com.pathfinder.view.components.SearchField;
 import com.vaadin.ui.CustomComponent;
 
@@ -20,9 +19,8 @@ public class SearchPanelTest {
 	@Before
 	public void initialize() {
 		AccordionView accordionView = new AccordionView();
-		Keyboard keyboard = new Keyboard();
 		SearchField searchField = new SearchField();
-		searchPanel = new SearchPanel(accordionView, keyboard, searchField);
+		searchPanel = new SearchPanel(accordionView, searchField);
 	}
 
 	@Test

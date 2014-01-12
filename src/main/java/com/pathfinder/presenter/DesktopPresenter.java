@@ -217,9 +217,8 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	public void switchToSearchView() {
 		// Hiding
 		desktopLayout.hideAppointmentView();
-		// TODO
-		// detailContainer.hideDetailContainer();
-		// detailContainer.removeDetails(...);
+		desktopLayout.hideDetailContainer();
+		desktopLayout.removeDetails();
 
 		// Adapting MenuBar
 		desktopLayout.replaceHomeButtonWithWheelChairButton();
@@ -229,6 +228,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		// Showing
 		desktopLayout.showFreeRoomView();
 		desktopLayout.showSearchPanel();
+		desktopLayout.showKeyboard();
 	}
 
 	@Override
@@ -237,6 +237,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		desktopLayout.hideAppointmentView();
 		desktopLayout.hideFreeRoomView();
 		desktopLayout.hideSearchPanel();
+		desktopLayout.hideKeyboard();
 
 		// Adapting MenuBar
 		desktopLayout.replaceWheelChairButtonWithHomeButton();
@@ -254,9 +255,9 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		// Hiding
 		desktopLayout.hideFreeRoomView();
 		desktopLayout.hideSearchPanel();
-		// TODO
-		// detailContainer.hideDetailContainer();
-		// detailContainer.removeDetails(...);
+		desktopLayout.hideKeyboard();
+		desktopLayout.hideDetailContainer();
+		desktopLayout.removeDetails();
 
 		// Adapting MenuBar
 		desktopLayout.replaceAppointmentButtonWithBackButton();

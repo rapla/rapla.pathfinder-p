@@ -29,17 +29,18 @@ public class Keyboard extends CustomComponent implements KeyboardSpec,
 	private final Button deleteButton = createButton(DELETE);
 	private final Button spaceButton = createButton(SPACE);
 
-	final VerticalLayout layout = new VerticalLayout();
-	final HorizontalLayout row1 = new HorizontalLayout();
-	final HorizontalLayout row2 = new HorizontalLayout();
-	final HorizontalLayout row3 = new HorizontalLayout();
-	final HorizontalLayout row4 = new HorizontalLayout();
+	private final VerticalLayout layout = new VerticalLayout();
+	private final HorizontalLayout row1 = new HorizontalLayout();
+	private final HorizontalLayout row2 = new HorizontalLayout();
+	private final HorizontalLayout row3 = new HorizontalLayout();
+	private final HorizontalLayout row4 = new HorizontalLayout();
 
 	/* Only the presenter registers one listener... */
 	List<KeyboardViewListenerSpec> listeners = new ArrayList<KeyboardViewListenerSpec>();
 
 	public Keyboard() {
 		buildLayout();
+		setCompositionRoot(layout);
 	}
 
 	private void buildLayout() {
@@ -80,8 +81,6 @@ public class Keyboard extends CustomComponent implements KeyboardSpec,
 		layout.addComponent(row2);
 		layout.addComponent(row3);
 		layout.addComponent(row4);
-
-		setCompositionRoot(layout);
 	}
 
 	/**
@@ -133,6 +132,16 @@ public class Keyboard extends CustomComponent implements KeyboardSpec,
 	@Override
 	public List<KeyboardViewListenerSpec> getKeyboardViewListener() {
 		return listeners;
+	}
+
+	@Override
+	public void hideKeyboard() {
+		this.setVisible(false);
+	}
+
+	@Override
+	public void showKeyboard() {
+		this.setVisible(true);
 	}
 
 	@Override

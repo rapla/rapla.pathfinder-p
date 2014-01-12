@@ -46,4 +46,16 @@ public class KeyboardSpecContract extends ComponentSpecContract implements
 		return Condition.ignored();
 	}
 
+	@Override
+	public void hideKeyboard() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void showKeyboard() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

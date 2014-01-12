@@ -13,4 +13,8 @@ public interface KeyboardSpec extends ComponentSpec {
 
 	@Pure
 	List<KeyboardViewListenerSpec> getKeyboardViewListener();
+
+	void hideKeyboard();
+
+	void showKeyboard();
 }
