@@ -31,6 +31,7 @@ import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomComponent;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
@@ -54,6 +55,8 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	private final AppointmentViewSpec appointmentView = new AppointmentView();
 
 	private final VerticalLayout layout = new VerticalLayout();
+	private final VerticalLayout layoutNormal = new VerticalLayout();
+	private final HorizontalLayout layoutWheelChair = new HorizontalLayout();
 
 	public DesktopLayout() {
 		this.buildLayout();
@@ -61,9 +64,12 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	}
 
 	private void buildLayout() {
+		// For the wheel chair button / view
+		this.layoutNormal.addComponent(searchPanel);
+
 		this.layout.addComponent(dateTime);
 		this.layout.addComponent(freeRoom);
-		this.layout.addComponent(searchPanel);
+		this.layout.addComponent(layoutNormal);
 		this.layout.addComponent(detailContainer);
 		this.layout.addComponent(appointmentView);
 		this.layout.addComponent(menuBar);
@@ -238,6 +244,21 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	@Override
 	public void hideWheelChairButton() {
 		menuBar.hideWheelChairButton();
+	}
+
+	@Override
+	public void changeWheelChairView() {
+		if (layout.getComponentIndex(layoutNormal) >= 0) {
+			layoutWheelChair.addComponent(searchPanel);
+			layoutWheelChair.setSizeFull();
+			this.layout.replaceComponent(layoutNormal, layoutWheelChair);
+			this.layoutNormal.removeAllComponents();
+		} else {
+			layoutNormal.addComponent(searchPanel);
+			layoutNormal.setSizeFull();
+			this.layout.replaceComponent(layoutWheelChair, layoutNormal);
+			layoutWheelChair.removeAllComponents();
+		}
 	}
 
 	@Override

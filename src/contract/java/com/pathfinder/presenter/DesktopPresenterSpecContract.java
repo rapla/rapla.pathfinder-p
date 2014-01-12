@@ -147,4 +147,10 @@ public class DesktopPresenterSpecContract implements DesktopPresenterSpec {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void changeWheelChairView() {
+		// TODO Auto-generated method stub
+		
+	}
 }

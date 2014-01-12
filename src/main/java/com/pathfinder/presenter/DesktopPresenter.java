@@ -157,6 +157,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		@Override
 		public void buttonClick(ClickEvent event) {
 			Notification.show("You pressed the WheelchairMan!");
+			changeWheelChairView();
 		}
 	}
 
@@ -262,6 +263,11 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 
 		// Showing
 		desktopLayout.showAppointmentView();
+	}
+
+	@Override
+	public void changeWheelChairView() {
+		desktopLayout.changeWheelChairView();
 	}
 
 	public void addKeybordKeyToSearchString(String key) {

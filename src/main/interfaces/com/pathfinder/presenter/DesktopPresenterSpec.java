@@ -16,6 +16,8 @@ public interface DesktopPresenterSpec {
 	void switchToDetailView(ResourceModel resource);
 
 	void switchToAppointmentView();
+	
+	void changeWheelChairView();
 
 	void setRoomContainer(BeanItemContainer<ResourceModel> beanItemContainer);
 

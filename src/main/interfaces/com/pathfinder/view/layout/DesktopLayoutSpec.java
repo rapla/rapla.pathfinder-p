@@ -24,4 +24,5 @@ public interface DesktopLayoutSpec extends ViewSpec, AccordionViewSpec,
 
 	void addKeyboardListener(KeyboardViewListenerSpec listener);
 
+	void changeWheelChairView();
 }
