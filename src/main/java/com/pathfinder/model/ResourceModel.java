@@ -1,11 +1,14 @@
 package com.pathfinder.model;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 /**
  * Model for all resources
  * 
  * @author alexh
  * 
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ResourceModel {
 	public static final String PROPERTY_ID = "id";
 	public static final String PROPERTY_NAME = "name";
@@ -28,6 +31,10 @@ public class ResourceModel {
 		this.setLink(link);
 		this.setSearchTerms(searchTerms);
 		this.setType(type);
+	}
+
+	public ResourceModel() {
+		super();
 	}
 
 	public String getId() {

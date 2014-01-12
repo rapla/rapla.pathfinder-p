@@ -16,17 +16,18 @@ import java.util.TimerTask;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.JsonProcessingException;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.type.TypeReference;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import com.google.gson.Gson;
 import com.pathfinder.model.Attribut;
 import com.pathfinder.model.Category;
 import com.pathfinder.model.FreeRoomModel;
 import com.pathfinder.model.ResourceModel;
-import com.pathfinder.model.gson.CategoryResult;
-import com.pathfinder.model.gson.ResourcesResult;
 import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.ApplicationPropertiesSpec;
 import com.pathfinder.util.properties.PropertiesKey;
@@ -119,7 +120,8 @@ public class DataLoader implements DataLoaderSpec {
 
 	private void loadResource(String resourceParameter,
 			BeanItemContainer<ResourceModel> resourceContainer) {
-		ResourcesResult resourceResult = gsonGetResources(resourceParameter, "");
+		List<ResourceModel> resourceResult = jacksonGetResources(
+				resourceParameter, "");
 
 		String type = "";
 		switch (resourceParameter) {
@@ -137,17 +139,16 @@ public class DataLoader implements DataLoaderSpec {
 			break;
 		}
 
-		if (resourceResult != null)
-			for (ResourceModel concreteResult : resourceResult.getResult()) {
-				ResourceModel resource = new ResourceModel(
-						concreteResult.getId(), concreteResult.getName(),
-						concreteResult.getLink(),
-						concreteResult.getSearchTerms(), type);
-				resourceContainer.addItem(resource);
+		if (resourceResult != null) {
+			for (ResourceModel concreteResult : resourceResult) {
+				concreteResult.setType(type);
 			}
+			resourceContainer.addAll(resourceResult);
+		}
 	}
 
-	private ResourcesResult gsonGetResources(String resource, String categoryId) {
+	private List<ResourceModel> jacksonGetResources(String resource,
+			String categoryId) {
 		String url = RESOURCES_METHOD + "resourceType=" + resource
 				+ "&categoryId=" + categoryId;
 		// LOGGER.trace("URL: " + url);
@@ -163,27 +164,35 @@ public class DataLoader implements DataLoaderSpec {
 			return null;
 		}
 
-		ResourcesResult ResourceData = new Gson().fromJson(br,
-				ResourcesResult.class);
+		// Create a standard Jackson mapper object.
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode node;
 
-		// Force Error
 		try {
-			ResourceData.getResult();
-			if ("".equals(categoryId)) {
-				LOGGER.info(resource + " loaded");
-				return ResourceData;
-			} else if (!"".equals(categoryId)) {
-				return ResourceData;
-			} else {
+			node = mapper.readTree(br);
+			node = node.path("result");
+
+			List<ResourceModel> list = mapper.readValue(node.traverse(),
+					new TypeReference<List<ResourceModel>>() {
+					});
+
+			if (list.equals(null))
 				return null;
-			}
-		} catch (NullPointerException ex) {
-			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE + resource);
-			return null;
+			else
+				return list;
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
+		return null;
+
 	}
 
-	private CategoryResult gsonGetOrganigram() {
+	private List<Category> jacksonGetOrganigram() {
 		String url = ORGANIGRAM_METHOD;
 		try {
 			br = new BufferedReader(new InputStreamReader(
@@ -198,39 +207,61 @@ public class DataLoader implements DataLoaderSpec {
 			return null;
 		}
 
-		CategoryResult organigramResult = new Gson().fromJson(br,
-				CategoryResult.class);
+		// Create a standard Jackson mapper object.
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode node;
 
-		// Force Error
 		try {
-			organigramResult.getResult();
-			LOGGER.info(REQUEST_PARAMETER_ORGANIGRAM + " loaded");
-			return organigramResult;
-		} catch (NullPointerException ex) {
-			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE
-					+ REQUEST_PARAMETER_ORGANIGRAM);
-			return null;
+			node = mapper.readTree(br);
+			node = node.path("result");
+
+			List<Category> list = mapper.readValue(node.traverse(),
+					new TypeReference<List<Category>>() {
+					});
+
+			if (list.equals(null))
+				return null;
+			else
+				return list;
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
+		return null;
+
+		// // Force Error
+		// try {
+		// organigramResult.getResult();
+		// LOGGER.info(REQUEST_PARAMETER_ORGANIGRAM + " loaded");
+		// return organigramResult;
+		// } catch (NullPointerException ex) {
+		// LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE
+		// + REQUEST_PARAMETER_ORGANIGRAM);
+		// return null;
+		// }
 	}
 
 	private void loadFaculty() {
 		// load the root facultys
-		CategoryResult categoryResult = gsonGetOrganigram();
+		List<Category> categoryResult = jacksonGetOrganigram();
 		List<ResourceModel> ResourceData;
 
 		if (categoryResult != null)
-			for (Category faculty : categoryResult.getResult()) {
+			for (Category faculty : categoryResult) {
 
 				try {
 					// get all courses in an special faculty
 					// TODO Use courseContainer - don´t call rapla again
-					ResourcesResult resourcesResult = gsonGetResources(
+					List<ResourceModel> resourcesResult = jacksonGetResources(
 							REQUEST_PARAMETER_COURSES, faculty.getId());
 					if (resourcesResult != null)
 						// look if there is any courses with the same id in the
 						// RAM
-						for (ResourceModel course_get : resourcesResult
-								.getResult()) {
+						for (ResourceModel course_get : resourcesResult) {
 							ResourceModel course = courseContainer.getItem(
 									course_get.getId()).getBean();
 							if (course != null) {
@@ -249,8 +280,8 @@ public class DataLoader implements DataLoaderSpec {
 				try {
 					// get all persons in an special faculty
 					// TODO Use personContainer - don´t call rapla again
-					ResourceData = gsonGetResources(REQUEST_PARAMETER_PERSONS,
-							faculty.getId()).getResult();
+					ResourceData = jacksonGetResources(
+							REQUEST_PARAMETER_PERSONS, faculty.getId());
 
 					// look if there is any persons with the same id in the RAM
 					for (ResourceModel person_get : ResourceData) {
