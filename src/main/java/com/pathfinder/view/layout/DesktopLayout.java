@@ -3,6 +3,7 @@ package com.pathfinder.view.layout;
 import java.util.List;
 import java.util.Locale;
 
+import com.pathfinder.model.Attribut;
 import com.pathfinder.model.FreeRoomModel;
 import com.pathfinder.model.ResourceModel;
 import com.pathfinder.util.widgetset.BackToHomeScreenListenerSpec;
@@ -81,23 +82,8 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	}
 
 	@Override
-	public void addItemClickListenerRoomTable(ItemClickListener listener) {
-		this.accordionView.addItemClickListenerRoomTable(listener);
-	}
-
-	@Override
-	public void addItemClickListenerCourseTable(ItemClickListener listener) {
-		this.accordionView.addItemClickListenerCourseTable(listener);
-	}
-
-	@Override
-	public void addItemClickListenerPersonTable(ItemClickListener listener) {
-		this.accordionView.addItemClickListenerPersonTable(listener);
-	}
-
-	@Override
-	public void addItemClickListenerPoiTable(ItemClickListener listener) {
-		this.accordionView.addItemClickListenerPoiTable(listener);
+	public void addItemClickListener(ItemClickListener listener) {
+		this.accordionView.addItemClickListener(listener);
 	}
 
 	@Override
@@ -329,8 +315,8 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	}
 
 	@Override
-	public void addDetails(ResourceModel resourceModel) {
-		detailContainer.addDetails(resourceModel);
+	public void addDetails(ResourceModel resourceModel, List<Attribut> resourceDetails) {
+		detailContainer.addDetails(resourceModel, resourceDetails);
 	}
 
 	@Override

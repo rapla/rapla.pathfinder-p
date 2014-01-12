@@ -12,13 +12,7 @@ import com.vaadin.event.ItemClickEvent.ItemClickListener;
  */
 public interface AccordionViewSpec extends ComponentSpec {
 
-	void addItemClickListenerRoomTable(ItemClickListener listener);
-
-	void addItemClickListenerCourseTable(ItemClickListener listener);
-
-	void addItemClickListenerPersonTable(ItemClickListener listener);
-
-	void addItemClickListenerPoiTable(ItemClickListener listener);
+	void addItemClickListener(ItemClickListener listener);
 
 	void setRoomContainer(BeanItemContainer<ResourceModel> beanItemContainer);
 

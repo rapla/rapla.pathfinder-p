@@ -118,4 +118,16 @@ public class DataLoaderSpecContract implements DataLoaderSpec {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void setDhbwEntryPoint(String dhbwEntryPoint) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getDhbwEntryPoint() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -4,11 +4,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.pathfinder.model.Attribut;
-import com.pathfinder.model.ResourceModel;
-import com.pathfinder.presenter.DataLoader;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -18,9 +15,7 @@ import com.vaadin.ui.VerticalLayout;
  * 
  */
 public class DetailInfo extends CustomComponent implements DetailInfoSpec {
-	private List<Attribut> modelDetails = null;
 	private final VerticalLayout layout = new VerticalLayout();
-	private final DataLoader dataLoader = DataLoader.getInstance();
 	private Label label = new Label();
 
 	public DetailInfo() {
@@ -28,11 +23,9 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 	}
 
 	@Override
-	public void addDetails(ResourceModel resource) {
-		// Should we use a table instead labels?
-		modelDetails = dataLoader.getResourceDetails(resource.getId(), UI
-				.getCurrent().getLocale());
-		Iterator<Attribut> modelDetailsIterator = modelDetails.iterator();
+	public void addDetails(List<Attribut> resourceDetails) {
+		// TODO Should we use a table instead labels?
+		Iterator<Attribut> modelDetailsIterator = resourceDetails.iterator();
 
 		while (modelDetailsIterator.hasNext()) {
 			Attribut modelAttribut = modelDetailsIterator.next();

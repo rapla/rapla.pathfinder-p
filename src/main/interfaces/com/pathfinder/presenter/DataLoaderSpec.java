@@ -13,6 +13,12 @@ import de.vksi.c4j.Pure;
 
 @ContractReference(DataLoaderSpecContract.class)
 public interface DataLoaderSpec {
+	void addDataListener(DataLoaderListenerSpec listener);
+
+	void setDhbwEntryPoint(String dhbwEntryPoint);
+
+	void reloadAllData();
+
 	@Pure
 	BeanItemContainer<ResourceModel> getRoomContainer();
 
@@ -28,10 +34,7 @@ public interface DataLoaderSpec {
 	@Pure
 	List<Attribut> getResourceDetails(String resourceId, Locale locale);
 
-	void reloadAllData();
-
-	void addDataListener(DataLoaderListenerSpec listener);
-
 	BeanItemContainer<FreeRoomModel> getFreeResources();
 
+	String getDhbwEntryPoint();
 }

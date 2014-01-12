@@ -1,6 +1,5 @@
 package com.pathfinder.view.components;
 
-import com.pathfinder.model.ResourceModel;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Image;
 
@@ -22,8 +21,9 @@ public class DetailImage extends Image implements DetailImageSpec {
 	}
 
 	@Override
-	public void setImage(ResourceModel resourceModel) {
-		this.setSource(new ThemeResource(IMAGEPATH + resourceModel));
+	public void setImage(String imageDescription) {
+		// TODO Check if image is available
+		this.setSource(new ThemeResource(IMAGEPATH + imageDescription + ".png"));
 		this.setSizeFull();
 	}
 

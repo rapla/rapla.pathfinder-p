@@ -25,13 +25,10 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 	private final BeanItemContainer<FreeRoomModel> freeRoomContainer = new BeanItemContainer<FreeRoomModel>(
 			FreeRoomModel.class);
 	private final Object[] visibleFreeRoomTableColumns = new String[] {
-			FreeRoomModel.PROPERTY_NAME, FreeRoomModel.PROPERTY_START,
-			FreeRoomModel.PROPERTY_END };
+			FreeRoomModel.PROPERTY_NAME, FreeRoomModel.PROPERTY_END };
 	private String[] headerFreeRoomTableCaptions = new String[] {
 			translator.translate(TranslationKeys.ROOM),
-			// TODO Should be removed?
-			translator.translate(TranslationKeys.BEGIN),
-			translator.translate(TranslationKeys.END) };
+			translator.translate(TranslationKeys.FREE_TILL) };
 	private final Table freeRoomTable = new Table();
 
 	private final Label noRoomsLabel = new Label(
@@ -77,10 +74,6 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 
 			if (FreeRoomModel.PROPERTY_NAME.equals(columnId)) {
 				Label label = new Label((String) prop.getValue());
-				return label;
-			} else if (FreeRoomModel.PROPERTY_START.equals(columnId)) {
-				Label label = new Label(prop.getValue() + " "
-						+ translator.translate(TranslationKeys.TIME));
 				return label;
 			} else if (FreeRoomModel.PROPERTY_END.equals(columnId)) {
 				Label label = new Label(prop.getValue() + " "
@@ -130,8 +123,7 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 	public void updateTranslations() {
 		headerFreeRoomTableCaptions = new String[] {
 				translator.translate(TranslationKeys.ROOM),
-				translator.translate(TranslationKeys.BEGIN),
-				translator.translate(TranslationKeys.END) };
+				translator.translate(TranslationKeys.FREE_TILL) };
 		freeRoomTable.setColumnHeaders(headerFreeRoomTableCaptions);
 		this.freeRoomTable.markAsDirtyRecursive();
 		actualFreeRoomsLabel.setCaption(translator

@@ -177,22 +177,10 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 	}
 
 	@Override
-	public void addItemClickListenerRoomTable(ItemClickListener listener) {
+	public void addItemClickListener(ItemClickListener listener) {
 		roomTable.addItemClickListener(listener);
-	}
-
-	@Override
-	public void addItemClickListenerCourseTable(ItemClickListener listener) {
 		courseTable.addItemClickListener(listener);
-	}
-
-	@Override
-	public void addItemClickListenerPersonTable(ItemClickListener listener) {
 		personTable.addItemClickListener(listener);
-	}
-
-	@Override
-	public void addItemClickListenerPoiTable(ItemClickListener listener) {
 		poiTable.addItemClickListener(listener);
 	}
 

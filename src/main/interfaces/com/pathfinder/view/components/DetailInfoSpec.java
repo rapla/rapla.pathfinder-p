@@ -1,6 +1,8 @@
 package com.pathfinder.view.components;
 
-import com.pathfinder.model.ResourceModel;
+import java.util.List;
+
+import com.pathfinder.model.Attribut;
 
 /**
  * DetailSpec
@@ -9,7 +11,7 @@ import com.pathfinder.model.ResourceModel;
  * 
  */
 public interface DetailInfoSpec extends ComponentSpec {
-	void addDetails(ResourceModel resource);
+	void addDetails(List<Attribut> resourceDetails);
 
 	void removeDetails();
 }

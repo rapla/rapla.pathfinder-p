@@ -1,11 +1,16 @@
 package com.pathfinder.view.container;
 
+import java.util.List;
+
+import com.pathfinder.model.Attribut;
 import com.pathfinder.model.ResourceModel;
+import com.pathfinder.presenter.DataLoader;
 import com.pathfinder.view.components.DetailImage;
 import com.pathfinder.view.components.DetailImageSpec;
 import com.pathfinder.view.components.DetailInfo;
 import com.pathfinder.view.components.DetailInfoSpec;
 import com.vaadin.ui.CustomComponent;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -19,6 +24,7 @@ public class DetailContainer extends CustomComponent implements
 	private final VerticalLayout layout = new VerticalLayout();
 	private final DetailInfoSpec detailInfo = new DetailInfo();
 	private final DetailImageSpec detailImage = new DetailImage();
+	private final DataLoader dataLoader = DataLoader.getInstance();
 	private ResourceModel resource = null;
 
 	public DetailContainer() {
@@ -32,13 +38,18 @@ public class DetailContainer extends CustomComponent implements
 	}
 
 	@Override
-	public void addDetails(ResourceModel resource) {
-		this.resource = resource;
-		detailInfo.addDetails(this.resource);
-		// TODO
-		// if (!"".equals(dataloader.getImage(resource.getId()))) {
-		// detailImage.setImage(dataloader.getImage(resource.getId()));
-		// }
+	public void addDetails(ResourceModel resource,
+			List<Attribut> resourceDetails) {
+		this.removeDetails();
+		detailInfo.addDetails(resourceDetails);
+		if ("room".equals(resource.getType())) {
+			for (Attribut attribut : resourceDetails) {
+				if ("roomNr".equals(attribut.getLabel())) {
+					detailImage.setImage(dataLoader.getDhbwEntryPoint()
+							+ attribut.getLabel());
+				}
+			}
+		}
 	}
 
 	@Override
@@ -62,7 +73,8 @@ public class DetailContainer extends CustomComponent implements
 	public void updateTranslations() {
 		if (resource != null) {
 			detailInfo.removeDetails();
-			detailInfo.addDetails(this.resource);
+			detailInfo.addDetails(dataLoader.getResourceDetails(
+					resource.getId(), UI.getCurrent().getLocale()));
 		}
 	}
 }

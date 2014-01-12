@@ -6,11 +6,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.pathfinder.presenter.DataLoader;
-import com.pathfinder.presenter.DataLoaderListenerSpec;
 import com.pathfinder.presenter.DesktopPresenter;
 import com.pathfinder.presenter.DesktopPresenterSpec;
-import com.pathfinder.presenter.MobilePresenter;
-import com.pathfinder.presenter.MobilePresenterSpec;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.vaadin.annotations.Theme;
@@ -27,16 +24,18 @@ import com.vaadin.ui.UI;
  * 
  */
 @Theme("rapla_pathfinder_p")
-public class PathfinderUI extends UI implements DataLoaderListenerSpec {
+public class PathfinderUI extends UI {
 	private static final Logger LOGGER = LogManager
 			.getLogger(PathfinderUI.class.getName());
 
 	private DesktopPresenterSpec desktopPresenter = null;
-	private MobilePresenterSpec mobilePresenter = null;
+	// TODO
+	// private MobilePresenterSpec mobilePresenter = null;
 
 	private Page page = null;
 	private WebBrowser webBrowser = null;
 	private String userAgent = "";
+	private String dhbwEntryPoint = "A";
 
 	@Override
 	protected void init(VaadinRequest request) {
@@ -47,11 +46,13 @@ public class PathfinderUI extends UI implements DataLoaderListenerSpec {
 		this.getBrowserData(request);
 		this.setUiLocale(request.getLocale());
 		this.printBrowserInfo(page, webBrowser, userAgent);
+		this.initDataloader();
 		this.buildLayout();
-		this.setData();
 	}
 
 	private void getBrowserData(VaadinRequest request) {
+		// TODO set dhbwEntryPoint - read directory after pathfinder/
+
 		// TODO Difference between getCurrent().getPage();?
 		page = Page.getCurrent();
 		webBrowser = getPage().getWebBrowser();
@@ -62,12 +63,6 @@ public class PathfinderUI extends UI implements DataLoaderListenerSpec {
 		}
 	}
 
-	/**
-	 * Sets locale of UI as specified in parameter; if it's not supported or
-	 * null, the fallback locale will be taken
-	 * 
-	 * @param locale
-	 */
 	private void setUiLocale(Locale locale) {
 		if (locale != null
 				&& Translator.getInstance().isLocaleSupported(locale)) {
@@ -90,6 +85,11 @@ public class PathfinderUI extends UI implements DataLoaderListenerSpec {
 		LOGGER.trace("Is touch device: " + webBrowser.isTouchDevice());
 	}
 
+	private void initDataloader() {
+		DataLoader dataLoader = DataLoader.getInstance();
+		dataLoader.setDhbwEntryPoint(dhbwEntryPoint);
+	}
+
 	private void buildLayout() {
 		desktopPresenter = new DesktopPresenter();
 		setPrimaryStyleName("main");
@@ -110,20 +110,5 @@ public class PathfinderUI extends UI implements DataLoaderListenerSpec {
 		// addClickListener(desktopPresenter.getUiClickListener());
 		// LOGGER.trace("Desktop application initialized");
 		// }
-	}
-
-	private void setData() {
-		DataLoader dataLoader = DataLoader.getInstance();
-		desktopPresenter.setRoomContainer(dataLoader.getRoomContainer());
-		desktopPresenter.setCourseContainer(dataLoader.getCourseContainer());
-		desktopPresenter.setPersonContainer(dataLoader.getPersonContainer());
-		desktopPresenter.setPoiContainer(dataLoader.getPoiContainer());
-		// Register as DataListener to get notified if data changes
-		dataLoader.addDataListener(this);
-	}
-
-	@Override
-	public void dataUpdated() {
-		setData();
 	}
 }

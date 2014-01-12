@@ -1,6 +1,7 @@
 package com.pathfinder.presenter;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -8,6 +9,7 @@ import java.util.TimerTask;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.pathfinder.model.Attribut;
 import com.pathfinder.model.KeyboardModel;
 import com.pathfinder.model.ResourceModel;
 import com.pathfinder.util.properties.ApplicationProperties;
@@ -38,7 +40,7 @@ import com.vaadin.ui.UI;
  * 
  */
 public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
-		DesktopPresenterSpec, KeyboardViewListenerSpec {
+		DesktopPresenterSpec, KeyboardViewListenerSpec, DataLoaderListenerSpec {
 	private static final Logger LOGGER = LogManager
 			.getLogger(DesktopPresenter.class.getName());
 	private final ApplicationPropertiesSpec properties = ApplicationProperties
@@ -52,27 +54,37 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	private final int goBackHomeIntervall = properties
 			.getIntProperty(PropertiesKey.BACK_TO_HOME_TIMER);
 
+	private ResourceModel resource = null;
+
 	private long lastUserInteractionTimestamp;
 
 	public DesktopPresenter() {
+		// Register as DataListener to get notified if data changes
+		dataLoader.addDataListener(this);
+		this.setResourceData();
+
+		this.initListeners();
+
+		this.refreshFreeRooms();
+		this.scheduleFreeRoomsLoading();
+	}
+
+	private void setResourceData() {
+		this.setRoomContainer(dataLoader.getRoomContainer());
+		this.setCourseContainer(dataLoader.getCourseContainer());
+		this.setPersonContainer(dataLoader.getPersonContainer());
+		this.setPoiContainer(dataLoader.getPoiContainer());
+	}
+
+	private void initListeners() {
 		this.desktopLayout.addKeyboardListener(this);
 		this.keyboardBinder.setBuffered(false);
 		this.keyboardBinder.setItemDataSource(new KeyboardModel());
 		this.keyboardBinder.bind(desktopLayout.getSearchField(),
 				KeyboardModel.PROPERTY_SEARCHSTRING);
-
-		this.desktopLayout
-				.addItemClickListenerRoomTable(new TableClickListener());
-		this.desktopLayout
-				.addItemClickListenerCourseTable(new TableClickListener());
-		this.desktopLayout
-				.addItemClickListenerPersonTable(new TableClickListener());
-		this.desktopLayout
-				.addItemClickListenerPoiTable(new TableClickListener());
-
+		this.desktopLayout.addItemClickListener(new TableDetailClickListener());
 		this.desktopLayout
 				.addDeleteAllClickListener(new DeleteAllClickListener());
-
 		desktopLayout.addClickListenerHomeButton(new HomeButtonClickListener());
 		desktopLayout
 				.addClickListenerAppointmentButton(new AppointmentButtonClickListener());
@@ -86,9 +98,6 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		}
 
 		desktopLayout.addBackToHomeListener(new BackToHomeListener());
-
-		this.refreshFreeRooms();
-		this.scheduleFreeRoomsLoading();
 	}
 
 	@Override
@@ -114,10 +123,15 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		}
 	}
 
-	class TableClickListener implements ItemClickListener {
+	@Override
+	public void dataUpdated() {
+		this.setResourceData();
+	}
+
+	class TableDetailClickListener implements ItemClickListener {
 		@Override
 		public void itemClick(ItemClickEvent event) {
-			ResourceModel resource = (ResourceModel) event.getItemId();
+			resource = (ResourceModel) event.getItemId();
 			LOGGER.trace(resource.getType() + " element was clicked: "
 					+ resource.getName());
 			switchToDetailView(resource);
@@ -125,7 +139,6 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	}
 
 	class DeleteAllClickListener implements ClickListener {
-
 		@Override
 		public void buttonClick(ClickEvent event) {
 			clearSearchString();
@@ -162,7 +175,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	class BackButtonClickListener implements ClickListener {
 		@Override
 		public void buttonClick(ClickEvent event) {
-			switchToSearchView();
+			switchToDetailView(resource);
 		}
 	}
 
@@ -189,7 +202,28 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 			desktopLayout.hideOpenLanguagePopup();
 			languageChanged(locale);
 		}
+	}
 
+	class BackToHomeListener implements BackToHomeScreenListenerSpec {
+
+		@Override
+		public void timeToGoHome() {
+			if (isTimeToGoHome()) {
+				goBackToHomeScreenAndRestoreDefaultSettings();
+			}
+		}
+
+	}
+
+	@Override
+	public com.vaadin.event.MouseEvents.ClickListener getUiClickListener() {
+		return new com.vaadin.event.MouseEvents.ClickListener() {
+
+			@Override
+			public void click(com.vaadin.event.MouseEvents.ClickEvent event) {
+				lastUserInteractionTimestamp = new Date().getTime();
+			}
+		};
 	}
 
 	private TimerTask getTimerTask() {
@@ -231,6 +265,9 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 
 	@Override
 	public void switchToDetailView(ResourceModel resource) {
+		List<Attribut> resourceDetails = dataLoader.getResourceDetails(
+				resource.getId(), UI.getCurrent().getLocale());
+
 		// Hiding
 		desktopLayout.hideAppointmentView();
 		desktopLayout.hideFreeRoomView();
@@ -239,12 +276,16 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 
 		// Adapting MenuBar
 		desktopLayout.replaceWheelChairButtonWithHomeButton();
-		if (resource.getLink() != null && !"".equals(resource.getLink())) {
-			desktopLayout.showAppointmentButton();
-		}
+
+		// for (Attribut attribut : resourceDetails) {
+		// if ("resourceUrl".equals(attribut.getLabel())) {
+		// desktopLayout.showAppointmentButton();
+		// }
+		// }
+		desktopLayout.showAppointmentButton();
 
 		// Showing
-		desktopLayout.addDetails(resource);
+		desktopLayout.addDetails(resource, resourceDetails);
 		desktopLayout.showDetailContainer();
 	}
 
@@ -385,17 +426,6 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		return desktopLayout;
 	}
 
-	class BackToHomeListener implements BackToHomeScreenListenerSpec {
-
-		@Override
-		public void timeToGoHome() {
-			if (isTimeToGoHome()) {
-				goBackToHomeScreenAndRestoreDefaultSettings();
-			}
-		}
-
-	}
-
 	private void goBackToHomeScreenAndRestoreDefaultSettings() {
 		switchToSearchView();
 		clearSearchString();
@@ -415,16 +445,4 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 
 		return result;
 	}
-
-	@Override
-	public com.vaadin.event.MouseEvents.ClickListener getUiClickListener() {
-		return new com.vaadin.event.MouseEvents.ClickListener() {
-
-			@Override
-			public void click(com.vaadin.event.MouseEvents.ClickEvent event) {
-				lastUserInteractionTimestamp = new Date().getTime();
-			}
-		};
-	}
-
 }

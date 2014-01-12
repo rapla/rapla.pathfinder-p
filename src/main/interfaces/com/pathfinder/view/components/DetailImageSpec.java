@@ -1,6 +1,5 @@
 package com.pathfinder.view.components;
 
-import com.pathfinder.model.ResourceModel;
 
 /**
  * DetailSpec
@@ -9,7 +8,7 @@ import com.pathfinder.model.ResourceModel;
  * 
  */
 public interface DetailImageSpec extends ComponentSpec {
-	void setImage(ResourceModel resource);
+	void setImage(String url);
 
 	void removeImage();
 }
