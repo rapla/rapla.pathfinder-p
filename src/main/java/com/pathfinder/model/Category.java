@@ -1,6 +1,6 @@
 package com.pathfinder.model;
 
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Model for the category

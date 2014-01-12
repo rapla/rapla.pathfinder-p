@@ -29,7 +29,6 @@ import com.vaadin.server.Page;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 
 /**
@@ -156,7 +155,6 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	class WheelChairButtonClickListener implements ClickListener {
 		@Override
 		public void buttonClick(ClickEvent event) {
-			Notification.show("You pressed the WheelchairMan!");
 			changeWheelChairView();
 		}
 	}
