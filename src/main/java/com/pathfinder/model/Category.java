@@ -1,11 +1,14 @@
 package com.pathfinder.model;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 /**
  * Model for the category
  * 
  * @author alexh
  * 
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Category {
 	public static final String PROPERTY_ID = "id";
 	public static final String PROPERTY_NAME = "name";
