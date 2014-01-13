@@ -94,9 +94,7 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	}
 
 	private void buildMainLayout() {
-		// TODO Only commented for testing
-		// this.hideAppointmentButton();
-
+		this.hideAppointmentButton();
 		layout.addComponent(languagePopupButton);
 		layout.addComponent(appointmentButton);
 		layout.addComponent(wheelChairDriverButton);
