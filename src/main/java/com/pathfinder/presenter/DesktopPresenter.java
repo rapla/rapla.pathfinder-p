@@ -220,6 +220,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		@Override
 		public void timeToGoHome() {
 			if (isTimeToGoHome()) {
+				LOGGER.trace("Restoring default Search View because user interaction timer expired");
 				goBackToHomeScreenAndRestoreDefaultSettings();
 			}
 		}
@@ -236,6 +237,11 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 						|| event instanceof com.vaadin.event.MouseEvents.ClickEvent) {
 					lastUserInteractionTimestamp = new Date().getTime();
 					wentBackToHomeScreen = false;
+					if (event.getComponent() != null)
+						LOGGER.trace("There was an user interaction; caption: "
+								+ event.getComponent().getCaption()
+								+ "; primary style name: "
+								+ event.getComponent().getPrimaryStyleName());
 				}
 			}
 		};
