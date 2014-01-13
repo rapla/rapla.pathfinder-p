@@ -45,7 +45,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 			.getLogger(DesktopPresenter.class.getName());
 	private final ApplicationPropertiesSpec properties = ApplicationProperties
 			.getInstance();
-	private final DataLoader dataLoader = DataLoader.getInstance();
+	private final DataLoaderSpec dataLoader = DataLoader.getInstance();
 	private final BeanFieldGroup<KeyboardModel> keyboardBinder = new BeanFieldGroup<KeyboardModel>(
 			KeyboardModel.class);
 

@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.pathfinder.presenter.DataLoader;
+import com.pathfinder.presenter.DataLoaderSpec;
 import com.pathfinder.presenter.DesktopPresenter;
 import com.pathfinder.presenter.DesktopPresenterSpec;
 import com.pathfinder.util.translation.TranslationKeys;
@@ -86,7 +87,7 @@ public class PathfinderUI extends UI {
 	}
 
 	private void initDataloader() {
-		DataLoader dataLoader = DataLoader.getInstance();
+		DataLoaderSpec dataLoader = DataLoader.getInstance();
 		dataLoader.setDhbwEntryPoint(dhbwEntryPoint);
 	}
 

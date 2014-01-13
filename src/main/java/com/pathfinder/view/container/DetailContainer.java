@@ -5,6 +5,7 @@ import java.util.List;
 import com.pathfinder.model.Attribut;
 import com.pathfinder.model.ResourceModel;
 import com.pathfinder.presenter.DataLoader;
+import com.pathfinder.presenter.DataLoaderSpec;
 import com.pathfinder.view.components.DetailImage;
 import com.pathfinder.view.components.DetailImageSpec;
 import com.pathfinder.view.components.DetailInfo;
@@ -24,7 +25,7 @@ public class DetailContainer extends CustomComponent implements
 	private final VerticalLayout layout = new VerticalLayout();
 	private final DetailInfoSpec detailInfo = new DetailInfo();
 	private final DetailImageSpec detailImage = new DetailImage();
-	private final DataLoader dataLoader = DataLoader.getInstance();
+	private final DataLoaderSpec dataLoader = DataLoader.getInstance();
 	private ResourceModel resource = null;
 
 	public DetailContainer() {
