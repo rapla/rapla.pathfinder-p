@@ -27,6 +27,8 @@ import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.event.FieldEvents.TextChangeEvent;
+import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.server.Page;
@@ -68,9 +70,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		// Register as DataListener to get notified if data changes
 		dataLoader.addDataListener(this);
 		this.setResourceData();
-
 		this.initListeners();
-
 		this.refreshFreeRooms();
 		this.scheduleFreeRoomsLoading();
 	}
@@ -89,8 +89,10 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		this.keyboardBinder.bind(desktopLayout.getSearchField(),
 				KeyboardModel.PROPERTY_SEARCHSTRING);
 		this.desktopLayout.addItemClickListener(new TableDetailClickListener());
-		this.desktopLayout
-				.addSearchFieldValueChangeListener(new SearchFieldValueChangeListener());
+		// TODO
+		// this.desktopLayout
+		// .addSearchFieldTextChangeListener(new
+		// SearchFieldTextChangeListener());
 		this.desktopLayout
 				.addDeleteAllClickListener(new DeleteAllClickListener());
 		desktopLayout.addClickListenerHomeButton(new HomeButtonClickListener());
@@ -144,6 +146,16 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 			LOGGER.trace(resource.getType() + " element was clicked: "
 					+ resource.getName());
 			switchToDetailView();
+		}
+	}
+
+	class SearchFieldTextChangeListener implements TextChangeListener {
+		@Override
+		public void textChange(TextChangeEvent event) {
+			LOGGER.trace("SearchString: " + getSearchString());
+			desktopLayout.useFiltersForAllTables(getSearchString());
+			// TODO Is this necessary?
+			desktopLayout.focusSearchField();
 		}
 	}
 
@@ -386,7 +398,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		setSearchString(newSearchString.toString());
 
 		// TODO Remove if all works
-		// desktopLayout.focusSearchField();
+		desktopLayout.focusSearchField();
 		setChangePosCounter(oldCursorPosition + 1);
 	}
 
@@ -401,10 +413,12 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 
 			setSearchString(newSearchString.toString());
 
-			// desktopLayout.focusSearchField();
+			// TODO Remove if all works
+			desktopLayout.focusSearchField();
 			setChangePosCounter(oldCursorPosition - 1);
 		} else {
-			// desktopLayout.focusSearchField();
+			// TODO Remove if all works
+			desktopLayout.focusSearchField();
 		}
 	}
 
@@ -442,7 +456,8 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		keyboardBinder.getItemDataSource()
 				.getItemProperty(KeyboardModel.PROPERTY_SEARCHSTRING)
 				.setValue(value);
-		// desktopLayout.useFiltersForAllTables(getSearchString());
+		// TODO Remove if all works
+		desktopLayout.useFiltersForAllTables(getSearchString());
 	}
 
 	@Override

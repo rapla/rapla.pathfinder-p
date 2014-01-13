@@ -26,8 +26,8 @@ import com.pathfinder.view.container.DetailContainerSpec;
 import com.pathfinder.view.container.SearchPanel;
 import com.pathfinder.view.container.SearchPanelSpec;
 import com.pathfinder.view.listener.KeyboardViewListenerSpec;
-import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
@@ -107,8 +107,8 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	}
 
 	@Override
-	public void addSearchFieldValueChangeListener(ValueChangeListener listener) {
-		searchField.addSearchFieldValueChangeListener(listener);
+	public void addSearchFieldTextChangeListener(TextChangeListener listener) {
+		searchField.addSearchFieldTextChangeListener(listener);
 	}
 
 	@Override
