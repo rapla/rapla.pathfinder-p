@@ -84,7 +84,7 @@ public class SearchFieldTest {
 			}
 		};
 
-		searchFieldSpec.addSearchFieldListener(listener);
+		searchFieldSpec.addSearchFieldTextChangeListener(listener);
 
 		searchField.getListeners(TextChangeEvent.class);
 

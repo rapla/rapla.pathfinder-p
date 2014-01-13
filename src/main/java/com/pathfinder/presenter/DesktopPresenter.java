@@ -25,7 +25,9 @@ import com.pathfinder.view.listener.DesktopLayoutViewListenerSpec;
 import com.pathfinder.view.listener.KeyboardViewListenerSpec;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.ItemClickEvent;
+import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinSession;
@@ -88,6 +90,8 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 				KeyboardModel.PROPERTY_SEARCHSTRING);
 		this.desktopLayout.addItemClickListener(new TableDetailClickListener());
 		this.desktopLayout
+				.addSearchFieldTextChangeListener(new SearchFieldTextChangeListener());
+		this.desktopLayout
 				.addDeleteAllClickListener(new DeleteAllClickListener());
 		desktopLayout.addClickListenerHomeButton(new HomeButtonClickListener());
 		desktopLayout
@@ -105,8 +109,12 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	}
 
 	@Override
-	public void buttonClick(KeyboardId keyId) {
+	public void dataUpdated() {
+		this.setResourceData();
+	}
 
+	@Override
+	public void buttonClick(KeyboardId keyId) {
 		KeyboardId id = (KeyboardId) keyId;
 		switch (id) {
 		case DELETE:
@@ -127,11 +135,6 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		}
 	}
 
-	@Override
-	public void dataUpdated() {
-		this.setResourceData();
-	}
-
 	class TableDetailClickListener implements ItemClickListener {
 		@Override
 		public void itemClick(ItemClickEvent event) {
@@ -141,6 +144,14 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 			LOGGER.trace(resource.getType() + " element was clicked: "
 					+ resource.getName());
 			switchToDetailView();
+		}
+	}
+
+	class SearchFieldTextChangeListener implements TextChangeListener {
+		@Override
+		public void textChange(TextChangeEvent event) {
+			desktopLayout.useFiltersForAllTables(getSearchString());
+			desktopLayout.focusSearchField();
 		}
 	}
 
@@ -266,6 +277,29 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		new Timer().schedule(getTimerTask(), loadInterval, loadInterval);
 	}
 
+	private void goBackToHomeScreenAndRestoreDefaultSettings() {
+		switchToSearchView();
+		clearSearchString();
+		languageChanged(VaadinSession.getCurrent().getLocale());
+	}
+
+	private boolean isTimeToGoHome() {
+		boolean result = false;
+
+		if (!wentBackToHomeScreen) {
+			long millisecondsSinceLastRequest = new Date().getTime()
+					- lastUserInteractionTimestamp;
+
+			if (millisecondsSinceLastRequest >= goBackHomeIntervall) {
+				lastUserInteractionTimestamp = new Date().getTime();
+				result = true;
+				wentBackToHomeScreen = true;
+			}
+		}
+
+		return result;
+	}
+
 	@Override
 	public void switchToSearchView() {
 		// Null setting
@@ -332,6 +366,10 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		desktopLayout.changeWheelChairView();
 	}
 
+	public synchronized void refreshFreeRooms() {
+		desktopLayout.refreshFreeRooms(dataLoader.getFreeResources());
+	}
+
 	public void addKeybordKeyToSearchString(String key) {
 		int oldCursorPosition = getChangePosCounter();
 
@@ -345,7 +383,8 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		}
 		setSearchString(newSearchString.toString());
 
-		desktopLayout.focusSearchField();
+		// TODO Remove if all works
+		// desktopLayout.focusSearchField();
 		setChangePosCounter(oldCursorPosition + 1);
 	}
 
@@ -360,15 +399,48 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 
 			setSearchString(newSearchString.toString());
 
-			desktopLayout.focusSearchField();
+			// desktopLayout.focusSearchField();
 			setChangePosCounter(oldCursorPosition - 1);
 		} else {
-			desktopLayout.focusSearchField();
+			// desktopLayout.focusSearchField();
 		}
 	}
 
 	public void clearSearchString() {
-		setSearchString("");
+		this.setSearchString("");
+	}
+
+	public int getChangePosCounter() {
+		return desktopLayout.getCursorPosition();
+	}
+
+	public void setChangePosCounter(int cursorPosition) {
+		if (cursorPosition >= 0 && cursorPosition <= getSearchString().length())
+			desktopLayout.setCursorPosition(cursorPosition);
+	}
+
+	@Override
+	public int getCursorPosition() {
+		return desktopLayout.getCursorPosition();
+	}
+
+	@Override
+	public String getSearchString() {
+		String returnString = (String) keyboardBinder.getItemDataSource()
+				.getItemProperty(KeyboardModel.PROPERTY_SEARCHSTRING)
+				.getValue();
+		if (returnString == null)
+			returnString = "";
+		return returnString;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void setSearchString(String value) {
+		keyboardBinder.getItemDataSource()
+				.getItemProperty(KeyboardModel.PROPERTY_SEARCHSTRING)
+				.setValue(value);
+		// desktopLayout.useFiltersForAllTables(getSearchString());
 	}
 
 	@Override
@@ -395,43 +467,6 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		desktopLayout.setPoiContainer(beanItemContainer);
 	}
 
-	public int getChangePosCounter() {
-		return desktopLayout.getCursorPosition();
-	}
-
-	public void setChangePosCounter(int cursorPosition) {
-		if (cursorPosition >= 0 && cursorPosition <= getSearchString().length())
-			desktopLayout.setCursorPosition(cursorPosition);
-	}
-
-	@Override
-	public String getSearchString() {
-		String returnString = (String) keyboardBinder.getItemDataSource()
-				.getItemProperty(KeyboardModel.PROPERTY_SEARCHSTRING)
-				.getValue();
-		if (returnString == null)
-			returnString = "";
-		return returnString;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public void setSearchString(String value) {
-		keyboardBinder.getItemDataSource()
-				.getItemProperty(KeyboardModel.PROPERTY_SEARCHSTRING)
-				.setValue(value);
-		desktopLayout.useFiltersForAllTables(getSearchString());
-	}
-
-	@Override
-	public int getCursorPosition() {
-		return desktopLayout.getCursorPosition();
-	}
-
-	public synchronized void refreshFreeRooms() {
-		desktopLayout.refreshFreeRooms(dataLoader.getFreeResources());
-	}
-
 	@Override
 	public void languageChanged(Locale locale) {
 		if (!UI.getCurrent().getLocale().equals(locale)) {
@@ -446,28 +481,5 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	@Override
 	public DesktopLayoutSpec getDesktopLayoutView() {
 		return desktopLayout;
-	}
-
-	private void goBackToHomeScreenAndRestoreDefaultSettings() {
-		switchToSearchView();
-		clearSearchString();
-		languageChanged(VaadinSession.getCurrent().getLocale());
-	}
-
-	private boolean isTimeToGoHome() {
-		boolean result = false;
-
-		if (!wentBackToHomeScreen) {
-			long millisecondsSinceLastRequest = new Date().getTime()
-					- lastUserInteractionTimestamp;
-
-			if (millisecondsSinceLastRequest >= goBackHomeIntervall) {
-				lastUserInteractionTimestamp = new Date().getTime();
-				result = true;
-				wentBackToHomeScreen = true;
-			}
-		}
-
-		return result;
 	}
 }

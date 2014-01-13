@@ -15,7 +15,7 @@ import de.vksi.c4j.ContractReference;
  */
 @ContractReference(SearchFieldSpecContract.class)
 public interface SearchFieldSpec extends ComponentSpec {
-	void addSearchFieldListener(TextChangeListener listener);
+	void addSearchFieldTextChangeListener(TextChangeListener listener);
 
 	void addMagnifierClickListener(ClickListener listener);
 

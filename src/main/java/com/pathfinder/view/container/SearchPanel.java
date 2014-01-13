@@ -1,7 +1,9 @@
 package com.pathfinder.view.container;
 
 import com.pathfinder.view.components.AccordionView;
+import com.pathfinder.view.components.AccordionViewSpec;
 import com.pathfinder.view.components.SearchField;
+import com.pathfinder.view.components.SearchFieldSpec;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.VerticalLayout;
 
@@ -13,8 +15,8 @@ import com.vaadin.ui.VerticalLayout;
  */
 public class SearchPanel extends CustomComponent implements SearchPanelSpec {
 
-	private AccordionView accordionView = null;
-	private SearchField searchField = null;
+	private AccordionViewSpec accordionView = null;
+	private SearchFieldSpec searchField = null;
 
 	private final VerticalLayout layout = new VerticalLayout();
 

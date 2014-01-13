@@ -107,8 +107,24 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	}
 
 	@Override
+	public void addSearchFieldTextChangeListener(TextChangeListener listener) {
+		searchField.addSearchFieldTextChangeListener(listener);
+	}
+
+	@Override
+	public void addMagnifierClickListener(ClickListener listener) {
+		searchField.addMagnifierClickListener(listener);
+	}
+
+	@Override
 	public void addDeleteAllClickListener(ClickListener listener) {
 		this.searchField.addDeleteAllClickListener(listener);
+	}
+
+	@Override
+	public void addClickListenerFlagPopup(Locale locale,
+			com.vaadin.event.MouseEvents.ClickListener listener) {
+		menuBar.addClickListenerFlagPopup(locale, listener);
 	}
 
 	@Override
@@ -164,12 +180,6 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	@Override
 	public void setAppointmentUrl(String url) {
 		appointmentView.setAppointmentUrl(url);
-	}
-
-	@Override
-	public void addClickListenerFlagPopup(Locale locale,
-			com.vaadin.event.MouseEvents.ClickListener listener) {
-		menuBar.addClickListenerFlagPopup(locale, listener);
 	}
 
 	@Override
@@ -277,16 +287,6 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	@Override
 	public void replaceHomeButtonWithWheelChairButton() {
 		menuBar.replaceHomeButtonWithWheelChairButton();
-	}
-
-	@Override
-	public void addSearchFieldListener(TextChangeListener listener) {
-		searchField.addSearchFieldListener(listener);
-	}
-
-	@Override
-	public void addMagnifierClickListener(ClickListener listener) {
-		searchField.addMagnifierClickListener(listener);
 	}
 
 	@Override

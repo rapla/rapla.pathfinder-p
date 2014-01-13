@@ -34,17 +34,9 @@ public class SearchField extends CustomComponent implements SearchFieldSpec {
 	private void init() {
 		magnifierButton.setEnabled(false);
 		magnifierButton.setIcon(magnifierResource);
-
 		deleteAllButton.setIcon(deleteResource);
-
 		searchField.setInputPrompt(translator
 				.translate(TranslationKeys.SEARCH_PROMP));
-	}
-
-	private void buildLayout() {
-		layout.addComponent(magnifierButton);
-		layout.addComponent(searchField);
-		layout.addComponent(deleteAllButton);
 	}
 
 	private void setStyles() {
@@ -54,8 +46,14 @@ public class SearchField extends CustomComponent implements SearchFieldSpec {
 		deleteAllButton.setPrimaryStyleName("delete-icon");
 	}
 
+	private void buildLayout() {
+		layout.addComponent(magnifierButton);
+		layout.addComponent(searchField);
+		layout.addComponent(deleteAllButton);
+	}
+
 	@Override
-	public void addSearchFieldListener(TextChangeListener listener) {
+	public void addSearchFieldTextChangeListener(TextChangeListener listener) {
 		searchField.addTextChangeListener(listener);
 	}
 

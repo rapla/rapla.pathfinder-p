@@ -35,7 +35,7 @@ public class SearchFieldSpecContract extends ComponentSpecContract implements
 	}
 
 	@Override
-	public void addSearchFieldListener(TextChangeListener listener) {
+	public void addSearchFieldTextChangeListener(TextChangeListener listener) {
 		if (preCondition()) {
 			assert listener != null : "Listener not null";
 			assert target.getSearchField() != null : "SearchField-Textfield not null";
@@ -112,7 +112,7 @@ public class SearchFieldSpecContract extends ComponentSpecContract implements
 	@Override
 	public void focusSearchField() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -124,7 +124,7 @@ public class SearchFieldSpecContract extends ComponentSpecContract implements
 	@Override
 	public void setCursorPosition(int cursorPosition) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
