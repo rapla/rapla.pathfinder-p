@@ -37,6 +37,7 @@ public class SearchField extends CustomComponent implements SearchFieldSpec {
 		deleteAllButton.setIcon(deleteResource);
 		searchField.setInputPrompt(translator
 				.translate(TranslationKeys.SEARCH_PROMP));
+		// TODO Doesn´t work - why???
 		searchField.setImmediate(true);
 	}
 

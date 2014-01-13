@@ -151,9 +151,9 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		@Override
 		public void valueChange(ValueChangeEvent event) {
 			LOGGER.trace("SearchString: " + getSearchString());
-
 			desktopLayout.useFiltersForAllTables(getSearchString());
-			desktopLayout.focusSearchField();
+			// TODO Is this necessary?
+			// desktopLayout.focusSearchField();
 		}
 	}
 
