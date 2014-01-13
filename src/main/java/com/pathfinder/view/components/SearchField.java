@@ -37,9 +37,6 @@ public class SearchField extends CustomComponent implements SearchFieldSpec {
 		deleteAllButton.setIcon(deleteResource);
 		searchField.setInputPrompt(translator
 				.translate(TranslationKeys.SEARCH_PROMP));
-		searchField.setBuffered(false);
-		searchField.setMaxLength(200);
-		searchField.setImmediate(true);
 	}
 
 	private void setStyles() {
