@@ -65,9 +65,8 @@ public class DataLoader implements DataLoaderSpec {
 	private final String ERROR_MASSAGE_LOADING_RESOURCE = "Error loading resource: ";
 	private final String ERROR_MASSAGE_URL_NOT_READABLE = "Error loading URL: ";
 	private final String ERROR_MASSAGE_SERVER_NOT_AVAILABLE = "No connection to the server";
-	// TODO: Use for better errorhandling
+	private final String ERROR_MASSAGE_JSON_HANDLING = "Can't handling JSON, maybe some problems with the data.xml";
 	private final String ERROR_MASSAGE_LOADING_RESOURCE_DETAIL = "Error loading resource detail - id: ";
-	private final String ERROR_MESSAGE_EMPTY_RESSOURCE = "Resource is empty";
 
 	private final BeanItemContainer<ResourceModel> roomContainer = new BeanItemContainer<ResourceModel>(
 			ResourceModel.class);
@@ -185,15 +184,13 @@ public class DataLoader implements DataLoaderSpec {
 			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE + resource, e);
 			return null;
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.error(ERROR_MASSAGE_JSON_HANDLING, e);
+			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE + resource, e);
+			return null;
 		} catch (IOException e) {
 			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE + resource, e);
 			return null;
 		}
-
-		return null;
-
 	}
 
 	private List<Category> jacksonGetOrganigram() {
@@ -227,15 +224,15 @@ public class DataLoader implements DataLoaderSpec {
 					+ REQUEST_PARAMETER_ORGANIGRAM, e);
 			return null;
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.error(ERROR_MASSAGE_JSON_HANDLING, e);
+			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE
+					+ REQUEST_PARAMETER_ORGANIGRAM, e);
+			return null;
 		} catch (IOException e) {
 			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE
 					+ REQUEST_PARAMETER_ORGANIGRAM, e);
 			return null;
 		}
-
-		return null;
 	}
 
 	private void loadFaculty() {
@@ -441,12 +438,17 @@ public class DataLoader implements DataLoaderSpec {
 					}
 				}
 			}
+		} catch (ConnectException e) {
+			LOGGER.info(ERROR_MASSAGE_SERVER_NOT_AVAILABLE);
+			LOGGER.error(ERROR_MASSAGE_URL_NOT_READABLE, e);
 		} catch (MalformedURLException e) {
+			LOGGER.error(ERROR_MASSAGE_URL_NOT_READABLE, e);
+		} catch (ParseException e) {
+			LOGGER.error(ERROR_MASSAGE_JSON_HANDLING, e);
 			LOGGER.error(ERROR_MASSAGE_URL_NOT_READABLE, e);
 		} catch (IOException e) {
 			LOGGER.error(ERROR_MASSAGE_URL_NOT_READABLE, e);
-		} catch (ParseException e) {
-			LOGGER.error(ERROR_MASSAGE_URL_NOT_READABLE, e);
+
 		} finally {
 			return freeRoomContainer;
 		}
@@ -503,16 +505,25 @@ public class DataLoader implements DataLoaderSpec {
 			}
 
 			return attributList;
-
-		} catch (MalformedURLException e) {
+		} catch (ConnectException e) {
+			LOGGER.info(ERROR_MASSAGE_LOADING_RESOURCE_DETAIL + resourceId);
+			LOGGER.info(ERROR_MASSAGE_SERVER_NOT_AVAILABLE);
 			LOGGER.error(ERROR_MASSAGE_URL_NOT_READABLE, e);
 			return null;
-		} catch (IOException e) {
+		} catch (MalformedURLException e) {
+			LOGGER.info(ERROR_MASSAGE_LOADING_RESOURCE_DETAIL + resourceId);
 			LOGGER.error(ERROR_MASSAGE_URL_NOT_READABLE, e);
 			return null;
 		} catch (ParseException e) {
+			LOGGER.info(ERROR_MASSAGE_LOADING_RESOURCE_DETAIL + resourceId);
+			LOGGER.error(ERROR_MASSAGE_JSON_HANDLING, e);
 			LOGGER.error(ERROR_MASSAGE_URL_NOT_READABLE, e);
 			return null;
+		} catch (IOException e) {
+			LOGGER.info(ERROR_MASSAGE_LOADING_RESOURCE_DETAIL + resourceId);
+			LOGGER.error(ERROR_MASSAGE_URL_NOT_READABLE, e);
+			return null;
+
 		}
 	}
 

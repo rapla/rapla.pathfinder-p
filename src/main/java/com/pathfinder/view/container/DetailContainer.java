@@ -22,10 +22,10 @@ import com.vaadin.ui.VerticalLayout;
  */
 public class DetailContainer extends CustomComponent implements
 		DetailContainerSpec {
+	private final DataLoaderSpec dataLoader = DataLoader.getInstance();
 	private final VerticalLayout layout = new VerticalLayout();
 	private final DetailInfoSpec detailInfo = new DetailInfo();
 	private final DetailImageSpec detailImage = new DetailImage();
-	private final DataLoaderSpec dataLoader = DataLoader.getInstance();
 	private ResourceModel resource = null;
 
 	public DetailContainer() {
@@ -34,6 +34,7 @@ public class DetailContainer extends CustomComponent implements
 	}
 
 	private void buildLayout() {
+		this.hideDetailContainer();
 		layout.addComponent(detailInfo);
 		layout.addComponent(detailImage);
 	}

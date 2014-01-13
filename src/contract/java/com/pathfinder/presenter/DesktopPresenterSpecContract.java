@@ -7,7 +7,7 @@ import static de.vksi.c4j.Condition.preCondition;
 import com.pathfinder.model.ResourceModel;
 import com.pathfinder.view.layout.DesktopLayoutSpec;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.event.MouseEvents.ClickListener;
+import com.vaadin.ui.Component.Listener;
 
 import de.vksi.c4j.ClassInvariant;
 import de.vksi.c4j.Target;
@@ -143,7 +143,7 @@ public class DesktopPresenterSpecContract implements DesktopPresenterSpec {
 	 * @see com.pathfinder.presenter.DesktopPresenterSpec#getUiClickListener()
 	 */
 	@Override
-	public ClickListener getUiClickListener() {
+	public Listener getUiListener() {
 		// TODO Auto-generated method stub
 		return null;
 	}

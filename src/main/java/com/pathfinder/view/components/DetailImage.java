@@ -1,5 +1,8 @@
 package com.pathfinder.view.components;
 
+import com.pathfinder.util.translation.TranslationKeys;
+import com.pathfinder.util.translation.Translator;
+import com.pathfinder.util.translation.TranslatorSpec;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Image;
 
@@ -10,6 +13,7 @@ import com.vaadin.ui.Image;
  * 
  */
 public class DetailImage extends Image implements DetailImageSpec {
+	private final TranslatorSpec translator = Translator.getInstance();
 	private final String IMAGE_PATH = "img/";
 	private final String IMAGE_ENDING = ".png";
 
@@ -18,7 +22,8 @@ public class DetailImage extends Image implements DetailImageSpec {
 	}
 
 	private void buildLayout() {
-		this.setAlternateText("Wegbeschreibung ist leider nicht verfügbar");
+		this.setAlternateText(translator
+				.translate(TranslationKeys.NO_DATA_AVAILABLE));
 	}
 
 	@Override
@@ -35,6 +40,7 @@ public class DetailImage extends Image implements DetailImageSpec {
 
 	@Override
 	public void updateTranslations() {
-		// Will be blank
+		this.setAlternateText(translator
+				.translate(TranslationKeys.NO_DATA_AVAILABLE));
 	}
 }

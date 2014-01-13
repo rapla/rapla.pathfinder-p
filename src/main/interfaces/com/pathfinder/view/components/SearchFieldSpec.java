@@ -1,6 +1,6 @@
 package com.pathfinder.view.components;
 
-import com.vaadin.event.FieldEvents.TextChangeListener;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.TextField;
@@ -15,7 +15,7 @@ import de.vksi.c4j.ContractReference;
  */
 @ContractReference(SearchFieldSpecContract.class)
 public interface SearchFieldSpec extends ComponentSpec {
-	void addSearchFieldListener(TextChangeListener listener);
+	void addSearchFieldValueChangeListener(ValueChangeListener listener);
 
 	void addMagnifierClickListener(ClickListener listener);
 

@@ -26,8 +26,8 @@ import com.pathfinder.view.container.DetailContainerSpec;
 import com.pathfinder.view.container.SearchPanel;
 import com.pathfinder.view.container.SearchPanelSpec;
 import com.pathfinder.view.listener.KeyboardViewListenerSpec;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
@@ -107,8 +107,24 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	}
 
 	@Override
+	public void addSearchFieldValueChangeListener(ValueChangeListener listener) {
+		searchField.addSearchFieldValueChangeListener(listener);
+	}
+
+	@Override
+	public void addMagnifierClickListener(ClickListener listener) {
+		searchField.addMagnifierClickListener(listener);
+	}
+
+	@Override
 	public void addDeleteAllClickListener(ClickListener listener) {
 		this.searchField.addDeleteAllClickListener(listener);
+	}
+
+	@Override
+	public void addClickListenerFlagPopup(Locale locale,
+			com.vaadin.event.MouseEvents.ClickListener listener) {
+		menuBar.addClickListenerFlagPopup(locale, listener);
 	}
 
 	@Override
@@ -164,12 +180,6 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	@Override
 	public void setAppointmentUrl(String url) {
 		appointmentView.setAppointmentUrl(url);
-	}
-
-	@Override
-	public void addClickListenerFlagPopup(Locale locale,
-			com.vaadin.event.MouseEvents.ClickListener listener) {
-		menuBar.addClickListenerFlagPopup(locale, listener);
 	}
 
 	@Override
@@ -277,16 +287,6 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	@Override
 	public void replaceHomeButtonWithWheelChairButton() {
 		menuBar.replaceHomeButtonWithWheelChairButton();
-	}
-
-	@Override
-	public void addSearchFieldListener(TextChangeListener listener) {
-		searchField.addSearchFieldListener(listener);
-	}
-
-	@Override
-	public void addMagnifierClickListener(ClickListener listener) {
-		searchField.addMagnifierClickListener(listener);
 	}
 
 	@Override
