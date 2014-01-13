@@ -13,10 +13,10 @@ public interface DesktopPresenterSpec {
 
 	void switchToSearchView();
 
-	void switchToDetailView(ResourceModel resource);
+	void switchToDetailView();
 
 	void switchToAppointmentView();
-	
+
 	void changeWheelChairView();
 
 	void setRoomContainer(BeanItemContainer<ResourceModel> beanItemContainer);

@@ -55,6 +55,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 			.getIntProperty(PropertiesKey.BACK_TO_HOME_TIMER);
 
 	private ResourceModel resource = null;
+	private List<Attribut> resourceDetails = null;
 
 	private long lastUserInteractionTimestamp;
 
@@ -132,9 +133,11 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		@Override
 		public void itemClick(ItemClickEvent event) {
 			resource = (ResourceModel) event.getItemId();
+			resourceDetails = dataLoader.getResourceDetails(resource.getId(),
+					UI.getCurrent().getLocale());
 			LOGGER.trace(resource.getType() + " element was clicked: "
 					+ resource.getName());
-			switchToDetailView(resource);
+			switchToDetailView();
 		}
 	}
 
@@ -155,12 +158,17 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	class AppointmentButtonClickListener implements ClickListener {
 		@Override
 		public void buttonClick(ClickEvent event) {
-			// TODO Should be variable URL - getResourceUrl();
-			// ResourceModel resource = (ResourceModel) event.getComponent();
-			// desktopLayout.setAppointmentUrl(resource.getLink());
-			desktopLayout.setAppointmentUrl(properties
-					.getProperty(PropertiesKey.APPOINTMENT_BASE_URL)
-					+ "&allocatable_id=2373");
+			for (Attribut attribut : resourceDetails) {
+				if ("Belegung".equals(attribut.getLabel())) {
+					desktopLayout.setAppointmentUrl(attribut.getValue());
+				}
+			}
+
+			// TODO Could be used for testing if no appointment is set in Rapla
+			// desktopLayout.setAppointmentUrl(properties
+			// .getProperty(PropertiesKey.APPOINTMENT_BASE_URL +
+			// "&allocatable_id=1011"));
+
 			switchToAppointmentView();
 		}
 	}
@@ -175,7 +183,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	class BackButtonClickListener implements ClickListener {
 		@Override
 		public void buttonClick(ClickEvent event) {
-			switchToDetailView(resource);
+			switchToDetailView();
 		}
 	}
 
@@ -247,6 +255,10 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 
 	@Override
 	public void switchToSearchView() {
+		// Null setting
+		this.resource = null;
+		this.resourceDetails = null;
+
 		// Hiding
 		desktopLayout.hideAppointmentView();
 		desktopLayout.hideDetailContainer();
@@ -264,10 +276,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	}
 
 	@Override
-	public void switchToDetailView(ResourceModel resource) {
-		List<Attribut> resourceDetails = dataLoader.getResourceDetails(
-				resource.getId(), UI.getCurrent().getLocale());
-
+	public void switchToDetailView() {
 		// Hiding
 		desktopLayout.hideAppointmentView();
 		desktopLayout.hideFreeRoomView();
@@ -277,13 +286,11 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		// Adapting MenuBar
 		desktopLayout.replaceWheelChairButtonWithHomeButton();
 
-		// TODO
-		// for (Attribut attribut : resourceDetails) {
-		// if ("resourceUrl".equals(attribut.getLabel())) {
-		// desktopLayout.showAppointmentButton();
-		// }
-		// }
-		desktopLayout.showAppointmentButton();
+		for (Attribut attribut : resourceDetails) {
+			if ("Belegung".equals(attribut.getLabel())) {
+				desktopLayout.showAppointmentButton();
+			}
+		}
 
 		// Showing
 		desktopLayout.addDetails(resource, resourceDetails);

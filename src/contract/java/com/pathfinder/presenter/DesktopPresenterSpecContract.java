@@ -126,7 +126,7 @@ public class DesktopPresenterSpecContract implements DesktopPresenterSpec {
 	}
 
 	@Override
-	public void switchToDetailView(ResourceModel resource) {
+	public void switchToDetailView() {
 		// TODO Auto-generated method stub
 
 	}
@@ -151,6 +151,6 @@ public class DesktopPresenterSpecContract implements DesktopPresenterSpec {
 	@Override
 	public void changeWheelChairView() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
