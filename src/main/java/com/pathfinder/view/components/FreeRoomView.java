@@ -18,8 +18,7 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 	private final TranslatorSpec translator = Translator.getInstance();
 
 	// TODO Can we use the table / CustomComponent caption?
-	private final Label actualFreeRoomsLabel = new Label(
-			translator.translate(TranslationKeys.CURRENTLY_FREE_ROOMS));
+	private final Label actualFreeRoomsLabel = new Label();
 
 	private final CssLayout cssLayout = new CssLayout();
 	private final BeanItemContainer<FreeRoomModel> freeRoomContainer = new BeanItemContainer<FreeRoomModel>(
@@ -87,6 +86,9 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 
 	private void buildLayout() {
 		cssLayout.addComponent(actualFreeRoomsLabel);
+		freeRoomTable.setPrimaryStyleName("freeroom");
+		actualFreeRoomsLabel.setCaption(translator
+				.translate(TranslationKeys.CURRENTLY_FREE_ROOMS));
 		cssLayout.addComponent(freeRoomTable);
 		cssLayout.setPrimaryStyleName("freeroom-border");
 	}
