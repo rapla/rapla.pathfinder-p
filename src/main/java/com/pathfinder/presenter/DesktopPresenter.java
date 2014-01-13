@@ -300,6 +300,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		desktopLayout.replaceWheelChairButtonWithHomeButton();
 
 		for (Attribut attribut : resourceDetails) {
+			// TODO Only works if language is German
 			if ("Belegung".equals(attribut.getLabel())) {
 				desktopLayout.showAppointmentButton();
 			}
