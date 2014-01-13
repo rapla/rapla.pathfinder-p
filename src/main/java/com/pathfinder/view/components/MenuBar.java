@@ -54,6 +54,12 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 		buildWheelChairDriver();
 		buildMainLayout();
 		setCompositionRoot(layout);
+		this.setPrimaryStyleName("menu-bar");
+		appointmentButton.setPrimaryStyleName("menubutton");
+		homeButton.setPrimaryStyleName("menubutton");
+		homeButton.setStyleName("right-button");
+		layout.setPrimaryStyleName("menulayout");
+		
 	}
 
 	private void loadFlagResources() {

@@ -86,6 +86,7 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 
 	private void buildLayout() {
 		cssLayout.addComponent(actualFreeRoomsLabel);
+		freeRoomTable.setPrimaryStyleName("freeroom");
 		actualFreeRoomsLabel.setCaption(translator
 				.translate(TranslationKeys.CURRENTLY_FREE_ROOMS));
 		cssLayout.addComponent(freeRoomTable);

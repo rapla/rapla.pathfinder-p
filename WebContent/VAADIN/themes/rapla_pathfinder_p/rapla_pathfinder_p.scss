@@ -14,8 +14,9 @@
 		padding: 0;
 	}
 	
+	
 	.main {
-		background: #ccc;
+		background: #E0E0E0;
 		width: 98% !important;
 		height: 100%;
 		padding-left: 1%;
@@ -169,7 +170,6 @@
 	}
 	
 	.result-table-table{
-		-webkit-touch-callout: none;
 		-webkit-user-select: none;
 		-khtml-user-select: none;
 		-moz-user-select: none;
@@ -193,27 +193,47 @@
 				}
 		}
 	}
+	
+	.accordion-result-item-content{
+		height: auto !important;
+	}
     
     /* FreeRooms Styling */
-    .freeroom-table{
-		width: 100%;
-		display: block;
-		overflow: hidden;
-
-		.freeroom-table-row {
-				height: 40px;
-				background-color: #767676;
-				margin-top: 2px;
-				width: 98%;
-				display: block;
-				
-				.freeroom-table-wrapper {
-					color: #cccccc; 
-					font: 20px Arial;
-					padding-left:35px;
-				}
-		}
-	}
+    
+    .freeroom{
+    	min-height:100%;
+    }
+    
+    .freeroom-header {
+    	background-color: #393939;
+    	color: #FFF;
+    	font: 1.5em Arial;
+    	
+    	.freeroom-caption-container{
+    			padding-left: 0.5em;
+    	}
+    }
+    
+    .freeroom-body-noselection{
+    	overflow:hidden;
+    }
+    
+    .freeroom-body{
+    	height: auto !important;
+    }
+    
+    .freeroom-row, .freeroom-row-odd{
+    		background-color: #767676;
+    		color: #FFF;
+    		font: 1.4em Arial;
+    		padding: 1em;
+    		display: block;
+    		
+    		.v-label{
+    			padding-left: 0.5em;
+    			font-size: 17px;
+    		}
+    }
 	
 	.freeroom-border {
 		border-color: red;
@@ -241,7 +261,7 @@
 	/* Picture Styling */
 	
 	.wheelChairButtonMan {
-	
+		margin-left: 193%;
 	}
 	
 	/* Datetime Styling */
@@ -250,6 +270,9 @@
 		font-size: 30px;
 		color: red;
 		width: 100%;
+		position: relative;
+		top: 0%;
+		margin-top: 1%;
 	}
 	
 	.dateLabel{
@@ -271,4 +294,50 @@
 		width: 7.5em;
 		margin: 0.2em;
 	}
+	
+	/* MenuBar Styling */
+	
+	.menu-bar{
+		position: absolute;
+		top: 0;
+		left: 0;
+		margin-top: 99%;
+		
+		.menulayout {
+			width:100%;
+		
+			.v-slot {
+				width: 33%;
+				height: 5em;
+				
+				.menubutton{
+					height: 5em;
+					width: 50%;
+					background-color: #767676;
+					
+					.menubutton-wrap{
+						font: 1.8em Arial;
+						color: #FFF;
+						display: block;
+						padding-top: 6%;
+						padding-left: 26%
+					}
+					
+				}
+				
+				.right-button{
+					float: right;
+					
+					.menubutton-wrap{
+						font: 1.8em Arial;
+						color: #FFF;
+						display: block;
+						padding-top: 6%;
+						padding-left: 39%
+					}
+				}
+			}
+		}
+	}
+	
 }
