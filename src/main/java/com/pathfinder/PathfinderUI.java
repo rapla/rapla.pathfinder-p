@@ -1,5 +1,6 @@
 package com.pathfinder;
 
+import java.util.Iterator;
 import java.util.Locale;
 
 import org.apache.logging.log4j.LogManager;
@@ -16,6 +17,8 @@ import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServletRequest;
 import com.vaadin.server.WebBrowser;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.HasComponents;
 import com.vaadin.ui.UI;
 
 /**
@@ -95,7 +98,8 @@ public class PathfinderUI extends UI {
 		desktopPresenter = new DesktopPresenter();
 		setPrimaryStyleName("main");
 		setContent(desktopPresenter.getDesktopLayoutView());
-		addClickListener(desktopPresenter.getUiClickListener());
+		addListenerToAllChildComponents((HasComponents) getContent(),
+				desktopPresenter.getUiListener());
 
 		// TODO
 		// LOGGER.trace("Desktop application initialized");
@@ -111,5 +115,25 @@ public class PathfinderUI extends UI {
 		// addClickListener(desktopPresenter.getUiClickListener());
 		// LOGGER.trace("Desktop application initialized");
 		// }
+	}
+
+	/**
+	 * Add listener to all UI components recursively to get notified when user
+	 * interacts
+	 * 
+	 * @param rootComponent
+	 * @param listener
+	 */
+	private void addListenerToAllChildComponents(HasComponents rootComponent,
+			Listener listener) {
+		Iterator<Component> iterator = rootComponent.iterator();
+		while (iterator.hasNext()) {
+			Component childComponent = iterator.next();
+			if (childComponent instanceof HasComponents) {
+				addListenerToAllChildComponents((HasComponents) childComponent,
+						listener);
+			}
+			childComponent.addListener(listener);
+		}
 	}
 }

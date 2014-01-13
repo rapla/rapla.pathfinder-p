@@ -31,6 +31,8 @@ import com.vaadin.server.Page;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Component.Event;
+import com.vaadin.ui.Component.Listener;
 import com.vaadin.ui.UI;
 
 /**
@@ -58,6 +60,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	private List<Attribut> resourceDetails = null;
 
 	private long lastUserInteractionTimestamp;
+	private boolean wentBackToHomeScreen = true;
 
 	public DesktopPresenter() {
 		// Register as DataListener to get notified if data changes
@@ -224,12 +227,16 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	}
 
 	@Override
-	public com.vaadin.event.MouseEvents.ClickListener getUiClickListener() {
-		return new com.vaadin.event.MouseEvents.ClickListener() {
+	public Listener getUiListener() {
+		return new Listener() {
 
 			@Override
-			public void click(com.vaadin.event.MouseEvents.ClickEvent event) {
-				lastUserInteractionTimestamp = new Date().getTime();
+			public void componentEvent(Event event) {
+				if (event instanceof ClickEvent
+						|| event instanceof com.vaadin.event.MouseEvents.ClickEvent) {
+					lastUserInteractionTimestamp = new Date().getTime();
+					wentBackToHomeScreen = false;
+				}
 			}
 		};
 	}
@@ -443,12 +450,15 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	private boolean isTimeToGoHome() {
 		boolean result = false;
 
-		long millisecondsSinceLastRequest = new Date().getTime()
-				- lastUserInteractionTimestamp;
+		if (!wentBackToHomeScreen) {
+			long millisecondsSinceLastRequest = new Date().getTime()
+					- lastUserInteractionTimestamp;
 
-		if (millisecondsSinceLastRequest >= goBackHomeIntervall) {
-			lastUserInteractionTimestamp = new Date().getTime();
-			result = true;
+			if (millisecondsSinceLastRequest >= goBackHomeIntervall) {
+				lastUserInteractionTimestamp = new Date().getTime();
+				result = true;
+				wentBackToHomeScreen = true;
+			}
 		}
 
 		return result;
