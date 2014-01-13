@@ -14,8 +14,9 @@ import com.pathfinder.PathfinderUI;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
-import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.ui.AbstractOrderedLayout;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -76,15 +77,14 @@ public class SearchFieldTest {
 	@Test
 	public void addSearchFieldListenerTest() {
 
-		TextChangeListener listener = new TextChangeListener() {
-
+		ValueChangeListener listener = new ValueChangeListener() {
 			@Override
-			public void textChange(TextChangeEvent event) {
-				// dummy event
+			public void valueChange(ValueChangeEvent event) {
+				// TODO Auto-generated method stub
 			}
 		};
 
-		searchFieldSpec.addSearchFieldTextChangeListener(listener);
+		searchFieldSpec.addSearchFieldValueChangeListener(listener);
 
 		searchField.getListeners(TextChangeEvent.class);
 

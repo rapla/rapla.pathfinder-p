@@ -3,7 +3,7 @@ package com.pathfinder.view.components;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
-import com.vaadin.event.FieldEvents.TextChangeListener;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
@@ -53,8 +53,8 @@ public class SearchField extends CustomComponent implements SearchFieldSpec {
 	}
 
 	@Override
-	public void addSearchFieldTextChangeListener(TextChangeListener listener) {
-		searchField.addTextChangeListener(listener);
+	public void addSearchFieldValueChangeListener(ValueChangeListener listener) {
+		searchField.addValueChangeListener(listener);
 	}
 
 	@Override

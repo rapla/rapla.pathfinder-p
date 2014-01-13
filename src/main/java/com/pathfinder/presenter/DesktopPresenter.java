@@ -23,11 +23,11 @@ import com.pathfinder.view.layout.DesktopLayout;
 import com.pathfinder.view.layout.DesktopLayoutSpec;
 import com.pathfinder.view.listener.DesktopLayoutViewListenerSpec;
 import com.pathfinder.view.listener.KeyboardViewListenerSpec;
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.ItemClickEvent;
-import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinSession;
@@ -90,7 +90,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 				KeyboardModel.PROPERTY_SEARCHSTRING);
 		this.desktopLayout.addItemClickListener(new TableDetailClickListener());
 		this.desktopLayout
-				.addSearchFieldTextChangeListener(new SearchFieldTextChangeListener());
+				.addSearchFieldValueChangeListener(new SearchFieldValueChangeListener());
 		this.desktopLayout
 				.addDeleteAllClickListener(new DeleteAllClickListener());
 		desktopLayout.addClickListenerHomeButton(new HomeButtonClickListener());
@@ -147,9 +147,11 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		}
 	}
 
-	class SearchFieldTextChangeListener implements TextChangeListener {
+	class SearchFieldValueChangeListener implements ValueChangeListener {
 		@Override
-		public void textChange(TextChangeEvent event) {
+		public void valueChange(ValueChangeEvent event) {
+			LOGGER.trace("SearchString: " + getSearchString());
+
 			desktopLayout.useFiltersForAllTables(getSearchString());
 			desktopLayout.focusSearchField();
 		}
