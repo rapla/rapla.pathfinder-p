@@ -54,13 +54,14 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	private final DetailContainerSpec detailContainer = new DetailContainer();
 	private final AppointmentViewSpec appointmentView = new AppointmentView();
 
-	private final VerticalLayout layout = new VerticalLayout();
+	private final VerticalLayout mainLayout = new VerticalLayout();
+	private final VerticalLayout contentLayout = new VerticalLayout();
 	private final VerticalLayout layoutNormal = new VerticalLayout();
 	private final HorizontalLayout layoutWheelChair = new HorizontalLayout();
 
 	public DesktopLayout() {
 		this.buildLayout();
-		this.setCompositionRoot(layout);
+		this.setCompositionRoot(mainLayout);
 	}
 
 	private void buildLayout() {
@@ -68,12 +69,18 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 		this.layoutNormal.addComponent(searchPanel);
 		this.layoutNormal.addComponent(keyboard);
 
-		this.layout.addComponent(dateTime);
-		this.layout.addComponent(freeRoom);
-		this.layout.addComponent(layoutNormal);
-		this.layout.addComponent(detailContainer);
-		this.layout.addComponent(appointmentView);
-		this.layout.addComponent(menuBar);
+		this.contentLayout.addComponent(freeRoom);
+		this.contentLayout.addComponent(layoutNormal);
+		this.contentLayout.addComponent(detailContainer);
+		this.contentLayout.addComponent(appointmentView);
+		this.contentLayout.setSizeFull();
+		// this.contentLayout.setHeight(900, Unit.PIXELS);
+
+		this.mainLayout.addComponent(dateTime);
+		this.mainLayout.addComponent(contentLayout);
+		this.mainLayout.addComponent(menuBar);
+
+		this.mainLayout.setExpandRatio(contentLayout, 1);
 	}
 
 	@Override
@@ -264,17 +271,17 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 		// CssLayout instead of HorizontalLayout?
 		// CssLayout instead of both layouts and only change the width of
 		// SearchPanel and Keyboard
-		if (layout.getComponentIndex(layoutNormal) >= 0) {
+		if (contentLayout.getComponentIndex(layoutNormal) >= 0) {
 			layoutWheelChair.addComponent(keyboard);
 			layoutWheelChair.addComponent(searchPanel);
 			layoutWheelChair.setSizeFull();
-			this.layout.replaceComponent(layoutNormal, layoutWheelChair);
+			this.contentLayout.replaceComponent(layoutNormal, layoutWheelChair);
 			this.layoutNormal.removeAllComponents();
 		} else {
 			layoutNormal.addComponent(searchPanel);
 			layoutNormal.addComponent(keyboard);
 			layoutNormal.setSizeFull();
-			this.layout.replaceComponent(layoutWheelChair, layoutNormal);
+			this.contentLayout.replaceComponent(layoutWheelChair, layoutNormal);
 			layoutWheelChair.removeAllComponents();
 		}
 	}

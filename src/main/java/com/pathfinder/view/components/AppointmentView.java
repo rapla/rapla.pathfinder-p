@@ -71,7 +71,8 @@ public class AppointmentView extends CustomComponent implements
 
 	@Override
 	public void showAppointmentView() {
-		browserFrame.setHeight(90f, Unit.PERCENTAGE);
+		// TODO Should be fixed for responsive view
+		browserFrame.setHeight(1000f, Unit.PIXELS);
 		this.setVisible(true);
 	}
 

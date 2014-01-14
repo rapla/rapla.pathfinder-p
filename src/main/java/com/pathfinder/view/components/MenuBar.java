@@ -11,6 +11,7 @@ import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
 import com.vaadin.server.Resource;
 import com.vaadin.server.ThemeResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomComponent;
@@ -53,14 +54,8 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 		buildLanguagePopup();
 		buildWheelChairDriver();
 		buildMainLayout();
+		// TODO addStyling();
 		setCompositionRoot(layout);
-		this.setPrimaryStyleName("menu-bar");
-		layout.setPrimaryStyleName("menulayout");
-		appointmentButton.setPrimaryStyleName("menubutton");
-		// TODO
-		backButton.setPrimaryStyleName("backbutton");
-		homeButton.setPrimaryStyleName("menubutton");
-		homeButton.setStyleName("right-button");
 	}
 
 	private void loadFlagResources() {
@@ -100,11 +95,24 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 		wheelChairDriverButton.setPrimaryStyleName("wheelChairButtonMan");
 	}
 
+	private void addStyling() {
+		this.setPrimaryStyleName("menu-bar");
+		layout.setPrimaryStyleName("menulayout");
+		appointmentButton.setPrimaryStyleName("menubutton");
+		// TODO backButton.setPrimaryStyleName("backbutton");
+		homeButton.setPrimaryStyleName("menubutton");
+		homeButton.setStyleName("right-button");
+	}
+
 	private void buildMainLayout() {
 		this.hideAppointmentButton();
 		layout.addComponent(languagePopupButton, 0, 0);
 		layout.addComponent(appointmentButton, 1, 0);
 		layout.addComponent(wheelChairDriverButton, 2, 0);
+		layout.setComponentAlignment(languagePopupButton, Alignment.TOP_LEFT);
+		layout.setComponentAlignment(appointmentButton, Alignment.TOP_CENTER);
+		layout.setComponentAlignment(wheelChairDriverButton,
+				Alignment.TOP_RIGHT);
 		layout.setSizeFull();
 	}
 
@@ -183,6 +191,7 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	public void replaceAppointmentButtonWithBackButton() {
 		if (appointmentButton.equals(layout.getComponent(1, 0))) {
 			layout.replaceComponent(appointmentButton, backButton);
+			layout.setComponentAlignment(backButton, Alignment.TOP_CENTER);
 		}
 	}
 
@@ -190,6 +199,8 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	public void replaceBackButtonWithAppointmentButton() {
 		if (backButton.equals(layout.getComponent(1, 0))) {
 			layout.replaceComponent(backButton, appointmentButton);
+			layout.setComponentAlignment(appointmentButton,
+					Alignment.TOP_CENTER);
 		}
 	}
 
@@ -197,6 +208,7 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	public void replaceWheelChairButtonWithHomeButton() {
 		if (wheelChairDriverButton.equals(layout.getComponent(2, 0))) {
 			layout.replaceComponent(wheelChairDriverButton, homeButton);
+			layout.setComponentAlignment(homeButton, Alignment.TOP_RIGHT);
 		}
 	}
 
@@ -204,6 +216,8 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	public void replaceHomeButtonWithWheelChairButton() {
 		if (homeButton.equals(layout.getComponent(2, 0))) {
 			layout.replaceComponent(homeButton, wheelChairDriverButton);
+			layout.setComponentAlignment(wheelChairDriverButton,
+					Alignment.TOP_RIGHT);
 		}
 	}
 
