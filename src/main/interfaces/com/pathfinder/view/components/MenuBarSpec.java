@@ -30,15 +30,19 @@ public interface MenuBarSpec extends ComponentSpec {
 
 	void hideAppointmentButton();
 
-	void hideOpenLanguagePopup();
+	void showBackButton();
+
+	void hideBackButton();
+
+	void showWheelChairButton();
+
+	void hideWheelChairButton();
 
 	void showHomeButton();
 
 	void hideHomeButton();
 
-	void showWheelChairButton();
-
-	void hideWheelChairButton();
+	void hideOpenLanguagePopup();
 
 	void replaceAppointmentButtonWithBackButton();
 

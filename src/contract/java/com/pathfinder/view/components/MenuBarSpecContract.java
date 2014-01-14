@@ -91,4 +91,16 @@ public class MenuBarSpecContract extends ComponentSpecContract implements
 	public void hideOpenLanguagePopup() {
 	}
 
+	@Override
+	public void showBackButton() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void hideBackButton() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -14,7 +14,7 @@ import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -28,15 +28,15 @@ import com.vaadin.ui.VerticalLayout;
 public class MenuBar extends CustomComponent implements MenuBarSpec {
 	private final TranslatorSpec translator = Translator.getInstance();
 
-	private final HorizontalLayout layout = new HorizontalLayout();
+	private final GridLayout layout = new GridLayout(3, 1);
 	private final VerticalLayout popupLayout = new VerticalLayout();
 	private final PopupButton languagePopupButton = new PopupButton();
-	private final Button homeButton = new Button("Home");
 	private final Button appointmentButton = new Button(
 			translator.translate(TranslationKeys.EVENT));
 	private final Button backButton = new Button(
 			translator.translate(TranslationKeys.BACK));
 	private final Button wheelChairDriverButton = new Button();
+	private final Button homeButton = new Button("Home");
 
 	// Saves all flag image resources to avoid unnecessary reloading of
 	// resources
@@ -55,11 +55,12 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 		buildMainLayout();
 		setCompositionRoot(layout);
 		this.setPrimaryStyleName("menu-bar");
+		layout.setPrimaryStyleName("menulayout");
 		appointmentButton.setPrimaryStyleName("menubutton");
+		// TODO
+		backButton.setPrimaryStyleName("backbutton");
 		homeButton.setPrimaryStyleName("menubutton");
 		homeButton.setStyleName("right-button");
-		layout.setPrimaryStyleName("menulayout");
-
 	}
 
 	private void loadFlagResources() {
@@ -100,11 +101,11 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	}
 
 	private void buildMainLayout() {
-		// TODO Remove after stele test
-		// this.hideAppointmentButton();
-		layout.addComponent(languagePopupButton);
-		layout.addComponent(appointmentButton);
-		layout.addComponent(wheelChairDriverButton);
+		this.hideAppointmentButton();
+		layout.addComponent(languagePopupButton, 0, 0);
+		layout.addComponent(appointmentButton, 1, 0);
+		layout.addComponent(wheelChairDriverButton, 2, 0);
+		layout.setSizeFull();
 	}
 
 	@Override
@@ -139,16 +140,6 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	}
 
 	@Override
-	public void showHomeButton() {
-		this.homeButton.setVisible(true);
-	}
-
-	@Override
-	public void hideHomeButton() {
-		this.homeButton.setVisible(false);
-	}
-
-	@Override
 	public void showAppointmentButton() {
 		this.appointmentButton.setVisible(true);
 	}
@@ -156,6 +147,16 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	@Override
 	public void hideAppointmentButton() {
 		this.appointmentButton.setVisible(false);
+	}
+
+	@Override
+	public void showBackButton() {
+		this.backButton.setVisible(true);
+	}
+
+	@Override
+	public void hideBackButton() {
+		this.backButton.setVisible(false);
 	}
 
 	@Override
@@ -169,23 +170,41 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	}
 
 	@Override
+	public void showHomeButton() {
+		this.homeButton.setVisible(true);
+	}
+
+	@Override
+	public void hideHomeButton() {
+		this.homeButton.setVisible(false);
+	}
+
+	@Override
 	public void replaceAppointmentButtonWithBackButton() {
-		layout.replaceComponent(appointmentButton, backButton);
+		if (appointmentButton.equals(layout.getComponent(1, 0))) {
+			layout.replaceComponent(appointmentButton, backButton);
+		}
 	}
 
 	@Override
 	public void replaceBackButtonWithAppointmentButton() {
-		layout.replaceComponent(backButton, appointmentButton);
+		if (backButton.equals(layout.getComponent(1, 0))) {
+			layout.replaceComponent(backButton, appointmentButton);
+		}
 	}
 
 	@Override
 	public void replaceWheelChairButtonWithHomeButton() {
-		layout.replaceComponent(wheelChairDriverButton, homeButton);
+		if (wheelChairDriverButton.equals(layout.getComponent(2, 0))) {
+			layout.replaceComponent(wheelChairDriverButton, homeButton);
+		}
 	}
 
 	@Override
 	public void replaceHomeButtonWithWheelChairButton() {
-		layout.replaceComponent(homeButton, wheelChairDriverButton);
+		if (homeButton.equals(layout.getComponent(2, 0))) {
+			layout.replaceComponent(homeButton, wheelChairDriverButton);
+		}
 	}
 
 	@Override

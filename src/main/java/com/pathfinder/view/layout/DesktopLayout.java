@@ -228,6 +228,16 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	}
 
 	@Override
+	public void showBackButton() {
+		menuBar.showBackButton();
+	}
+
+	@Override
+	public void hideBackButton() {
+		menuBar.hideBackButton();
+	}
+
+	@Override
 	public void showHomeButton() {
 		menuBar.showHomeButton();
 	}
