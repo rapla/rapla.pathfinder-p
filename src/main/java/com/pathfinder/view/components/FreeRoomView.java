@@ -14,12 +14,17 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.Table.ColumnHeaderMode;
 
+/**
+ * Layout for the FreeRoomView
+ * 
+ * @author alexh
+ * 
+ */
 public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 	private final TranslatorSpec translator = Translator.getInstance();
 
 	// TODO Can we use the table / CustomComponent caption?
 	private final Label actualFreeRoomsLabel = new Label();
-
 	private final CssLayout cssLayout = new CssLayout();
 	private final BeanItemContainer<FreeRoomModel> freeRoomContainer = new BeanItemContainer<FreeRoomModel>(
 			FreeRoomModel.class);
@@ -29,13 +34,13 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 			translator.translate(TranslationKeys.ROOM),
 			translator.translate(TranslationKeys.FREE_TILL) };
 	private final Table freeRoomTable = new Table();
-
 	private final Label noRoomsLabel = new Label(
 			translator.translate(TranslationKeys.NO_FREE_ROOMS_AVAILABLE));
 
 	public FreeRoomView() {
 		this.createTable();
 		this.buildLayout();
+		this.addStyling();
 		this.setCompositionRoot(cssLayout);
 	}
 
@@ -60,8 +65,6 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 		this.freeRoomTable.setSortAscending(true);
 		this.freeRoomTable.setSortEnabled(false);
 		this.freeRoomTable.setWidth(100, Unit.PERCENTAGE);
-		// TODO
-		// this.freeRoomTable.setPrimaryStyleName("freeroom-table");
 	}
 
 	class LabelColumnGenerator implements ColumnGenerator {
@@ -85,11 +88,14 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 	}
 
 	private void buildLayout() {
-		cssLayout.addComponent(actualFreeRoomsLabel);
-		freeRoomTable.setPrimaryStyleName("freeroom");
 		actualFreeRoomsLabel.setCaption(translator
 				.translate(TranslationKeys.CURRENTLY_FREE_ROOMS));
+		cssLayout.addComponent(actualFreeRoomsLabel);
 		cssLayout.addComponent(freeRoomTable);
+	}
+
+	private void addStyling() {
+		freeRoomTable.setPrimaryStyleName("freeroom");
 		cssLayout.setPrimaryStyleName("freeroom-border");
 	}
 
