@@ -1,7 +1,6 @@
 package com.pathfinder.presenter;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -99,10 +98,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 				.addDeleteAllClickListener(new DeleteAllClickListener());
 		desktopLayout.addClickListenerHomeButton(new HomeButtonClickListener());
 		desktopLayout
-				.addClickListenerAppointmentButton(new AppointmentButtonClickListener());
-		desktopLayout
 				.addClickListenerWheelChairButton(new WheelChairButtonClickListener());
-		desktopLayout.addClickListenerBackButton(new BackButtonClickListener());
 
 		for (Locale locale : Translator.getInstance().getSupportedLocales()) {
 			desktopLayout.addClickListenerFlagPopup(locale,
@@ -188,35 +184,10 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		}
 	}
 
-	class AppointmentButtonClickListener implements ClickListener {
-		@Override
-		public void buttonClick(ClickEvent event) {
-			for (Attribut attribut : resourceDetails.getItemIds()) {
-				if ("Belegung".equals(attribut.getLabel())) {
-					desktopLayout.setAppointmentUrl(attribut.getValue());
-				}
-			}
-
-			// TODO Could be used for testing if no appointment is set in Rapla
-			// desktopLayout.setAppointmentUrl(properties
-			// .getProperty(PropertiesKey.APPOINTMENT_BASE_URL +
-			// "&allocatable_id=1011"));
-
-			switchToAppointmentView();
-		}
-	}
-
 	class WheelChairButtonClickListener implements ClickListener {
 		@Override
 		public void buttonClick(ClickEvent event) {
 			changeWheelChairView();
-		}
-	}
-
-	class BackButtonClickListener implements ClickListener {
-		@Override
-		public void buttonClick(ClickEvent event) {
-			switchToDetailView();
 		}
 	}
 
@@ -332,8 +303,6 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 
 		// Adapting MenuBar
 		desktopLayout.replaceHomeButtonWithWheelChairButton();
-		desktopLayout.replaceBackButtonWithAppointmentButton();
-		desktopLayout.hideAppointmentButton();
 
 		// Showing
 		desktopLayout.showFreeRoomView();
@@ -351,33 +320,15 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 
 		// Adapting MenuBar
 		desktopLayout.replaceWheelChairButtonWithHomeButton();
-		desktopLayout.replaceBackButtonWithAppointmentButton();
-		for (Attribut attribut : resourceDetails.getItemIds()) {
-			LOGGER.trace("Detail attribut: " + attribut.getKey());
-			if ("resourcueurl".equals(attribut.getKey())) {
-				desktopLayout.showAppointmentButton();
-			}
-		}
 
 		// Showing
+		// for (Attribut attribut : resourceDetails.getItemIds()) {
+		// if ("resourcueurl".equals(attribut.getKey())) {
+		//
+		// }
+		// }
 		desktopLayout.addDetails(resource, resourceDetails, resourceEvents);
 		desktopLayout.showDetailContainer();
-	}
-
-	@Override
-	public void switchToAppointmentView() {
-		// Hiding
-		desktopLayout.hideFreeRoomView();
-		desktopLayout.hideSearchPanel();
-		desktopLayout.hideKeyboard();
-		desktopLayout.hideDetailContainer();
-		desktopLayout.removeDetails();
-
-		// Adapting MenuBar
-		desktopLayout.replaceAppointmentButtonWithBackButton();
-
-		// Showing
-		desktopLayout.showAppointmentView();
 	}
 
 	@Override

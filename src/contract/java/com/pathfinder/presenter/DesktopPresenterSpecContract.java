@@ -132,17 +132,6 @@ public class DesktopPresenterSpecContract implements DesktopPresenterSpec {
 	}
 
 	@Override
-	public void switchToAppointmentView() {
-		// TODO Auto-generated method stub
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.pathfinder.presenter.DesktopPresenterSpec#getUiClickListener()
-	 */
-	@Override
 	public Listener getUiListener() {
 		// TODO Auto-generated method stub
 		return null;

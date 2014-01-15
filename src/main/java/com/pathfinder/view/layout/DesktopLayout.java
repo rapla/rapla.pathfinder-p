@@ -101,18 +101,8 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	}
 
 	@Override
-	public void addClickListenerAppointmentButton(ClickListener listener) {
-		menuBar.addClickListenerAppointmentButton(listener);
-	}
-
-	@Override
 	public void addClickListenerWheelChairButton(ClickListener listener) {
 		menuBar.addClickListenerWheelChairButton(listener);
-	}
-
-	@Override
-	public void addClickListenerBackButton(ClickListener listener) {
-		menuBar.addClickListenerBackButton(listener);
 	}
 
 	@Override
@@ -176,16 +166,6 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	}
 
 	@Override
-	public void hideAppointmentButton() {
-		menuBar.hideAppointmentButton();
-	}
-
-	@Override
-	public void showAppointmentButton() {
-		menuBar.showAppointmentButton();
-	}
-
-	@Override
 	public void refreshFreeRooms(
 			BeanItemContainer<FreeRoomModel> freeRoomContainer) {
 		freeRoom.refreshFreeRooms(freeRoomContainer);
@@ -242,16 +222,6 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	}
 
 	@Override
-	public void showBackButton() {
-		menuBar.showBackButton();
-	}
-
-	@Override
-	public void hideBackButton() {
-		menuBar.hideBackButton();
-	}
-
-	@Override
 	public void showHomeButton() {
 		menuBar.showHomeButton();
 	}
@@ -291,16 +261,6 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 			this.contentLayout.replaceComponent(layoutWheelChair, layoutNormal);
 			layoutWheelChair.removeAllComponents();
 		}
-	}
-
-	@Override
-	public void replaceAppointmentButtonWithBackButton() {
-		menuBar.replaceAppointmentButtonWithBackButton();
-	}
-
-	@Override
-	public void replaceBackButtonWithAppointmentButton() {
-		menuBar.replaceBackButtonWithAppointmentButton();
 	}
 
 	@Override

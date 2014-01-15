@@ -17,22 +17,10 @@ public interface MenuBarSpec extends ComponentSpec {
 
 	void addClickListenerHomeButton(ClickListener listener);
 
-	void addClickListenerAppointmentButton(ClickListener listener);
-
 	void addClickListenerWheelChairButton(ClickListener listener);
-
-	void addClickListenerBackButton(ClickListener listener);
 
 	void addClickListenerFlagPopup(Locale locale,
 			com.vaadin.event.MouseEvents.ClickListener listener);
-
-	void showAppointmentButton();
-
-	void hideAppointmentButton();
-
-	void showBackButton();
-
-	void hideBackButton();
 
 	void showWheelChairButton();
 
@@ -43,10 +31,6 @@ public interface MenuBarSpec extends ComponentSpec {
 	void hideHomeButton();
 
 	void hideOpenLanguagePopup();
-
-	void replaceAppointmentButtonWithBackButton();
-
-	void replaceBackButtonWithAppointmentButton();
 
 	void replaceWheelChairButtonWithHomeButton();
 

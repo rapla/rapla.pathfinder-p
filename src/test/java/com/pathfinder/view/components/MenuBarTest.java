@@ -59,8 +59,6 @@ public class MenuBarTest {
 			}
 		};
 
-		menuBar.addClickListenerAppointmentButton(listener);
-
 		// Check if above defined listener is the same as Button's listener
 		Assert.assertEquals(listener,
 				appointmentButton.getListeners(ClickEvent.class).iterator()
@@ -69,17 +67,6 @@ public class MenuBarTest {
 		appointmentButton.click();
 
 		Assert.assertTrue(buttonclicked);
-	}
-
-	@Test
-	public void showHideAppointmentButtonTest() {
-		Assert.assertTrue(appointmentButton.isVisible());
-
-		menuBar.hideAppointmentButton();
-		Assert.assertFalse(appointmentButton.isVisible());
-
-		menuBar.showAppointmentButton();
-		Assert.assertTrue(appointmentButton.isVisible());
 	}
 
 	@Test

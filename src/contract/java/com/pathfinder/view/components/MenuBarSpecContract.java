@@ -3,8 +3,6 @@
  */
 package com.pathfinder.view.components;
 
-import static de.vksi.c4j.Condition.preCondition;
-
 import java.util.Locale;
 
 import com.vaadin.ui.Button.ClickListener;
@@ -23,35 +21,8 @@ public class MenuBarSpecContract extends ComponentSpecContract implements
 	int listenerCountBefore = -5;
 
 	@Override
-	public void addClickListenerAppointmentButton(ClickListener listener) {
-		if (preCondition()) {
-			assert listener != null : "Listener not null";
-		}
-	}
-
-	@Override
-	public void showAppointmentButton() {
-	}
-
-	@Override
-	public void hideAppointmentButton() {
-	}
-
-	@Override
 	public void addClickListenerWheelChairButton(ClickListener listener) {
 
-	}
-
-	@Override
-	public void addClickListenerBackButton(ClickListener listener) {
-	}
-
-	@Override
-	public void replaceAppointmentButtonWithBackButton() {
-	}
-
-	@Override
-	public void replaceBackButtonWithAppointmentButton() {
 	}
 
 	@Override
@@ -90,17 +61,4 @@ public class MenuBarSpecContract extends ComponentSpecContract implements
 	@Override
 	public void hideOpenLanguagePopup() {
 	}
-
-	@Override
-	public void showBackButton() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void hideBackButton() {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

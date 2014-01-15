@@ -6,11 +6,8 @@ package com.pathfinder.view.layout;
 import java.util.Locale;
 
 import org.junit.Before;
-import org.junit.Test;
 
 import com.pathfinder.PathfinderUI;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.UI;
 
 /**
@@ -29,17 +26,4 @@ public class DesktopLayoutTest {
 
 		this.desktopLayout = new DesktopLayout();
 	}
-
-	@Test
-	public void addClickListenerAppointmentButtonTest() {
-		desktopLayout.addClickListenerAppointmentButton(new ClickListener() {
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-	}
-
 }
