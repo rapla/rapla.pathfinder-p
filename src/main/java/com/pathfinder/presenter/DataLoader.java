@@ -27,6 +27,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pathfinder.model.Attribut;
 import com.pathfinder.model.Category;
+import com.pathfinder.model.EventModel;
 import com.pathfinder.model.FreeRoomModel;
 import com.pathfinder.model.ResourceModel;
 import com.pathfinder.util.properties.ApplicationProperties;
@@ -55,6 +56,7 @@ public class DataLoader implements DataLoaderSpec {
 	private final String RESOURCE_DETAIL_METHOD = BASE_URL + "/getResource?";
 	private final String ORGANIGRAM_METHOD = BASE_URL + "/getOrganigram";
 	private final String FREE_RESOURCES_METHOD = BASE_URL + "/getFreeResources";
+	private final String EVENTS_RESOURCE_ROOM_METHOD = BASE_URL + "/getEvents?";
 
 	private final String REQUEST_PARAMETER_PERSONS = "persons";
 	private final String REQUEST_PARAMETER_ROOMS = "rooms";
@@ -67,6 +69,7 @@ public class DataLoader implements DataLoaderSpec {
 	private final String ERROR_MASSAGE_SERVER_NOT_AVAILABLE = "No connection to the server";
 	private final String ERROR_MASSAGE_JSON_HANDLING = "Can't handling JSON, maybe some problems with the data.xml";
 	private final String ERROR_MASSAGE_LOADING_RESOURCE_DETAIL = "Error loading resource detail - id: ";
+	private final String ERROR_MASSAGE_LOADING_RESOURCE_EVENT = "Error loading resource event - id: ";
 
 	private final BeanItemContainer<ResourceModel> roomContainer = new BeanItemContainer<ResourceModel>(
 			ResourceModel.class);
@@ -310,6 +313,17 @@ public class DataLoader implements DataLoaderSpec {
 		new Timer().schedule(getTimerTask(), loadInterval, loadInterval);
 	}
 
+	private List<JSONObject> getFreeResourcesResources(JSONObject jsonObject) {
+
+		this.jsonObject = jsonObject;
+
+		@SuppressWarnings("unchecked")
+		List<JSONObject> resources = (List<JSONObject>) this.jsonObject
+				.get("resources");
+
+		return resources;
+	}
+
 	private void notifyDataLoaderListener() {
 		LOGGER.trace("Notify all UIs that data changed");
 		for (DataLoaderListenerSpec listener : dataListener) {
@@ -454,17 +468,6 @@ public class DataLoader implements DataLoaderSpec {
 		}
 	}
 
-	private List<JSONObject> getFreeResourcesResources(JSONObject jsonObject) {
-
-		this.jsonObject = jsonObject;
-
-		@SuppressWarnings("unchecked")
-		List<JSONObject> resources = (List<JSONObject>) this.jsonObject
-				.get("resources");
-
-		return resources;
-	}
-
 	@Override
 	public List<Attribut> getResourceDetails(String resourceId, Locale locale) {
 		String url = RESOURCE_DETAIL_METHOD + "resourceId=" + resourceId;
@@ -495,7 +498,7 @@ public class DataLoader implements DataLoaderSpec {
 				attribut = new Attribut();
 
 				String nextKey = attributeMapKeys.next().toString();
-
+				attribut.setKey(nextKey.toLowerCase());
 				attribut.setLabel((String) ((JSONObject) attributMap
 						.get(nextKey)).get(Attribut.PROPERTY_LABEL));
 				attribut.setValue((String) ((JSONObject) attributMap
@@ -537,5 +540,47 @@ public class DataLoader implements DataLoaderSpec {
 			instance = new DataLoader();
 		}
 		return instance;
+	}
+
+	public BeanItemContainer<EventModel> getEvent(String resourceId) {
+		String url = EVENTS_RESOURCE_ROOM_METHOD + "resourceId=" + resourceId;
+		BeanItemContainer<EventModel> eventContainer = new BeanItemContainer<EventModel>(
+				EventModel.class);
+
+		try {
+			br = new BufferedReader(new InputStreamReader(
+					new URL(url).openStream()));
+
+			// Create a standard Jackson mapper object.
+			ObjectMapper mapper = new ObjectMapper();
+			JsonNode node;
+
+			node = mapper.readTree(br);
+			node = node.path("result");
+
+			List<EventModel> eventsList = mapper.readValue(node.traverse(),
+					new TypeReference<List<EventModel>>() {
+					});
+			eventContainer.addAll(eventsList);
+
+			if (eventContainer.equals(null))
+				return null;
+			else
+				return eventContainer;
+		} catch (ConnectException e) {
+			LOGGER.info(ERROR_MASSAGE_SERVER_NOT_AVAILABLE);
+			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE_EVENT + resourceId, e);
+			return null;
+		} catch (MalformedURLException e) {
+			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE_EVENT + resourceId, e);
+			return null;
+		} catch (JsonProcessingException e) {
+			LOGGER.error(ERROR_MASSAGE_JSON_HANDLING, e);
+			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE_EVENT + resourceId, e);
+			return null;
+		} catch (IOException e) {
+			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE_EVENT + resourceId, e);
+			return null;
+		}
 	}
 }
