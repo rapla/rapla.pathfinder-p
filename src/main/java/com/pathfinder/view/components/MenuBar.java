@@ -107,10 +107,10 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 		layout.addComponent(languagePopupButton, 0, 0);
 		layout.addComponent(appointmentButton, 1, 0);
 		layout.addComponent(wheelChairDriverButton, 2, 0);
-		layout.setComponentAlignment(languagePopupButton, Alignment.TOP_LEFT);
+		layout.setComponentAlignment(languagePopupButton, Alignment.TOP_CENTER);
 		layout.setComponentAlignment(appointmentButton, Alignment.TOP_CENTER);
 		layout.setComponentAlignment(wheelChairDriverButton,
-				Alignment.TOP_RIGHT);
+				Alignment.TOP_CENTER);
 		layout.setSizeFull();
 	}
 
@@ -209,7 +209,8 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 			layout.setComponentAlignment(homeButton, Alignment.TOP_RIGHT);
 		}
 		homeButton.setPrimaryStyleName("homebutton");
-		ThemeResource res = new ThemeResource(THEME_RESOURCES_FOLDER + "home.png");
+		ThemeResource res = new ThemeResource(THEME_RESOURCES_FOLDER
+				+ "home.png");
 		homeButton.setIcon(res);
 	}
 

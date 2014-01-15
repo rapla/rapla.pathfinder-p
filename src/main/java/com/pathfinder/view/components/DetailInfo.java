@@ -35,7 +35,7 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 	}
 
 	private void setStyling() {
-		this.setPrimaryStyleName("details");
+		// this.setPrimaryStyleName("details");
 	}
 
 	@Override
