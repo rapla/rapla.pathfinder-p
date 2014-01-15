@@ -10,6 +10,7 @@ import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
 import com.vaadin.data.Container.Filter;
+import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.filter.Or;
 import com.vaadin.data.util.filter.SimpleStringFilter;
@@ -47,6 +48,8 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 	private final Table personTable = new Table();
 	private final Table poiTable = new Table();
 	private final String[] visibleTableColumns = new String[] { ResourceModel.PROPERTY_NAME };
+	private final String[] visibleCourseColumns = new String[] {
+			ResourceModel.PROPERTY_NAME, ResourceModel.PROPERTY_FACULTY };
 
 	private final BeanItemContainer<ResourceModel> roomContainer = new BeanItemContainer<ResourceModel>(
 			ResourceModel.class);
@@ -59,7 +62,7 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 
 	public AccordionView() {
 		this.createTable(roomTable, roomContainer, visibleTableColumns);
-		this.createTable(courseTable, courseContainer, visibleTableColumns);
+		this.createTable(courseTable, courseContainer, visibleCourseColumns);
 		this.createTable(personTable, personContainer, visibleTableColumns);
 		this.createTable(poiTable, poiContainer, visibleTableColumns);
 
@@ -99,37 +102,57 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 
 	public void useFiltersForAllTables(String filterString) {
 		/* Filter lists */
-		List<Filter> roomFilters = new ArrayList<Filter>();
-		List<Filter> courseFilters = new ArrayList<Filter>();
-		List<Filter> personFilters = new ArrayList<Filter>();
-		List<Filter> poiFilters = new ArrayList<Filter>();
+		List<Filter> tableFilters = new ArrayList<Filter>();
+		// List<Filter> roomFilters = new ArrayList<Filter>();
+		// List<Filter> courseFilters = new ArrayList<Filter>();
+		// List<Filter> personFilters = new ArrayList<Filter>();
+		// List<Filter> poiFilters = new ArrayList<Filter>();
 
 		/* Create the filters */
-		roomFilters = this.createFilters(visibleTableColumns, filterString);
-		courseFilters = this.createFilters(visibleTableColumns, filterString);
-		personFilters = this.createFilters(visibleTableColumns, filterString);
-		poiFilters = this.createFilters(visibleTableColumns, filterString);
+		tableFilters = createFiltersForAllPropertyIds(filterString);
+		// roomFilters = this.createFilters(visibleTableColumns, filterString);
+		// courseFilters = this.createFilters(visibleTableColumns,
+		// filterString);
+		// personFilters = this.createFilters(visibleTableColumns,
+		// filterString);
+		// poiFilters = this.createFilters(visibleTableColumns, filterString);
 
 		/* Remove the old filters */
 		this.removeAllFiltersFromContainers();
 
 		/* Add the new filters */
-		this.addFiltersToTables(roomFilters, roomContainer, "room");
-		this.addFiltersToTables(courseFilters, courseContainer, "course");
-		this.addFiltersToTables(personFilters, personContainer, "person");
-		this.addFiltersToTables(poiFilters, poiContainer, "poi");
+		this.addFiltersToTables(tableFilters, roomContainer);
+		this.addFiltersToTables(tableFilters, courseContainer);
+		this.addFiltersToTables(tableFilters, personContainer);
+		this.addFiltersToTables(tableFilters, poiContainer);
 	}
 
-	private List<Filter> createFilters(String[] visibleTableColumns,
-			String filterString) {
+	private List<Filter> createFiltersForAllPropertyIds(String filterString) {
 		List<Filter> filters = new ArrayList<Filter>();
-		for (String visibleColumn : visibleTableColumns) {
-			Filter filter = new SimpleStringFilter(visibleColumn, filterString,
+
+		BeanItem<ResourceModel> beanItem = new BeanItem<ResourceModel>(
+				new ResourceModel());
+		for (Object propertyId : beanItem.getItemPropertyIds()) {
+			Filter filter = new SimpleStringFilter(propertyId, filterString,
 					true, false);
 			filters.add(filter);
 		}
+
 		return filters;
 	}
+
+	// private List<Filter> createFiltersForOnlyForVisibleColumns(
+	// String[] visibleTableColumns, String filterString) {
+	// List<Filter> filters = new ArrayList<Filter>();
+	//
+	// for (String visibleColumn : visibleTableColumns) {
+	// Filter filter = new SimpleStringFilter(visibleColumn, filterString,
+	// true, false);
+	// filters.add(filter);
+	// }
+	//
+	// return filters;
+	// }
 
 	private void removeAllFiltersFromContainers() {
 		roomContainer.removeAllContainerFilters();
@@ -139,7 +162,7 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 	}
 
 	private <T> void addFiltersToTables(List<Filter> filters,
-			BeanItemContainer<T> beanItemContainer, String type) {
+			BeanItemContainer<T> beanItemContainer) {
 		beanItemContainer.addContainerFilter(new Or(filters
 				.toArray(new Filter[] {})));
 	}
@@ -195,6 +218,10 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 		accordionCaptionPois = new String(
 				translator.translate(TranslationKeys.POI));
 
+		this.updateTableCaptions();
+	}
+
+	private void updateTableCaptions() {
 		accordion.getTab(roomTable).setCaption(accordionCaptionRooms);
 		accordion.getTab(courseTable).setCaption(accordionCaptionCourses);
 		accordion.getTab(personTable).setCaption(accordionCaptionPersons);
