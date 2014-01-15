@@ -23,20 +23,42 @@ public class EventModel {
 		this.resources = resources;
 	}
 
-	public String getBegin() {
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getStart() {
 		return start;
+	}
+
+	public void setStart(String start) {
+		this.start = start;
 	}
 
 	public String getEnd() {
 		return end;
 	}
 
+	public void setEnd(String end) {
+		this.end = end;
+	}
+
 	public List<ResourceModel> getResources() {
 		return resources;
 	}
 
+	public void setResources(List<ResourceModel> resources) {
+		this.resources = resources;
+	}
+
+	@Override
 	public String toString() {
-		return name + " " + start + "-" + end;
+		return "EventModel [name=" + name + ", start=" + start + ", end=" + end
+				+ ", resources=" + resources + "]";
 	}
 
 }
