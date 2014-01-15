@@ -4,9 +4,14 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import com.pathfinder.model.EventModel;
+import com.pathfinder.util.translation.TranslationKeys;
+import com.pathfinder.util.translation.Translator;
+import com.pathfinder.util.translation.TranslatorSpec;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Calendar;
 import com.vaadin.ui.CustomComponent;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.components.calendar.event.CalendarEvent;
 
 /**
@@ -14,11 +19,26 @@ import com.vaadin.ui.components.calendar.event.CalendarEvent;
  * 
  */
 public class DetailEvents extends CustomComponent implements DetailEventsSpec {
+	private final HorizontalLayout layout = new HorizontalLayout();
 	private final Calendar calendar = new Calendar();
 	private final GregorianCalendar gc = new GregorianCalendar();
+	private final Label noEventsLabel = new Label();
+	private final TranslatorSpec translator = Translator.getInstance();
 
 	public DetailEvents() {
-		setCompositionRoot(calendar);
+		noEventsLabel.setCaption(translator
+				.translate(TranslationKeys.NO_EVENTS_AVAILABLE));
+		layout.addComponent(noEventsLabel);
+		layout.addComponent(calendar);
+		setCompositionRoot(layout);
+
+		calendar.addListener(new Listener() {
+
+			@Override
+			public void componentEvent(Event event) {
+				System.out.println("You did something: " + event);
+			}
+		});
 	}
 
 	@Override
@@ -28,6 +48,14 @@ public class DetailEvents extends CustomComponent implements DetailEventsSpec {
 
 		int firstHourOfDay = 24;
 		int lastHourOfDay = 0;
+
+		if (events.getItemIds().size() == 0) {
+			noEventsLabel.setVisible(true);
+			calendar.setVisible(false);
+		} else {
+			noEventsLabel.setVisible(false);
+			calendar.setVisible(true);
+		}
 
 		for (EventModel event : events.getItemIds()) {
 
@@ -68,7 +96,8 @@ public class DetailEvents extends CustomComponent implements DetailEventsSpec {
 
 	@Override
 	public void updateTranslations() {
-
+		noEventsLabel.setCaption(translator
+				.translate(TranslationKeys.NO_EVENTS_AVAILABLE));
 	}
 
 }

@@ -2,7 +2,9 @@ package com.pathfinder.model;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -29,6 +31,8 @@ public class EventModel implements CalendarEvent {
 	private String styleName;
 	private boolean isAllDay;
 	private final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+	private final GregorianCalendar parsedDate = new GregorianCalendar();
+	private final GregorianCalendar todayDate = new GregorianCalendar();
 
 	public EventModel() {
 	}
@@ -46,11 +50,7 @@ public class EventModel implements CalendarEvent {
 	}
 
 	public void setStartString(String start) {
-		try {
-			this.start = dateFormat.parse(start);
-		} catch (ParseException pe) {
-			LOGGER.error("Event's start time couldn't be parsed to date instance. Check data interface!");
-		}
+		this.start = parseAndCreateDate(start);
 		this.startString = start;
 	}
 
@@ -59,11 +59,7 @@ public class EventModel implements CalendarEvent {
 	}
 
 	public void setEndString(String end) {
-		try {
-			this.end = dateFormat.parse(end);
-		} catch (ParseException pe) {
-			LOGGER.error("Event's end time couldn't be parsed to date instance. Check data interface!");
-		}
+		this.end = parseAndCreateDate(end);
 		this.endString = end;
 	}
 
@@ -109,6 +105,24 @@ public class EventModel implements CalendarEvent {
 	@Override
 	public Date getEnd() {
 		return this.end;
+	}
+
+	private Date parseAndCreateDate(String dateString) {
+		Date returnDate = null;
+		try {
+			parsedDate.setTime(dateFormat.parse(dateString));
+			todayDate.setTime(new Date());
+			int year = todayDate.get(Calendar.YEAR);
+			int month = todayDate.get(Calendar.MONTH);
+			int date = todayDate.get(Calendar.DATE);
+			parsedDate.set(year, month, date);
+
+			returnDate = parsedDate.getTime();
+		} catch (ParseException pe) {
+			LOGGER.error("Event's time couldn't be parsed to date instance. Check data formatter of this class!");
+		}
+
+		return returnDate;
 	}
 
 }

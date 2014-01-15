@@ -93,8 +93,8 @@ public class DetailContainer extends CustomComponent implements
 			detailInfo.addDetails(dataLoader.getResourceDetails(
 					resource.getId(), UI.getCurrent().getLocale()));
 			detailEvents.removeEvents();
-			// TODO: Load events from DataLoader
-			// detailEvents.setEvents();
+			detailEvents.setEvents(dataLoader.getEvent(resource.getId()));
 		}
+		detailEvents.updateTranslations();
 	}
 }
