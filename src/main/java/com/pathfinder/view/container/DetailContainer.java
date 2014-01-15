@@ -1,7 +1,5 @@
 package com.pathfinder.view.container;
 
-import java.util.List;
-
 import com.pathfinder.model.Attribut;
 import com.pathfinder.model.EventModel;
 import com.pathfinder.model.ResourceModel;
@@ -36,9 +34,8 @@ public class DetailContainer extends CustomComponent implements
 	private ResourceModel resource = null;
 
 	public DetailContainer() {
-		this.setPrimaryStyleName("detail-container");
-		layout.setPrimaryStyleName("detail-vertical-layout");
 		this.buildLayout();
+		this.addStyling();
 		this.setCompositionRoot(layout);
 	}
 
@@ -48,11 +45,16 @@ public class DetailContainer extends CustomComponent implements
 		infoEventsLayout.addComponent(detailInfo);
 		infoEventsLayout.addComponent(detailEvents);
 		layout.addComponent(infoEventsLayout);
+
 		infoEventsLayout.setSizeFull();
 		detailInfo.setSizeFull();
 		detailEvents.setSizeFull();
 		infoEventsLayout.setExpandRatio(detailInfo, 0.5f);
 		infoEventsLayout.setExpandRatio(detailEvents, 0.5f);
+	}
+
+	private void addStyling() {
+		// TODO this.setPrimaryStyleName("detail-container");
 	}
 
 	@Override

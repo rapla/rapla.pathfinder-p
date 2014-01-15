@@ -271,14 +271,7 @@
 				font-size: 15px;
 			}
 		}
-		.roomLabel		{ font-size: 15px; margin-top: 5px; }
-		
-	}
-	
-	/* Picture Styling */
-	
-	.wheelChairButtonMan {
-		
+		.roomLabel		{ font-size: 15px; margin-top: 5px; }	
 	}
 	
 	/* Datetime Styling */
@@ -301,9 +294,9 @@
 		float: right;
 	}
 	
-	/* Language Popup and menu bar buttons */
-	
-	.flagImage, .v-icon {
+	/* MenuBar Styling */
+    
+    .flagImage, .v-icon {
 		height: 5em;
 	}	
 	
@@ -311,8 +304,6 @@
 		width: 7.5em;
 		margin: 0.2em;
 	}
-	
-	/* MenuBar Styling */
 	
 	.menuBar{
 		position: absolute;
@@ -350,5 +341,4 @@
 				color: #FFF;
 			}
 	}
-	
 }
