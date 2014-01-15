@@ -334,6 +334,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	@Override
 	public void changeWheelChairView() {
 		desktopLayout.changeWheelChairView();
+		desktopLayout.replaceWheelChairButtonWithHomeButton();
 	}
 
 	public synchronized void refreshFreeRooms() {

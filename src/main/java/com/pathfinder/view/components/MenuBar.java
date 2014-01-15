@@ -46,12 +46,11 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	private final String STYLE_CLASS_FLAG_IMAGE = "flagImage";
 
 	public MenuBar() {
-		buildLanguagePopup();
-		buildWheelChairDriver();
-		buildMainLayout();
+		this.buildLanguagePopup();
+		this.buildButtons();
+		this.buildMainLayout();
 		this.addStyling();
-		this.setPrimaryStyleName("menubar");
-		setCompositionRoot(layout);
+		this.setCompositionRoot(layout);
 	}
 
 	private void buildLanguagePopup() {
@@ -81,16 +80,11 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 		languagePopupButton.setIcon(new ThemeResource(recentFlagFilename));
 	}
 
-	private void buildWheelChairDriver() {
-		wheelChairButton
-				.setIcon(new ThemeResource("icon/wheelChairDriver.png"));
-		wheelChairButton.setPrimaryStyleName("wheelChairButtonMan");
-	}
-
-	private void addStyling() {
-		this.setPrimaryStyleName("menu-bar");
-		layout.setPrimaryStyleName("menulayout");
-		popupLayout.setPrimaryStyleName(STYLE_CLASS_LANGUAGE_BUTTON);
+	private void buildButtons() {
+		wheelChairButton.setIcon(new ThemeResource(THEME_RESOURCES_FOLDER
+				+ "wheelChairDriver" + THEME_RESOURCES_SUFFIX));
+		homeButton.setIcon(new ThemeResource(THEME_RESOURCES_FOLDER + "home"
+				+ THEME_RESOURCES_SUFFIX));
 	}
 
 	private void buildMainLayout() {
@@ -99,6 +93,16 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 		layout.setComponentAlignment(languagePopupButton, Alignment.TOP_CENTER);
 		layout.setComponentAlignment(wheelChairButton, Alignment.TOP_CENTER);
 		layout.setSizeFull();
+	}
+
+	private void addStyling() {
+		// TODO which one?
+		this.setPrimaryStyleName("menu-bar");
+		this.setPrimaryStyleName("menubar");
+		layout.setPrimaryStyleName("menulayout");
+		popupLayout.setPrimaryStyleName(STYLE_CLASS_LANGUAGE_BUTTON);
+		wheelChairButton.setPrimaryStyleName("wheelChairButtonMan");
+		homeButton.setPrimaryStyleName("homebutton");
 	}
 
 	@Override
@@ -146,19 +150,15 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	public void replaceWheelChairButtonWithHomeButton() {
 		if (wheelChairButton.equals(layout.getComponent(2, 0))) {
 			layout.replaceComponent(wheelChairButton, homeButton);
-			layout.setComponentAlignment(homeButton, Alignment.TOP_RIGHT);
+			layout.setComponentAlignment(homeButton, Alignment.TOP_CENTER);
 		}
-		homeButton.setPrimaryStyleName("homebutton");
-		ThemeResource res = new ThemeResource(THEME_RESOURCES_FOLDER + "home"
-				+ THEME_RESOURCES_SUFFIX);
-		homeButton.setIcon(res);
 	}
 
 	@Override
 	public void replaceHomeButtonWithWheelChairButton() {
 		if (homeButton.equals(layout.getComponent(2, 0))) {
 			layout.replaceComponent(homeButton, wheelChairButton);
-			layout.setComponentAlignment(wheelChairButton, Alignment.TOP_RIGHT);
+			layout.setComponentAlignment(wheelChairButton, Alignment.TOP_CENTER);
 		}
 	}
 
