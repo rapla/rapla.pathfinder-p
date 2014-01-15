@@ -83,6 +83,7 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 		this.mainLayout.addComponent(menuBar);
 
 		this.mainLayout.setExpandRatio(contentLayout, 1);
+		setPrimaryStyleName("main");
 	}
 
 	@Override
