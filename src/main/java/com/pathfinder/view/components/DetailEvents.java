@@ -29,17 +29,19 @@ public class DetailEvents extends CustomComponent implements DetailEventsSpec {
 	private final List<EventModel> calendarEvents = new ArrayList<>();
 
 	public DetailEvents() {
+		this.buildLayout();
+		this.setCompositionRoot(layout);
+	}
+
+	private void buildLayout() {
 		noEventsLabel.setCaption(translator
 				.translate(TranslationKeys.NO_EVENTS_AVAILABLE));
 		layout.addComponent(noEventsLabel);
 		layout.addComponent(calendar);
-		setCompositionRoot(layout);
-
 	}
 
 	@Override
 	public void setEvents(BeanItemContainer<EventModel> events) {
-
 		removeEvents();
 
 		calendar.setStartDate(new Date());
@@ -99,5 +101,4 @@ public class DetailEvents extends CustomComponent implements DetailEventsSpec {
 		noEventsLabel.setCaption(translator
 				.translate(TranslationKeys.NO_EVENTS_AVAILABLE));
 	}
-
 }

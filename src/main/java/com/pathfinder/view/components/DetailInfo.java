@@ -21,7 +21,7 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 
 	public DetailInfo() {
 		initTable();
-		setStyling();
+		addStyling();
 		setCompositionRoot(table);
 	}
 
@@ -34,8 +34,8 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 		table.setSizeFull();
 	}
 
-	private void setStyling() {
-		// this.setPrimaryStyleName("details");
+	private void addStyling() {
+		// TODO this.setPrimaryStyleName("details");
 	}
 
 	@Override
