@@ -469,7 +469,8 @@ public class DataLoader implements DataLoaderSpec {
 	}
 
 	@Override
-	public List<Attribut> getResourceDetails(String resourceId, Locale locale) {
+	public BeanItemContainer<Attribut> getResourceDetails(String resourceId,
+			Locale locale) {
 		String url = RESOURCE_DETAIL_METHOD + "resourceId=" + resourceId;
 		if (locale != null) {
 			url += "&language=" + locale.getLanguage();
@@ -478,7 +479,8 @@ public class DataLoader implements DataLoaderSpec {
 		JSONObject attributMap;
 		Attribut attribut;
 
-		List<Attribut> attributList = new ArrayList<Attribut>();
+		BeanItemContainer<Attribut> attributList = new BeanItemContainer<Attribut>(
+				Attribut.class);
 
 		try {
 			br = new BufferedReader(new InputStreamReader(
@@ -504,7 +506,7 @@ public class DataLoader implements DataLoaderSpec {
 				attribut.setValue((String) ((JSONObject) attributMap
 						.get(nextKey)).get(Attribut.PROPERTY_VALUE));
 
-				attributList.add(attribut);
+				attributList.addItem(attribut);
 			}
 
 			return attributList;

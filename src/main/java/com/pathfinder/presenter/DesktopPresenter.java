@@ -63,8 +63,8 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 			.getIntProperty(PropertiesKey.BACK_TO_HOME_TIMER);
 
 	private ResourceModel resource = null;
-	private List<Attribut> resourceDetails = null;
-	private List<EventModel> resourceEvents;
+	private BeanItemContainer<Attribut> resourceDetails = null;
+	private BeanItemContainer<EventModel> resourceEvents;
 
 	private long lastUserInteractionTimestamp;
 	private boolean wentBackToHomeScreen = true;
@@ -147,10 +147,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 			resourceDetails = dataLoader.getResourceDetails(resource.getId(),
 					UI.getCurrent().getLocale());
 
-			// TODO: Load Events
-			List<EventModel> events = new ArrayList<>();
-
-			resourceEvents = new ArrayList<>();
+			resourceEvents = dataLoader.getEvent(resource.getId());
 
 			LOGGER.trace(resource.getType() + " element was clicked: "
 					+ resource.getName());
@@ -195,7 +192,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 	class AppointmentButtonClickListener implements ClickListener {
 		@Override
 		public void buttonClick(ClickEvent event) {
-			for (Attribut attribut : resourceDetails) {
+			for (Attribut attribut : resourceDetails.getItemIds()) {
 				if ("Belegung".equals(attribut.getLabel())) {
 					desktopLayout.setAppointmentUrl(attribut.getValue());
 				}
@@ -356,7 +353,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		// Adapting MenuBar
 		desktopLayout.replaceWheelChairButtonWithHomeButton();
 		desktopLayout.replaceBackButtonWithAppointmentButton();
-		for (Attribut attribut : resourceDetails) {
+		for (Attribut attribut : resourceDetails.getItemIds()) {
 			LOGGER.trace("Detail attribut: " + attribut.getKey());
 			if ("resourcueurl".equals(attribut.getKey())) {
 				desktopLayout.showAppointmentButton();

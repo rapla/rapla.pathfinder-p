@@ -39,7 +39,7 @@ public class PathfinderUI extends UI {
 	private Page page = null;
 	private WebBrowser webBrowser = null;
 	private String userAgent = "";
-	private String dhbwEntryPoint = "A";
+	private String dhbwEntryPoint = "";
 
 	@Override
 	protected void init(VaadinRequest request) {

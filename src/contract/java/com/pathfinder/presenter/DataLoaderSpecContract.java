@@ -7,7 +7,6 @@ import static de.vksi.c4j.Condition.ignored;
 import static de.vksi.c4j.Condition.postCondition;
 import static de.vksi.c4j.Condition.preCondition;
 
-import java.util.List;
 import java.util.Locale;
 
 import com.pathfinder.model.Attribut;
@@ -109,7 +108,8 @@ public class DataLoaderSpecContract implements DataLoaderSpec {
 	}
 
 	@Override
-	public List<Attribut> getResourceDetails(String modelLink, Locale locale) {
+	public BeanItemContainer<Attribut> getResourceDetails(String modelLink,
+			Locale locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}

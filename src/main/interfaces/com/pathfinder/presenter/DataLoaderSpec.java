@@ -33,7 +33,7 @@ public interface DataLoaderSpec {
 	BeanItemContainer<ResourceModel> getPoiContainer();
 
 	@Pure
-	List<Attribut> getResourceDetails(String resourceId, Locale locale);
+	BeanItemContainer<Attribut> getResourceDetails(String resourceId, Locale locale);
 
 	@Pure
 	BeanItemContainer<FreeRoomModel> getFreeResources();

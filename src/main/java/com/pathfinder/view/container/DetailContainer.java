@@ -13,6 +13,7 @@ import com.pathfinder.view.components.DetailImage;
 import com.pathfinder.view.components.DetailImageSpec;
 import com.pathfinder.view.components.DetailInfo;
 import com.pathfinder.view.components.DetailInfoSpec;
+import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.UI;
@@ -47,20 +48,26 @@ public class DetailContainer extends CustomComponent implements
 		infoEventsLayout.addComponent(detailInfo);
 		infoEventsLayout.addComponent(detailEvents);
 		layout.addComponent(infoEventsLayout);
+		infoEventsLayout.setSizeFull();
+		detailInfo.setSizeFull();
+		detailEvents.setSizeFull();
+		infoEventsLayout.setExpandRatio(detailInfo, 0.5f);
+		infoEventsLayout.setExpandRatio(detailEvents, 0.5f);
 	}
 
 	@Override
 	public void addDetails(ResourceModel resource,
-			List<Attribut> resourceDetails, List<EventModel> resourceEvents) {
+			BeanItemContainer<Attribut> resourceDetails,
+			BeanItemContainer<EventModel> resourceEvents) {
 		this.removeDetails();
 
 		detailInfo.addDetails(resourceDetails);
 		detailEvents.setEvents(resourceEvents);
 		if ("room".equals(resource.getType())) {
-			for (Attribut attribut : resourceDetails) {
+			for (Attribut attribut : resourceDetails.getItemIds()) {
 				if ("Raum".equals(attribut.getLabel())) {
-					// TODO dataLoader.getDhbwEntryPoint() +
-					detailImage.setImage(attribut.getValue());
+					detailImage.setImage(dataLoader.getDhbwEntryPoint()
+							+ attribut.getValue());
 				}
 			}
 		}
@@ -91,8 +98,8 @@ public class DetailContainer extends CustomComponent implements
 			detailInfo.addDetails(dataLoader.getResourceDetails(
 					resource.getId(), UI.getCurrent().getLocale()));
 			detailEvents.removeEvents();
-			// TODO: Load events from DataLoader
-			// detailEvents.setEvents();
+			detailEvents.setEvents(dataLoader.getEvent(resource.getId()));
 		}
+		detailEvents.updateTranslations();
 	}
 }

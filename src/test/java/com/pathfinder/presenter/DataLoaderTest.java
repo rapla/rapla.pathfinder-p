@@ -75,9 +75,10 @@ public class DataLoaderTest {
 	@Test
 	public void getModelDetailsAndReadWithIterators() {
 
-		List<Attribut> modelDetails = dataLoader.getResourceDetails(
-				"org.rapla.entities.domain.Allocatable_1320", new Locale(
-						"DE_de"));
+		BeanItemContainer<Attribut> modelDetails = dataLoader
+				.getResourceDetails(
+						"org.rapla.entities.domain.Allocatable_1320",
+						new Locale("DE_de"));
 
 		Assert.assertNotNull(modelDetails);
 	}

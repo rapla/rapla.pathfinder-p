@@ -3,16 +3,15 @@
  */
 package com.pathfinder.view.components;
 
-import java.util.List;
-
 import com.pathfinder.model.EventModel;
+import com.vaadin.data.util.BeanItemContainer;
 
 /**
  * @author tim
  * 
  */
 public interface DetailEventsSpec extends ComponentSpec {
-	void setEvents(List<EventModel> events);
+	void setEvents(BeanItemContainer<EventModel> events);
 
 	void removeEvents();
 }

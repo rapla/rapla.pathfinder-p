@@ -1,12 +1,10 @@
 package com.pathfinder.view.components;
 
-import java.util.Iterator;
-import java.util.List;
-
 import com.pathfinder.model.Attribut;
+import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Table;
+import com.vaadin.ui.Table.ColumnHeaderMode;
 
 /**
  * Defines the detail view for persons, courses, pois or rooms
@@ -15,34 +13,43 @@ import com.vaadin.ui.VerticalLayout;
  * 
  */
 public class DetailInfo extends CustomComponent implements DetailInfoSpec {
-	private final VerticalLayout layout = new VerticalLayout();
-	private Label label = new Label();
+	private final Object[] visibleColumns = new String[] {
+			Attribut.PROPERTY_LABEL, Attribut.PROPERTY_VALUE };
+	private final Table table = new Table();
+	private final BeanItemContainer<Attribut> attributeContainer = new BeanItemContainer<Attribut>(
+			Attribut.class);
 
 	public DetailInfo() {
-		layout.setPrimaryStyleName("detail-layout");
+		initTable();
+		setStyling();
+		setCompositionRoot(table);
+	}
+
+	private void initTable() {
+		table.setContainerDataSource(attributeContainer);
+		table.setVisibleColumns(visibleColumns);
+		table.setColumnHeaderMode(ColumnHeaderMode.HIDDEN);
+		table.setCacheRate(1);
+		table.setSelectable(false);
+		table.setSizeFull();
+	}
+
+	private void setStyling() {
 		this.setPrimaryStyleName("details");
-		setCompositionRoot(layout);
 	}
 
 	@Override
-	public void addDetails(List<Attribut> resourceDetails) {
-		// TODO Should we use a table instead labels?
-		Iterator<Attribut> modelDetailsIterator = resourceDetails.iterator();
-
-		while (modelDetailsIterator.hasNext()) {
-			Attribut modelAttribut = modelDetailsIterator.next();
-
-			if (!"resourceurl".equals(modelAttribut.getKey())) {
-				label = new Label(modelAttribut.getLabel()
-						+ modelAttribut.getValue());
-				layout.addComponent(label);
+	public void addDetails(BeanItemContainer<Attribut> resourceDetails) {
+		for (Attribut attributeItem : resourceDetails.getItemIds()) {
+			if (!"resourceurl".equals(attributeItem.getKey())) {
+				this.table.addItem(attributeItem);
 			}
 		}
 	}
 
 	@Override
 	public void removeDetails() {
-		layout.removeAllComponents();
+		table.removeAllItems();
 	}
 
 	@Override

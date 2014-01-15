@@ -12,6 +12,7 @@ import com.pathfinder.model.Attribut;
 import com.pathfinder.model.EventModel;
 import com.pathfinder.model.ResourceModel;
 import com.pathfinder.view.components.ComponentSpecContract;
+import com.vaadin.data.util.BeanItemContainer;
 
 import de.vksi.c4j.ClassInvariant;
 import de.vksi.c4j.Target;
@@ -47,7 +48,8 @@ public class DetailContainerSpecContract extends ComponentSpecContract
 
 	@Override
 	public void addDetails(ResourceModel resourceModel,
-			List<Attribut> resourceDetails, List<EventModel> resourceEvents) {
+			BeanItemContainer<Attribut> resourceDetails,
+			BeanItemContainer<EventModel> resourceEvents) {
 		if (preCondition()) {
 			// TODO: write preconditions if required
 		}
@@ -60,4 +62,5 @@ public class DetailContainerSpecContract extends ComponentSpecContract
 	public void removeDetails() {
 		// TODO Auto-generated method stub
 	}
+
 }
