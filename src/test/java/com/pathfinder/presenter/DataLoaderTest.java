@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.pathfinder.model.Attribut;
+import com.pathfinder.model.EventModel;
 import com.pathfinder.model.FreeRoomModel;
 import com.vaadin.data.util.BeanItemContainer;
 
@@ -79,5 +80,12 @@ public class DataLoaderTest {
 						"DE_de"));
 
 		Assert.assertNotNull(modelDetails);
+	}
+
+	@Test
+	public void getEventTest() {
+		BeanItemContainer<EventModel> eventContainer = dataLoader
+				.getEvent("org.rapla.entities.domain.Allocatable_2431");
+		Assert.assertNotNull(eventContainer);
 	}
 }
