@@ -243,11 +243,6 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 
 	@Override
 	public void changeWheelChairView() {
-		// TODO Is there maybe a more beautiful variant with more performance?
-		// Initialize both layouts in the constructor and only change them here?
-		// CssLayout instead of HorizontalLayout?
-		// CssLayout instead of both layouts and only change the width of
-		// SearchPanel and Keyboard
 		if (contentLayout.getComponentIndex(layoutNormal) >= 0) {
 			layoutWheelChair.addComponent(keyboard);
 			layoutWheelChair.addComponent(searchPanel);

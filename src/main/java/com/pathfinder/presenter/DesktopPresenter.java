@@ -324,8 +324,6 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		// Showing
 		// for (Attribut attribut : resourceDetails.getItemIds()) {
 		// if ("resourcueurl".equals(attribut.getKey())) {
-		//
-		// }
 		// }
 		desktopLayout.addDetails(resource, resourceDetails, resourceEvents);
 		desktopLayout.showDetailContainer();

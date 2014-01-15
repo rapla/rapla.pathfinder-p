@@ -42,8 +42,11 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 
 	private final String THEME_RESOURCES_FOLDER = "icon/";
 	private final String THEME_RESOURCES_SUFFIX = ".png";
+	private final String STYLE_CLASS_MENUBAR = "menuBar";
 	private final String STYLE_CLASS_LANGUAGE_BUTTON = "languageButton";
 	private final String STYLE_CLASS_FLAG_IMAGE = "flagImage";
+	private final String STYLE_CLASS_WHEELCHAIR_BUTTON = "wheelChairButton";
+	private final String STYLE_CLASS_HOME_BUTTON = "homeButton";
 
 	public MenuBar() {
 		this.buildLanguagePopup();
@@ -96,13 +99,10 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	}
 
 	private void addStyling() {
-		// TODO which one?
-		this.setPrimaryStyleName("menu-bar");
-		this.setPrimaryStyleName("menubar");
-		layout.setPrimaryStyleName("menulayout");
+		this.setPrimaryStyleName(STYLE_CLASS_MENUBAR);
 		popupLayout.setPrimaryStyleName(STYLE_CLASS_LANGUAGE_BUTTON);
-		wheelChairButton.setPrimaryStyleName("wheelChairButtonMan");
-		homeButton.setPrimaryStyleName("homebutton");
+		wheelChairButton.setPrimaryStyleName(STYLE_CLASS_WHEELCHAIR_BUTTON);
+		homeButton.setPrimaryStyleName(STYLE_CLASS_HOME_BUTTON);
 	}
 
 	@Override
