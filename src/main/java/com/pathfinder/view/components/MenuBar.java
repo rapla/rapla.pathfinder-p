@@ -37,7 +37,7 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	private final Button backButton = new Button(
 			translator.translate(TranslationKeys.BACK));
 	private final Button wheelChairDriverButton = new Button();
-	private final Button homeButton = new Button("Home");
+	private final Button homeButton = new Button();
 
 	// Saves all flag image resources to avoid unnecessary reloading of
 	// resources
@@ -54,7 +54,7 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 		buildLanguagePopup();
 		buildWheelChairDriver();
 		buildMainLayout();
-		// TODO addStyling();
+		this.setPrimaryStyleName("menubar");
 		setCompositionRoot(layout);
 	}
 
@@ -100,8 +100,6 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 		layout.setPrimaryStyleName("menulayout");
 		appointmentButton.setPrimaryStyleName("menubutton");
 		// TODO backButton.setPrimaryStyleName("backbutton");
-		homeButton.setPrimaryStyleName("menubutton");
-		homeButton.setStyleName("right-button");
 	}
 
 	private void buildMainLayout() {
@@ -210,6 +208,9 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 			layout.replaceComponent(wheelChairDriverButton, homeButton);
 			layout.setComponentAlignment(homeButton, Alignment.TOP_RIGHT);
 		}
+		homeButton.setPrimaryStyleName("homebutton");
+		ThemeResource res = new ThemeResource(THEME_RESOURCES_FOLDER + "home.png");
+		homeButton.setIcon(res);
 	}
 
 	@Override

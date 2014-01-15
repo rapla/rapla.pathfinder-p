@@ -19,6 +19,8 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 	private Label label = new Label();
 
 	public DetailInfo() {
+		layout.setPrimaryStyleName("detail-layout");
+		this.setPrimaryStyleName("details");
 		setCompositionRoot(layout);
 	}
 
@@ -30,9 +32,11 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 		while (modelDetailsIterator.hasNext()) {
 			Attribut modelAttribut = modelDetailsIterator.next();
 
-			label = new Label(modelAttribut.getLabel()
-					+ modelAttribut.getValue());
-			layout.addComponent(label);
+			if (!"resourceurl".equals(modelAttribut.getKey())) {
+				label = new Label(modelAttribut.getLabel()
+						+ modelAttribut.getValue());
+				layout.addComponent(label);
+			}
 		}
 	}
 
