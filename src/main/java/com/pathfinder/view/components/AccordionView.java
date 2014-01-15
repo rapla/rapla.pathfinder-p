@@ -67,6 +67,7 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 		this.createTable(poiTable, poiContainer, visibleTableColumns);
 
 		this.buildLayout();
+		this.setStyling();
 		this.setCompositionRoot(accordion);
 	}
 
@@ -95,8 +96,10 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 		persons.setIcon(orderlines);
 		Tab pois = accordion.addTab(poiTable, accordionCaptionPois);
 		pois.setIcon(orderlines);
-
 		this.accordion.setSizeFull();
+	}
+
+	private void setStyling() {
 		this.accordion.setPrimaryStyleName("accordion-result");
 	}
 
@@ -176,6 +179,10 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 			BeanItemContainer<ResourceModel> beanItemContainer) {
 		this.roomTable.removeAllItems();
 		this.roomContainer.addAll(beanItemContainer.getItemIds());
+
+		for (ResourceModel resourceModel : beanItemContainer.getItemIds()) {
+			System.out.println("Faculty: " + resourceModel.getFaculty());
+		}
 	}
 
 	@Override
@@ -183,6 +190,10 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 			BeanItemContainer<ResourceModel> beanItemContainer) {
 		this.courseTable.removeAllItems();
 		this.courseContainer.addAll(beanItemContainer.getItemIds());
+
+		for (ResourceModel resourceModel : beanItemContainer.getItemIds()) {
+			System.out.println("Faculty: " + resourceModel.getFaculty());
+		}
 	}
 
 	@Override
@@ -190,6 +201,10 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 			BeanItemContainer<ResourceModel> beanItemContainer) {
 		this.personTable.removeAllItems();
 		this.personContainer.addAll(beanItemContainer.getItemIds());
+
+		for (ResourceModel resourceModel : beanItemContainer.getItemIds()) {
+			System.out.println("Faculty: " + resourceModel.getFaculty());
+		}
 	}
 
 	@Override
@@ -197,6 +212,10 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 			BeanItemContainer<ResourceModel> beanItemContainer) {
 		this.poiTable.removeAllItems();
 		this.poiContainer.addAll(beanItemContainer.getItemIds());
+
+		for (ResourceModel resourceModel : beanItemContainer.getItemIds()) {
+			System.out.println("Faculty: " + resourceModel.getFaculty());
+		}
 	}
 
 	@Override
