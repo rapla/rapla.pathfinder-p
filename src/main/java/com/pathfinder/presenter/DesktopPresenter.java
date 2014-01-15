@@ -1,5 +1,6 @@
 package com.pathfinder.presenter;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -62,6 +63,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 
 	private ResourceModel resource = null;
 	private List<Attribut> resourceDetails = null;
+	private List<com.pathfinder.model.Event> resourceEvents;
 
 	private long lastUserInteractionTimestamp;
 	private boolean wentBackToHomeScreen = true;
@@ -143,6 +145,14 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 			resource = (ResourceModel) event.getItemId();
 			resourceDetails = dataLoader.getResourceDetails(resource.getId(),
 					UI.getCurrent().getLocale());
+
+			// TODO: Load Events
+			List<com.pathfinder.model.Event> events = new ArrayList<>();
+			com.pathfinder.model.Event newEvent = new com.pathfinder.model.Event();
+			newEvent.setName("Veranstaltung - Test");
+			events.add(newEvent);
+			resourceEvents = events;
+
 			LOGGER.trace(resource.getType() + " element was clicked: "
 					+ resource.getName());
 			switchToDetailView();
@@ -355,7 +365,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		}
 
 		// Showing
-		desktopLayout.addDetails(resource, resourceDetails);
+		desktopLayout.addDetails(resource, resourceDetails, resourceEvents);
 		desktopLayout.showDetailContainer();
 	}
 

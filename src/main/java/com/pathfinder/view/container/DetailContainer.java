@@ -6,11 +6,14 @@ import com.pathfinder.model.Attribut;
 import com.pathfinder.model.ResourceModel;
 import com.pathfinder.presenter.DataLoader;
 import com.pathfinder.presenter.DataLoaderSpec;
+import com.pathfinder.view.components.DetailEvents;
+import com.pathfinder.view.components.DetailEventsSpec;
 import com.pathfinder.view.components.DetailImage;
 import com.pathfinder.view.components.DetailImageSpec;
 import com.pathfinder.view.components.DetailInfo;
 import com.pathfinder.view.components.DetailInfoSpec;
 import com.vaadin.ui.CustomComponent;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
@@ -24,8 +27,10 @@ public class DetailContainer extends CustomComponent implements
 		DetailContainerSpec {
 	private final DataLoaderSpec dataLoader = DataLoader.getInstance();
 	private final VerticalLayout layout = new VerticalLayout();
+	private final HorizontalLayout infoEventsLayout = new HorizontalLayout();
 	private final DetailInfoSpec detailInfo = new DetailInfo();
 	private final DetailImageSpec detailImage = new DetailImage();
+	private final DetailEventsSpec detailEvents = new DetailEvents();
 	private ResourceModel resource = null;
 
 	public DetailContainer() {
@@ -35,16 +40,20 @@ public class DetailContainer extends CustomComponent implements
 
 	private void buildLayout() {
 		this.hideDetailContainer();
-		layout.addComponent(detailInfo);
 		layout.addComponent(detailImage);
+		infoEventsLayout.addComponent(detailInfo);
+		infoEventsLayout.addComponent(detailEvents);
+		layout.addComponent(infoEventsLayout);
 	}
 
 	@Override
 	public void addDetails(ResourceModel resource,
-			List<Attribut> resourceDetails) {
+			List<Attribut> resourceDetails,
+			List<com.pathfinder.model.Event> resourceEvents) {
 		this.removeDetails();
 
 		detailInfo.addDetails(resourceDetails);
+		detailEvents.setEvents(resourceEvents);
 		if ("room".equals(resource.getType())) {
 			for (Attribut attribut : resourceDetails) {
 				if ("Raum".equals(attribut.getLabel())) {
@@ -58,6 +67,7 @@ public class DetailContainer extends CustomComponent implements
 	@Override
 	public void removeDetails() {
 		detailInfo.removeDetails();
+		detailEvents.removeEvents();
 		detailImage.removeImage();
 		this.resource = null;
 	}
@@ -78,6 +88,9 @@ public class DetailContainer extends CustomComponent implements
 			detailInfo.removeDetails();
 			detailInfo.addDetails(dataLoader.getResourceDetails(
 					resource.getId(), UI.getCurrent().getLocale()));
+			detailEvents.removeEvents();
+			// TODO: Load events from DataLoader
+			// detailEvents.setEvents();
 		}
 	}
 }
