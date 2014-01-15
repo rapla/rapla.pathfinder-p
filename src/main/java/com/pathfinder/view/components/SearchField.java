@@ -26,7 +26,7 @@ public class SearchField extends CustomComponent implements SearchFieldSpec {
 
 	public SearchField() {
 		this.init();
-		this.setStyles();
+		this.addStyling();
 		this.buildLayout();
 		setCompositionRoot(layout);
 	}
@@ -40,7 +40,7 @@ public class SearchField extends CustomComponent implements SearchFieldSpec {
 		searchField.setImmediate(true);
 	}
 
-	private void setStyles() {
+	private void addStyling() {
 		layout.setPrimaryStyleName("search");
 		searchField.setPrimaryStyleName("searchfield");
 		magnifierButton.setPrimaryStyleName("search-icon");

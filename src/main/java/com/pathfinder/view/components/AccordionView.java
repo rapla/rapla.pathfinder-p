@@ -63,7 +63,7 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 		this.createTable(poiTable, poiContainer, visibleTableColumns);
 
 		this.buildLayout();
-		this.setStyling();
+		this.addStyling();
 		this.setCompositionRoot(accordion);
 	}
 
@@ -95,7 +95,7 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 		this.accordion.setSizeFull();
 	}
 
-	private void setStyling() {
+	private void addStyling() {
 		this.accordion.setPrimaryStyleName("accordion-result");
 	}
 
