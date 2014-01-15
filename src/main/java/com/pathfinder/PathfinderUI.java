@@ -8,8 +8,9 @@ import org.apache.logging.log4j.Logger;
 
 import com.pathfinder.presenter.DataLoader;
 import com.pathfinder.presenter.DataLoaderSpec;
-import com.pathfinder.presenter.DesktopPresenter;
 import com.pathfinder.presenter.DesktopPresenterSpec;
+import com.pathfinder.presenter.MobilePresenterSpec;
+import com.pathfinder.presenter.StelePresenter;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.vaadin.annotations.Theme;
@@ -32,9 +33,9 @@ public class PathfinderUI extends UI {
 	private static final Logger LOGGER = LogManager
 			.getLogger(PathfinderUI.class.getName());
 
+	private DesktopPresenterSpec stelePresenter = null;
 	private DesktopPresenterSpec desktopPresenter = null;
-	// TODO
-	// private MobilePresenterSpec mobilePresenter = null;
+	private MobilePresenterSpec mobilePresenter = null;
 
 	private Page page = null;
 	private WebBrowser webBrowser = null;
@@ -55,8 +56,7 @@ public class PathfinderUI extends UI {
 	}
 
 	private void getBrowserData(VaadinRequest request) {
-		// TODO set dhbwEntryPoint - read directory after pathfinder/
-
+		// TODO set dhbwEntryPoint - read directory after pathfinder/ LA, "", RA
 		// TODO Difference between getCurrent().getPage();?
 		page = Page.getCurrent();
 		webBrowser = getPage().getWebBrowser();
@@ -95,11 +95,15 @@ public class PathfinderUI extends UI {
 	}
 
 	private void buildLayout() {
-		desktopPresenter = new DesktopPresenter();
-		setPrimaryStyleName("main");
-		setContent(desktopPresenter.getDesktopLayoutView());
+		stelePresenter = new StelePresenter();
+		setContent(stelePresenter.getDesktopLayoutView());
 		addListenerToAllChildComponents((HasComponents) getContent(),
-				desktopPresenter.getUiListener());
+				stelePresenter.getUiListener());
+
+		// desktopPresenter = new DesktopPresenter();
+		// setContent(desktopPresenter.getDesktopLayoutView());
+		// addListenerToAllChildComponents((HasComponents) getContent(),
+		// desktopPresenter.getUiListener());
 
 		// TODO
 		// LOGGER.trace("Desktop application initialized");
@@ -110,7 +114,6 @@ public class PathfinderUI extends UI {
 		// LOGGER.trace("Mobile application initialized");
 		// } else {
 		// desktopPresenter = new DesktopPresenter();
-		// setPrimaryStyleName("main");
 		// setContent(desktopPresenter.getDesktopLayoutView());
 		// addClickListener(desktopPresenter.getUiClickListener());
 		// LOGGER.trace("Desktop application initialized");
