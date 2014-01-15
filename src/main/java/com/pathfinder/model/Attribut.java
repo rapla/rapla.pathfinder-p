@@ -7,11 +7,21 @@ package com.pathfinder.model;
  * 
  */
 public class Attribut {
+	public static final String PROPERTY_KEY = "key";
 	public static final String PROPERTY_LABEL = "label";
 	public static final String PROPERTY_VALUE = "value";
 
+	private String key;
 	private String label;
 	private String value;
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
 
 	public String getLabel() {
 		return label;

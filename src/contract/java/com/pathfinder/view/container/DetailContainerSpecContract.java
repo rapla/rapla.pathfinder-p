@@ -46,7 +46,8 @@ public class DetailContainerSpecContract extends ComponentSpecContract
 
 	@Override
 	public void addDetails(ResourceModel resourceModel,
-			List<Attribut> resourceDetails) {
+			List<Attribut> resourceDetails,
+			List<com.pathfinder.model.Event> resourceEvents) {
 		if (preCondition()) {
 			// TODO: write preconditions if required
 		}
