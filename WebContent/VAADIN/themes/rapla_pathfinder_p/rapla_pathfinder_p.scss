@@ -173,17 +173,22 @@
 		overflow: hidden;
 
 		.result-table-row {
-				height: 40px;
-				background-color: #767676;
-				margin-top: 2px;
-				width: 98%;
-				display: block;
+			height: 40px;
+			background-color: #767676;
+			margin-top: 2px;
+			width: 96%;
+			display: block;
+			padding-left: 30px;
+				
+			.result-table-cell-content{
+				width: 100% !important;
+				display: block;	
 				
 				.result-table-cell-wrapper {
 					color: #cccccc; 
 					font: 20px Arial;
-					padding-left:35px;
 				}
+			}
 		}
 	}
 	
