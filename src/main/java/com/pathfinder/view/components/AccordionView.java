@@ -33,14 +33,10 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 
 	private final ThemeResource orderlines = new ThemeResource(
 			"icon/orderlines.png");
-	private String accordionCaptionRooms = new String(
-			translator.translate(TranslationKeys.ROOMS));
-	private String accordionCaptionCourses = new String(
-			translator.translate(TranslationKeys.COURSES));
-	private String accordionCaptionPersons = new String(
-			translator.translate(TranslationKeys.PERSONS));
-	private String accordionCaptionPois = new String(
-			translator.translate(TranslationKeys.POI));
+	private String accordionCaptionRooms = null;
+	private String accordionCaptionCourses = null;
+	private String accordionCaptionPersons = null;
+	private String accordionCaptionPois = null;
 
 	private final Accordion accordion = new Accordion();
 	private final Table roomTable = new Table();
@@ -103,6 +99,15 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 		this.accordion.setPrimaryStyleName("accordion-result");
 	}
 
+	@Override
+	public void addItemClickListener(ItemClickListener listener) {
+		roomTable.addItemClickListener(listener);
+		courseTable.addItemClickListener(listener);
+		personTable.addItemClickListener(listener);
+		poiTable.addItemClickListener(listener);
+	}
+
+	@Override
 	public void useFiltersForAllTables(String filterString) {
 		/* Filter lists */
 		List<Filter> tableFilters = new ArrayList<Filter>();
@@ -128,6 +133,9 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 		this.addFiltersToTables(tableFilters, courseContainer);
 		this.addFiltersToTables(tableFilters, personContainer);
 		this.addFiltersToTables(tableFilters, poiContainer);
+
+		// Update table captions
+		this.updateTableCaptions();
 	}
 
 	private List<Filter> createFiltersForAllPropertyIds(String filterString) {
@@ -170,6 +178,7 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 				.toArray(new Filter[] {})));
 	}
 
+	@Override
 	public void deselectClickedItem(Table table, Object itemId) {
 		table.unselect(itemId);
 	}
@@ -179,6 +188,7 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 			BeanItemContainer<ResourceModel> beanItemContainer) {
 		this.roomTable.removeAllItems();
 		this.roomContainer.addAll(beanItemContainer.getItemIds());
+		this.updateTableCaptions();
 	}
 
 	@Override
@@ -186,10 +196,7 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 			BeanItemContainer<ResourceModel> beanItemContainer) {
 		this.courseTable.removeAllItems();
 		this.courseContainer.addAll(beanItemContainer.getItemIds());
-
-		for (ResourceModel resourceModel : beanItemContainer.getItemIds()) {
-			System.out.println("Faculty: " + resourceModel.getFaculty());
-		}
+		this.updateTableCaptions();
 	}
 
 	@Override
@@ -197,6 +204,7 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 			BeanItemContainer<ResourceModel> beanItemContainer) {
 		this.personTable.removeAllItems();
 		this.personContainer.addAll(beanItemContainer.getItemIds());
+		this.updateTableCaptions();
 	}
 
 	@Override
@@ -204,34 +212,65 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 			BeanItemContainer<ResourceModel> beanItemContainer) {
 		this.poiTable.removeAllItems();
 		this.poiContainer.addAll(beanItemContainer.getItemIds());
-	}
-
-	@Override
-	public void addItemClickListener(ItemClickListener listener) {
-		roomTable.addItemClickListener(listener);
-		courseTable.addItemClickListener(listener);
-		personTable.addItemClickListener(listener);
-		poiTable.addItemClickListener(listener);
-	}
-
-	@Override
-	public void updateTranslations() {
-		accordionCaptionRooms = new String(
-				translator.translate(TranslationKeys.ROOMS));
-		accordionCaptionCourses = new String(
-				translator.translate(TranslationKeys.COURSES));
-		accordionCaptionPersons = new String(
-				translator.translate(TranslationKeys.PERSONS));
-		accordionCaptionPois = new String(
-				translator.translate(TranslationKeys.POI));
-
 		this.updateTableCaptions();
 	}
 
 	private void updateTableCaptions() {
-		accordion.getTab(roomTable).setCaption(accordionCaptionRooms);
-		accordion.getTab(courseTable).setCaption(accordionCaptionCourses);
-		accordion.getTab(personTable).setCaption(accordionCaptionPersons);
-		accordion.getTab(poiTable).setCaption(accordionCaptionPois);
+		if (getRoomTableLength() > 0) {
+			accordionCaptionRooms = new String(this.getRoomTableLength() + " "
+					+ translator.translate(TranslationKeys.ROOMS));
+			accordion.getTab(roomTable).setCaption(accordionCaptionRooms);
+			accordion.getTab(roomTable).setVisible(true);
+		} else {
+			accordion.getTab(roomTable).setVisible(false);
+		}
+
+		if (getCourseTableLength() > 0) {
+			accordionCaptionCourses = new String(this.getCourseTableLength()
+					+ " " + translator.translate(TranslationKeys.COURSES));
+			accordion.getTab(courseTable).setCaption(accordionCaptionCourses);
+			accordion.getTab(courseTable).setVisible(true);
+		} else {
+			accordion.getTab(courseTable).setVisible(false);
+		}
+
+		if (getPersonTableLength() > 0) {
+			accordionCaptionPersons = new String(this.getPersonTableLength()
+					+ " " + translator.translate(TranslationKeys.PERSONS));
+			accordion.getTab(personTable).setCaption(accordionCaptionPersons);
+			accordion.getTab(personTable).setVisible(true);
+		} else {
+			accordion.getTab(personTable).setVisible(false);
+		}
+
+		if (getPoiTableLength() > 0) {
+			accordionCaptionPois = new String(this.getPoiTableLength() + " "
+					+ translator.translate(TranslationKeys.POI));
+			accordion.getTab(poiTable).setCaption(accordionCaptionPois);
+			accordion.getTab(poiTable).setVisible(true);
+		} else {
+			accordion.getTab(poiTable).setVisible(false);
+		}
+	}
+
+	private int getRoomTableLength() {
+		return roomTable.getItemIds().size();
+	}
+
+	private int getCourseTableLength() {
+		return courseTable.getItemIds().size();
+	}
+
+	private int getPersonTableLength() {
+		return personTable.getItemIds().size();
+	}
+
+	private int getPoiTableLength() {
+		return poiTable.getItemIds().size();
+	}
+
+	@Override
+	public void updateTranslations() {
+		this.updateTableCaptions();
 	}
 }

@@ -34,6 +34,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
@@ -138,6 +139,11 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	@Override
 	public void addBackToHomeListener(BackToHomeScreenListenerSpec listener) {
 		dateTime.addBackToHomeListener(listener);
+	}
+
+	@Override
+	public void addKeyboardViewListener(KeyboardViewListenerSpec listener) {
+		keyboard.addKeyboardViewListener(listener);
 	}
 
 	@Override
@@ -318,11 +324,6 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	}
 
 	@Override
-	public void addKeyboardViewListener(KeyboardViewListenerSpec listener) {
-		keyboard.addKeyboardViewListener(listener);
-	}
-
-	@Override
 	public List<KeyboardViewListenerSpec> getKeyboardViewListener() {
 		return keyboard.getKeyboardViewListener();
 	}
@@ -335,6 +336,11 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	@Override
 	public void showSearchPanel() {
 		searchPanel.showSearchPanel();
+	}
+
+	@Override
+	public void deselectClickedItem(Table table, Object itemId) {
+		accordionView.deselectClickedItem(table, itemId);
 	}
 
 	@Override

@@ -209,8 +209,8 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 			layout.setComponentAlignment(homeButton, Alignment.TOP_RIGHT);
 		}
 		homeButton.setPrimaryStyleName("homebutton");
-		ThemeResource res = new ThemeResource(THEME_RESOURCES_FOLDER
-				+ "home.png");
+		ThemeResource res = new ThemeResource(THEME_RESOURCES_FOLDER + "home"
+				+ THEME_RESOURCES_SUFFIX);
 		homeButton.setIcon(res);
 	}
 
