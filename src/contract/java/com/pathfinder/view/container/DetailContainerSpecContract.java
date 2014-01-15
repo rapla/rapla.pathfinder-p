@@ -9,6 +9,7 @@ import static de.vksi.c4j.Condition.preCondition;
 import java.util.List;
 
 import com.pathfinder.model.Attribut;
+import com.pathfinder.model.EventModel;
 import com.pathfinder.model.ResourceModel;
 import com.pathfinder.view.components.ComponentSpecContract;
 
@@ -46,8 +47,7 @@ public class DetailContainerSpecContract extends ComponentSpecContract
 
 	@Override
 	public void addDetails(ResourceModel resourceModel,
-			List<Attribut> resourceDetails,
-			List<com.pathfinder.model.Event> resourceEvents) {
+			List<Attribut> resourceDetails, List<EventModel> resourceEvents) {
 		if (preCondition()) {
 			// TODO: write preconditions if required
 		}

@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.pathfinder.model.Attribut;
+import com.pathfinder.model.EventModel;
 import com.pathfinder.model.KeyboardModel;
 import com.pathfinder.model.ResourceModel;
 import com.pathfinder.util.properties.ApplicationProperties;
@@ -63,7 +64,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 
 	private ResourceModel resource = null;
 	private List<Attribut> resourceDetails = null;
-	private List<com.pathfinder.model.Event> resourceEvents;
+	private List<EventModel> resourceEvents;
 
 	private long lastUserInteractionTimestamp;
 	private boolean wentBackToHomeScreen = true;
@@ -147,11 +148,9 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 					UI.getCurrent().getLocale());
 
 			// TODO: Load Events
-			List<com.pathfinder.model.Event> events = new ArrayList<>();
-			com.pathfinder.model.Event newEvent = new com.pathfinder.model.Event();
-			newEvent.setName("Veranstaltung - Test");
-			events.add(newEvent);
-			resourceEvents = events;
+			List<EventModel> events = new ArrayList<>();
+
+			resourceEvents = new ArrayList<>();
 
 			LOGGER.trace(resource.getType() + " element was clicked: "
 					+ resource.getName());

@@ -3,6 +3,7 @@ package com.pathfinder.view.container;
 import java.util.List;
 
 import com.pathfinder.model.Attribut;
+import com.pathfinder.model.EventModel;
 import com.pathfinder.model.ResourceModel;
 import com.pathfinder.presenter.DataLoader;
 import com.pathfinder.presenter.DataLoaderSpec;
@@ -48,8 +49,7 @@ public class DetailContainer extends CustomComponent implements
 
 	@Override
 	public void addDetails(ResourceModel resource,
-			List<Attribut> resourceDetails,
-			List<com.pathfinder.model.Event> resourceEvents) {
+			List<Attribut> resourceDetails, List<EventModel> resourceEvents) {
 		this.removeDetails();
 
 		detailInfo.addDetails(resourceDetails);
