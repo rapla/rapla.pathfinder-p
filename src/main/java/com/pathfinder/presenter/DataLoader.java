@@ -542,6 +542,7 @@ public class DataLoader implements DataLoaderSpec {
 		return instance;
 	}
 
+	@Override
 	public BeanItemContainer<EventModel> getEvent(String resourceId) {
 		String url = EVENTS_RESOURCE_ROOM_METHOD + "resourceId=" + resourceId;
 		BeanItemContainer<EventModel> eventContainer = new BeanItemContainer<EventModel>(
