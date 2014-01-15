@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Locale;
 
 import com.pathfinder.model.Attribut;
+import com.pathfinder.model.EventModel;
 import com.pathfinder.model.FreeRoomModel;
 import com.pathfinder.model.ResourceModel;
 import com.vaadin.data.util.BeanItemContainer;
@@ -122,11 +123,17 @@ public class DataLoaderSpecContract implements DataLoaderSpec {
 	@Override
 	public void setDhbwEntryPoint(String dhbwEntryPoint) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public String getDhbwEntryPoint() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BeanItemContainer<EventModel> getEvent(String resourceId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
