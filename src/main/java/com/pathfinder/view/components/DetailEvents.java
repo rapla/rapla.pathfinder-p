@@ -32,17 +32,13 @@ public class DetailEvents extends CustomComponent implements DetailEventsSpec {
 		layout.addComponent(calendar);
 		setCompositionRoot(layout);
 
-		calendar.addListener(new Listener() {
-
-			@Override
-			public void componentEvent(Event event) {
-				System.out.println("You did something: " + event);
-			}
-		});
 	}
 
 	@Override
 	public void setEvents(BeanItemContainer<EventModel> events) {
+
+		removeEvents();
+
 		calendar.setStartDate(new Date());
 		calendar.setEndDate(new Date());
 
