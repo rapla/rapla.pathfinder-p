@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Locale;
 
 import com.pathfinder.model.Attribut;
+import com.pathfinder.model.EventModel;
 import com.pathfinder.model.FreeRoomModel;
 import com.pathfinder.model.ResourceModel;
 import com.vaadin.data.util.BeanItemContainer;
@@ -34,7 +35,12 @@ public interface DataLoaderSpec {
 	@Pure
 	List<Attribut> getResourceDetails(String resourceId, Locale locale);
 
+	@Pure
 	BeanItemContainer<FreeRoomModel> getFreeResources();
 
+	@Pure
 	String getDhbwEntryPoint();
+
+	@Pure
+	BeanItemContainer<EventModel> getEvent(String resourceId);
 }

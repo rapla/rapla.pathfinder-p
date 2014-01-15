@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Locale;
 
 import com.pathfinder.model.Attribut;
+import com.pathfinder.model.EventModel;
 import com.pathfinder.model.FreeRoomModel;
 import com.pathfinder.model.ResourceModel;
 import com.pathfinder.util.widgetset.BackToHomeScreenListenerSpec;
@@ -338,8 +339,9 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 
 	@Override
 	public void addDetails(ResourceModel resourceModel,
-			List<Attribut> resourceDetails) {
-		detailContainer.addDetails(resourceModel, resourceDetails);
+			List<Attribut> resourceDetails, List<EventModel> resourceEvents) {
+		detailContainer.addDetails(resourceModel, resourceDetails,
+				resourceEvents);
 	}
 
 	@Override

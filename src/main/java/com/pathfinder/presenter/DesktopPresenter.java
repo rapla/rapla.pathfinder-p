@@ -1,5 +1,6 @@
 package com.pathfinder.presenter;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -10,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.pathfinder.model.Attribut;
+import com.pathfinder.model.EventModel;
 import com.pathfinder.model.KeyboardModel;
 import com.pathfinder.model.ResourceModel;
 import com.pathfinder.util.properties.ApplicationProperties;
@@ -62,6 +64,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 
 	private ResourceModel resource = null;
 	private List<Attribut> resourceDetails = null;
+	private List<EventModel> resourceEvents;
 
 	private long lastUserInteractionTimestamp;
 	private boolean wentBackToHomeScreen = true;
@@ -143,6 +146,12 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 			resource = (ResourceModel) event.getItemId();
 			resourceDetails = dataLoader.getResourceDetails(resource.getId(),
 					UI.getCurrent().getLocale());
+
+			// TODO: Load Events
+			List<EventModel> events = new ArrayList<>();
+
+			resourceEvents = new ArrayList<>();
+
 			LOGGER.trace(resource.getType() + " element was clicked: "
 					+ resource.getName());
 			switchToDetailView();
@@ -348,15 +357,14 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		desktopLayout.replaceWheelChairButtonWithHomeButton();
 		desktopLayout.replaceBackButtonWithAppointmentButton();
 		for (Attribut attribut : resourceDetails) {
-			// TODO Only works if language is German
-			LOGGER.trace("Detail attribut: " + attribut.getLabel());
-			if ("Belegung".equals(attribut.getLabel())) {
+			LOGGER.trace("Detail attribut: " + attribut.getKey());
+			if ("resourcueurl".equals(attribut.getKey())) {
 				desktopLayout.showAppointmentButton();
 			}
 		}
 
 		// Showing
-		desktopLayout.addDetails(resource, resourceDetails);
+		desktopLayout.addDetails(resource, resourceDetails, resourceEvents);
 		desktopLayout.showDetailContainer();
 	}
 
