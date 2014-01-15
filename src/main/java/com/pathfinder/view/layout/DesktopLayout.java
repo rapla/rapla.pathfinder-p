@@ -339,7 +339,7 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 
 	@Override
 	public void addDetails(ResourceModel resourceModel,
-			List<Attribut> resourceDetails, List<EventModel> resourceEvents) {
+			List<Attribut> resourceDetails, BeanItemContainer<EventModel> resourceEvents) {
 		detailContainer.addDetails(resourceModel, resourceDetails,
 				resourceEvents);
 	}

@@ -1,26 +1,36 @@
 package com.pathfinder.model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.vaadin.ui.components.calendar.event.CalendarEvent;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class EventModel {
-	String name;
-	String start;
-	String end;
-	List<ResourceModel> resources;
+public class EventModel implements CalendarEvent {
+
+	private static final Logger LOGGER = LogManager.getLogger(EventModel.class);
+
+	private String name;
+	@JsonProperty("start")
+	private String startString;
+	@JsonProperty("end")
+	private String endString;
+	private List<ResourceModel> resources;
+	private Date start;
+	private Date end;
+	private String description;
+	private String styleName;
+	private boolean isAllDay;
+	private final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
 
 	public EventModel() {
-	}
-
-	public EventModel(String name, String begin, String end,
-			List<ResourceModel> resources) {
-		super();
-		this.name = name;
-		this.start = begin;
-		this.end = end;
-		this.resources = resources;
 	}
 
 	public String getName() {
@@ -31,20 +41,30 @@ public class EventModel {
 		this.name = name;
 	}
 
-	public String getStart() {
-		return start;
+	public String getStartString() {
+		return startString;
 	}
 
-	public void setStart(String start) {
-		this.start = start;
+	public void setStartString(String start) {
+		try {
+			this.start = dateFormat.parse(start);
+		} catch (ParseException pe) {
+			LOGGER.error("Event's start time couldn't be parsed to date instance. Check data interface!");
+		}
+		this.startString = start;
 	}
 
-	public String getEnd() {
-		return end;
+	public String getEndString() {
+		return endString;
 	}
 
-	public void setEnd(String end) {
-		this.end = end;
+	public void setEndString(String end) {
+		try {
+			this.end = dateFormat.parse(end);
+		} catch (ParseException pe) {
+			LOGGER.error("Event's end time couldn't be parsed to date instance. Check data interface!");
+		}
+		this.endString = end;
 	}
 
 	public List<ResourceModel> getResources() {
@@ -57,8 +77,38 @@ public class EventModel {
 
 	@Override
 	public String toString() {
-		return "EventModel [name=" + name + ", start=" + start + ", end=" + end
-				+ ", resources=" + resources + "]";
+		return "EventModel [name=" + name + ", start=" + startString + ", end="
+				+ endString + ", resources=" + resources + "]";
+	}
+
+	@Override
+	public String getCaption() {
+		return name;
+	}
+
+	@Override
+	public String getDescription() {
+		return this.description;
+	}
+
+	@Override
+	public String getStyleName() {
+		return this.styleName;
+	}
+
+	@Override
+	public boolean isAllDay() {
+		return isAllDay;
+	}
+
+	@Override
+	public Date getStart() {
+		return this.start;
+	}
+
+	@Override
+	public Date getEnd() {
+		return this.end;
 	}
 
 }

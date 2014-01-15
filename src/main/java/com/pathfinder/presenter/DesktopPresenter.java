@@ -1,6 +1,5 @@
 package com.pathfinder.presenter;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -64,7 +63,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 
 	private ResourceModel resource = null;
 	private List<Attribut> resourceDetails = null;
-	private List<EventModel> resourceEvents;
+	private BeanItemContainer<EventModel> resourceEvents;
 
 	private long lastUserInteractionTimestamp;
 	private boolean wentBackToHomeScreen = true;
@@ -147,10 +146,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 			resourceDetails = dataLoader.getResourceDetails(resource.getId(),
 					UI.getCurrent().getLocale());
 
-			// TODO: Load Events
-			List<EventModel> events = new ArrayList<>();
-
-			resourceEvents = new ArrayList<>();
+			resourceEvents = dataLoader.getEvent(resource.getId());
 
 			LOGGER.trace(resource.getType() + " element was clicked: "
 					+ resource.getName());

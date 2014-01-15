@@ -2,12 +2,11 @@ package com.pathfinder.view.components;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 import com.pathfinder.model.EventModel;
+import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Calendar;
 import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.components.calendar.event.BasicEvent;
 import com.vaadin.ui.components.calendar.event.CalendarEvent;
 
 /**
@@ -15,7 +14,6 @@ import com.vaadin.ui.components.calendar.event.CalendarEvent;
  * 
  */
 public class DetailEvents extends CustomComponent implements DetailEventsSpec {
-
 	private final Calendar calendar = new Calendar();
 	private final GregorianCalendar gc = new GregorianCalendar();
 
@@ -24,35 +22,27 @@ public class DetailEvents extends CustomComponent implements DetailEventsSpec {
 	}
 
 	@Override
-	public void setEvents(List<EventModel> events) {
+	public void setEvents(BeanItemContainer<EventModel> events) {
 		calendar.setStartDate(new Date());
 		calendar.setEndDate(new Date());
 
 		int firstHourOfDay = 24;
 		int lastHourOfDay = 0;
 
-		BasicEvent calendarEvent;
-		for (EventModel event : events) {
-			// TODO: Adapt do 'real' event data
-			// calendarEvent = new BasicEvent();
-			// calendarEvent.setCaption(event.getName());
-			// calendarEvent.setDescription("Description of event");
-			// GregorianCalendar gc = new GregorianCalendar();
-			// calendarEvent.setStart(new Date());
-			// gc.add(java.util.Calendar.HOUR_OF_DAY, 2);
-			// calendarEvent.setEnd(gc.getTime());
-			//
-			// calendar.addEvent(calendarEvent);
-			//
-			// int startHour = getHourOfDay(calendarEvent.getStart());
-			// if (startHour < firstHourOfDay) {
-			// firstHourOfDay = startHour;
-			// }
-			// int endHour = getHourOfDay(calendarEvent.getEnd());
-			// if (endHour > lastHourOfDay) {
-			// lastHourOfDay = endHour;
-			// }
+		for (EventModel event : events.getItemIds()) {
 
+			int startHour = getHourOfDay(event.getStart());
+			int endHour = getHourOfDay(event.getEnd());
+			if (startHour == -1 || endHour == -1)
+				break;
+			if (startHour < firstHourOfDay) {
+				firstHourOfDay = startHour;
+			}
+			if (endHour > lastHourOfDay) {
+				lastHourOfDay = endHour;
+			}
+
+			calendar.addEvent(event);
 		}
 
 		calendar.setFirstVisibleHourOfDay(firstHourOfDay - 1);
@@ -61,8 +51,12 @@ public class DetailEvents extends CustomComponent implements DetailEventsSpec {
 	}
 
 	private int getHourOfDay(Date date) {
-		gc.setTime(date);
-		return gc.get(java.util.Calendar.HOUR_OF_DAY);
+		int result = -1;
+		if (date != null) {
+			gc.setTime(date);
+			result = gc.get(java.util.Calendar.HOUR_OF_DAY);
+		}
+		return result;
 	}
 
 	@Override

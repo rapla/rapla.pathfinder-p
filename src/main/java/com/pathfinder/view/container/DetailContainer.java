@@ -13,6 +13,7 @@ import com.pathfinder.view.components.DetailImage;
 import com.pathfinder.view.components.DetailImageSpec;
 import com.pathfinder.view.components.DetailInfo;
 import com.pathfinder.view.components.DetailInfoSpec;
+import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.UI;
@@ -51,7 +52,8 @@ public class DetailContainer extends CustomComponent implements
 
 	@Override
 	public void addDetails(ResourceModel resource,
-			List<Attribut> resourceDetails, List<EventModel> resourceEvents) {
+			List<Attribut> resourceDetails,
+			BeanItemContainer<EventModel> resourceEvents) {
 		this.removeDetails();
 
 		detailInfo.addDetails(resourceDetails);
