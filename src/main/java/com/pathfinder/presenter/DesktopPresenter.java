@@ -348,9 +348,8 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		desktopLayout.replaceWheelChairButtonWithHomeButton();
 		desktopLayout.replaceBackButtonWithAppointmentButton();
 		for (Attribut attribut : resourceDetails) {
-			// TODO Only works if language is German
-			LOGGER.trace("Detail attribut: " + attribut.getLabel());
-			if ("Belegung".equals(attribut.getLabel())) {
+			LOGGER.trace("Detail attribut: " + attribut.getKey());
+			if ("resourcueurl".equals(attribut.getKey())) {
 				desktopLayout.showAppointmentButton();
 			}
 		}

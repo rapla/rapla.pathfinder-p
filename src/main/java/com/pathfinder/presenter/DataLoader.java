@@ -495,7 +495,7 @@ public class DataLoader implements DataLoaderSpec {
 				attribut = new Attribut();
 
 				String nextKey = attributeMapKeys.next().toString();
-
+				attribut.setKey(nextKey.toLowerCase());
 				attribut.setLabel((String) ((JSONObject) attributMap
 						.get(nextKey)).get(Attribut.PROPERTY_LABEL));
 				attribut.setValue((String) ((JSONObject) attributMap

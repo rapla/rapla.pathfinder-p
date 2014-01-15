@@ -30,9 +30,11 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 		while (modelDetailsIterator.hasNext()) {
 			Attribut modelAttribut = modelDetailsIterator.next();
 
-			label = new Label(modelAttribut.getLabel()
-					+ modelAttribut.getValue());
-			layout.addComponent(label);
+			if (!"resourceurl".equals(modelAttribut.getKey())) {
+				label = new Label(modelAttribut.getLabel()
+						+ modelAttribut.getValue());
+				layout.addComponent(label);
+			}
 		}
 	}
 
