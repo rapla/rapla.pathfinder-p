@@ -8,9 +8,9 @@ import org.apache.logging.log4j.Logger;
 
 import com.pathfinder.presenter.DataLoader;
 import com.pathfinder.presenter.DataLoaderSpec;
+import com.pathfinder.presenter.DesktopPresenter;
 import com.pathfinder.presenter.DesktopPresenterSpec;
 import com.pathfinder.presenter.MobilePresenterSpec;
-import com.pathfinder.presenter.StelePresenter;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.vaadin.annotations.Theme;
@@ -95,15 +95,15 @@ public class PathfinderUI extends UI {
 	}
 
 	private void buildLayout() {
-		stelePresenter = new StelePresenter();
-		setContent(stelePresenter.getDesktopLayoutView());
-		addListenerToAllChildComponents((HasComponents) getContent(),
-				stelePresenter.getUiListener());
-
-		// desktopPresenter = new DesktopPresenter();
-		// setContent(desktopPresenter.getDesktopLayoutView());
+		// stelePresenter = new StelePresenter();
+		// setContent(stelePresenter.getDesktopLayoutView());
 		// addListenerToAllChildComponents((HasComponents) getContent(),
-		// desktopPresenter.getUiListener());
+		// stelePresenter.getUiListener());
+
+		desktopPresenter = new DesktopPresenter();
+		setContent(desktopPresenter.getDesktopLayoutView());
+		addListenerToAllChildComponents((HasComponents) getContent(),
+				desktopPresenter.getUiListener());
 
 		// TODO
 		// LOGGER.trace("Desktop application initialized");
