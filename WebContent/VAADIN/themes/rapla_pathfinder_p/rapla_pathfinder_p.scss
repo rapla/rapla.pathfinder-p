@@ -15,9 +15,14 @@
 		padding: 0;
 	}
 	
+	.pathfinder {
+		background-image: url('img/background.png') !important;
+		background-color: #E0E0E0 !important;
+	}
 	
 	.main {
-		background: #E0E0E0;
+
+
 		width: 98% !important;
 		max-width: 1080px;
 		overflow: hidden !important;
@@ -181,12 +186,13 @@
 		}
 	}
 	
+    /*
 	.result-table{
 		width: 100%;
 		display: block;
 		overflow: hidden;
 
-		.result-table-row {
+		.v-table-cell-content-result-table-row {
 			height: 40px;
 			background-color: #767676;
 			margin-top: 2px;
@@ -204,7 +210,26 @@
 				}
 			}
 		}
-	}
+	}*/
+    
+      /* Style the whole row 
+  .v-table-row.v-table-row-highlight-row-yellow,.v-table-row-odd.v-table-row-highlight-row-yellow {
+  	background-color: yellow;
+        height: 40px;
+  }*/
+    
+      /* Style specifically for the "red" cells. */
+  .v-table-cell-content-result-row {
+        height: 40px;
+			background-color: #767676;
+			margin-top: 2px;
+			padding-left: 30px;
+        
+        .v-table-cell-wrapper {
+					color: #cccccc; 
+					font: 20px Arial;
+				}
+  }
 	
 	.accordion-result-item-content{
 		height: auto !important;

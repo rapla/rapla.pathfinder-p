@@ -20,6 +20,7 @@ import com.vaadin.ui.Accordion;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.TabSheet.Tab;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.Table.CellStyleGenerator;
 import com.vaadin.ui.Table.ColumnHeaderMode;
 
 /**
@@ -73,14 +74,21 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 		table.setImmediate(true);
 		table.setColumnHeaderMode(ColumnHeaderMode.HIDDEN);
 		table.setVisibleColumns(vivisbleColumns);
-		table.setPageLength(10);
+		table.setPageLength(5);
 		table.setCacheRate(Double.parseDouble(ApplicationProperties
 				.getInstance().getProperty(PropertiesKey.TABLE_CACHE_RATE)));
 		table.setSortContainerPropertyId(ResourceModel.PROPERTY_NAME);
 		table.setSortAscending(true);
 		table.setSelectable(true);
 		table.setSizeFull();
-		// TODO table.setPrimaryStyleName("result-table");
+		table.setCellStyleGenerator(new CustomCellStyleGenerator());
+	}
+
+	class CustomCellStyleGenerator implements CellStyleGenerator {
+		@Override
+		public String getStyle(Table source, Object itemId, Object propertyId) {
+			return "result-row";
+		}
 	}
 
 	private void buildLayout() {
@@ -134,8 +142,6 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 		this.addFiltersToTables(tableFilters, personContainer);
 		this.addFiltersToTables(tableFilters, poiContainer);
 
-		System.out.println("Size1: " + roomContainer.size());
-
 		// Update table captions
 		this.updateTableCaptions();
 	}
@@ -153,19 +159,6 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 
 		return filters;
 	}
-
-	// private List<Filter> createFiltersForOnlyForVisibleColumns(
-	// String[] visibleTableColumns, String filterString) {
-	// List<Filter> filters = new ArrayList<Filter>();
-	//
-	// for (String visibleColumn : visibleTableColumns) {
-	// Filter filter = new SimpleStringFilter(visibleColumn, filterString,
-	// true, false);
-	// filters.add(filter);
-	// }
-	//
-	// return filters;
-	// }
 
 	private void removeAllFiltersFromContainers() {
 		roomContainer.removeAllContainerFilters();
@@ -256,20 +249,19 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 	}
 
 	private int getRoomTableLength() {
-		System.out.println("Size2: " + roomContainer.size());
-		return roomContainer.size();
+		return roomTable.size();
 	}
 
 	private int getCourseTableLength() {
-		return courseContainer.size();
+		return courseTable.size();
 	}
 
 	private int getPersonTableLength() {
-		return personContainer.size();
+		return personTable.size();
 	}
 
 	private int getPoiTableLength() {
-		return poiContainer.size();
+		return poiTable.size();
 	}
 
 	@Override
