@@ -234,31 +234,24 @@ public class DataLoader implements DataLoaderSpec {
 	}
 
 	private void loadFaculty() {
-		// load the root facultys
 		List<Category> categoryResult = jacksonGetOrganigram();
-		List<ResourceModel> ResourceData;
 
 		if (categoryResult != null)
 			for (Category faculty : categoryResult) {
 
 				try {
-					// get all courses in an special faculty
-					// TODO Use courseContainer - don´t call rapla again
-					List<ResourceModel> resourcesResult = jacksonGetResources(
+					List<ResourceModel> courseResult = jacksonGetResources(
 							REQUEST_PARAMETER_COURSES, faculty.getId());
-					if (resourcesResult != null)
-						// look if there is any courses with the same id in the
-						// RAM
-						for (ResourceModel course_get : resourcesResult) {
-							ResourceModel course = courseContainer.getItem(
-									course_get.getId()).getBean();
-							if (course != null) {
-								// add the actual category information to the
-								// found
-								// item
-								course.setFaculty(faculty.getName());
-							}
 
+					if (courseResult != null)
+						for (ResourceModel courseModel : courseResult) {
+							for (ResourceModel resourceModel : courseContainer
+									.getItemIds()) {
+								if (courseModel.getId().equals(
+										resourceModel.getId())) {
+									resourceModel.setFaculty(faculty.getName());
+								}
+							}
 						}
 				} catch (Exception e) {
 					LOGGER.info("Faculty " + faculty.getName()
@@ -266,21 +259,19 @@ public class DataLoader implements DataLoaderSpec {
 				}
 
 				try {
-					// get all persons in an special faculty
-					// TODO Use personContainer - don´t call rapla again
-					ResourceData = jacksonGetResources(
+					List<ResourceModel> personResult = jacksonGetResources(
 							REQUEST_PARAMETER_PERSONS, faculty.getId());
 
-					// look if there is any persons with the same id in the RAM
-					for (ResourceModel person_get : ResourceData) {
-						ResourceModel person = personContainer.getItem(
-								person_get.getId()).getBean();
-						if (person != null) {
-							// add the actual category information to the found
-							// item
-							person.setFaculty(faculty.getName());
+					if (personResult != null)
+						for (ResourceModel personModel : personResult) {
+							for (ResourceModel resourceModel : personContainer
+									.getItemIds()) {
+								if (personModel.getId().equals(
+										resourceModel.getId())) {
+									resourceModel.setFaculty(faculty.getName());
+								}
+							}
 						}
-					}
 				} catch (Exception e) {
 					LOGGER.info("Faculty " + faculty.getName()
 							+ " has no persons");
