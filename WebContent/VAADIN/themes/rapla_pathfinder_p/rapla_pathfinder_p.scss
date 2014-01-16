@@ -15,9 +15,14 @@
 		padding: 0;
 	}
 	
+	.pathfinder {
+		background-image: url('img/background.png') !important;
+		background-color: #E0E0E0 !important;
+	}
 	
 	.main {
-		background: #E0E0E0;
+		
+		
 		width: 98% !important;
 		max-width: 1080px;
 		overflow: hidden !important;
@@ -296,6 +301,7 @@
 	.timeLabel {
 		display: inline;
 		float: right;
+		color: #FFF;
 	}
 	
 	/* MenuBar Styling */

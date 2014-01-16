@@ -52,6 +52,7 @@ public class PathfinderUI extends UI {
 		this.setUiLocale(request.getLocale());
 		this.printBrowserInfo(page, webBrowser, userAgent);
 		this.initDataloader();
+		this.setPrimaryStyleName("pathfinder");
 		this.buildLayout();
 	}
 
