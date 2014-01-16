@@ -80,7 +80,7 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 		table.setSortAscending(true);
 		table.setSelectable(true);
 		table.setSizeFull();
-		table.setPrimaryStyleName("result-table");
+		// TODO table.setPrimaryStyleName("result-table");
 	}
 
 	private void buildLayout() {
@@ -133,6 +133,8 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 		this.addFiltersToTables(tableFilters, courseContainer);
 		this.addFiltersToTables(tableFilters, personContainer);
 		this.addFiltersToTables(tableFilters, poiContainer);
+
+		System.out.println("Size1: " + roomContainer.size());
 
 		// Update table captions
 		this.updateTableCaptions();
@@ -254,19 +256,20 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 	}
 
 	private int getRoomTableLength() {
-		return roomTable.getItemIds().size();
+		System.out.println("Size2: " + roomContainer.size());
+		return roomContainer.size();
 	}
 
 	private int getCourseTableLength() {
-		return courseTable.getItemIds().size();
+		return courseContainer.size();
 	}
 
 	private int getPersonTableLength() {
-		return personTable.getItemIds().size();
+		return personContainer.size();
 	}
 
 	private int getPoiTableLength() {
-		return poiTable.getItemIds().size();
+		return poiContainer.size();
 	}
 
 	@Override
