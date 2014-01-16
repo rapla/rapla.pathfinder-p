@@ -95,9 +95,10 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 		layout.addComponent(wheelChairButton, 2, 0);
 		ThemeResource resFooter = new ThemeResource("img/footer.png");
 		imgFooter.setSource(resFooter);
+		imgFooter.setPrimaryStyleName("image-footer");
 		layout.addComponent(imgFooter, 0, 1, 2, 1);
-		layout.setComponentAlignment(languagePopupButton, Alignment.TOP_CENTER);
-		layout.setComponentAlignment(wheelChairButton, Alignment.TOP_CENTER);
+		layout.setComponentAlignment(languagePopupButton, Alignment.TOP_LEFT);
+		layout.setComponentAlignment(wheelChairButton, Alignment.TOP_RIGHT);
 		layout.setSizeFull();
 	}
 
@@ -153,7 +154,7 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	public void replaceWheelChairButtonWithHomeButton() {
 		if (wheelChairButton.equals(layout.getComponent(2, 0))) {
 			layout.replaceComponent(wheelChairButton, homeButton);
-			layout.setComponentAlignment(homeButton, Alignment.TOP_CENTER);
+			layout.setComponentAlignment(homeButton, Alignment.TOP_RIGHT);
 		}
 	}
 
@@ -161,7 +162,7 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 	public void replaceHomeButtonWithWheelChairButton() {
 		if (homeButton.equals(layout.getComponent(2, 0))) {
 			layout.replaceComponent(homeButton, wheelChairButton);
-			layout.setComponentAlignment(wheelChairButton, Alignment.TOP_CENTER);
+			layout.setComponentAlignment(wheelChairButton, Alignment.TOP_RIGHT);
 		}
 	}
 

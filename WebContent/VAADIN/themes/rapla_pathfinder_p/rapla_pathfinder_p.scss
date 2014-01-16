@@ -19,6 +19,8 @@
 	.main {
 		background: #E0E0E0;
 		width: 98% !important;
+		max-width: 1080px;
+		overflow: hidden !important;
 		height: 100%;
 		padding-left: 1%;
 		padding-right: 1%;
@@ -311,7 +313,7 @@
 		position: absolute;
 		top: 0;
 		left: 0;
-		margin-top: 1776px;
+		margin-top: 1722px;
 		
 		.v-gridlayout {
 			
@@ -325,6 +327,13 @@
 			
 			.homeButton {
 				margin-right: 2em;
+			}
+			
+			.v-gridlayout-slot {
+				
+				.image-footer{
+					padding-top: 60px;
+				}
 			}
 		}
 	}
