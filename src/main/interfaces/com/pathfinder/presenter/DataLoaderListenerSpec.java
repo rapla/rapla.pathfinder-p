@@ -13,4 +13,6 @@ package com.pathfinder.presenter;
 public interface DataLoaderListenerSpec {
 
 	void dataUpdated();
+
+	boolean isTimeToGetRemoved();
 }

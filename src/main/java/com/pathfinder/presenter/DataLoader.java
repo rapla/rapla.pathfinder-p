@@ -7,7 +7,6 @@ import java.net.ConnectException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -34,7 +33,6 @@ import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.ApplicationPropertiesSpec;
 import com.pathfinder.util.properties.PropertiesKey;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.ui.UI;
 
 /**
  * Load data from the rapla server
@@ -338,19 +336,17 @@ public class DataLoader implements DataLoaderSpec {
 	}
 
 	private void removeDeadListener() {
-		long tenMinutesAgo = new Date().getTime() - 10 * 60 * 1000;
+
 		List<DataLoaderListenerSpec> listenerToBeRemoved = new ArrayList<DataLoaderListenerSpec>();
 
 		// Find all listener that are UIs and didn't send two consecutive
 		// heartbeats (UI sends a heartbeat every 5 Minutes if alive)
 		Iterator<DataLoaderListenerSpec> iterator = dataListener.iterator();
 		while (iterator.hasNext()) {
+
 			DataLoaderListenerSpec listener = iterator.next();
-			if (listener instanceof UI) {
-				long lastHeartbeat = ((UI) listener)
-						.getLastHeartbeatTimestamp();
-				if (lastHeartbeat < tenMinutesAgo)
-					listenerToBeRemoved.add(listener);
+			if (listener.isTimeToGetRemoved()) {
+				listenerToBeRemoved.add(listener);
 			}
 		}
 

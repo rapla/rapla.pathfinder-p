@@ -1,6 +1,5 @@
 package com.pathfinder.presenter;
 
-import java.util.List;
 import java.util.Locale;
 
 import org.junit.Assert;
@@ -49,6 +48,11 @@ public class DataLoaderTest {
 			@Override
 			public void dataUpdated() {
 				dataUpdated = true;
+			}
+
+			@Override
+			public boolean isTimeToGetRemoved() {
+				return true;
 			}
 		});
 

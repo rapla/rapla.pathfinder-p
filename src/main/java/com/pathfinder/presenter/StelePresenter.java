@@ -454,4 +454,19 @@ public class StelePresenter implements DesktopLayoutViewListenerSpec,
 	public DesktopLayoutSpec getDesktopLayoutView() {
 		return steleLayout;
 	}
+
+	@Override
+	public boolean isTimeToGetRemoved() {
+
+		boolean result = false;
+
+		long tenMinutesAgo = new Date().getTime() - 10 * 60 * 1000;
+
+		long lastHeartbeat = UI.getCurrent().getLastHeartbeatTimestamp();
+
+		if (lastHeartbeat < tenMinutesAgo)
+			result = true;
+
+		return result;
+	}
 }
