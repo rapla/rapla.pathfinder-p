@@ -52,9 +52,12 @@
 		<dependency org="org.apache.logging.log4j" name="log4j-core"
 			rev="2.0-beta9" />
 
-		<!-- Responsive addon -->
+		<!-- Responsive addon 
 		<dependency org="com.vaadin.addon.responsive" name="responsive"
-			rev="1.0.0.alpha4" />
+			rev="1.0.0.alpha4" />-->
+			
+		<!-- Grid AddOn - Should be replaced asap through the native Grid integrated in Vaadin 7.2 -->
+		<dependency org="com.lexaden.components" name="grid" rev="1.8.1" />
 			
 		<!-- Jackson -->	
 		<dependency org="com.fasterxml.jackson.core" name="jackson-databind" rev="2.3.1" />

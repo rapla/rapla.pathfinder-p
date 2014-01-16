@@ -34,14 +34,6 @@
         -ms-user-select: none;
         -o-user-select: none;
         user-select: none;
-        
-        overflow: scroll;
-        -webkit-overflow-scrolling: touch;
-        -ms-overflow-style: scrollbar;
-        
-        -ms-touch-action: auto;
-         /*This should be used in IE11+ */
-        touch-action: auto;
 	}
 	
 	/* Keyboard Styling */
@@ -188,40 +180,9 @@
 			padding-left: 0.3%;
 		}
 	}
-	
-    /*
-	.result-table{
-		width: 100%;
-		display: block;
-		overflow: hidden;
-
-		.v-table-cell-content-result-table-row {
-			height: 40px;
-			background-color: #767676;
-			margin-top: 2px;
-			width: 96%;
-			display: block;
-			padding-left: 30px;
-				
-			.result-table-cell-content{
-				width: 100% !important;
-				display: block;	
-				
-				.result-table-cell-wrapper {
-					color: #cccccc; 
-					font: 20px Arial;
-				}
-			}
-		}
-	}*/
     
-      /* Style the whole row 
-  .v-table-row.v-table-row-highlight-row-yellow,.v-table-row-odd.v-table-row-highlight-row-yellow {
-  	background-color: yellow;
-        height: 40px;
-  }*/
+    /* Global table styling */
     
-      /* Style specifically for the "red" cells. */
 	.v-table-row-result-row{
 		margin-top: 2px;
 		display: block;
@@ -383,22 +344,6 @@
 			}
 		}
 	}
-	
-	/* Detail Page Styling */
-	
-	/* Not up-to-date
-    .details {
-		margin-top: 2em;
-		background-color: #393939;
-		overflow: hidden;
-		height: 45em;
-		margin-bottom: 1em;
-		
-			.v-label {
-				font: 1.65em Arial;
-				color: #FFF;
-			}
-	} */
 	
 	.details {
 		
