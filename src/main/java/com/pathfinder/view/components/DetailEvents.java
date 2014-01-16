@@ -14,6 +14,7 @@ import com.vaadin.ui.Calendar;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.components.calendar.event.CalendarEvent;
 
 /**
@@ -100,5 +101,7 @@ public class DetailEvents extends CustomComponent implements DetailEventsSpec {
 	public void updateTranslations() {
 		noEventsLabel.setCaption(translator
 				.translate(TranslationKeys.NO_EVENTS_AVAILABLE));
+		calendar.setLocale(UI.getCurrent().getLocale());
 	}
+
 }
