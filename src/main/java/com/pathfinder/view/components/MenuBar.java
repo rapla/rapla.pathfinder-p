@@ -8,6 +8,7 @@ import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
+import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.server.Resource;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Alignment;
@@ -79,6 +80,7 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 		String recentFlagFilename = THEME_RESOURCES_FOLDER
 				+ UI.getCurrent().getLocale().getLanguage()
 				+ THEME_RESOURCES_SUFFIX;
+		languagePopupButton.setClickShortcut(KeyCode.ARROW_UP);
 		languagePopupButton.setIcon(new ThemeResource(recentFlagFilename));
 	}
 

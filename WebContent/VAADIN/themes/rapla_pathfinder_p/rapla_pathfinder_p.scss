@@ -342,7 +342,15 @@
 	}
 	
 	.v-popupview-popup {
-		background-color: #ccc;
+		background-color: #767676;
+	}
+	
+	.v-popupbutton .v-popup-indicator {
+		background-image: url('icon/dropup_icon.png') !important;
+		background-size: 20px Auto;
+		width: 60px;
+		height:60px;
+		background-position:20px 50%;
 	}
 	
 	.menuBar{
@@ -355,7 +363,8 @@
 			
 			.languageButton {
 				margin-left: 2em;
-				background: #ccc;
+				background: #797979;
+				height: 60px;
 			}
 			
 			.wheelChairButton {
