@@ -7,9 +7,10 @@
 			<ibiblio name="public" m2compatible="true" />
 
 			<!-- Vaadin Add-on repository -->
-			<ibiblio name="vaadin-addons" usepoms="true" m2compatible="true"
-				root="http://maven.vaadin.com/vaadin-addons" />
-
+			<ibiblio name="vaadin-addons" usepoms="true" m2compatible="true" root="http://maven.vaadin.com/vaadin-addons" />
+			
+			<ibiblio name="lexaden" usepoms="true" m2compatible="true" root="http://www.lexaden.com/maven2/repo" />
+			
 			<!-- Vaadin snapshots repository -->
 			<ibiblio name="vaadin-snapshots" usepoms="true" m2compatible="true"
 				root="https://oss.sonatype.org/content/repositories/vaadin-snapshots" />
