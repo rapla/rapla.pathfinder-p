@@ -18,6 +18,7 @@ public class DetailImage extends Image implements DetailImageSpec {
 	private final String IMAGE_ENDING = ".png";
 
 	public DetailImage() {
+		this.setPrimaryStyleName("detail-image");
 		buildLayout();
 	}
 

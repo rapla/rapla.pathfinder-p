@@ -54,7 +54,7 @@ public class DetailContainer extends CustomComponent implements
 	}
 
 	private void addStyling() {
-		// TODO this.setPrimaryStyleName("detail-container");
+		this.setPrimaryStyleName("details");
 	}
 
 	@Override
