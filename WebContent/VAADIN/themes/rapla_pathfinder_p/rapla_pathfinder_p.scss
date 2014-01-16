@@ -119,8 +119,8 @@
 	
 	.search {
 		width: 100%;
-		margin-top: 1%;
-		margin-bottom: 1%;
+		margin-top: 3em;
+		margin-bottom: 3em;
 		background-color: #e2001b;
 		
 		.v-slot {
@@ -128,21 +128,20 @@
 			
 			.search-icon {
 				float:left;
-				width: 4%;
-				height: 3em;
+				width: 6%;
 				
 				img {
-					height:2.1em;
-					width:2.1em;
-					padding-left: 20%;
-					padding-top: 15%;
+					height:2.8em;
+					width:2.8em;
+					padding-left: 22%;
+					padding-top: 20%;
 				}
 			}
 			
 			.searchfield {
 				float:left;
-				width:92%;
-				height: 40px;
+				width:88%;
+				height: 60px;
 				background-color: #FFFFFF;
 				border: 1px solid #e2001b;
 				font: 1.65em Arial;
@@ -150,13 +149,12 @@
 			
 			.delete-icon {
 				float:left;
-				width: 3%;
-				height: 40px;
+				width: 6%;
 				
 				img {
-					height:2.1em;
-					width:2.1em;
-					padding-left: 23%;
+					height:2.8em;
+					width:2.8em;
+					padding-left: 22%;
 					padding-top: 20%;
 				}
 			}
@@ -164,6 +162,10 @@
 	}
     
     /* Accordion styling */
+
+	.accordion-result{
+		margin-top: 7em;
+	}
 	
 	.accordion-result-item-caption {
 		height: 40px;
@@ -285,7 +287,7 @@
 	
 	.freeroom-border {
 		width: 100%;
-		margin-top: 2em;
+		margin-top: 7em;
 		color: #393939;
 		margin-bottom: 2em;
 		
