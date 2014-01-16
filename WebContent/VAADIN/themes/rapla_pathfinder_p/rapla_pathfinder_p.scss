@@ -22,7 +22,6 @@
 	
 	.main {
 		width: 98% !important;
-		max-width: 1080px;
 		overflow: hidden !important;
 		height: 100%;
 		padding-left: 1%;
@@ -217,17 +216,21 @@
   }*/
     
       /* Style specifically for the "red" cells. */
-  .v-table-cell-content-result-row {
-        height: 40px;
+	.v-table-row-result-row{
+		margin-top: 2px;
+		display: block;
+	
+		.v-table-cell-content-result-row {
+			height: 40px;
 			background-color: #767676;
-			margin-top: 2px;
 			padding-left: 30px;
         
-        .v-table-cell-wrapper {
-					color: #cccccc; 
-					font: 20px Arial;
-				}
-  }
+        	.v-table-cell-wrapper {
+				color: #cccccc; 
+				font: 20px Arial;
+			}
+		}
+	}
 	
 	.accordion-result-item-content{
 		height: auto !important;
@@ -333,6 +336,10 @@
 		margin: 0.2em;
 	}
 	
+	.v-popupview-popup {
+		background-color: #ccc;
+	}
+	
 	.menuBar{
 		position: absolute;
 		top: 0;
@@ -343,6 +350,7 @@
 			
 			.languageButton {
 				margin-left: 2em;
+				background: #ccc;
 			}
 			
 			.wheelChairButton {
