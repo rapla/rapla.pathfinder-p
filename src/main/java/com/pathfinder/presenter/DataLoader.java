@@ -243,40 +243,49 @@ public class DataLoader implements DataLoaderSpec {
 					List<ResourceModel> courseResult = jacksonGetResources(
 							REQUEST_PARAMETER_COURSES, faculty.getId());
 
-					if (courseResult != null)
-						for (ResourceModel courseModel : courseResult) {
-							for (ResourceModel resourceModel : courseContainer
+					if (courseResult != null) {
+						for (ResourceModel loadedCourse : courseResult) {
+							for (ResourceModel localeCourseFromContainer : courseContainer
 									.getItemIds()) {
-								if (courseModel.getId().equals(
-										resourceModel.getId())) {
-									resourceModel.setFaculty(faculty.getName());
+								if (loadedCourse.getId().equals(
+										localeCourseFromContainer.getId())) {
+									localeCourseFromContainer
+											.setFaculty(faculty.getName());
 								}
 							}
 						}
+					} else {
+						LOGGER.error("Couldn´t load courses to add their faculties");
+					}
 				} catch (Exception e) {
-					LOGGER.info("Faculty " + faculty.getName()
-							+ " has no courses");
+					LOGGER.error("Faculty couldn´t added to courses");
 				}
 
 				try {
 					List<ResourceModel> personResult = jacksonGetResources(
 							REQUEST_PARAMETER_PERSONS, faculty.getId());
 
-					if (personResult != null)
-						for (ResourceModel personModel : personResult) {
-							for (ResourceModel resourceModel : personContainer
+					if (personResult != null) {
+						for (ResourceModel loadedPerson : personResult) {
+							for (ResourceModel localPersonFromContainer : personContainer
 									.getItemIds()) {
-								if (personModel.getId().equals(
-										resourceModel.getId())) {
-									resourceModel.setFaculty(faculty.getName());
+								if (loadedPerson.getId().equals(
+										localPersonFromContainer.getId())) {
+									localPersonFromContainer.setFaculty(faculty
+											.getName());
 								}
 							}
 						}
+					} else {
+						LOGGER.error("Couldn´t load persons to add their faculties");
+					}
 				} catch (Exception e) {
-					LOGGER.info("Faculty " + faculty.getName()
-							+ " has no persons");
+					LOGGER.error("Faculty couldn´t added to persons");
 				}
 			}
+		else {
+			LOGGER.error("Couldn´t load faculties");
+		}
 	}
 
 	private TimerTask getTimerTask() {
