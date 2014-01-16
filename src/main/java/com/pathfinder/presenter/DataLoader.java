@@ -398,7 +398,7 @@ public class DataLoader implements DataLoaderSpec {
 
 	@SuppressWarnings("finally")
 	@Override
-	public BeanItemContainer<FreeRoomModel> getFreeResources() {
+	public synchronized BeanItemContainer<FreeRoomModel> getFreeResources() {
 		FreeRoomModel freeRoom = null;
 
 		BeanItemContainer<FreeRoomModel> freeRoomContainer = new BeanItemContainer<FreeRoomModel>(
