@@ -81,9 +81,6 @@ public class DataLoader implements DataLoaderSpec {
 			ResourceModel.class);
 
 	private final JSONParser parser = new JSONParser();
-	private JSONObject jsonObject = null;
-
-	private BufferedReader br;
 
 	/**
 	 * Consumer of data have to register themselves to this class, to get
@@ -160,7 +157,7 @@ public class DataLoader implements DataLoaderSpec {
 		// LOGGER.trace("URL: " + url);
 
 		try {
-			br = new BufferedReader(new InputStreamReader(
+			BufferedReader br = new BufferedReader(new InputStreamReader(
 					new URL(url).openStream()));
 
 			// Create a standard Jackson mapper object.
@@ -199,7 +196,7 @@ public class DataLoader implements DataLoaderSpec {
 	private List<Category> jacksonGetOrganigram() {
 		String url = ORGANIGRAM_METHOD;
 		try {
-			br = new BufferedReader(new InputStreamReader(
+			BufferedReader br = new BufferedReader(new InputStreamReader(
 					new URL(url).openStream()));
 
 			// Create a standard Jackson mapper object.
@@ -315,10 +312,8 @@ public class DataLoader implements DataLoaderSpec {
 
 	private List<JSONObject> getFreeResourcesResources(JSONObject jsonObject) {
 
-		this.jsonObject = jsonObject;
-
 		@SuppressWarnings("unchecked")
-		List<JSONObject> resources = (List<JSONObject>) this.jsonObject
+		List<JSONObject> resources = (List<JSONObject>) jsonObject
 				.get("resources");
 
 		return resources;
@@ -411,10 +406,10 @@ public class DataLoader implements DataLoaderSpec {
 		int counter = 0;
 
 		try {
-			br = new BufferedReader(new InputStreamReader(new URL(
-					FREE_RESOURCES_METHOD).openStream()));
+			BufferedReader br = new BufferedReader(new InputStreamReader(
+					new URL(FREE_RESOURCES_METHOD).openStream()));
 
-			jsonObject = (JSONObject) parser.parse(br);
+			JSONObject jsonObject = (JSONObject) parser.parse(br);
 
 			@SuppressWarnings("unchecked")
 			List<JSONObject> freeResourcesResult = (List<JSONObject>) jsonObject
@@ -483,10 +478,10 @@ public class DataLoader implements DataLoaderSpec {
 				Attribut.class);
 
 		try {
-			br = new BufferedReader(new InputStreamReader(
+			BufferedReader br = new BufferedReader(new InputStreamReader(
 					new URL(url).openStream()));
 
-			jsonObject = (JSONObject) parser.parse(br);
+			JSONObject jsonObject = (JSONObject) parser.parse(br);
 
 			attributMap = (JSONObject) ((JSONObject) jsonObject.get("result"))
 					.get("attributeMap");
@@ -551,7 +546,7 @@ public class DataLoader implements DataLoaderSpec {
 				EventModel.class);
 
 		try {
-			br = new BufferedReader(new InputStreamReader(
+			BufferedReader br = new BufferedReader(new InputStreamReader(
 					new URL(url).openStream()));
 
 			// Create a standard Jackson mapper object.
