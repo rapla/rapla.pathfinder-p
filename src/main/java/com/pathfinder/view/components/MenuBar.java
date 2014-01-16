@@ -167,7 +167,9 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 
 	@Override
 	public void updateTranslations() {
-		languagePopupButton.setIcon(flagResources.get(UI.getCurrent()
-				.getLocale()));
+		String flagFilename = THEME_RESOURCES_FOLDER
+				+ UI.getCurrent().getLocale().getLanguage()
+				+ THEME_RESOURCES_SUFFIX;
+		languagePopupButton.setIcon(new ThemeResource(flagFilename));
 	}
 }
