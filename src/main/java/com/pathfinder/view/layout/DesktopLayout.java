@@ -30,12 +30,10 @@ import com.pathfinder.view.listener.KeyboardViewListenerSpec;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
-import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Image;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
@@ -47,7 +45,6 @@ import com.vaadin.ui.VerticalLayout;
  * 
  */
 public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec {
-	private final Image imgHeader = new Image();
 	private final DateTimeSpec dateTime = new DateTime();
 	private final FreeRoomViewSpec freeRoom = new FreeRoomView();
 	private final AccordionViewSpec accordionView = new AccordionView();
@@ -81,9 +78,6 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 		this.contentLayout.setSizeFull();
 		// this.contentLayout.setHeight(900, Unit.PIXELS);
 
-		ThemeResource resHeader = new ThemeResource("img/header.png");
-		imgHeader.setSource(resHeader);
-		this.mainLayout.addComponent(imgHeader);
 		this.mainLayout.addComponent(dateTime);
 		this.mainLayout.addComponent(contentLayout);
 		this.mainLayout.addComponent(menuBar);
