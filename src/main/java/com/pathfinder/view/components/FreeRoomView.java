@@ -11,6 +11,7 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.Table.CellStyleGenerator;
 import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.Table.ColumnHeaderMode;
 
@@ -23,9 +24,8 @@ import com.vaadin.ui.Table.ColumnHeaderMode;
 public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 	private final TranslatorSpec translator = Translator.getInstance();
 
-	// TODO Can we use the table / CustomComponent caption?
-	private final Label actualFreeRoomsLabel = new Label();
 	private final CssLayout cssLayout = new CssLayout();
+	private final Label actualFreeRoomsLabel = new Label();
 	private final BeanItemContainer<FreeRoomModel> freeRoomContainer = new BeanItemContainer<FreeRoomModel>(
 			FreeRoomModel.class);
 	private final Object[] visibleFreeRoomTableColumns = new String[] {
@@ -65,6 +65,8 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 		this.freeRoomTable.setSortAscending(true);
 		this.freeRoomTable.setSortEnabled(false);
 		this.freeRoomTable.setWidth(100, Unit.PERCENTAGE);
+		this.freeRoomTable
+				.setCellStyleGenerator(new CustomCellStyleGenerator());
 	}
 
 	class LabelColumnGenerator implements ColumnGenerator {
@@ -87,16 +89,27 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 		}
 	}
 
+	class CustomCellStyleGenerator implements CellStyleGenerator {
+		@Override
+		public String getStyle(Table source, Object itemId, Object propertyId) {
+			return "result-row";
+		}
+	}
+
 	private void buildLayout() {
 		actualFreeRoomsLabel.setCaption(translator
 				.translate(TranslationKeys.CURRENTLY_FREE_ROOMS));
 		cssLayout.addComponent(actualFreeRoomsLabel);
 		cssLayout.addComponent(freeRoomTable);
+		this.setSizeFull();
+		cssLayout.setSizeFull();
+		freeRoomTable.setSizeFull();
 	}
 
 	private void addStyling() {
-		freeRoomTable.setPrimaryStyleName("freeroom");
-		cssLayout.setPrimaryStyleName("freeroom-border");
+		cssLayout.setPrimaryStyleName("freeroom");
+		actualFreeRoomsLabel.addStyleName("big-caption");
+		freeRoomTable.addStyleName("global-table");
 	}
 
 	@Override

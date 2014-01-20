@@ -35,7 +35,6 @@ public class DetailContainer extends CustomComponent implements
 
 	public DetailContainer() {
 		this.buildLayout();
-		this.addStyling();
 		this.setCompositionRoot(layout);
 	}
 
@@ -51,10 +50,6 @@ public class DetailContainer extends CustomComponent implements
 		detailEvents.setSizeFull();
 		infoEventsLayout.setExpandRatio(detailInfo, 0.5f);
 		infoEventsLayout.setExpandRatio(detailEvents, 0.5f);
-	}
-
-	private void addStyling() {
-		this.setPrimaryStyleName("details");
 	}
 
 	@Override

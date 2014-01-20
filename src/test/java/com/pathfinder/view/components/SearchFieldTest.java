@@ -34,7 +34,6 @@ import com.vaadin.ui.UI;
 public class SearchFieldTest {
 
 	private SearchFieldSpec searchFieldSpec;
-	private Button magnifier;
 	private TextField searchField;
 	private Button deleteAll;
 	private TranslatorSpec translator = Translator.getInstance();
@@ -44,7 +43,6 @@ public class SearchFieldTest {
 		searchFieldSpec = new SearchField();
 		Iterator<Component> iterator = ((AbstractOrderedLayout) (((CustomComponent) searchFieldSpec)
 				.iterator().next())).iterator();
-		magnifier = (Button) iterator.next();
 		searchField = (TextField) iterator.next();
 		deleteAll = (Button) iterator.next();
 	}
@@ -101,22 +99,6 @@ public class SearchFieldTest {
 		Assert.assertEquals(listener,
 				searchField.getListeners(TextChangeEvent.class).iterator()
 						.next());
-	}
-
-	@Test
-	public void addMagnifierClickListenerTest() {
-
-		ClickListener listener = new ClickListener() {
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				// dummy event
-			}
-		};
-
-		Assert.assertEquals(listener, magnifier.getListeners(ClickEvent.class)
-				.iterator().next());
-
 	}
 
 	public void addDeleteAllClickListener() {

@@ -20,11 +20,16 @@ public class DetailImage extends Image implements DetailImageSpec {
 	public DetailImage() {
 		this.setPrimaryStyleName("detail-image");
 		buildLayout();
+		addSytling();
 	}
 
 	private void buildLayout() {
 		this.setAlternateText(translator
 				.translate(TranslationKeys.NO_DATA_AVAILABLE));
+	}
+
+	private void addSytling() {
+		this.setPrimaryStyleName("detail-image");
 	}
 
 	@Override

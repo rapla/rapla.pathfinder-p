@@ -104,7 +104,7 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 	}
 
 	private void addStyling() {
-		this.accordion.setPrimaryStyleName("accordion-result");
+		this.accordion.setPrimaryStyleName("resource-accordion");
 	}
 
 	@Override
