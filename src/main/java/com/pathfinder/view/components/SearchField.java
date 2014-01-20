@@ -31,7 +31,7 @@ public class SearchField extends CustomComponent implements SearchFieldSpec {
 	private void init() {
 		deleteAllButton.setIcon(deleteResource);
 		searchField.setInputPrompt(translator
-				.translate(TranslationKeys.SEARCH_PROMP));
+				.translate(TranslationKeys.SEARCH_PROMPT));
 		searchField.setImmediate(true);
 	}
 
@@ -84,6 +84,6 @@ public class SearchField extends CustomComponent implements SearchFieldSpec {
 	@Override
 	public void updateTranslations() {
 		searchField.setInputPrompt(translator
-				.translate(TranslationKeys.SEARCH_PROMP));
+				.translate(TranslationKeys.SEARCH_PROMPT));
 	}
 }

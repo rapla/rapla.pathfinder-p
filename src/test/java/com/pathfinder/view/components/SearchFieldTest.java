@@ -57,14 +57,14 @@ public class SearchFieldTest {
 		initialize();
 
 		String expectedTranslation = translator.translate(
-				TranslationKeys.SEARCH_PROMP, Locale.ENGLISH);
+				TranslationKeys.SEARCH_PROMPT, Locale.ENGLISH);
 		String actualTranslation = searchField.getInputPrompt();
 		Assert.assertEquals(expectedTranslation, actualTranslation);
 
 		ui.setLocale(Locale.GERMAN);
 		searchFieldSpec.updateTranslations();
 		expectedTranslation = translator.translate(
-				TranslationKeys.SEARCH_PROMP, Locale.GERMAN);
+				TranslationKeys.SEARCH_PROMPT, Locale.GERMAN);
 		actualTranslation = searchField.getInputPrompt();
 		Assert.assertEquals(expectedTranslation, actualTranslation);
 

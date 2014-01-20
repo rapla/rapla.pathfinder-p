@@ -211,41 +211,21 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 	}
 
 	private void updateTableCaptions() {
-		if (getRoomTableLength() > 0) {
-			accordionCaptionRooms = new String(this.getRoomTableLength() + " "
-					+ translator.translate(TranslationKeys.ROOMS));
-			accordion.getTab(roomTable).setCaption(accordionCaptionRooms);
-			accordion.getTab(roomTable).setVisible(true);
-		} else {
-			accordion.getTab(roomTable).setVisible(false);
-		}
+		accordionCaptionRooms = new String(this.getRoomTableLength() + " "
+				+ translator.translate(TranslationKeys.ROOMS));
+		accordion.getTab(roomTable).setCaption(accordionCaptionRooms);
 
-		if (getCourseTableLength() > 0) {
-			accordionCaptionCourses = new String(this.getCourseTableLength()
-					+ " " + translator.translate(TranslationKeys.COURSES));
-			accordion.getTab(courseTable).setCaption(accordionCaptionCourses);
-			accordion.getTab(courseTable).setVisible(true);
-		} else {
-			accordion.getTab(courseTable).setVisible(false);
-		}
+		accordionCaptionCourses = new String(this.getCourseTableLength() + " "
+				+ translator.translate(TranslationKeys.COURSES));
+		accordion.getTab(courseTable).setCaption(accordionCaptionCourses);
 
-		if (getPersonTableLength() > 0) {
-			accordionCaptionPersons = new String(this.getPersonTableLength()
-					+ " " + translator.translate(TranslationKeys.PERSONS));
-			accordion.getTab(personTable).setCaption(accordionCaptionPersons);
-			accordion.getTab(personTable).setVisible(true);
-		} else {
-			accordion.getTab(personTable).setVisible(false);
-		}
+		accordionCaptionPersons = new String(this.getPersonTableLength() + " "
+				+ translator.translate(TranslationKeys.PERSONS));
+		accordion.getTab(personTable).setCaption(accordionCaptionPersons);
 
-		if (getPoiTableLength() > 0) {
-			accordionCaptionPois = new String(this.getPoiTableLength() + " "
-					+ translator.translate(TranslationKeys.POI));
-			accordion.getTab(poiTable).setCaption(accordionCaptionPois);
-			accordion.getTab(poiTable).setVisible(true);
-		} else {
-			accordion.getTab(poiTable).setVisible(false);
-		}
+		accordionCaptionPois = new String(this.getPoiTableLength() + " "
+				+ translator.translate(TranslationKeys.POI));
+		accordion.getTab(poiTable).setCaption(accordionCaptionPois);
 	}
 
 	private int getRoomTableLength() {
