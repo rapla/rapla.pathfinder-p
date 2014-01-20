@@ -211,20 +211,24 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 	}
 
 	private void updateTableCaptions() {
-		accordionCaptionRooms = new String(this.getRoomTableLength() + " "
-				+ translator.translate(TranslationKeys.ROOMS));
+		accordionCaptionRooms = new String(
+				translator.translate(TranslationKeys.ROOMS) + " ["
+						+ this.getRoomTableLength() + "]");
 		accordion.getTab(roomTable).setCaption(accordionCaptionRooms);
 
-		accordionCaptionCourses = new String(this.getCourseTableLength() + " "
-				+ translator.translate(TranslationKeys.COURSES));
+		accordionCaptionCourses = new String(
+				translator.translate(TranslationKeys.COURSES) + " ["
+						+ this.getCourseTableLength() + "]");
 		accordion.getTab(courseTable).setCaption(accordionCaptionCourses);
 
-		accordionCaptionPersons = new String(this.getPersonTableLength() + " "
-				+ translator.translate(TranslationKeys.PERSONS));
+		accordionCaptionPersons = new String(
+				translator.translate(TranslationKeys.PERSONS) + " ["
+						+ this.getPersonTableLength() + "]");
 		accordion.getTab(personTable).setCaption(accordionCaptionPersons);
 
-		accordionCaptionPois = new String(this.getPoiTableLength() + " "
-				+ translator.translate(TranslationKeys.POI));
+		accordionCaptionPois = new String(
+				translator.translate(TranslationKeys.POI) + " ["
+						+ this.getPoiTableLength() + "]");
 		accordion.getTab(poiTable).setCaption(accordionCaptionPois);
 	}
 
