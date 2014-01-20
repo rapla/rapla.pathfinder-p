@@ -7,6 +7,7 @@ import static de.vksi.c4j.Condition.ignored;
 import static de.vksi.c4j.Condition.postCondition;
 import static de.vksi.c4j.Condition.preCondition;
 
+import java.util.Date;
 import java.util.Locale;
 
 import com.pathfinder.model.Attribut;
@@ -133,7 +134,8 @@ public class DataLoaderSpecContract implements DataLoaderSpec {
 	}
 
 	@Override
-	public BeanItemContainer<EventModel> getEvent(String resourceId) {
+	public BeanItemContainer<EventModel> getEvent(String resourceId,
+			Date startDate, Date endDate, Locale locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -6,7 +6,11 @@ import java.io.InputStreamReader;
 import java.net.ConnectException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -54,7 +58,8 @@ public class DataLoader implements DataLoaderSpec {
 	private final String RESOURCE_DETAIL_METHOD = BASE_URL + "/getResource?";
 	private final String ORGANIGRAM_METHOD = BASE_URL + "/getOrganigram";
 	private final String FREE_RESOURCES_METHOD = BASE_URL + "/getFreeResources";
-	private final String EVENTS_RESOURCE_ROOM_METHOD = BASE_URL + "/getEvents?";
+	private final String EVENTS_RESOURCE_ROOM_METHOD = BASE_URL
+			+ "/getEvents?resourceId={0}&start={1}&end={2}&language={3}";
 
 	private final String REQUEST_PARAMETER_PERSONS = "persons";
 	private final String REQUEST_PARAMETER_ROOMS = "rooms";
@@ -79,6 +84,9 @@ public class DataLoader implements DataLoaderSpec {
 			ResourceModel.class);
 
 	private final JSONParser parser = new JSONParser();
+
+	private final DateFormat raplaDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd HH:mm");
 
 	/**
 	 * Consumer of data have to register themselves to this class, to get
@@ -536,8 +544,21 @@ public class DataLoader implements DataLoaderSpec {
 	}
 
 	@Override
-	public BeanItemContainer<EventModel> getEvent(String resourceId) {
-		String url = EVENTS_RESOURCE_ROOM_METHOD + "resourceId=" + resourceId;
+	public BeanItemContainer<EventModel> getEvent(String resourceId,
+			Date startDate, Date endDate, Locale locale) {
+
+		String startDateString = encodeSpecialCharactersForUrl(raplaDateFormat
+				.format(startDate));
+		String endDateString = encodeSpecialCharactersForUrl(raplaDateFormat
+				.format(endDate));
+		String languageString = locale.toString();
+
+		// Replace placeholder with values
+		MessageFormat urlPlaceholder = new MessageFormat(
+				EVENTS_RESOURCE_ROOM_METHOD);
+		String url = urlPlaceholder.format(new Object[] { resourceId,
+				startDateString, endDateString, languageString });
+
 		BeanItemContainer<EventModel> eventContainer = new BeanItemContainer<EventModel>(
 				EventModel.class);
 
@@ -576,5 +597,10 @@ public class DataLoader implements DataLoaderSpec {
 			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE_EVENT + resourceId, e);
 			return null;
 		}
+	}
+
+	private String encodeSpecialCharactersForUrl(String url) {
+		String result = url.replace(" ", "%20");
+		return result.replace(":", "%3A");
 	}
 }

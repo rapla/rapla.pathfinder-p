@@ -1,6 +1,6 @@
 package com.pathfinder.view.container;
 
-import java.util.List;
+import java.util.Date;
 
 import com.pathfinder.model.Attribut;
 import com.pathfinder.model.EventModel;
@@ -20,6 +20,10 @@ public interface DetailContainerSpec extends ComponentSpec {
 	void showDetailContainer();
 
 	void addDetails(ResourceModel resource,
-			BeanItemContainer<Attribut> resourceDetails,
-			BeanItemContainer<EventModel> resourceEvents);
+			BeanItemContainer<Attribut> resourceDetails);
+
+	void addCalendarListener(Listener listener);
+
+	void updateCalenarEvents(BeanItemContainer<EventModel> resourceEvents,
+			Date calendarStartDate);
 }

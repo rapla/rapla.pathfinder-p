@@ -1,6 +1,8 @@
 package com.pathfinder.presenter;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -142,7 +144,9 @@ public class StelePresenter implements DesktopLayoutViewListenerSpec,
 			resourceDetails = dataLoader.getResourceDetails(resource.getId(),
 					UI.getCurrent().getLocale());
 
-			resourceEvents = dataLoader.getEvent(resource.getId());
+			resourceEvents = dataLoader.getEvent(resource.getId(),
+					getBeginningOfDay(), getEndOfDay(), UI.getCurrent()
+							.getLocale());
 
 			LOGGER.trace(resource.getType() + " element was clicked: "
 					+ resource.getName());
@@ -325,7 +329,7 @@ public class StelePresenter implements DesktopLayoutViewListenerSpec,
 		// for (Attribut attribut : resourceDetails.getItemIds()) {
 		// if ("resourcueurl".equals(attribut.getKey())) {
 		// }
-		steleLayout.addDetails(resource, resourceDetails, resourceEvents);
+		steleLayout.addDetails(resource, resourceDetails);
 		steleLayout.showDetailContainer();
 	}
 
@@ -468,5 +472,19 @@ public class StelePresenter implements DesktopLayoutViewListenerSpec,
 			result = true;
 
 		return result;
+	}
+
+	private Date getBeginningOfDay() {
+		GregorianCalendar now = new GregorianCalendar();
+		now.set(Calendar.HOUR_OF_DAY, 0);
+		now.set(Calendar.MINUTE, 0);
+		return now.getTime();
+	}
+
+	private Date getEndOfDay() {
+		GregorianCalendar now = new GregorianCalendar();
+		now.set(Calendar.HOUR_OF_DAY, 23);
+		now.set(Calendar.MINUTE, 59);
+		return now.getTime();
 	}
 }

@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.pathfinder.model.Attribut;
+import com.pathfinder.model.CalendarModel;
 import com.pathfinder.model.EventModel;
 import com.pathfinder.model.KeyboardModel;
 import com.pathfinder.model.ResourceModel;
@@ -38,6 +39,8 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component.Event;
 import com.vaadin.ui.Component.Listener;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.components.calendar.CalendarComponentEvents.BackwardEvent;
+import com.vaadin.ui.components.calendar.CalendarComponentEvents.ForwardEvent;
 
 /**
  * The presenter for the desktop/stele view
@@ -66,6 +69,10 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 
 	private long lastUserInteractionTimestamp;
 	private boolean wentBackToHomeScreen = true;
+
+	private CalendarModel calendarModel = new CalendarModel();
+
+	private Listener uiListener = null;
 
 	public DesktopPresenter() {
 		// Register as DataListener to get notified if data changes
@@ -106,6 +113,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		}
 
 		desktopLayout.addBackToHomeListener(new BackToHomeListener());
+		desktopLayout.addCalendarListener(new CalendarListener());
 	}
 
 	@Override
@@ -142,7 +150,9 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 			resourceDetails = dataLoader.getResourceDetails(resource.getId(),
 					UI.getCurrent().getLocale());
 
-			resourceEvents = dataLoader.getEvent(resource.getId());
+			calendarModel.setBeginningOfCurrentDay(new Date());
+
+			updateCalendarEvents();
 
 			LOGGER.trace(resource.getType() + " element was clicked: "
 					+ resource.getName());
@@ -228,24 +238,67 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 
 	}
 
+	class CalendarListener implements Listener {
+
+		@Override
+		public void componentEvent(Event event) {
+
+			long oneDay = 24 * 60 * 60 * 1000;
+			if (event instanceof ForwardEvent) {
+				long calendarDayMinusOne = calendarModel
+						.getBeginningOfCurrentDay().getTime() + oneDay;
+				calendarModel.setBeginningOfCurrentDay(new Date(
+						calendarDayMinusOne));
+				updateCalendarEvents();
+			} else if (event instanceof BackwardEvent) {
+				long calendarDayPlusOne = calendarModel
+						.getBeginningOfCurrentDay().getTime() - oneDay;
+				calendarModel.setBeginningOfCurrentDay(new Date(
+						calendarDayPlusOne));
+				updateCalendarEvents();
+			}
+		}
+
+	}
+
+	private void updateCalendarEvents() {
+
+		if (resource != null) {
+
+			resourceEvents = dataLoader.getEvent(resource.getId(),
+					calendarModel.getBeginningOfCurrentDay(), calendarModel
+							.getEndOfCurrentDay(), UI.getCurrent().getLocale());
+
+			desktopLayout.updateCalenarEvents(resourceEvents,
+					calendarModel.getBeginningOfCurrentDay());
+		}
+	}
+
 	@Override
 	public Listener getUiListener() {
-		return new Listener() {
+		if (uiListener == null) {
 
-			@Override
-			public void componentEvent(Event event) {
-				if (event instanceof ClickEvent
-						|| event instanceof com.vaadin.event.MouseEvents.ClickEvent) {
-					lastUserInteractionTimestamp = new Date().getTime();
-					wentBackToHomeScreen = false;
-					if (event.getComponent() != null)
-						LOGGER.trace("There was an user interaction; caption: "
-								+ event.getComponent().getCaption()
-								+ "; primary style name: "
-								+ event.getComponent().getPrimaryStyleName());
+			uiListener = new Listener() {
+
+				@Override
+				public void componentEvent(Event event) {
+					if (event instanceof ClickEvent
+							|| event instanceof com.vaadin.event.MouseEvents.ClickEvent
+							|| event instanceof ForwardEvent
+							|| event instanceof BackwardEvent) {
+						lastUserInteractionTimestamp = new Date().getTime();
+						wentBackToHomeScreen = false;
+						if (event.getComponent() != null)
+							LOGGER.trace("There was an user interaction; caption: "
+									+ event.getComponent().getCaption()
+									+ "; primary style name: "
+									+ event.getComponent()
+											.getPrimaryStyleName());
+					}
 				}
-			}
-		};
+			};
+		}
+		return uiListener;
 	}
 
 	private TimerTask getTimerTask() {
@@ -325,7 +378,7 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 		// for (Attribut attribut : resourceDetails.getItemIds()) {
 		// if ("resourcueurl".equals(attribut.getKey())) {
 		// }
-		desktopLayout.addDetails(resource, resourceDetails, resourceEvents);
+		desktopLayout.addDetails(resource, resourceDetails);
 		desktopLayout.showDetailContainer();
 	}
 
@@ -469,4 +522,5 @@ public class DesktopPresenter implements DesktopLayoutViewListenerSpec,
 
 		return result;
 	}
+
 }

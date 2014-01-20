@@ -1,6 +1,6 @@
 package com.pathfinder.presenter;
 
-import java.util.List;
+import java.util.Date;
 import java.util.Locale;
 
 import com.pathfinder.model.Attribut;
@@ -33,7 +33,8 @@ public interface DataLoaderSpec {
 	BeanItemContainer<ResourceModel> getPoiContainer();
 
 	@Pure
-	BeanItemContainer<Attribut> getResourceDetails(String resourceId, Locale locale);
+	BeanItemContainer<Attribut> getResourceDetails(String resourceId,
+			Locale locale);
 
 	@Pure
 	BeanItemContainer<FreeRoomModel> getFreeResources();
@@ -42,5 +43,6 @@ public interface DataLoaderSpec {
 	String getDhbwEntryPoint();
 
 	@Pure
-	BeanItemContainer<EventModel> getEvent(String resourceId);
+	BeanItemContainer<EventModel> getEvent(String resourceId, Date startDate,
+			Date endDate, Locale locale);
 }

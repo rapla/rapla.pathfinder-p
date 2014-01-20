@@ -1,5 +1,6 @@
 package com.pathfinder.view.layout;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -281,10 +282,8 @@ public class SteleLayout extends CustomComponent implements DesktopLayoutSpec {
 
 	@Override
 	public void addDetails(ResourceModel resourceModel,
-			BeanItemContainer<Attribut> resourceDetails,
-			BeanItemContainer<EventModel> resourceEvents) {
-		detailContainer.addDetails(resourceModel, resourceDetails,
-				resourceEvents);
+			BeanItemContainer<Attribut> resourceDetails) {
+		detailContainer.addDetails(resourceModel, resourceDetails);
 	}
 
 	@Override
@@ -321,5 +320,19 @@ public class SteleLayout extends CustomComponent implements DesktopLayoutSpec {
 		detailContainer.updateTranslations();
 		appointmentView.updateTranslations();
 		menuBar.updateTranslations();
+	}
+
+	@Override
+	public void addCalendarListener(Listener listener) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void updateCalenarEvents(
+			BeanItemContainer<EventModel> resourceEvents,
+			Date currentCalendarDate) {
+		detailContainer
+				.updateCalenarEvents(resourceEvents, currentCalendarDate);
 	}
 }

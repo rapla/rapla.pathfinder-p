@@ -90,7 +90,7 @@ public class DataLoaderTest {
 	@Test
 	public void getEventTest() {
 		BeanItemContainer<EventModel> eventContainer = dataLoader
-				.getEvent("org.rapla.entities.domain.Allocatable_2431");
+				.getEvent("org.rapla.entities.domain.Allocatable_2431", null, null, null);
 		Assert.assertNotNull(eventContainer);
 	}
 }

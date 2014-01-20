@@ -6,7 +6,7 @@ package com.pathfinder.view.container;
 import static de.vksi.c4j.Condition.postCondition;
 import static de.vksi.c4j.Condition.preCondition;
 
-import java.util.List;
+import java.util.Date;
 
 import com.pathfinder.model.Attribut;
 import com.pathfinder.model.EventModel;
@@ -48,8 +48,7 @@ public class DetailContainerSpecContract extends ComponentSpecContract
 
 	@Override
 	public void addDetails(ResourceModel resourceModel,
-			BeanItemContainer<Attribut> resourceDetails,
-			BeanItemContainer<EventModel> resourceEvents) {
+			BeanItemContainer<Attribut> resourceDetails) {
 		if (preCondition()) {
 			// TODO: write preconditions if required
 		}
@@ -61,6 +60,20 @@ public class DetailContainerSpecContract extends ComponentSpecContract
 	@Override
 	public void removeDetails() {
 		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void addCalendarListener(Listener listener) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void updateCalenarEvents(
+			BeanItemContainer<EventModel> resourceEvents,
+			Date currentCalendarDate) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

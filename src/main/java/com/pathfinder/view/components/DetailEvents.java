@@ -6,14 +6,10 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import com.pathfinder.model.EventModel;
-import com.pathfinder.util.translation.TranslationKeys;
-import com.pathfinder.util.translation.Translator;
-import com.pathfinder.util.translation.TranslatorSpec;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Calendar;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.components.calendar.event.CalendarEvent;
 
@@ -25,9 +21,7 @@ public class DetailEvents extends CustomComponent implements DetailEventsSpec {
 	private final HorizontalLayout layout = new HorizontalLayout();
 	private final Calendar calendar = new Calendar();
 	private final GregorianCalendar gc = new GregorianCalendar();
-	private final Label noEventsLabel = new Label();
-	private final TranslatorSpec translator = Translator.getInstance();
-	private final List<EventModel> calendarEvents = new ArrayList<>();
+	private final List<CalendarEventComponent> calendarEvents = new ArrayList<>();
 
 	public DetailEvents() {
 		this.buildLayout();
@@ -35,36 +29,35 @@ public class DetailEvents extends CustomComponent implements DetailEventsSpec {
 	}
 
 	private void buildLayout() {
-		noEventsLabel.setCaption(translator
-				.translate(TranslationKeys.NO_EVENTS_AVAILABLE));
-		layout.addComponent(noEventsLabel);
 		layout.addComponent(calendar);
 	}
 
 	@Override
-	public void setEvents(BeanItemContainer<EventModel> events) {
+	public void setEvents(BeanItemContainer<EventModel> events,
+			Date calendarStartDate) {
 		removeEvents();
-
-		calendar.setStartDate(new Date());
-		calendar.setEndDate(new Date());
 
 		int firstHourOfDay = 24;
 		int lastHourOfDay = 0;
 
+		calendar.setStartDate(calendarStartDate);
+		calendar.setEndDate(calendarStartDate);
+
 		if (events.getItemIds().size() == 0) {
-			noEventsLabel.setVisible(true);
-			calendar.setVisible(false);
-		} else {
-			noEventsLabel.setVisible(false);
-			calendar.setVisible(true);
-			calendarEvents.clear();
-			calendarEvents.addAll(events.getItemIds());
+			firstHourOfDay = 10;
+			lastHourOfDay = 18;
 		}
+
+		CalendarEventComponent calendarEvent;
 
 		for (EventModel event : events.getItemIds()) {
 
-			int startHour = getHourOfDay(event.getStart());
-			int endHour = getHourOfDay(event.getEnd());
+			calendarEvent = new CalendarEventComponent(event);
+
+			int startHour = getHourOfDay(calendarEvent.getStart(),
+					calendarStartDate);
+			int endHour = getHourOfDay(calendarEvent.getEnd(),
+					calendarStartDate);
 			if (startHour == -1 || endHour == -1)
 				break;
 			if (startHour < firstHourOfDay) {
@@ -74,18 +67,33 @@ public class DetailEvents extends CustomComponent implements DetailEventsSpec {
 				lastHourOfDay = endHour;
 			}
 
-			calendar.addEvent(event);
+			calendar.addEvent(calendarEvent);
+			calendarEvents.add(calendarEvent);
 		}
 
 		calendar.setFirstVisibleHourOfDay(firstHourOfDay - 1);
-		calendar.setLastVisibleHourOfDay(lastHourOfDay + 1);
+		calendar.setLastVisibleHourOfDay(lastHourOfDay);
+
 	}
 
-	private int getHourOfDay(Date date) {
+	private int getHourOfDay(Date dateToGetHourFrom, Date currentDateOfCalendar) {
 		int result = -1;
-		if (date != null) {
-			gc.setTime(date);
-			result = gc.get(java.util.Calendar.HOUR_OF_DAY);
+		if (dateToGetHourFrom != null && currentDateOfCalendar != null) {
+			gc.setTime(currentDateOfCalendar);
+			gc.set(java.util.Calendar.HOUR, 23);
+			gc.set(java.util.Calendar.MINUTE, 59);
+			if (gc.getTime().before(dateToGetHourFrom)) {
+				result = 23;
+			} else {
+				gc.set(java.util.Calendar.HOUR, 0);
+				gc.set(java.util.Calendar.MINUTE, 0);
+				if (gc.getTime().after(dateToGetHourFrom)) {
+					result = 0;
+				} else {
+					gc.setTime(dateToGetHourFrom);
+					result = gc.get(java.util.Calendar.HOUR_OF_DAY);
+				}
+			}
 		}
 		return result;
 	}
@@ -95,13 +103,17 @@ public class DetailEvents extends CustomComponent implements DetailEventsSpec {
 		for (CalendarEvent event : calendarEvents) {
 			calendar.removeEvent(event);
 		}
+		calendarEvents.clear();
 	}
 
 	@Override
 	public void updateTranslations() {
-		noEventsLabel.setCaption(translator
-				.translate(TranslationKeys.NO_EVENTS_AVAILABLE));
 		calendar.setLocale(UI.getCurrent().getLocale());
+	}
+
+	@Override
+	public void addCalendarListener(Listener listener) {
+		calendar.addListener(listener);
 	}
 
 }

@@ -3,6 +3,8 @@
  */
 package com.pathfinder.view.components;
 
+import java.util.Date;
+
 import com.pathfinder.model.EventModel;
 import com.vaadin.data.util.BeanItemContainer;
 
@@ -11,7 +13,9 @@ import com.vaadin.data.util.BeanItemContainer;
  * 
  */
 public interface DetailEventsSpec extends ComponentSpec {
-	void setEvents(BeanItemContainer<EventModel> events);
+	void setEvents(BeanItemContainer<EventModel> events, Date calendarStartDate);
 
 	void removeEvents();
+
+	void addCalendarListener(Listener listener);
 }

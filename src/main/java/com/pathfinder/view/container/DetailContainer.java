@@ -1,5 +1,7 @@
 package com.pathfinder.view.container;
 
+import java.util.Date;
+
 import com.pathfinder.model.Attribut;
 import com.pathfinder.model.EventModel;
 import com.pathfinder.model.ResourceModel;
@@ -54,12 +56,10 @@ public class DetailContainer extends CustomComponent implements
 
 	@Override
 	public void addDetails(ResourceModel resource,
-			BeanItemContainer<Attribut> resourceDetails,
-			BeanItemContainer<EventModel> resourceEvents) {
+			BeanItemContainer<Attribut> resourceDetails) {
 		this.removeDetails();
 
 		detailInfo.addDetails(resourceDetails);
-		detailEvents.setEvents(resourceEvents);
 		if ("room".equals(resource.getType())) {
 			for (Attribut attribut : resourceDetails.getItemIds()) {
 				if ("Raum".equals(attribut.getLabel())) {
@@ -94,9 +94,18 @@ public class DetailContainer extends CustomComponent implements
 			detailInfo.removeDetails();
 			detailInfo.addDetails(dataLoader.getResourceDetails(
 					resource.getId(), UI.getCurrent().getLocale()));
-			detailEvents.removeEvents();
-			detailEvents.setEvents(dataLoader.getEvent(resource.getId()));
 		}
 		detailEvents.updateTranslations();
+	}
+
+	@Override
+	public void addCalendarListener(Listener listener) {
+		detailEvents.addCalendarListener(listener);
+	}
+
+	@Override
+	public void updateCalenarEvents(
+			BeanItemContainer<EventModel> resourceEvents, Date calendarStartDate) {
+		detailEvents.setEvents(resourceEvents, calendarStartDate);
 	}
 }
