@@ -67,6 +67,7 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 		this.freeRoomTable.setWidth(100, Unit.PERCENTAGE);
 		this.freeRoomTable
 				.setCellStyleGenerator(new CustomCellStyleGenerator());
+		this.freeRoomTable.setSizeFull();
 	}
 
 	class LabelColumnGenerator implements ColumnGenerator {
@@ -103,7 +104,6 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 		cssLayout.addComponent(freeRoomTable);
 		this.setSizeFull();
 		cssLayout.setSizeFull();
-		freeRoomTable.setSizeFull();
 	}
 
 	private void addStyling() {

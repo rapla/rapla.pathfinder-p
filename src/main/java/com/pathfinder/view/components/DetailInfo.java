@@ -4,6 +4,7 @@ import com.pathfinder.model.Attribut;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.Table.CellStyleGenerator;
 import com.vaadin.ui.Table.ColumnHeaderMode;
 
 /**
@@ -15,41 +16,60 @@ import com.vaadin.ui.Table.ColumnHeaderMode;
 public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 	private final Object[] visibleColumns = new String[] {
 			Attribut.PROPERTY_LABEL, Attribut.PROPERTY_VALUE };
-	private final Table table = new Table();
+	private final Table detailInfoTable = new Table();
 	private final BeanItemContainer<Attribut> attributeContainer = new BeanItemContainer<Attribut>(
 			Attribut.class);
 
 	public DetailInfo() {
 		initTable();
+		buildLayout();
 		addStyling();
-		setCompositionRoot(table);
+		setCompositionRoot(detailInfoTable);
 	}
 
 	private void initTable() {
-		table.setContainerDataSource(attributeContainer);
-		table.setVisibleColumns(visibleColumns);
-		table.setColumnHeaderMode(ColumnHeaderMode.HIDDEN);
-		table.setCacheRate(1);
-		table.setSelectable(false);
-		table.setSizeFull();
+		detailInfoTable.setContainerDataSource(attributeContainer);
+		detailInfoTable.setVisibleColumns(visibleColumns);
+		detailInfoTable.setColumnHeaderMode(ColumnHeaderMode.HIDDEN);
+		detailInfoTable.setCacheRate(1);
+		detailInfoTable.setSelectable(false);
+		detailInfoTable.setCellStyleGenerator(new CustomCellStyleGenerator());
+		detailInfoTable.setSizeFull();
+	}
+
+	private void buildLayout() {
+		detailInfoTable.setVisible(false);
+	}
+
+	class CustomCellStyleGenerator implements CellStyleGenerator {
+		@Override
+		public String getStyle(Table source, Object itemId, Object propertyId) {
+			return "result-row";
+		}
 	}
 
 	private void addStyling() {
-		// TODO this.setPrimaryStyleName("details");
+		// TODO .actualFreeRoomsLabel.addStyleName("big-caption");
+		detailInfoTable.addStyleName("global-table");
 	}
 
 	@Override
 	public void addDetails(BeanItemContainer<Attribut> resourceDetails) {
+		int length = 0;
 		for (Attribut attributeItem : resourceDetails.getItemIds()) {
 			if (!"resourceurl".equals(attributeItem.getKey())) {
-				this.table.addItem(attributeItem);
+				this.detailInfoTable.addItem(attributeItem);
+				length += 1;
 			}
 		}
+		detailInfoTable.setPageLength(length);
+		detailInfoTable.setVisible(true);
 	}
 
 	@Override
 	public void removeDetails() {
-		table.removeAllItems();
+		detailInfoTable.removeAllItems();
+		detailInfoTable.setVisible(false);
 	}
 
 	@Override
