@@ -35,15 +35,15 @@ public class SearchField extends CustomComponent implements SearchFieldSpec {
 		searchField.setImmediate(true);
 	}
 
+	private void buildLayout() {
+		layout.addComponent(searchField);
+		layout.addComponent(deleteAllButton);
+	}
+
 	private void addStyling() {
 		layout.setPrimaryStyleName("search");
 		searchField.setPrimaryStyleName("searchfield");
 		deleteAllButton.setPrimaryStyleName("delete-icon");
-	}
-
-	private void buildLayout() {
-		layout.addComponent(searchField);
-		layout.addComponent(deleteAllButton);
 	}
 
 	@Override

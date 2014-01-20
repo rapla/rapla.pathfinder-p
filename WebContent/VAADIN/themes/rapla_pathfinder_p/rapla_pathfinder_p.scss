@@ -6,9 +6,8 @@
 /* If somebody wants to extend the theme she will include this mixin. */
 @mixin rapla_pathfinder_p {
   /* Include all the styles from the reindeer theme */
- /* TODO Can we already use Tune-Theme? */
+  /* TODO Can we already use Tune-Theme? */
   @include reindeer;
-	
 	
 	* {
 		margin: 0;
@@ -35,6 +34,56 @@
         -o-user-select: none;
         user-select: none;
 	}
+	
+	/* Global stylings */
+	
+	/* Caption styling */
+	
+	.v-caption-big-caption { 
+		font-size: 30px; 
+		line-height: 30px; 
+	}
+	
+	/* Table styling */
+	
+	.global-table {
+		.v-table-header-wrap, .v-table-header-cell, .v-table-resizer
+		{
+			height: 40px;	
+		}
+		
+		.v-table-header {
+			background-color: #393939;
+			height: 40px;
+	   		color: #FFF;
+	   		font: 1.65em Arial;
+	   		width: auto;
+		}
+		
+		.v-scrollable.v-table-body-wrapper.v-table-body {
+			background-color: #E0E0E0;
+		}
+	}
+
+	 /* Table row styling */
+    
+	.v-table-row-result-row{
+		margin-top: 2px;
+		display: block;
+	
+		.v-table-cell-content-result-row {
+			height: 40px;
+			background-color: #767676;
+			padding-left: 30px;
+	       
+	       	.v-table-cell-wrapper {
+				color: #cccccc; 
+				font: 20px Arial;
+			}
+		}
+	}
+	
+	/* Individual styling */
 	
 	/* Keyboard Styling */
 	
@@ -137,52 +186,6 @@
 					padding-left: 22%;
 					padding-top: 20%;
 				}
-			}
-		}
-	}
-	
-	/* Global caption styling */
-	
-	.v-caption-big-caption { 
-		font-size: 30px; 
-		line-height: 30px; 
-	}
-	
-	/* Global table styling */
-	
-	.global-table {
-		.v-table-header-wrap, .v-table-header-cell, .v-table-resizer
-		{
-			height: 40px;	
-		}
-		
-		.v-table-header {
-			background-color: #393939;
-			height: 40px;
-	   		color: #FFF;
-	   		font: 1.65em Arial;
-	   		width: auto;
-		}
-		
-		.v-scrollable.v-table-body-wrapper.v-table-body {
-			background-color: #E0E0E0;
-		}
-	}
-
-	 /* Global table row styling */
-    
-	.v-table-row-result-row{
-		margin-top: 2px;
-		display: block;
-	
-		.v-table-cell-content-result-row {
-			height: 40px;
-			background-color: #767676;
-			padding-left: 30px;
-	       
-	       	.v-table-cell-wrapper {
-				color: #cccccc; 
-				font: 20px Arial;
 			}
 		}
 	}
@@ -292,7 +295,7 @@
 		background-position:20px 50%;
 	}
 	
-	/* Detail styling */
+	/* Detail image styling */
 	
 	.detail-image{
 		margin-top: 7em;
