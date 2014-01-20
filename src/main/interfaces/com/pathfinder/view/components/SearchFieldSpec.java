@@ -17,8 +17,6 @@ import de.vksi.c4j.ContractReference;
 public interface SearchFieldSpec extends ComponentSpec {
 	void addSearchFieldTextChangeListener(TextChangeListener listener);
 
-	void addMagnifierClickListener(ClickListener listener);
-
 	void addDeleteAllClickListener(ClickListener listener);
 
 	void focusSearchField();
@@ -28,8 +26,6 @@ public interface SearchFieldSpec extends ComponentSpec {
 	void setCursorPosition(int cursorPosition);
 
 	TextField getSearchField();
-
-	Button getMagnifierButton();
 
 	Button getDeleteAllButton();
 }

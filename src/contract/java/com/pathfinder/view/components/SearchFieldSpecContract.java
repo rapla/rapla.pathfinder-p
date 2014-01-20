@@ -51,26 +51,9 @@ public class SearchFieldSpecContract extends ComponentSpecContract implements
 	}
 
 	@Override
-	public void addMagnifierClickListener(ClickListener listener) {
-		if (preCondition()) {
-			assert listener != null : "Listener not null";
-			assert target.getMagnifierButton() != null : "MagnifierButton not null";
-			listenerCountBefore = target.getMagnifierButton()
-					.getListeners(ClickEvent.class).size();
-		}
-		if (postCondition()) {
-			int listenerCountAfter = target.getMagnifierButton()
-					.getListeners(ClickEvent.class).size();
-			assert listenerCountAfter == listenerCountBefore + 1 : "MagnifierButton has one listener more than before";
-			listenerCountBefore = -5;
-		}
-	}
-
-	@Override
 	public void addDeleteAllClickListener(ClickListener listener) {
 		if (preCondition()) {
 			assert listener != null : "Listener not null";
-			assert target.getMagnifierButton() != null : "DeleteButton not null";
 			listenerCountBefore = target.getDeleteAllButton()
 					.getListeners(ClickEvent.class).size();
 		}
@@ -92,15 +75,6 @@ public class SearchFieldSpecContract extends ComponentSpecContract implements
 	}
 
 	@Override
-	public Button getMagnifierButton() {
-		if (postCondition()) {
-			Button button = Condition.result();
-			assert button != null : "Result not null";
-		}
-		return ignored();
-	}
-
-	@Override
 	public Button getDeleteAllButton() {
 		if (postCondition()) {
 			Button button = Condition.result();
@@ -112,7 +86,6 @@ public class SearchFieldSpecContract extends ComponentSpecContract implements
 	@Override
 	public void focusSearchField() {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -124,7 +97,5 @@ public class SearchFieldSpecContract extends ComponentSpecContract implements
 	@Override
 	public void setCursorPosition(int cursorPosition) {
 		// TODO Auto-generated method stub
-
 	}
-
 }

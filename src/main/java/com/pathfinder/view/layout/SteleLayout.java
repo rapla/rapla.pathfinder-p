@@ -31,13 +31,13 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickListener;
 
 public class SteleLayout extends CustomComponent implements DesktopLayoutSpec {
 	private final DateTimeSpec dateTime = new DateTime();
@@ -98,11 +98,6 @@ public class SteleLayout extends CustomComponent implements DesktopLayoutSpec {
 	@Override
 	public void addSearchFieldTextChangeListener(TextChangeListener listener) {
 		searchField.addSearchFieldTextChangeListener(listener);
-	}
-
-	@Override
-	public void addMagnifierClickListener(ClickListener listener) {
-		searchField.addMagnifierClickListener(listener);
 	}
 
 	@Override
@@ -257,11 +252,6 @@ public class SteleLayout extends CustomComponent implements DesktopLayoutSpec {
 	@Override
 	public void replaceHomeButtonWithWheelChairButton() {
 		menuBar.replaceHomeButtonWithWheelChairButton();
-	}
-
-	@Override
-	public Button getMagnifierButton() {
-		return searchField.getMagnifierButton();
 	}
 
 	@Override

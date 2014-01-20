@@ -114,8 +114,6 @@ public class SearchFieldTest {
 			}
 		};
 
-		searchFieldSpec.addMagnifierClickListener(listener);
-
 		Assert.assertEquals(listener, magnifier.getListeners(ClickEvent.class)
 				.iterator().next());
 

@@ -81,8 +81,6 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 		this.mainLayout.addComponent(dateTime);
 		this.mainLayout.addComponent(contentLayout);
 		this.mainLayout.addComponent(menuBar);
-		
-		
 
 		this.mainLayout.setExpandRatio(contentLayout, 1);
 		setPrimaryStyleName("main");
@@ -111,11 +109,6 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	@Override
 	public void addSearchFieldTextChangeListener(TextChangeListener listener) {
 		searchField.addSearchFieldTextChangeListener(listener);
-	}
-
-	@Override
-	public void addMagnifierClickListener(ClickListener listener) {
-		searchField.addMagnifierClickListener(listener);
 	}
 
 	@Override
@@ -269,11 +262,6 @@ public class DesktopLayout extends CustomComponent implements DesktopLayoutSpec 
 	@Override
 	public void replaceHomeButtonWithWheelChairButton() {
 		menuBar.replaceHomeButtonWithWheelChairButton();
-	}
-
-	@Override
-	public Button getMagnifierButton() {
-		return searchField.getMagnifierButton();
 	}
 
 	@Override

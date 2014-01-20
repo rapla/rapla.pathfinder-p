@@ -15,14 +15,11 @@ public class SearchField extends CustomComponent implements SearchFieldSpec {
 	private final TranslatorSpec translator = Translator.getInstance();
 
 	private final HorizontalLayout layout = new HorizontalLayout();
-	private final Button magnifierButton = new Button();
 	private final Button deleteAllButton = new Button();
 	private final TextField searchField = new TextField();
 
 	private final ThemeResource deleteResource = new ThemeResource(
 			"icon/DeleteAll.png");
-	private final ThemeResource magnifierResource = new ThemeResource(
-			"icon/Magnifier.png");
 
 	public SearchField() {
 		this.init();
@@ -32,8 +29,6 @@ public class SearchField extends CustomComponent implements SearchFieldSpec {
 	}
 
 	private void init() {
-		magnifierButton.setEnabled(false);
-		magnifierButton.setIcon(magnifierResource);
 		deleteAllButton.setIcon(deleteResource);
 		searchField.setInputPrompt(translator
 				.translate(TranslationKeys.SEARCH_PROMP));
@@ -43,12 +38,10 @@ public class SearchField extends CustomComponent implements SearchFieldSpec {
 	private void addStyling() {
 		layout.setPrimaryStyleName("search");
 		searchField.setPrimaryStyleName("searchfield");
-		magnifierButton.setPrimaryStyleName("search-icon");
 		deleteAllButton.setPrimaryStyleName("delete-icon");
 	}
 
 	private void buildLayout() {
-		layout.addComponent(magnifierButton);
 		layout.addComponent(searchField);
 		layout.addComponent(deleteAllButton);
 	}
@@ -56,11 +49,6 @@ public class SearchField extends CustomComponent implements SearchFieldSpec {
 	@Override
 	public void addSearchFieldTextChangeListener(TextChangeListener listener) {
 		searchField.addTextChangeListener(listener);
-	}
-
-	@Override
-	public void addMagnifierClickListener(ClickListener listener) {
-		magnifierButton.addClickListener(listener);
 	}
 
 	@Override
@@ -81,11 +69,6 @@ public class SearchField extends CustomComponent implements SearchFieldSpec {
 	@Override
 	public void setCursorPosition(int cursorPosition) {
 		searchField.setCursorPosition(cursorPosition);
-	}
-
-	@Override
-	public Button getMagnifierButton() {
-		return magnifierButton;
 	}
 
 	@Override
