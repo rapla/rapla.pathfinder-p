@@ -19,6 +19,10 @@ public interface AccordionViewSpec extends ComponentSpec {
 
 	void deselectClickedItem(Table table, Object itemId);
 
+	void hideAccordionView();
+
+	void showAccordionView();
+
 	void setRoomContainer(BeanItemContainer<ResourceModel> beanItemContainer);
 
 	void setCourseContainer(BeanItemContainer<ResourceModel> beanItemContainer);

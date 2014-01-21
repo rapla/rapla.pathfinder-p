@@ -27,5 +27,9 @@ public interface SearchFieldSpec extends ComponentSpec {
 
 	TextField getSearchField();
 
+	void hideSearchField();
+
+	void showSearchField();
+
 	Button getDeleteAllButton();
 }

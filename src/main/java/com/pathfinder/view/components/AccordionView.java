@@ -117,6 +117,7 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 				accordionCaptionPois);
 		pois.setIcon(orderlines);
 		this.accordion.setSizeFull();
+		this.setSizeFull();
 	}
 
 	private HorizontalLayout createTabContent(ResourceType type, Table table) {
@@ -355,6 +356,16 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 
 	private int getPoiTableLength() {
 		return poiTable.size();
+	}
+
+	@Override
+	public void hideAccordionView() {
+		this.setVisible(false);
+	}
+
+	@Override
+	public void showAccordionView() {
+		this.setVisible(true);
 	}
 
 	@Override

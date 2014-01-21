@@ -23,8 +23,6 @@ import com.pathfinder.view.components.SearchField;
 import com.pathfinder.view.components.SearchFieldSpec;
 import com.pathfinder.view.container.DetailContainer;
 import com.pathfinder.view.container.DetailContainerSpec;
-import com.pathfinder.view.container.SearchPanel;
-import com.pathfinder.view.container.SearchPanelSpec;
 import com.pathfinder.view.listener.KeyboardViewListenerSpec;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.FieldEvents.TextChangeListener;
@@ -49,8 +47,6 @@ public class SteleLayout extends CustomComponent implements SteleLayoutSpec {
 	private final AccordionViewSpec accordionView = new AccordionView();
 	private final KeyboardSpec keyboard = new Keyboard();
 	private final SearchFieldSpec searchField = new SearchField();
-	private final SearchPanelSpec searchPanel = new SearchPanel(
-			(AccordionView) accordionView, (SearchField) searchField);
 	private final MenuBarSpec menuBar = new MenuBar();
 	private final DetailContainerSpec detailContainer = new DetailContainer();
 
@@ -66,7 +62,8 @@ public class SteleLayout extends CustomComponent implements SteleLayoutSpec {
 
 	private void buildLayout() {
 		// For the wheel chair button / view
-		this.layoutNormal.addComponent(searchPanel);
+		this.layoutNormal.addComponent(accordionView);
+		this.layoutNormal.addComponent(searchField);
 		this.layoutNormal.addComponent(keyboard);
 
 		this.contentLayout.addComponent(freeRoom);
@@ -222,8 +219,12 @@ public class SteleLayout extends CustomComponent implements SteleLayoutSpec {
 	@Override
 	public void changeToWheelChairView() {
 		if (contentLayout.getComponentIndex(layoutNormal) >= 0) {
+			VerticalLayout rightSide = new VerticalLayout();
+			rightSide.addComponent(accordionView);
+			rightSide.addComponent(searchField);
+			
 			layoutWheelChair.addComponent(keyboard);
-			layoutWheelChair.addComponent(searchPanel);
+			layoutWheelChair.addComponent(rightSide);
 			layoutWheelChair.setSizeFull();
 			this.contentLayout.replaceComponent(layoutNormal, layoutWheelChair);
 			this.layoutNormal.removeAllComponents();
@@ -233,7 +234,8 @@ public class SteleLayout extends CustomComponent implements SteleLayoutSpec {
 	@Override
 	public void changeToNonWheelChairView() {
 		if (contentLayout.getComponentIndex(layoutWheelChair) >= 0) {
-			layoutNormal.addComponent(searchPanel);
+			layoutNormal.addComponent(accordionView);
+			layoutNormal.addComponent(searchField);
 			layoutNormal.addComponent(keyboard);
 			layoutNormal.setSizeFull();
 			this.contentLayout.replaceComponent(layoutWheelChair, layoutNormal);
@@ -262,13 +264,23 @@ public class SteleLayout extends CustomComponent implements SteleLayoutSpec {
 	}
 
 	@Override
-	public void hideSearchPanel() {
-		searchPanel.hideSearchPanel();
+	public void hideAccordionView() {
+		accordionView.hideAccordionView();
 	}
 
 	@Override
-	public void showSearchPanel() {
-		searchPanel.showSearchPanel();
+	public void showAccordionView() {
+		accordionView.showAccordionView();
+	}
+
+	@Override
+	public void hideSearchField() {
+		searchField.hideSearchField();
+	}
+
+	@Override
+	public void showSearchField() {
+		searchField.showSearchField();
 	}
 
 	@Override
@@ -308,16 +320,6 @@ public class SteleLayout extends CustomComponent implements SteleLayoutSpec {
 	}
 
 	@Override
-	public void updateTranslations() {
-		dateTime.updateTranslations();
-		freeRoom.updateTranslations();
-		searchPanel.updateTranslations();
-		keyboard.updateTranslations();
-		detailContainer.updateTranslations();
-		menuBar.updateTranslations();
-	}
-
-	@Override
 	public void addCalendarListener(Listener listener) {
 		detailContainer.addCalendarListener(listener);
 	}
@@ -330,4 +332,14 @@ public class SteleLayout extends CustomComponent implements SteleLayoutSpec {
 				.updateCalenarEvents(resourceEvents, currentCalendarDate);
 	}
 
+	@Override
+	public void updateTranslations() {
+		dateTime.updateTranslations();
+		freeRoom.updateTranslations();
+		accordionView.updateTranslations();
+		searchField.updateTranslations();
+		keyboard.updateTranslations();
+		detailContainer.updateTranslations();
+		menuBar.updateTranslations();
+	}
 }

@@ -38,6 +38,7 @@ public class SearchField extends CustomComponent implements SearchFieldSpec {
 	private void buildLayout() {
 		layout.addComponent(searchField);
 		layout.addComponent(deleteAllButton);
+		this.setSizeFull();
 	}
 
 	private void addStyling() {
@@ -79,6 +80,16 @@ public class SearchField extends CustomComponent implements SearchFieldSpec {
 	@Override
 	public TextField getSearchField() {
 		return searchField;
+	}
+
+	@Override
+	public void hideSearchField() {
+		this.setVisible(false);
+	}
+
+	@Override
+	public void showSearchField() {
+		this.setVisible(true);
 	}
 
 	@Override

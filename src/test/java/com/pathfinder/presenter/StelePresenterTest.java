@@ -30,7 +30,6 @@ import com.pathfinder.view.components.FreeRoomViewSpec;
 import com.pathfinder.view.components.KeyboardId;
 import com.pathfinder.view.components.MenuBarSpec;
 import com.pathfinder.view.container.DetailContainerSpec;
-import com.pathfinder.view.container.SearchPanelSpec;
 import com.pathfinder.view.layout.SteleLayoutSpec;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HasComponents;
@@ -41,7 +40,6 @@ public class StelePresenterTest {
 	SteleLayoutSpec desktopLayout;
 	DateTimeSpec dateTime;
 	FreeRoomViewSpec freeRoom;
-	SearchPanelSpec searchPanel;
 	DetailContainerSpec detailContainer;
 	MenuBarSpec menuBar;
 
@@ -63,8 +61,6 @@ public class StelePresenterTest {
 				dateTime = (DateTimeSpec) component;
 			} else if (component instanceof FreeRoomViewSpec) {
 				freeRoom = (FreeRoomViewSpec) component;
-			} else if (component instanceof SearchPanelSpec) {
-				searchPanel = (SearchPanelSpec) component;
 			} else if (component instanceof DetailContainerSpec) {
 				detailContainer = (DetailContainerSpec) component;
 			} else if (component instanceof MenuBarSpec) {
@@ -74,7 +70,6 @@ public class StelePresenterTest {
 
 		Assert.assertTrue(dateTime != null);
 		Assert.assertTrue(freeRoom != null);
-		Assert.assertTrue(searchPanel != null);
 		Assert.assertTrue(detailContainer != null);
 		Assert.assertTrue(menuBar != null);
 	}

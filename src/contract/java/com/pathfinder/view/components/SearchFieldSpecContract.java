@@ -98,4 +98,16 @@ public class SearchFieldSpecContract extends ComponentSpecContract implements
 	public void setCursorPosition(int cursorPosition) {
 		// TODO Auto-generated method stub
 	}
+
+	@Override
+	public void hideSearchField() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void showSearchField() {
+		// TODO Auto-generated method stub
+		
+	}
 }

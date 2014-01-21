@@ -359,7 +359,8 @@ public class StelePresenter implements DesktopLayoutViewListenerSpec,
 
 		// Showing
 		desktopLayout.showFreeRoomView();
-		desktopLayout.showSearchPanel();
+		desktopLayout.showAccordionView();
+		desktopLayout.showSearchField();
 		desktopLayout.showKeyboard();
 	}
 
@@ -367,7 +368,8 @@ public class StelePresenter implements DesktopLayoutViewListenerSpec,
 	public void switchToDetailView() {
 		// Hiding
 		desktopLayout.hideFreeRoomView();
-		desktopLayout.hideSearchPanel();
+		desktopLayout.hideAccordionView();
+		desktopLayout.hideSearchField();
 		desktopLayout.hideKeyboard();
 
 		// Adapting MenuBar
