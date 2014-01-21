@@ -12,10 +12,10 @@ import com.vaadin.ui.Component.Listener;
 import de.vksi.c4j.ClassInvariant;
 import de.vksi.c4j.Target;
 
-public class DesktopPresenterSpecContract implements DesktopPresenterSpec {
+public class StelePresenterSpecContract implements StelePresenterSpec {
 
 	@Target
-	private DesktopPresenterSpec target;
+	private StelePresenterSpec target;
 
 	@ClassInvariant
 	public void classInvariant() {
@@ -138,7 +138,13 @@ public class DesktopPresenterSpecContract implements DesktopPresenterSpec {
 	}
 
 	@Override
-	public void changeWheelChairView() {
+	public void changeToWheelChairView() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void changeToNonWheelChairView() {
 		// TODO Auto-generated method stub
 
 	}

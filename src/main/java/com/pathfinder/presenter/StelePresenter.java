@@ -49,7 +49,7 @@ import com.vaadin.ui.components.calendar.CalendarComponentEvents.ForwardEvent;
  * 
  */
 public class StelePresenter implements DesktopLayoutViewListenerSpec,
-		DesktopPresenterSpec, KeyboardViewListenerSpec, DataLoaderListenerSpec {
+		StelePresenterSpec, KeyboardViewListenerSpec, DataLoaderListenerSpec {
 	private static final Logger LOGGER = LogManager
 			.getLogger(StelePresenter.class.getName());
 	private final ApplicationPropertiesSpec properties = ApplicationProperties
@@ -190,6 +190,7 @@ public class StelePresenter implements DesktopLayoutViewListenerSpec,
 	class HomeButtonClickListener implements ClickListener {
 		@Override
 		public void buttonClick(ClickEvent event) {
+			changeToNonWheelChairView();
 			switchToSearchView();
 		}
 	}
@@ -197,7 +198,7 @@ public class StelePresenter implements DesktopLayoutViewListenerSpec,
 	class WheelChairButtonClickListener implements ClickListener {
 		@Override
 		public void buttonClick(ClickEvent event) {
-			changeWheelChairView();
+			changeToWheelChairView();
 		}
 	}
 
@@ -350,7 +351,6 @@ public class StelePresenter implements DesktopLayoutViewListenerSpec,
 		this.resourceDetails = null;
 
 		// Hiding
-		desktopLayout.hideAppointmentView();
 		desktopLayout.hideDetailContainer();
 		desktopLayout.removeDetails();
 
@@ -366,7 +366,6 @@ public class StelePresenter implements DesktopLayoutViewListenerSpec,
 	@Override
 	public void switchToDetailView() {
 		// Hiding
-		desktopLayout.hideAppointmentView();
 		desktopLayout.hideFreeRoomView();
 		desktopLayout.hideSearchPanel();
 		desktopLayout.hideKeyboard();
@@ -383,9 +382,15 @@ public class StelePresenter implements DesktopLayoutViewListenerSpec,
 	}
 
 	@Override
-	public void changeWheelChairView() {
-		desktopLayout.changeWheelChairView();
+	public void changeToWheelChairView() {
+		desktopLayout.changeToWheelChairView();
 		desktopLayout.replaceWheelChairButtonWithHomeButton();
+	}
+
+	@Override
+	public void changeToNonWheelChairView() {
+		desktopLayout.changeToNonWheelChairView();
+		desktopLayout.replaceHomeButtonWithWheelChairButton();
 	}
 
 	public synchronized void refreshFreeRooms() {

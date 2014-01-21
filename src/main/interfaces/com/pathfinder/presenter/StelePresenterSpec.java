@@ -8,14 +8,16 @@ import com.vaadin.ui.Component.Listener;
 import de.vksi.c4j.ContractReference;
 import de.vksi.c4j.Pure;
 
-@ContractReference(DesktopPresenterSpecContract.class)
-public interface DesktopPresenterSpec {
+@ContractReference(StelePresenterSpecContract.class)
+public interface StelePresenterSpec {
 
 	void switchToSearchView();
 
 	void switchToDetailView();
 
-	void changeWheelChairView();
+	void changeToWheelChairView();
+
+	void changeToNonWheelChairView();
 
 	void setRoomContainer(BeanItemContainer<ResourceModel> beanItemContainer);
 

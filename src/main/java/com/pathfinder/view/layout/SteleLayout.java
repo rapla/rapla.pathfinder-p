@@ -12,8 +12,6 @@ import com.pathfinder.util.widgetset.BackToHomeScreenListenerSpec;
 import com.pathfinder.util.widgetset.DateTime;
 import com.pathfinder.view.components.AccordionView;
 import com.pathfinder.view.components.AccordionViewSpec;
-import com.pathfinder.view.components.AppointmentView;
-import com.pathfinder.view.components.AppointmentViewSpec;
 import com.pathfinder.view.components.DateTimeSpec;
 import com.pathfinder.view.components.FreeRoomView;
 import com.pathfinder.view.components.FreeRoomViewSpec;
@@ -55,7 +53,6 @@ public class SteleLayout extends CustomComponent implements SteleLayoutSpec {
 			(AccordionView) accordionView, (SearchField) searchField);
 	private final MenuBarSpec menuBar = new MenuBar();
 	private final DetailContainerSpec detailContainer = new DetailContainer();
-	private final AppointmentViewSpec appointmentView = new AppointmentView();
 
 	private final VerticalLayout mainLayout = new VerticalLayout();
 	private final VerticalLayout contentLayout = new VerticalLayout();
@@ -75,7 +72,6 @@ public class SteleLayout extends CustomComponent implements SteleLayoutSpec {
 		this.contentLayout.addComponent(freeRoom);
 		this.contentLayout.addComponent(layoutNormal);
 		this.contentLayout.addComponent(detailContainer);
-		this.contentLayout.addComponent(appointmentView);
 		this.contentLayout.setSizeFull();
 		// this.contentLayout.setHeight(900, Unit.PIXELS);
 
@@ -169,11 +165,6 @@ public class SteleLayout extends CustomComponent implements SteleLayoutSpec {
 	}
 
 	@Override
-	public void setAppointmentUrl(String url) {
-		appointmentView.setAppointmentUrl(url);
-	}
-
-	@Override
 	public void hideOpenLanguagePopup() {
 		menuBar.hideOpenLanguagePopup();
 	}
@@ -209,16 +200,6 @@ public class SteleLayout extends CustomComponent implements SteleLayoutSpec {
 	}
 
 	@Override
-	public void hideAppointmentView() {
-		appointmentView.hideAppointmentView();
-	}
-
-	@Override
-	public void showAppointmentView() {
-		appointmentView.showAppointmentView();
-	}
-
-	@Override
 	public void showHomeButton() {
 		menuBar.showHomeButton();
 	}
@@ -239,14 +220,19 @@ public class SteleLayout extends CustomComponent implements SteleLayoutSpec {
 	}
 
 	@Override
-	public void changeWheelChairView() {
+	public void changeToWheelChairView() {
 		if (contentLayout.getComponentIndex(layoutNormal) >= 0) {
 			layoutWheelChair.addComponent(keyboard);
 			layoutWheelChair.addComponent(searchPanel);
 			layoutWheelChair.setSizeFull();
 			this.contentLayout.replaceComponent(layoutNormal, layoutWheelChair);
 			this.layoutNormal.removeAllComponents();
-		} else {
+		}
+	}
+
+	@Override
+	public void changeToNonWheelChairView() {
+		if (contentLayout.getComponentIndex(layoutWheelChair) >= 0) {
 			layoutNormal.addComponent(searchPanel);
 			layoutNormal.addComponent(keyboard);
 			layoutNormal.setSizeFull();
@@ -328,7 +314,6 @@ public class SteleLayout extends CustomComponent implements SteleLayoutSpec {
 		searchPanel.updateTranslations();
 		keyboard.updateTranslations();
 		detailContainer.updateTranslations();
-		appointmentView.updateTranslations();
 		menuBar.updateTranslations();
 	}
 

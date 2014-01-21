@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Logger;
 import com.pathfinder.presenter.DataLoader;
 import com.pathfinder.presenter.DataLoaderSpec;
 import com.pathfinder.presenter.StelePresenter;
-import com.pathfinder.presenter.DesktopPresenterSpec;
+import com.pathfinder.presenter.StelePresenterSpec;
 import com.pathfinder.presenter.MobilePresenterSpec;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
@@ -33,8 +33,8 @@ public class PathfinderUI extends UI {
 	private static final Logger LOGGER = LogManager
 			.getLogger(PathfinderUI.class.getName());
 
-	private DesktopPresenterSpec stelePresenter = null;
-	private DesktopPresenterSpec desktopPresenter = null;
+	private StelePresenterSpec stelePresenter = null;
+	private StelePresenterSpec desktopPresenter = null;
 	private MobilePresenterSpec mobilePresenter = null;
 
 	private Page page = null;

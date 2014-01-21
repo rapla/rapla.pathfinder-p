@@ -2,7 +2,6 @@ package com.pathfinder.view.layout;
 
 import com.pathfinder.view.ViewSpec;
 import com.pathfinder.view.components.AccordionViewSpec;
-import com.pathfinder.view.components.AppointmentViewSpec;
 import com.pathfinder.view.components.DateTimeSpec;
 import com.pathfinder.view.components.FreeRoomViewSpec;
 import com.pathfinder.view.components.KeyboardSpec;
@@ -19,10 +18,12 @@ import com.pathfinder.view.listener.KeyboardViewListenerSpec;
  * 
  */
 public interface SteleLayoutSpec extends ViewSpec, AccordionViewSpec,
-		AppointmentViewSpec, DateTimeSpec, FreeRoomViewSpec, KeyboardSpec,
-		MenuBarSpec, SearchFieldSpec, SearchPanelSpec, DetailContainerSpec {
+		DateTimeSpec, FreeRoomViewSpec, KeyboardSpec, MenuBarSpec,
+		SearchFieldSpec, SearchPanelSpec, DetailContainerSpec {
 
 	void addKeyboardListener(KeyboardViewListenerSpec listener);
 
-	void changeWheelChairView();
+	void changeToWheelChairView();
+
+	void changeToNonWheelChairView();
 }
