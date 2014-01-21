@@ -18,14 +18,14 @@ import com.pathfinder.view.components.KeyboardId;
 import com.pathfinder.view.components.MenuBarSpec;
 import com.pathfinder.view.container.DetailContainerSpec;
 import com.pathfinder.view.container.SearchPanelSpec;
-import com.pathfinder.view.layout.DesktopLayoutSpec;
+import com.pathfinder.view.layout.SteleLayoutSpec;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HasComponents;
 import com.vaadin.ui.UI;
 
 public class DesktopPresenterTest {
-	DesktopPresenter desktopPresenter;
-	DesktopLayoutSpec desktopLayout;
+	StelePresenter desktopPresenter;
+	SteleLayoutSpec desktopLayout;
 	DateTimeSpec dateTime;
 	FreeRoomViewSpec freeRoom;
 	SearchPanelSpec searchPanel;
@@ -39,7 +39,7 @@ public class DesktopPresenterTest {
 		ui.setLocale(Locale.GERMAN);
 		UI.setCurrent(ui);
 
-		desktopPresenter = new DesktopPresenter();
+		desktopPresenter = new StelePresenter();
 		desktopLayout = desktopPresenter.getDesktopLayoutView();
 
 		HasComponents rootLayout = (HasComponents) ((HasComponents) desktopLayout)

@@ -1,7 +1,7 @@
 package com.pathfinder.presenter;
 
 import com.pathfinder.model.ResourceModel;
-import com.pathfinder.view.layout.DesktopLayoutSpec;
+import com.pathfinder.view.layout.SteleLayoutSpec;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Component.Listener;
 
@@ -27,7 +27,7 @@ public interface DesktopPresenterSpec {
 
 	void refreshFreeRooms();
 
-	DesktopLayoutSpec getDesktopLayoutView();
+	SteleLayoutSpec getDesktopLayoutView();
 
 	void addKeybordKeyToSearchString(String key);
 

@@ -18,7 +18,7 @@ import com.pathfinder.view.listener.KeyboardViewListenerSpec;
  * @author alexh
  * 
  */
-public interface DesktopLayoutSpec extends ViewSpec, AccordionViewSpec,
+public interface SteleLayoutSpec extends ViewSpec, AccordionViewSpec,
 		AppointmentViewSpec, DateTimeSpec, FreeRoomViewSpec, KeyboardSpec,
 		MenuBarSpec, SearchFieldSpec, SearchPanelSpec, DetailContainerSpec {
 

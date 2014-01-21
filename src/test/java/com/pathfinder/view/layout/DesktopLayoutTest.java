@@ -13,7 +13,7 @@ import com.vaadin.ui.UI;
  */
 public class DesktopLayoutTest {
 
-	private DesktopLayout desktopLayout;
+	private SteleLayout desktopLayout;
 
 	@Before
 	public void initialize() {
@@ -21,6 +21,6 @@ public class DesktopLayoutTest {
 		ui.setLocale(Locale.GERMAN);
 		UI.setCurrent(ui);
 
-		this.desktopLayout = new DesktopLayout();
+		this.desktopLayout = new SteleLayout();
 	}
 }

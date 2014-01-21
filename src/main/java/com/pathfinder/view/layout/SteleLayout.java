@@ -34,13 +34,18 @@ import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
-public class SteleLayout extends CustomComponent implements DesktopLayoutSpec {
+/**
+ * Defines the main layout of the stele view
+ * 
+ * @author alexh
+ * 
+ */
+public class SteleLayout extends CustomComponent implements SteleLayoutSpec {
 	private final DateTimeSpec dateTime = new DateTime();
 	private final FreeRoomViewSpec freeRoom = new FreeRoomView();
 	private final AccordionViewSpec accordionView = new AccordionView();
@@ -52,7 +57,8 @@ public class SteleLayout extends CustomComponent implements DesktopLayoutSpec {
 	private final DetailContainerSpec detailContainer = new DetailContainer();
 	private final AppointmentViewSpec appointmentView = new AppointmentView();
 
-	private final GridLayout mainLayout = new GridLayout(1, 12);
+	private final VerticalLayout mainLayout = new VerticalLayout();
+	private final VerticalLayout contentLayout = new VerticalLayout();
 	private final VerticalLayout layoutNormal = new VerticalLayout();
 	private final HorizontalLayout layoutWheelChair = new HorizontalLayout();
 
@@ -66,13 +72,18 @@ public class SteleLayout extends CustomComponent implements DesktopLayoutSpec {
 		this.layoutNormal.addComponent(searchPanel);
 		this.layoutNormal.addComponent(keyboard);
 
-		this.mainLayout.addComponent(dateTime, 0, 1);
-		this.mainLayout.addComponent(freeRoom, 0, 2);
-		this.mainLayout.addComponent(layoutNormal, 0, 4);
-		this.mainLayout.addComponent(menuBar, 0, 10);
+		this.contentLayout.addComponent(freeRoom);
+		this.contentLayout.addComponent(layoutNormal);
+		this.contentLayout.addComponent(detailContainer);
+		this.contentLayout.addComponent(appointmentView);
+		this.contentLayout.setSizeFull();
+		// this.contentLayout.setHeight(900, Unit.PIXELS);
 
-		this.mainLayout.setHeight("1920");
-		this.mainLayout.setWidth("1080");
+		this.mainLayout.addComponent(dateTime);
+		this.mainLayout.addComponent(contentLayout);
+		this.mainLayout.addComponent(menuBar);
+
+		this.mainLayout.setExpandRatio(contentLayout, 1);
 		setPrimaryStyleName("main");
 	}
 
@@ -229,20 +240,19 @@ public class SteleLayout extends CustomComponent implements DesktopLayoutSpec {
 
 	@Override
 	public void changeWheelChairView() {
-		// TODO
-		// if (contentLayout.getComponentIndex(layoutNormal) >= 0) {
-		// layoutWheelChair.addComponent(keyboard);
-		// layoutWheelChair.addComponent(searchPanel);
-		// layoutWheelChair.setSizeFull();
-		// this.contentLayout.replaceComponent(layoutNormal, layoutWheelChair);
-		// this.layoutNormal.removeAllComponents();
-		// } else {
-		// layoutNormal.addComponent(searchPanel);
-		// layoutNormal.addComponent(keyboard);
-		// layoutNormal.setSizeFull();
-		// this.contentLayout.replaceComponent(layoutWheelChair, layoutNormal);
-		// layoutWheelChair.removeAllComponents();
-		// }
+		if (contentLayout.getComponentIndex(layoutNormal) >= 0) {
+			layoutWheelChair.addComponent(keyboard);
+			layoutWheelChair.addComponent(searchPanel);
+			layoutWheelChair.setSizeFull();
+			this.contentLayout.replaceComponent(layoutNormal, layoutWheelChair);
+			this.layoutNormal.removeAllComponents();
+		} else {
+			layoutNormal.addComponent(searchPanel);
+			layoutNormal.addComponent(keyboard);
+			layoutNormal.setSizeFull();
+			this.contentLayout.replaceComponent(layoutWheelChair, layoutNormal);
+			layoutWheelChair.removeAllComponents();
+		}
 	}
 
 	@Override
@@ -324,8 +334,7 @@ public class SteleLayout extends CustomComponent implements DesktopLayoutSpec {
 
 	@Override
 	public void addCalendarListener(Listener listener) {
-		// TODO Auto-generated method stub
-
+		detailContainer.addCalendarListener(listener);
 	}
 
 	@Override
@@ -335,4 +344,5 @@ public class SteleLayout extends CustomComponent implements DesktopLayoutSpec {
 		detailContainer
 				.updateCalenarEvents(resourceEvents, currentCalendarDate);
 	}
+
 }

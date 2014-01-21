@@ -5,7 +5,7 @@ import static de.vksi.c4j.Condition.postCondition;
 import static de.vksi.c4j.Condition.preCondition;
 
 import com.pathfinder.model.ResourceModel;
-import com.pathfinder.view.layout.DesktopLayoutSpec;
+import com.pathfinder.view.layout.SteleLayoutSpec;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Component.Listener;
 
@@ -67,7 +67,7 @@ public class DesktopPresenterSpecContract implements DesktopPresenterSpec {
 	}
 
 	@Override
-	public DesktopLayoutSpec getDesktopLayoutView() {
+	public SteleLayoutSpec getDesktopLayoutView() {
 		if (preCondition()) {
 			// TODO: write preconditions if required
 		}

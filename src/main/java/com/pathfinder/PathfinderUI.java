@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.pathfinder.presenter.DataLoader;
 import com.pathfinder.presenter.DataLoaderSpec;
-import com.pathfinder.presenter.DesktopPresenter;
+import com.pathfinder.presenter.StelePresenter;
 import com.pathfinder.presenter.DesktopPresenterSpec;
 import com.pathfinder.presenter.MobilePresenterSpec;
 import com.pathfinder.util.translation.TranslationKeys;
@@ -101,7 +101,7 @@ public class PathfinderUI extends UI {
 		// addListenerToAllChildComponents((HasComponents) getContent(),
 		// stelePresenter.getUiListener());
 
-		desktopPresenter = new DesktopPresenter();
+		desktopPresenter = new StelePresenter();
 		setContent(desktopPresenter.getDesktopLayoutView());
 		addListenerToAllChildComponents((HasComponents) getContent(),
 				desktopPresenter.getUiListener());
