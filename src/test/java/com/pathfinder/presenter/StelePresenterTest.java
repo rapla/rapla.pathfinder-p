@@ -1,20 +1,6 @@
 package com.pathfinder.presenter;
 
-import static com.pathfinder.view.components.KeyboardId.AE;
-import static com.pathfinder.view.components.KeyboardId.DELETE;
-import static com.pathfinder.view.components.KeyboardId.I;
-import static com.pathfinder.view.components.KeyboardId.K;
-import static com.pathfinder.view.components.KeyboardId.L;
-import static com.pathfinder.view.components.KeyboardId.LEFT;
-import static com.pathfinder.view.components.KeyboardId.M;
-import static com.pathfinder.view.components.KeyboardId.OE;
-import static com.pathfinder.view.components.KeyboardId.P;
-import static com.pathfinder.view.components.KeyboardId.RIGHT;
-import static com.pathfinder.view.components.KeyboardId.S;
-import static com.pathfinder.view.components.KeyboardId.SPACE;
-import static com.pathfinder.view.components.KeyboardId.T;
-import static com.pathfinder.view.components.KeyboardId.UE;
-import static com.pathfinder.view.components.KeyboardId.X;
+import static com.pathfinder.view.components.KeyboardId.*;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Iterator;
@@ -31,12 +17,13 @@ import com.pathfinder.view.components.KeyboardId;
 import com.pathfinder.view.components.MenuBarSpec;
 import com.pathfinder.view.layout.DetailContainerSpec;
 import com.pathfinder.view.layout.SteleLayoutSpec;
+import com.vaadin.ui.AbstractOrderedLayout;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HasComponents;
 import com.vaadin.ui.UI;
 
 public class StelePresenterTest {
-	StelePresenter desktopPresenter;
+	StelePresenter stelePresenter;
 	SteleLayoutSpec desktopLayout;
 	DateTimeSpec dateTime;
 	FreeRoomViewSpec freeRoom;
@@ -49,8 +36,8 @@ public class StelePresenterTest {
 		ui.setLocale(Locale.GERMAN);
 		UI.setCurrent(ui);
 
-		desktopPresenter = new StelePresenter();
-		desktopLayout = desktopPresenter.getDesktopLayoutView();
+		stelePresenter = new StelePresenter();
+		desktopLayout = stelePresenter.getDesktopLayoutView();
 
 		HasComponents rootLayout = (HasComponents) ((HasComponents) desktopLayout)
 				.iterator().next();
@@ -59,13 +46,22 @@ public class StelePresenterTest {
 			Component component = iterator.next();
 			if (component instanceof DateTimeSpec) {
 				dateTime = (DateTimeSpec) component;
-			} else if (component instanceof FreeRoomViewSpec) {
-				freeRoom = (FreeRoomViewSpec) component;
-			} else if (component instanceof DetailContainerSpec) {
-				detailContainer = (DetailContainerSpec) component;
 			} else if (component instanceof MenuBarSpec) {
 				menuBar = (MenuBarSpec) component;
+			} else if (component instanceof AbstractOrderedLayout) {
+				Iterator<Component> contentIterator = ((AbstractOrderedLayout) component)
+						.iterator();
+				while (contentIterator.hasNext()) {
+					Component contentComponent = contentIterator.next();
+					if (contentComponent instanceof FreeRoomViewSpec) {
+						freeRoom = (FreeRoomViewSpec) contentComponent;
+					} else if (contentComponent instanceof DetailContainerSpec) {
+						detailContainer = (DetailContainerSpec) contentComponent;
+					}
+
+				}
 			}
+
 		}
 
 		Assert.assertTrue(dateTime != null);
@@ -76,85 +72,85 @@ public class StelePresenterTest {
 
 	@Test
 	public void addKeyboardKeyToSearchStringTest() {
-		desktopPresenter.buttonClick(I);
-		desktopPresenter.buttonClick(K);
-		assertEquals("IK", desktopPresenter.getSearchString());
+		stelePresenter.buttonClick(I);
+		stelePresenter.buttonClick(K);
+		assertEquals("IK", stelePresenter.getSearchString());
 	}
 
 	@Test
 	public void deleteKeyboardKeyFromSearchStringTest() {
-		desktopPresenter.buttonClick(I);
-		desktopPresenter.buttonClick(K);
-		desktopPresenter.buttonClick(DELETE);
-		assertEquals("I", desktopPresenter.getSearchString());
+		stelePresenter.buttonClick(I);
+		stelePresenter.buttonClick(K);
+		stelePresenter.buttonClick(DELETE);
+		assertEquals("I", stelePresenter.getSearchString());
 	}
 
 	@Test
 	public void clearSearchStringTest() {
-		desktopPresenter.buttonClick(I);
-		desktopPresenter.buttonClick(K);
-		desktopPresenter.clearSearchString();
-		assertEquals("", desktopPresenter.getSearchString());
+		stelePresenter.buttonClick(I);
+		stelePresenter.buttonClick(K);
+		stelePresenter.clearSearchString();
+		assertEquals("", stelePresenter.getSearchString());
 	}
 
 	@Test
 	public void complexKeyboardKeyTest() {
 
-		desktopPresenter.buttonClick(L);
-		desktopPresenter.buttonClick(P);
-		assertEquals("LP", desktopPresenter.getSearchString());
+		stelePresenter.buttonClick(L);
+		stelePresenter.buttonClick(P);
+		assertEquals("LP", stelePresenter.getSearchString());
 
-		desktopPresenter.buttonClick(DELETE);
-		desktopPresenter.buttonClick(DELETE);
-		desktopPresenter.buttonClick(DELETE);
-		desktopPresenter.buttonClick(DELETE);
-		assertEquals("", desktopPresenter.getSearchString());
+		stelePresenter.buttonClick(DELETE);
+		stelePresenter.buttonClick(DELETE);
+		stelePresenter.buttonClick(DELETE);
+		stelePresenter.buttonClick(DELETE);
+		assertEquals("", stelePresenter.getSearchString());
 
-		desktopPresenter.buttonClick(T);
-		desktopPresenter.buttonClick(AE);
-		desktopPresenter.buttonClick(S);
-		assertEquals("TÄS", desktopPresenter.getSearchString());
+		stelePresenter.buttonClick(T);
+		stelePresenter.buttonClick(AE);
+		stelePresenter.buttonClick(S);
+		assertEquals("TÄS", stelePresenter.getSearchString());
 
-		desktopPresenter.buttonClick(SPACE);
-		assertEquals("TÄS ", desktopPresenter.getSearchString());
+		stelePresenter.buttonClick(SPACE);
+		assertEquals("TÄS ", stelePresenter.getSearchString());
 
-		desktopPresenter.buttonClick(SPACE);
-		desktopPresenter.buttonClick(SPACE);
-		assertEquals("TÄS   ", desktopPresenter.getSearchString());
+		stelePresenter.buttonClick(SPACE);
+		stelePresenter.buttonClick(SPACE);
+		assertEquals("TÄS   ", stelePresenter.getSearchString());
 
-		desktopPresenter.buttonClick(KeyboardId.RIGHT);
-		desktopPresenter.buttonClick(KeyboardId.RIGHT);
-		desktopPresenter.buttonClick(KeyboardId.RIGHT);
-		desktopPresenter.buttonClick(KeyboardId.RIGHT);
-		desktopPresenter.buttonClick(KeyboardId.RIGHT);
-		desktopPresenter.buttonClick(KeyboardId.DELETE);
-		assertEquals("TÄS  ", desktopPresenter.getSearchString());
+		stelePresenter.buttonClick(KeyboardId.RIGHT);
+		stelePresenter.buttonClick(KeyboardId.RIGHT);
+		stelePresenter.buttonClick(KeyboardId.RIGHT);
+		stelePresenter.buttonClick(KeyboardId.RIGHT);
+		stelePresenter.buttonClick(KeyboardId.RIGHT);
+		stelePresenter.buttonClick(KeyboardId.DELETE);
+		assertEquals("TÄS  ", stelePresenter.getSearchString());
 
-		desktopPresenter.buttonClick(UE);
-		desktopPresenter.buttonClick(UE);
-		desktopPresenter.buttonClick(LEFT);
-		desktopPresenter.buttonClick(X);
-		assertEquals("TÄS  ÜXÜ", desktopPresenter.getSearchString());
+		stelePresenter.buttonClick(UE);
+		stelePresenter.buttonClick(UE);
+		stelePresenter.buttonClick(LEFT);
+		stelePresenter.buttonClick(X);
+		assertEquals("TÄS  ÜXÜ", stelePresenter.getSearchString());
 
-		desktopPresenter.buttonClick(LEFT);
-		desktopPresenter.buttonClick(LEFT);
-		desktopPresenter.buttonClick(LEFT);
-		desktopPresenter.buttonClick(LEFT);
-		desktopPresenter.buttonClick(LEFT);
-		desktopPresenter.buttonClick(LEFT);
-		desktopPresenter.buttonClick(LEFT);
-		desktopPresenter.buttonClick(LEFT);
-		desktopPresenter.buttonClick(LEFT);
-		desktopPresenter.buttonClick(LEFT);
-		desktopPresenter.buttonClick(LEFT);
-		desktopPresenter.buttonClick(OE);
-		assertEquals("ÖTÄS  ÜXÜ", desktopPresenter.getSearchString());
+		stelePresenter.buttonClick(LEFT);
+		stelePresenter.buttonClick(LEFT);
+		stelePresenter.buttonClick(LEFT);
+		stelePresenter.buttonClick(LEFT);
+		stelePresenter.buttonClick(LEFT);
+		stelePresenter.buttonClick(LEFT);
+		stelePresenter.buttonClick(LEFT);
+		stelePresenter.buttonClick(LEFT);
+		stelePresenter.buttonClick(LEFT);
+		stelePresenter.buttonClick(LEFT);
+		stelePresenter.buttonClick(LEFT);
+		stelePresenter.buttonClick(OE);
+		assertEquals("ÖTÄS  ÜXÜ", stelePresenter.getSearchString());
 
-		desktopPresenter.buttonClick(RIGHT);
-		desktopPresenter.buttonClick(RIGHT);
-		desktopPresenter.buttonClick(RIGHT);
-		desktopPresenter.buttonClick(M);
-		assertEquals("ÖTÄSM  ÜXÜ", desktopPresenter.getSearchString());
+		stelePresenter.buttonClick(RIGHT);
+		stelePresenter.buttonClick(RIGHT);
+		stelePresenter.buttonClick(RIGHT);
+		stelePresenter.buttonClick(M);
+		assertEquals("ÖTÄSM  ÜXÜ", stelePresenter.getSearchString());
 	}
 
 }

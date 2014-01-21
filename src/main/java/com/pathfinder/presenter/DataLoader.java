@@ -509,27 +509,23 @@ public class DataLoader implements DataLoaderSpec {
 				attributList.addItem(attribut);
 			}
 
-			return attributList;
 		} catch (ConnectException e) {
 			LOGGER.info(ERROR_MASSAGE_LOADING_RESOURCE_DETAIL + resourceId);
 			LOGGER.info(ERROR_MASSAGE_SERVER_NOT_AVAILABLE);
 			LOGGER.error(ERROR_MASSAGE_URL_NOT_READABLE, e);
-			return null;
 		} catch (MalformedURLException e) {
 			LOGGER.info(ERROR_MASSAGE_LOADING_RESOURCE_DETAIL + resourceId);
 			LOGGER.error(ERROR_MASSAGE_URL_NOT_READABLE, e);
-			return null;
 		} catch (ParseException e) {
 			LOGGER.info(ERROR_MASSAGE_LOADING_RESOURCE_DETAIL + resourceId);
 			LOGGER.error(ERROR_MASSAGE_JSON_HANDLING, e);
 			LOGGER.error(ERROR_MASSAGE_URL_NOT_READABLE, e);
-			return null;
 		} catch (IOException e) {
 			LOGGER.info(ERROR_MASSAGE_LOADING_RESOURCE_DETAIL + resourceId);
 			LOGGER.error(ERROR_MASSAGE_URL_NOT_READABLE, e);
-			return null;
 
 		}
+		return attributList;
 	}
 
 	@Override
@@ -579,25 +575,19 @@ public class DataLoader implements DataLoaderSpec {
 					});
 			eventContainer.addAll(eventsList);
 
-			if (eventContainer.equals(null))
-				return null;
-			else
-				return eventContainer;
 		} catch (ConnectException e) {
 			LOGGER.info(ERROR_MASSAGE_SERVER_NOT_AVAILABLE);
 			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE_EVENT + resourceId, e);
-			return null;
 		} catch (MalformedURLException e) {
 			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE_EVENT + resourceId, e);
-			return null;
 		} catch (JsonProcessingException e) {
 			LOGGER.error(ERROR_MASSAGE_JSON_HANDLING, e);
 			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE_EVENT + resourceId, e);
-			return null;
 		} catch (IOException e) {
 			LOGGER.error(ERROR_MASSAGE_LOADING_RESOURCE_EVENT + resourceId, e);
-			return null;
 		}
+
+		return eventContainer;
 	}
 
 	private String encodeSpecialCharactersForUrl(String url) {

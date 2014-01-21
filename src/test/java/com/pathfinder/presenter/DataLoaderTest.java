@@ -1,5 +1,6 @@
 package com.pathfinder.presenter;
 
+import java.util.Date;
 import java.util.Locale;
 
 import org.junit.Assert;
@@ -89,8 +90,9 @@ public class DataLoaderTest {
 
 	@Test
 	public void getEventTest() {
-		BeanItemContainer<EventModel> eventContainer = dataLoader
-				.getEvent("org.rapla.entities.domain.Allocatable_2431", null, null, null);
+		BeanItemContainer<EventModel> eventContainer = dataLoader.getEvent(
+				"org.rapla.entities.domain.Allocatable_2431", new Date(),
+				new Date(), Locale.GERMAN);
 		Assert.assertNotNull(eventContainer);
 	}
 }
