@@ -8,9 +8,7 @@ import java.util.List;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
-import com.pathfinder.view.listener.KeyboardViewListenerSpec;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
@@ -22,9 +20,10 @@ import com.vaadin.ui.VerticalLayout;
  * @author max
  * 
  */
-public class Keyboard extends CustomComponent implements KeyboardSpec,
-		ClickListener {
+public class Keyboard extends CustomComponent implements KeyboardSpec {
 	private final TranslatorSpec translator = Translator.getInstance();
+
+	private final List<Button> buttonList = new ArrayList<>();
 
 	private final Button deleteButton = createButton(DELETE);
 	private final Button spaceButton = createButton(SPACE);
@@ -35,15 +34,13 @@ public class Keyboard extends CustomComponent implements KeyboardSpec,
 	private final HorizontalLayout row3 = new HorizontalLayout();
 	private final HorizontalLayout row4 = new HorizontalLayout();
 
-	/* Only the presenter registers one listener... */
-	List<KeyboardViewListenerSpec> listeners = new ArrayList<KeyboardViewListenerSpec>();
-
 	public Keyboard() {
 		buildLayout();
 		setCompositionRoot(layout);
 	}
 
 	private void buildLayout() {
+
 		row1.setPrimaryStyleName("keyboard-row");
 		row2.setPrimaryStyleName("keyboard-row");
 		row3.setPrimaryStyleName("keyboard-row");
@@ -94,7 +91,7 @@ public class Keyboard extends CustomComponent implements KeyboardSpec,
 	private Button createButton(KeyboardId id) {
 		Button newButton = new Button();
 		newButton.setData(id);
-		newButton.addClickListener(this);
+		buttonList.add(newButton);
 
 		switch (id) {
 		case SPACE:
@@ -115,26 +112,6 @@ public class Keyboard extends CustomComponent implements KeyboardSpec,
 	}
 
 	@Override
-	public void addKeyboardViewListener(KeyboardViewListenerSpec listener) {
-		listeners.add(listener);
-	}
-
-	/**
-	 * Relay button clicks to the presenter with an implementation-independent
-	 * event
-	 */
-	@Override
-	public void buttonClick(ClickEvent event) {
-		for (KeyboardViewListenerSpec listener : listeners)
-			listener.buttonClick((KeyboardId) event.getButton().getData());
-	}
-
-	@Override
-	public List<KeyboardViewListenerSpec> getKeyboardViewListener() {
-		return listeners;
-	}
-
-	@Override
 	public void hideKeyboard() {
 		this.setVisible(false);
 	}
@@ -148,5 +125,12 @@ public class Keyboard extends CustomComponent implements KeyboardSpec,
 	public void updateTranslations() {
 		deleteButton.setCaption(translator.translate(TranslationKeys.DELETE));
 		spaceButton.setCaption(translator.translate(TranslationKeys.SPACE));
+	}
+
+	@Override
+	public void addKeyboardButtonListener(ClickListener listener) {
+		for (Button button : buttonList) {
+			button.addClickListener(listener);
+		}
 	}
 }

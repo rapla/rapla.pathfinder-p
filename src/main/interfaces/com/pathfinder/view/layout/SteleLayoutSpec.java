@@ -7,7 +7,6 @@ import com.pathfinder.view.components.FreeRoomViewSpec;
 import com.pathfinder.view.components.KeyboardSpec;
 import com.pathfinder.view.components.MenuBarSpec;
 import com.pathfinder.view.components.SearchFieldSpec;
-import com.pathfinder.view.listener.KeyboardViewListenerSpec;
 
 /**
  * MainLayoutSpec
@@ -18,8 +17,6 @@ import com.pathfinder.view.listener.KeyboardViewListenerSpec;
 public interface SteleLayoutSpec extends ViewSpec, AccordionViewSpec,
 		DateTimeSpec, FreeRoomViewSpec, KeyboardSpec, MenuBarSpec,
 		SearchFieldSpec, DetailContainerSpec {
-
-	void addKeyboardListener(KeyboardViewListenerSpec listener);
 
 	void changeToWheelChairView();
 

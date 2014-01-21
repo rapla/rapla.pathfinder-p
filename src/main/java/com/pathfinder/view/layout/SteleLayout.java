@@ -1,7 +1,6 @@
 package com.pathfinder.view.layout;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 import com.pathfinder.model.Attribut;
@@ -21,7 +20,6 @@ import com.pathfinder.view.components.MenuBar;
 import com.pathfinder.view.components.MenuBarSpec;
 import com.pathfinder.view.components.SearchField;
 import com.pathfinder.view.components.SearchFieldSpec;
-import com.pathfinder.view.listener.KeyboardViewListenerSpec;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
@@ -79,8 +77,8 @@ public class SteleLayout extends CustomComponent implements SteleLayoutSpec {
 	}
 
 	@Override
-	public void addKeyboardListener(KeyboardViewListenerSpec listener) {
-		this.keyboard.addKeyboardViewListener(listener);
+	public void addKeyboardButtonListener(ClickListener listener) {
+		this.keyboard.addKeyboardButtonListener(listener);
 	}
 
 	@Override
@@ -117,11 +115,6 @@ public class SteleLayout extends CustomComponent implements SteleLayoutSpec {
 	@Override
 	public void addBackToHomeListener(BackToHomeScreenListenerSpec listener) {
 		dateTime.addBackToHomeListener(listener);
-	}
-
-	@Override
-	public void addKeyboardViewListener(KeyboardViewListenerSpec listener) {
-		keyboard.addKeyboardViewListener(listener);
 	}
 
 	@Override
@@ -220,7 +213,7 @@ public class SteleLayout extends CustomComponent implements SteleLayoutSpec {
 			VerticalLayout rightSide = new VerticalLayout();
 			rightSide.addComponent(accordionView);
 			rightSide.addComponent(searchField);
-			
+
 			layoutWheelChair.addComponent(keyboard);
 			layoutWheelChair.addComponent(rightSide);
 			layoutWheelChair.setSizeFull();
@@ -254,11 +247,6 @@ public class SteleLayout extends CustomComponent implements SteleLayoutSpec {
 	@Override
 	public Button getDeleteAllButton() {
 		return searchField.getDeleteAllButton();
-	}
-
-	@Override
-	public List<KeyboardViewListenerSpec> getKeyboardViewListener() {
-		return keyboard.getKeyboardViewListener();
 	}
 
 	@Override

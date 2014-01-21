@@ -19,10 +19,8 @@ import com.pathfinder.PathfinderUI;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
-import com.pathfinder.view.listener.KeyboardViewListenerSpec;
 import com.vaadin.ui.AbstractOrderedLayout;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HasComponents;
@@ -94,32 +92,6 @@ public class KeyboardTest {
 	}
 
 	private KeyboardId keyboardId = null;
-
-	@Test
-	public void addListenerTest() {
-		KeyboardViewListenerSpec listener = new KeyboardViewListenerSpec() {
-
-			@Override
-			public void buttonClick(KeyboardId keyId) {
-				keyboardId = keyId;
-			}
-		};
-
-		keyboard.addKeyboardViewListener(listener);
-
-		Assert.assertEquals(listener, keyboard.listeners.get(0));
-
-		Button button = new Button();
-		button.setData(KeyboardId.A);
-		keyboard.buttonClick(new ClickEvent(button));
-
-		Assert.assertEquals(KeyboardId.A, keyboardId);
-
-		button.setData(KeyboardId.F);
-		keyboard.buttonClick(new ClickEvent(button));
-
-		Assert.assertEquals(KeyboardId.F, keyboardId);
-	}
 
 	@Test
 	public void updateTranslationsTest() {

@@ -31,7 +31,7 @@ public interface StelePresenterSpec {
 
 	void refreshFreeRooms();
 
-	SteleLayoutSpec getDesktopLayoutView();
+	SteleLayoutSpec getSteleLayoutView();
 
 	void addKeybordKeyToSearchString(String key);
 

@@ -69,7 +69,7 @@ public class StelePresenterSpecContract implements StelePresenterSpec {
 	}
 
 	@Override
-	public SteleLayoutSpec getDesktopLayoutView() {
+	public SteleLayoutSpec getSteleLayoutView() {
 		if (preCondition()) {
 			// TODO: write preconditions if required
 		}
@@ -163,4 +163,5 @@ public class StelePresenterSpecContract implements StelePresenterSpec {
 		// TODO Auto-generated method stub
 
 	}
+
 }
