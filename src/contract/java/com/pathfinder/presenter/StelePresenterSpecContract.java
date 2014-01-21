@@ -4,6 +4,8 @@ import static de.vksi.c4j.Condition.ignored;
 import static de.vksi.c4j.Condition.postCondition;
 import static de.vksi.c4j.Condition.preCondition;
 
+import java.util.Locale;
+
 import com.pathfinder.model.ResourceModel;
 import com.pathfinder.view.layout.SteleLayoutSpec;
 import com.vaadin.data.util.BeanItemContainer;
@@ -145,6 +147,19 @@ public class StelePresenterSpecContract implements StelePresenterSpec {
 
 	@Override
 	public void changeToNonWheelChairView() {
+		// TODO Auto-generated method stub
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pathfinder.presenter.StelePresenterSpec#languageChanged(java.util
+	 * .Locale)
+	 */
+	@Override
+	public void languageChanged(Locale locale) {
 		// TODO Auto-generated method stub
 
 	}

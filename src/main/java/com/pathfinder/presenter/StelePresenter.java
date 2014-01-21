@@ -22,7 +22,6 @@ import com.pathfinder.util.widgetset.BackToHomeScreenListenerSpec;
 import com.pathfinder.view.components.KeyboardId;
 import com.pathfinder.view.layout.SteleLayout;
 import com.pathfinder.view.layout.SteleLayoutSpec;
-import com.pathfinder.view.listener.DesktopLayoutViewListenerSpec;
 import com.pathfinder.view.listener.KeyboardViewListenerSpec;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -48,8 +47,8 @@ import com.vaadin.ui.components.calendar.CalendarComponentEvents.ForwardEvent;
  * @author alexh
  * 
  */
-public class StelePresenter implements DesktopLayoutViewListenerSpec,
-		StelePresenterSpec, KeyboardViewListenerSpec, DataLoaderListenerSpec {
+public class StelePresenter implements StelePresenterSpec,
+		KeyboardViewListenerSpec, DataLoaderListenerSpec {
 	private static final Logger LOGGER = LogManager
 			.getLogger(StelePresenter.class.getName());
 	private final ApplicationPropertiesSpec properties = ApplicationProperties

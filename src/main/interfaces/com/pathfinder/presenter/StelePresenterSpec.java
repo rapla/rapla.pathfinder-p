@@ -1,5 +1,7 @@
 package com.pathfinder.presenter;
 
+import java.util.Locale;
+
 import com.pathfinder.model.ResourceModel;
 import com.pathfinder.view.layout.SteleLayoutSpec;
 import com.vaadin.data.util.BeanItemContainer;
@@ -38,6 +40,8 @@ public interface StelePresenterSpec {
 	void clearSearchString();
 
 	void setSearchString(String value);
+
+	void languageChanged(Locale locale);
 
 	@Pure
 	String getSearchString();
