@@ -21,8 +21,6 @@ import com.pathfinder.view.components.MenuBar;
 import com.pathfinder.view.components.MenuBarSpec;
 import com.pathfinder.view.components.SearchField;
 import com.pathfinder.view.components.SearchFieldSpec;
-import com.pathfinder.view.container.DetailContainer;
-import com.pathfinder.view.container.DetailContainerSpec;
 import com.pathfinder.view.listener.KeyboardViewListenerSpec;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.FieldEvents.TextChangeListener;

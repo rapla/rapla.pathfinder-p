@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.pathfinder.view.container;
+package com.pathfinder.view;
 
 import static de.vksi.c4j.Condition.postCondition;
 import static de.vksi.c4j.Condition.preCondition;
@@ -12,6 +12,7 @@ import com.pathfinder.model.Attribut;
 import com.pathfinder.model.EventModel;
 import com.pathfinder.model.ResourceModel;
 import com.pathfinder.view.components.ComponentSpecContract;
+import com.pathfinder.view.layout.DetailContainerSpec;
 import com.vaadin.data.util.BeanItemContainer;
 
 import de.vksi.c4j.ClassInvariant;

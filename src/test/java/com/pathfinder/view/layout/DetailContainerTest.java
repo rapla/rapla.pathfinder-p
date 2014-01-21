@@ -1,10 +1,12 @@
 /**
  * 
  */
-package com.pathfinder.view.container;
+package com.pathfinder.view.layout;
 
 import org.junit.Assert;
 import org.junit.Before;
+
+import com.pathfinder.view.layout.DetailContainer;
 
 /**
  * @author tim

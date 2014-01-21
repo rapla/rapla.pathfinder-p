@@ -7,7 +7,6 @@ import com.pathfinder.view.components.FreeRoomViewSpec;
 import com.pathfinder.view.components.KeyboardSpec;
 import com.pathfinder.view.components.MenuBarSpec;
 import com.pathfinder.view.components.SearchFieldSpec;
-import com.pathfinder.view.container.DetailContainerSpec;
 import com.pathfinder.view.listener.KeyboardViewListenerSpec;
 
 /**

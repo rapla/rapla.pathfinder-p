@@ -29,7 +29,7 @@ import com.pathfinder.view.components.DateTimeSpec;
 import com.pathfinder.view.components.FreeRoomViewSpec;
 import com.pathfinder.view.components.KeyboardId;
 import com.pathfinder.view.components.MenuBarSpec;
-import com.pathfinder.view.container.DetailContainerSpec;
+import com.pathfinder.view.layout.DetailContainerSpec;
 import com.pathfinder.view.layout.SteleLayoutSpec;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HasComponents;

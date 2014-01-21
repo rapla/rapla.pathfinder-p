@@ -1,4 +1,4 @@
-package com.pathfinder.view.container;
+package com.pathfinder.view.layout;
 
 import java.util.Date;
 

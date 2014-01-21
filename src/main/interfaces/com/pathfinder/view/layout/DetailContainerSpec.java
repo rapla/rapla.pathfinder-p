@@ -1,10 +1,11 @@
-package com.pathfinder.view.container;
+package com.pathfinder.view.layout;
 
 import java.util.Date;
 
 import com.pathfinder.model.Attribut;
 import com.pathfinder.model.EventModel;
 import com.pathfinder.model.ResourceModel;
+import com.pathfinder.view.DetailContainerSpecContract;
 import com.pathfinder.view.components.ComponentSpec;
 import com.vaadin.data.util.BeanItemContainer;
 
