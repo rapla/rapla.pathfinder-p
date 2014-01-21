@@ -68,8 +68,9 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 		this.setCompositionRoot(accordion);
 	}
 
-	private <T> void createTable(Table table,
-			BeanItemContainer<T> beanItemContainer, Object[] vivisbleColumns) {
+	private void createTable(Table table,
+			BeanItemContainer<ResourceModel> beanItemContainer,
+			Object[] vivisbleColumns) {
 		table.setContainerDataSource(beanItemContainer);
 		table.setImmediate(true);
 		table.setColumnHeaderMode(ColumnHeaderMode.HIDDEN);
