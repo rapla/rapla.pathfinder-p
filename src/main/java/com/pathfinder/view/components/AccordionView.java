@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.pathfinder.model.ResourceModel;
+import com.pathfinder.model.ResourceModel.ResourceType;
 import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.PropertiesKey;
 import com.pathfinder.util.translation.TranslationKeys;
@@ -17,7 +18,12 @@ import com.vaadin.data.util.filter.SimpleStringFilter;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Accordion;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomComponent;
+import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TabSheet.Tab;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.CellStyleGenerator;
@@ -93,15 +99,117 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 	}
 
 	private void buildLayout() {
-		Tab rooms = accordion.addTab(roomTable, accordionCaptionRooms);
+
+		Tab rooms = accordion.addTab(
+				createTabContent(ResourceType.ROOM, roomTable),
+				accordionCaptionRooms);
 		rooms.setIcon(orderlines);
-		Tab courses = accordion.addTab(courseTable, accordionCaptionCourses);
+		Tab courses = accordion.addTab(
+				createTabContent(ResourceType.COURSE, courseTable),
+				accordionCaptionCourses);
 		courses.setIcon(orderlines);
-		Tab persons = accordion.addTab(personTable, accordionCaptionPersons);
+		Tab persons = accordion.addTab(
+				createTabContent(ResourceType.PERSON, personTable),
+				accordionCaptionPersons);
 		persons.setIcon(orderlines);
-		Tab pois = accordion.addTab(poiTable, accordionCaptionPois);
+		Tab pois = accordion.addTab(
+				createTabContent(ResourceType.POI, poiTable),
+				accordionCaptionPois);
 		pois.setIcon(orderlines);
 		this.accordion.setSizeFull();
+	}
+
+	private HorizontalLayout createTabContent(ResourceType type, Table table) {
+		final HorizontalLayout horizontal = new HorizontalLayout();
+		final GridLayout verticalGrid = new GridLayout(1, 2);
+		Button up = new Button("Hoch");
+		up.addClickListener(new ScrollClickListener(type, true));
+		Button down = new Button("Runter");
+		down.addClickListener(new ScrollClickListener(type, false));
+
+		verticalGrid.addComponent(up, 0, 0);
+		verticalGrid.addComponent(down, 0, 1);
+		// verticalGrid.setSizeUndefined();
+		// verticalGrid.setHeight(100, Unit.PERCENTAGE);
+		// verticalGrid.setComponentAlignment(up, Alignment.MIDDLE_CENTER);
+		// verticalGrid.setComponentAlignment(down, Alignment.MIDDLE_CENTER);
+
+		horizontal.addComponent(table);
+		horizontal.addComponent(verticalGrid);
+		horizontal.setSizeFull();
+		horizontal.setExpandRatio(table, 1f);
+
+		return horizontal;
+	}
+
+	class ScrollClickListener implements ClickListener {
+		ResourceType type;
+		boolean up;
+
+		public ScrollClickListener(ResourceType type, boolean up) {
+			this.type = type;
+			this.up = up;
+		}
+
+		@Override
+		public void buttonClick(ClickEvent event) {
+			if (up) {
+				switch (type) {
+				case ROOM:
+					upScrolling(roomTable);
+					break;
+				case COURSE:
+					upScrolling(courseTable);
+					break;
+				case PERSON:
+					upScrolling(personTable);
+					break;
+				case POI:
+					upScrolling(poiTable);
+					break;
+				}
+			} else {
+				switch (type) {
+				case ROOM:
+					downScrolling(roomTable);
+					break;
+				case COURSE:
+					downScrolling(courseTable);
+					break;
+				case PERSON:
+					downScrolling(personTable);
+					break;
+				case POI:
+					downScrolling(poiTable);
+					break;
+				}
+			}
+
+		}
+
+		private void upScrolling(Table table) {
+			int oldIndex = table.getCurrentPageFirstItemIndex();
+			int newIndex;
+			int pageLength = table.getPageLength();
+
+			newIndex = oldIndex - pageLength;
+			// TODO Index 0 doesn´t work oO
+			if (newIndex <= 0) {
+				newIndex = 0;
+			}
+
+			table.setCurrentPageFirstItemIndex(newIndex);
+		}
+
+		private void downScrolling(Table table) {
+			int oldIndex = table.getCurrentPageFirstItemIndex();
+			int newIndex;
+			int pageLength = table.getPageLength();
+
+			newIndex = oldIndex + pageLength;
+
+			table.setCurrentPageFirstItemIndex(newIndex);
+		}
 	}
 
 	private void addStyling() {
@@ -215,22 +323,22 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 		accordionCaptionRooms = new String(
 				translator.translate(TranslationKeys.ROOMS) + " ["
 						+ this.getRoomTableLength() + "]");
-		accordion.getTab(roomTable).setCaption(accordionCaptionRooms);
+		accordion.getTab(0).setCaption(accordionCaptionRooms);
 
 		accordionCaptionCourses = new String(
 				translator.translate(TranslationKeys.COURSES) + " ["
 						+ this.getCourseTableLength() + "]");
-		accordion.getTab(courseTable).setCaption(accordionCaptionCourses);
+		accordion.getTab(1).setCaption(accordionCaptionCourses);
 
 		accordionCaptionPersons = new String(
 				translator.translate(TranslationKeys.PERSONS) + " ["
 						+ this.getPersonTableLength() + "]");
-		accordion.getTab(personTable).setCaption(accordionCaptionPersons);
+		accordion.getTab(2).setCaption(accordionCaptionPersons);
 
 		accordionCaptionPois = new String(
 				translator.translate(TranslationKeys.POI) + " ["
 						+ this.getPoiTableLength() + "]");
-		accordion.getTab(poiTable).setCaption(accordionCaptionPois);
+		accordion.getTab(3).setCaption(accordionCaptionPois);
 	}
 
 	private int getRoomTableLength() {
