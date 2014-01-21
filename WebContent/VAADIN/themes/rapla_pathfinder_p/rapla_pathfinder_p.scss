@@ -83,7 +83,7 @@
 		}
 	}
 	
-	/* Individual styling */
+	/* Individual stele styling */
 	
 	/* Keyboard Styling */
 	
@@ -155,40 +155,6 @@
 			}
 		}
 	}
-	
-	/* Search Field Styling */
-	
-	.search {
-		width: 100%;
-		margin-top: 3em;
-		margin-bottom: 3em;
-		background-color: #e2001b;
-		
-		.v-slot {
-			display: block;
-			
-			.searchfield {
-				float:left;
-				width:94%;
-				height: 60px;
-				background-color: #FFFFFF;
-				border: 1px solid #e2001b;
-				font: 1.65em Arial;
-			}
-			
-			.delete-icon {
-				float:left;
-				width: 6%;
-				
-				img {
-					height:2.8em;
-					width:2.8em;
-					padding-left: 22%;
-					padding-top: 20%;
-				}
-			}
-		}
-	}
     
     /* Resource Accordion styling */
 	
@@ -239,6 +205,49 @@
 		display: inline;
 		float: right;
 		color: #FFF;
+	}
+	
+	/* Detail image styling */
+	
+	.detail-image{
+		margin-top: 7em;
+		margin-bottom: 5em;
+	}
+	
+	/* Individual styling */
+	
+	/* Search Field Styling */
+	
+	.search {
+		width: 100%;
+		margin-top: 3em;
+		margin-bottom: 3em;
+		background-color: #e2001b;
+		
+		.v-slot {
+			display: block;
+			
+			.searchfield {
+				float:left;
+				width:94%;
+				height: 60px;
+				background-color: #FFFFFF;
+				border: 1px solid #e2001b;
+				font: 1.65em Arial;
+			}
+			
+			.delete-icon {
+				float:left;
+				width: 6%;
+				
+				img {
+					height:2.8em;
+					width:2.8em;
+					padding-left: 22%;
+					padding-top: 20%;
+				}
+			}
+		}
 	}
 	
 	/* MenuBar Styling */
@@ -293,12 +302,5 @@
 		width: 60px;
 		height:60px;
 		background-position:20px 50%;
-	}
-	
-	/* Detail image styling */
-	
-	.detail-image{
-		margin-top: 7em;
-		margin-bottom: 5em;
 	}
 }

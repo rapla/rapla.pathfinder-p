@@ -379,6 +379,7 @@ public class StelePresenter implements DesktopLayoutViewListenerSpec,
 		// for (Attribut attribut : resourceDetails.getItemIds()) {
 		// if ("resourcueurl".equals(attribut.getKey())) {
 		// }
+		desktopLayout.removeDetails();
 		desktopLayout.addDetails(resource, resourceDetails);
 		desktopLayout.showDetailContainer();
 	}

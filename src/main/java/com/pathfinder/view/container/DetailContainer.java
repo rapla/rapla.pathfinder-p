@@ -15,6 +15,7 @@ import com.pathfinder.view.components.DetailImageSpec;
 import com.pathfinder.view.components.DetailInfo;
 import com.pathfinder.view.components.DetailInfoSpec;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.UI;
@@ -51,16 +52,19 @@ public class DetailContainer extends CustomComponent implements
 		infoEventsLayout.setSizeFull();
 		detailInfo.setSizeFull();
 		detailEvents.setSizeFull();
-		infoEventsLayout.setExpandRatio(detailInfo, 0.5f);
-		infoEventsLayout.setExpandRatio(detailEvents, 0.5f);
+		infoEventsLayout.setExpandRatio(detailInfo, 0.4f);
+		infoEventsLayout.setExpandRatio(detailEvents, 0.4f);
+		infoEventsLayout.setComponentAlignment(detailEvents,
+				Alignment.MIDDLE_RIGHT);
 	}
 
 	@Override
 	public void addDetails(ResourceModel resource,
 			BeanItemContainer<Attribut> resourceDetails) {
-		this.removeDetails();
+		this.resource = resource;
 
 		detailInfo.addDetails(resourceDetails);
+
 		if ((ResourceType.ROOM.toString()).equals(resource.getType())) {
 			for (Attribut attribut : resourceDetails.getItemIds()) {
 				if ("Raum".equals(attribut.getLabel())) {
@@ -90,16 +94,6 @@ public class DetailContainer extends CustomComponent implements
 	}
 
 	@Override
-	public void updateTranslations() {
-		if (resource != null) {
-			detailInfo.removeDetails();
-			detailInfo.addDetails(dataLoader.getResourceDetails(
-					resource.getId(), UI.getCurrent().getLocale()));
-		}
-		detailEvents.updateTranslations();
-	}
-
-	@Override
 	public void addCalendarListener(Listener listener) {
 		detailEvents.addCalendarListener(listener);
 	}
@@ -108,5 +102,15 @@ public class DetailContainer extends CustomComponent implements
 	public void updateCalenarEvents(
 			BeanItemContainer<EventModel> resourceEvents, Date calendarStartDate) {
 		detailEvents.setEvents(resourceEvents, calendarStartDate);
+	}
+
+	@Override
+	public void updateTranslations() {
+		if (resource != null) {
+			detailInfo.removeDetails();
+			detailInfo.addDetails(dataLoader.getResourceDetails(
+					resource.getId(), UI.getCurrent().getLocale()));
+		}
+		detailEvents.updateTranslations();
 	}
 }
