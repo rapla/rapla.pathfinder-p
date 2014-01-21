@@ -10,6 +10,21 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ResourceModel {
+	public enum ResourceType {
+		ROOM("room"), COURSE("course"), PERSON("person"), POI("poi");
+
+		private final String stringValue;
+
+		private ResourceType(final String text) {
+			this.stringValue = text;
+		}
+
+		@Override
+		public String toString() {
+			return stringValue;
+		}
+	}
+
 	public static final String PROPERTY_ID = "id";
 	public static final String PROPERTY_NAME = "name";
 	public static final String PROPERTY_LINK = "link";

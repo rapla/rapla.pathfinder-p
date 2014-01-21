@@ -33,6 +33,7 @@ import com.pathfinder.model.Category;
 import com.pathfinder.model.EventModel;
 import com.pathfinder.model.FreeRoomModel;
 import com.pathfinder.model.ResourceModel;
+import com.pathfinder.model.ResourceModel.ResourceType;
 import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.ApplicationPropertiesSpec;
 import com.pathfinder.util.properties.PropertiesKey;
@@ -135,16 +136,16 @@ public class DataLoader implements DataLoaderSpec {
 		String type = "";
 		switch (resourceParameter) {
 		case REQUEST_PARAMETER_COURSES:
-			type = "course";
+			type = ResourceType.COURSE.toString();
 			break;
 		case REQUEST_PARAMETER_ROOMS:
-			type = "room";
+			type = ResourceType.ROOM.toString();
 			break;
 		case REQUEST_PARAMETER_PERSONS:
-			type = "person";
+			type = ResourceType.PERSON.toString();
 			break;
 		case REQUEST_PARAMETER_POIS:
-			type = "poi";
+			type = ResourceType.POI.toString();
 			break;
 		}
 

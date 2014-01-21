@@ -5,6 +5,7 @@ import java.util.Date;
 import com.pathfinder.model.Attribut;
 import com.pathfinder.model.EventModel;
 import com.pathfinder.model.ResourceModel;
+import com.pathfinder.model.ResourceModel.ResourceType;
 import com.pathfinder.presenter.DataLoader;
 import com.pathfinder.presenter.DataLoaderSpec;
 import com.pathfinder.view.components.DetailEvents;
@@ -60,7 +61,7 @@ public class DetailContainer extends CustomComponent implements
 		this.removeDetails();
 
 		detailInfo.addDetails(resourceDetails);
-		if ("room".equals(resource.getType())) {
+		if ((ResourceType.ROOM.toString()).equals(resource.getType())) {
 			for (Attribut attribut : resourceDetails.getItemIds()) {
 				if ("Raum".equals(attribut.getLabel())) {
 					detailImage.setImage(dataLoader.getDhbwEntryPoint()
