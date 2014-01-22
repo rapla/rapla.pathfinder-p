@@ -123,9 +123,14 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 	private HorizontalLayout createTabContent(ResourceType type, Table table) {
 		final HorizontalLayout horizontal = new HorizontalLayout();
 		final GridLayout verticalGrid = new GridLayout(1, 2);
-		Button up = new Button("Hoch");
+		ThemeResource res = new ThemeResource("icon/dropup_icon.png");
+		Button up = new Button();
+		up.setPrimaryStyleName("button-up");
+		up.setIcon(res);
 		up.addClickListener(new ScrollClickListener(type, true));
-		Button down = new Button("Runter");
+		Button down = new Button();
+		down.setPrimaryStyleName("button-down");
+		down.setIcon(res);
 		down.addClickListener(new ScrollClickListener(type, false));
 
 		verticalGrid.addComponent(up, 0, 0);
