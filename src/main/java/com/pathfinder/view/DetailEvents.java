@@ -2,15 +2,12 @@ package com.pathfinder.view;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import com.pathfinder.model.EventModel;
-import com.pathfinder.view.DetailEventsSpec;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Calendar;
 import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.components.calendar.event.CalendarEvent;
 
@@ -19,18 +16,19 @@ import com.vaadin.ui.components.calendar.event.CalendarEvent;
  * 
  */
 public class DetailEvents extends CustomComponent implements DetailEventsSpec {
-	private final HorizontalLayout layout = new HorizontalLayout();
 	private final Calendar calendar = new Calendar();
-	private final GregorianCalendar gc = new GregorianCalendar();
 	private final List<CalendarEventComponent> calendarEvents = new ArrayList<>();
 
 	public DetailEvents() {
 		this.buildLayout();
-		this.setCompositionRoot(layout);
+		this.setCompositionRoot(calendar);
 	}
 
 	private void buildLayout() {
-		layout.addComponent(calendar);
+		setSizeFull();
+		calendar.setSizeFull();
+		calendar.setHeight(600, Unit.PIXELS);
+		calendar.setReadOnly(true);
 	}
 
 	@Override
@@ -58,10 +56,12 @@ public class DetailEvents extends CustomComponent implements DetailEventsSpec {
 
 	@Override
 	public void removeEvents() {
-		for (CalendarEvent event : calendarEvents) {
-			calendar.removeEvent(event);
+		if (calendarEvents.size() != 0) {
+			for (CalendarEvent event : calendarEvents) {
+				calendar.removeEvent(event);
+			}
+			calendarEvents.clear();
 		}
-		calendarEvents.clear();
 	}
 
 	@Override
