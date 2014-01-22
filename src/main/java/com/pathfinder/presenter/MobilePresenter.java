@@ -1,6 +1,6 @@
 package com.pathfinder.presenter;
 
-import com.pathfinder.view.layout.MobileLayout;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomComponent;
 
 /**
@@ -10,9 +10,11 @@ import com.vaadin.ui.CustomComponent;
  * 
  */
 public class MobilePresenter implements MobilePresenterSpec {
-	private final MobileLayout mobileLayout = new MobileLayout();
+	private final CssLayout layout = new CssLayout();
 
+	@Override
 	public CustomComponent getMobileLayoutView() {
-		return this.mobileLayout;
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

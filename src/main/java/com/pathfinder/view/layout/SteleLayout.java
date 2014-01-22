@@ -12,6 +12,7 @@ import com.pathfinder.util.widgetset.DateTime;
 import com.pathfinder.view.components.AccordionView;
 import com.pathfinder.view.components.AccordionViewSpec;
 import com.pathfinder.view.components.DateTimeSpec;
+import com.pathfinder.view.components.DetailContainer;
 import com.pathfinder.view.components.FreeRoomView;
 import com.pathfinder.view.components.FreeRoomViewSpec;
 import com.pathfinder.view.components.Keyboard;
