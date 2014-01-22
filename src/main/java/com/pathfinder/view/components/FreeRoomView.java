@@ -6,6 +6,7 @@ import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomComponent;
@@ -68,6 +69,7 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 		this.freeRoomTable
 				.setCellStyleGenerator(new CustomCellStyleGenerator());
 		this.freeRoomTable.setSizeFull();
+		this.freeRoomTable.setSelectable(true);
 	}
 
 	class LabelColumnGenerator implements ColumnGenerator {
@@ -149,5 +151,10 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 		this.freeRoomTable.markAsDirtyRecursive();
 		actualFreeRoomsLabel.setCaption(translator
 				.translate(TranslationKeys.CURRENTLY_FREE_ROOMS));
+	}
+
+	@Override
+	public void addTableItemClickListener(ItemClickListener listener) {
+		this.freeRoomTable.addItemClickListener(listener);
 	}
 }

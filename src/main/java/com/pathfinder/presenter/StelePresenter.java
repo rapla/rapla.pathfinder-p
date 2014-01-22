@@ -11,8 +11,10 @@ import org.apache.logging.log4j.Logger;
 import com.pathfinder.model.Attribut;
 import com.pathfinder.model.CalendarModel;
 import com.pathfinder.model.EventModel;
+import com.pathfinder.model.FreeRoomModel;
 import com.pathfinder.model.KeyboardModel;
 import com.pathfinder.model.ResourceModel;
+import com.pathfinder.model.ResourceModel.ResourceType;
 import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.ApplicationPropertiesSpec;
 import com.pathfinder.util.properties.PropertiesKey;
@@ -62,6 +64,7 @@ public class StelePresenter implements StelePresenterSpec,
 			.getIntProperty(PropertiesKey.BACK_TO_HOME_TIMER);
 
 	private ResourceModel resource = null;
+	private FreeRoomModel freeResource = null;
 	private BeanItemContainer<Attribut> resourceDetails = null;
 	private BeanItemContainer<EventModel> resourceEvents;
 
@@ -94,10 +97,14 @@ public class StelePresenter implements StelePresenterSpec,
 		this.keyboardBinder.bind(steleLayout.getSearchField(),
 				KeyboardModel.PROPERTY_SEARCHSTRING);
 		this.steleLayout.addItemClickListener(new TableDetailClickListener());
-		// TODO
+		this.steleLayout
+				.addTableItemClickListener(new TableDetailClickListener());
+
+		// TODO: Mit Keyboard in die Suche schreiben
 		// this.desktopLayout
 		// .addSearchFieldTextChangeListener(new
 		// SearchFieldTextChangeListener());
+
 		this.steleLayout
 				.addDeleteAllClickListener(new DeleteAllClickListener());
 		steleLayout.addClickListenerHomeButton(new HomeButtonClickListener());
@@ -123,7 +130,18 @@ public class StelePresenter implements StelePresenterSpec,
 	class TableDetailClickListener implements ItemClickListener {
 		@Override
 		public void itemClick(ItemClickEvent event) {
-			resource = (ResourceModel) event.getItemId();
+
+			if (event.getItemId() instanceof ResourceModel)
+				resource = (ResourceModel) event.getItemId();
+			if (event.getItemId() instanceof FreeRoomModel) {
+				FreeRoomModel freeResource = (FreeRoomModel) event.getItemId();
+				resource = new ResourceModel();
+
+				resource.setId(freeResource.getId());
+				resource.setName(freeResource.getName());
+				resource.setType(ResourceType.ROOM.toString());
+			}
+
 			resourceDetails = dataLoader.getResourceDetails(resource.getId(),
 					UI.getCurrent().getLocale());
 
