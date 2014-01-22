@@ -17,7 +17,6 @@ import com.pathfinder.view.components.DetailInfoSpec;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
@@ -31,7 +30,7 @@ public class DetailContainer extends CustomComponent implements
 		DetailContainerSpec {
 	private final DataLoaderSpec dataLoader = DataLoader.getInstance();
 	private final VerticalLayout layout = new VerticalLayout();
-	private final HorizontalLayout infoEventsLayout = new HorizontalLayout();
+	private final VerticalLayout infoEventsLayout = new VerticalLayout();
 	private final DetailInfoSpec detailInfo = new DetailInfo();
 	private final DetailImageSpec detailImage = new DetailImage();
 	private final DetailEventsSpec detailEvents = new DetailEvents();
@@ -100,8 +99,12 @@ public class DetailContainer extends CustomComponent implements
 
 	@Override
 	public void updateCalenarEvents(
-			BeanItemContainer<EventModel> resourceEvents, Date calendarStartDate) {
-		detailEvents.setEvents(resourceEvents, calendarStartDate);
+			BeanItemContainer<EventModel> resourceEvents,
+			Date calendarStartDate, Date calendarEndDate) {
+		detailEvents.setEvents(resourceEvents, calendarStartDate,
+				calendarEndDate);
+		detailEvents.setEvents(resourceEvents, calendarStartDate,
+				calendarEndDate);
 	}
 
 	@Override

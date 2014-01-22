@@ -34,19 +34,11 @@ public class DetailEvents extends CustomComponent implements DetailEventsSpec {
 
 	@Override
 	public void setEvents(BeanItemContainer<EventModel> events,
-			Date calendarStartDate) {
+			Date calendarStartDate, Date calendarEndDate) {
 		removeEvents();
 
-		int firstHourOfDay = 24;
-		int lastHourOfDay = 0;
-
 		calendar.setStartDate(calendarStartDate);
-		calendar.setEndDate(calendarStartDate);
-
-		if (events.getItemIds().size() == 0) {
-			firstHourOfDay = 10;
-			lastHourOfDay = 18;
-		}
+		calendar.setEndDate(calendarEndDate);
 
 		CalendarEventComponent calendarEvent;
 
@@ -54,48 +46,13 @@ public class DetailEvents extends CustomComponent implements DetailEventsSpec {
 
 			calendarEvent = new CalendarEventComponent(event);
 
-			int startHour = getHourOfDay(calendarEvent.getStart(),
-					calendarStartDate);
-			int endHour = getHourOfDay(calendarEvent.getEnd(),
-					calendarStartDate);
-			if (startHour == -1 || endHour == -1)
-				break;
-			if (startHour < firstHourOfDay) {
-				firstHourOfDay = startHour;
-			}
-			if (endHour > lastHourOfDay) {
-				lastHourOfDay = endHour;
-			}
-
 			calendar.addEvent(calendarEvent);
 			calendarEvents.add(calendarEvent);
 		}
 
-		calendar.setFirstVisibleHourOfDay(firstHourOfDay - 1);
-		calendar.setLastVisibleHourOfDay(lastHourOfDay);
+		calendar.setFirstVisibleHourOfDay(8);
+		calendar.setLastVisibleHourOfDay(20);
 
-	}
-
-	private int getHourOfDay(Date dateToGetHourFrom, Date currentDateOfCalendar) {
-		int result = -1;
-		if (dateToGetHourFrom != null && currentDateOfCalendar != null) {
-			gc.setTime(currentDateOfCalendar);
-			gc.set(java.util.Calendar.HOUR, 23);
-			gc.set(java.util.Calendar.MINUTE, 59);
-			if (gc.getTime().before(dateToGetHourFrom)) {
-				result = 23;
-			} else {
-				gc.set(java.util.Calendar.HOUR, 0);
-				gc.set(java.util.Calendar.MINUTE, 0);
-				if (gc.getTime().after(dateToGetHourFrom)) {
-					result = 0;
-				} else {
-					gc.setTime(dateToGetHourFrom);
-					result = gc.get(java.util.Calendar.HOUR_OF_DAY);
-				}
-			}
-		}
-		return result;
 	}
 
 	@Override

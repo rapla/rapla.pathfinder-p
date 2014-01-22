@@ -72,7 +72,7 @@ public class DetailContainerSpecContract extends ComponentSpecContract
 	@Override
 	public void updateCalenarEvents(
 			BeanItemContainer<EventModel> resourceEvents,
-			Date currentCalendarDate) {
+			Date currentCalendarDate, Date calendarEndDate) {
 		// TODO Auto-generated method stub
 
 	}

@@ -82,6 +82,11 @@ public class SteleLayout extends CustomComponent implements SteleLayoutSpec {
 	}
 
 	@Override
+	public void addTableItemClickListener(ItemClickListener listener) {
+		this.freeRoom.addTableItemClickListener(listener);
+	}
+
+	@Override
 	public void addItemClickListener(ItemClickListener listener) {
 		this.accordionView.addItemClickListener(listener);
 	}
@@ -313,9 +318,9 @@ public class SteleLayout extends CustomComponent implements SteleLayoutSpec {
 	@Override
 	public void updateCalenarEvents(
 			BeanItemContainer<EventModel> resourceEvents,
-			Date currentCalendarDate) {
-		detailContainer
-				.updateCalenarEvents(resourceEvents, currentCalendarDate);
+			Date currentCalendarDate, Date calendarEndDate) {
+		detailContainer.updateCalenarEvents(resourceEvents,
+				currentCalendarDate, calendarEndDate);
 	}
 
 	@Override
@@ -328,4 +333,5 @@ public class SteleLayout extends CustomComponent implements SteleLayoutSpec {
 		detailContainer.updateTranslations();
 		menuBar.updateTranslations();
 	}
+
 }

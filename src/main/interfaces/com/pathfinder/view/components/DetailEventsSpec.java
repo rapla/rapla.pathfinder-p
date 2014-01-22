@@ -13,7 +13,7 @@ import com.vaadin.data.util.BeanItemContainer;
  * 
  */
 public interface DetailEventsSpec extends ComponentSpec {
-	void setEvents(BeanItemContainer<EventModel> events, Date calendarStartDate);
+	void setEvents(BeanItemContainer<EventModel> events, Date calendarStartDate, Date calendarEndDate);
 
 	void removeEvents();
 

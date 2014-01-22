@@ -26,5 +26,5 @@ public interface DetailContainerSpec extends ComponentSpec {
 	void addCalendarListener(Listener listener);
 
 	void updateCalenarEvents(BeanItemContainer<EventModel> resourceEvents,
-			Date calendarStartDate);
+			Date calendarStartDate, Date calendarEndDate);
 }
