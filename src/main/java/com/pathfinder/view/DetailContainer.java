@@ -13,6 +13,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.components.calendar.CalendarComponentEvents.EventClickHandler;
 
 /**
  * Defines the layout for the DetailContainer: DetailInfo and DetailImage
@@ -108,5 +109,10 @@ public class DetailContainer extends CustomComponent implements
 					resource.getId(), UI.getCurrent().getLocale()));
 		}
 		detailEvents.updateTranslations();
+	}
+
+	@Override
+	public void setEventClickHandler(EventClickHandler eventClickHandler) {
+		detailEvents.setEventClickHandler(eventClickHandler);
 	}
 }

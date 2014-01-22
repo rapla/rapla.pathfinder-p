@@ -12,6 +12,7 @@ import com.pathfinder.model.Attribut;
 import com.pathfinder.model.EventModel;
 import com.pathfinder.model.ResourceModel;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.ui.components.calendar.CalendarComponentEvents.EventClickHandler;
 
 import de.vksi.c4j.ClassInvariant;
 import de.vksi.c4j.Target;
@@ -71,6 +72,19 @@ public class DetailContainerSpecContract extends ComponentSpecContract
 	public void updateCalendarEvents(
 			BeanItemContainer<EventModel> resourceEvents,
 			Date currentCalendarDate, Date calendarEndDate) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pathfinder.view.DetailContainerSpec#setEventClickHandler(com.vaadin
+	 * .ui.components.calendar.CalendarComponentEvents.EventClickHandler)
+	 */
+	@Override
+	public void setEventClickHandler(EventClickHandler eventClickHandler) {
 		// TODO Auto-generated method stub
 
 	}

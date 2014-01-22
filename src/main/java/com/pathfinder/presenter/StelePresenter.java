@@ -25,9 +25,12 @@ import com.pathfinder.util.widgetset.BackToHomeScreenListenerSpec;
 import com.pathfinder.util.widgetset.DateTime;
 import com.pathfinder.view.AccordionView;
 import com.pathfinder.view.AccordionViewSpec;
+import com.pathfinder.view.CalendarEventComponent;
 import com.pathfinder.view.DateTimeSpec;
 import com.pathfinder.view.DetailContainer;
 import com.pathfinder.view.DetailContainerSpec;
+import com.pathfinder.view.EventSelectionView;
+import com.pathfinder.view.EventSelectionViewSpec;
 import com.pathfinder.view.FreeRoomView;
 import com.pathfinder.view.FreeRoomViewSpec;
 import com.pathfinder.view.Keyboard;
@@ -47,16 +50,18 @@ import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinSession;
+import com.vaadin.shared.ui.calendar.DateConstants;
 import com.vaadin.ui.AbstractLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component.Event;
 import com.vaadin.ui.Component.Listener;
-import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.components.calendar.CalendarComponentEvents.BackwardEvent;
+import com.vaadin.ui.components.calendar.CalendarComponentEvents.EventClick;
+import com.vaadin.ui.components.calendar.CalendarComponentEvents.EventClickHandler;
 import com.vaadin.ui.components.calendar.CalendarComponentEvents.ForwardEvent;
 
 /**
@@ -80,8 +85,8 @@ public class StelePresenter implements StelePresenterSpec,
 	private final SearchFieldSpec searchField = new SearchField();
 	private final MenuBarSpec menuBar = new MenuBar();
 	private final DetailContainerSpec detailContainer = new DetailContainer();
+	private final EventSelectionViewSpec eventSelectionView = new EventSelectionView();
 
-	private CustomComponent component = new CustomComponent();
 	private final VerticalLayout mainLayout = new VerticalLayout();
 	private final VerticalLayout contentLayout = new VerticalLayout();
 	private final VerticalLayout layoutNormal = new VerticalLayout();
@@ -172,8 +177,12 @@ public class StelePresenter implements StelePresenterSpec,
 
 		this.dateTime.addBackToHomeListener(new BackToHomeListener());
 		this.detailContainer.addCalendarListener(new CalendarListener());
+		this.detailContainer
+				.setEventClickHandler(new CalendarEventClickHandler());
 		this.keyboard
 				.addKeyboardButtonListener(new KeyboardButtonClickListener());
+		this.eventSelectionView
+				.addButtonClickListener(new EventResourceSelectedListener());
 	}
 
 	@Override
@@ -196,17 +205,23 @@ public class StelePresenter implements StelePresenterSpec,
 				resource.setType(ResourceType.ROOM.toString());
 			}
 
-			resourceDetails = dataLoader.getResourceDetails(resource.getId(),
-					UI.getCurrent().getLocale());
+			prepareForDetailView();
 
-			calendarModel.setBeginningOfCurrentDay(new Date());
-
-			updateCalendarEvents();
-
-			LOGGER.trace(resource.getType() + " element was clicked: "
-					+ resource.getName());
-			switchToDetailView();
 		}
+	}
+
+	private void prepareForDetailView() {
+
+		resourceDetails = dataLoader.getResourceDetails(resource.getId(), UI
+				.getCurrent().getLocale());
+
+		calendarModel.setBeginningOfCurrentDay(new Date());
+
+		updateCalendarEvents();
+
+		LOGGER.trace(resource.getType() + " element was clicked: "
+				+ resource.getName());
+		switchToDetailView();
 	}
 
 	class SearchFieldTextChangeListener implements TextChangeListener {
@@ -290,8 +305,7 @@ public class StelePresenter implements StelePresenterSpec,
 
 		@Override
 		public void componentEvent(Event event) {
-
-			long sevenDays = 7 * 24 * 60 * 60 * 1000;
+			long sevenDays = 7 * DateConstants.DAYINMILLIS;
 			if (event instanceof ForwardEvent) {
 				long calendarDayMinusOne = calendarModel
 						.getBeginningOfCurrentDay().getTime() + sevenDays;
@@ -333,6 +347,36 @@ public class StelePresenter implements StelePresenterSpec,
 				break;
 			}
 
+		}
+
+	}
+
+	class CalendarEventClickHandler implements EventClickHandler {
+
+		@Override
+		public void eventClick(EventClick event) {
+			if (event.getCalendarEvent() instanceof CalendarEventComponent) {
+				CalendarEventComponent calendarEventComponent = (CalendarEventComponent) (event
+						.getCalendarEvent());
+
+				if (calendarEventComponent.getEventModel().getResources()
+						.size() > 0) {
+					eventSelectionView
+							.showEventResourceSelection(calendarEventComponent
+									.getEventModel().getResources());
+				}
+			}
+		}
+	}
+
+	class EventResourceSelectedListener implements ClickListener {
+
+		@Override
+		public void buttonClick(ClickEvent event) {
+			if (event.getButton().getData() instanceof ResourceModel) {
+				resource = (ResourceModel) event.getButton().getData();
+				prepareForDetailView();
+			}
 		}
 
 	}
@@ -620,7 +664,8 @@ public class StelePresenter implements StelePresenterSpec,
 
 		boolean result = false;
 
-		long tenMinutesAgo = new Date().getTime() - 10 * 60 * 1000;
+		long tenMinutesAgo = new Date().getTime() - 10
+				* DateConstants.MINUTEINMILLIS;
 
 		long lastHeartbeat = UI.getCurrent().getLastHeartbeatTimestamp();
 
@@ -640,7 +685,7 @@ public class StelePresenter implements StelePresenterSpec,
 	private Date getLastDayOfWeek(Date date) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
-		cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+		cal.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
 		return cal.getTime();
 	}
 

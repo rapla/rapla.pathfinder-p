@@ -12,6 +12,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.pathfinder.model.EventModel;
+import com.pathfinder.model.ResourceModel;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.components.calendar.event.CalendarEvent;
 
@@ -68,7 +69,16 @@ public class CalendarEventComponent extends CustomComponent implements
 
 	@Override
 	public String getCaption() {
-		return eventModel.getName();
+		String caption = eventModel.getName();
+		if (eventModel.getResources().size() > 0) {
+			caption += " (";
+			for (ResourceModel resource : eventModel.getResources()) {
+				caption += " " + resource.getName();
+			}
+			caption += " )";
+		}
+
+		return caption;
 	}
 
 	public EventModel getEventModel() {

@@ -9,6 +9,9 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Calendar;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.components.calendar.CalendarComponentEvents.DateClickEvent;
+import com.vaadin.ui.components.calendar.CalendarComponentEvents.DateClickHandler;
+import com.vaadin.ui.components.calendar.CalendarComponentEvents.EventClickHandler;
 import com.vaadin.ui.components.calendar.event.CalendarEvent;
 
 /**
@@ -22,13 +25,13 @@ public class DetailEvents extends CustomComponent implements DetailEventsSpec {
 	public DetailEvents() {
 		this.buildLayout();
 		this.setCompositionRoot(calendar);
+		this.initDummyHanlders();
 	}
 
 	private void buildLayout() {
 		setSizeFull();
 		calendar.setSizeFull();
 		calendar.setHeight(600, Unit.PIXELS);
-		calendar.setReadOnly(true);
 	}
 
 	@Override
@@ -74,4 +77,17 @@ public class DetailEvents extends CustomComponent implements DetailEventsSpec {
 		calendar.addListener(listener);
 	}
 
+	@Override
+	public void setEventClickHandler(EventClickHandler eventClickHandler) {
+		calendar.setHandler(eventClickHandler);
+	}
+
+	private void initDummyHanlders() {
+		calendar.setHandler(new DateClickHandler() {
+
+			@Override
+			public void dateClick(DateClickEvent event) {
+			}
+		});
+	}
 }
