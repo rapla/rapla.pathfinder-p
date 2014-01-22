@@ -1,4 +1,4 @@
-package com.pathfinder.view.components;
+package com.pathfinder.view;
 
 
 /**

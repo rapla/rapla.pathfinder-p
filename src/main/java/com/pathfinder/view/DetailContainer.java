@@ -1,4 +1,4 @@
-package com.pathfinder.view.components;
+package com.pathfinder.view;
 
 import java.util.Date;
 
@@ -8,10 +8,10 @@ import com.pathfinder.model.ResourceModel;
 import com.pathfinder.model.ResourceModel.ResourceType;
 import com.pathfinder.presenter.DataLoader;
 import com.pathfinder.presenter.DataLoaderSpec;
-import com.pathfinder.view.components.DetailEventsSpec;
-import com.pathfinder.view.components.DetailImageSpec;
-import com.pathfinder.view.components.DetailInfoSpec;
-import com.pathfinder.view.layout.DetailContainerSpec;
+import com.pathfinder.view.DetailContainerSpec;
+import com.pathfinder.view.DetailEventsSpec;
+import com.pathfinder.view.DetailImageSpec;
+import com.pathfinder.view.DetailInfoSpec;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.CustomComponent;
@@ -96,7 +96,7 @@ public class DetailContainer extends CustomComponent implements
 	}
 
 	@Override
-	public void updateCalenarEvents(
+	public void updateCalendarEvents(
 			BeanItemContainer<EventModel> resourceEvents,
 			Date calendarStartDate, Date calendarEndDate) {
 		detailEvents.setEvents(resourceEvents, calendarStartDate,

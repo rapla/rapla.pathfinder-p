@@ -3,8 +3,8 @@ package com.pathfinder.presenter;
 import java.util.Locale;
 
 import com.pathfinder.model.ResourceModel;
-import com.pathfinder.view.layout.SteleLayoutSpec;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.ui.AbstractLayout;
 import com.vaadin.ui.Component.Listener;
 
 import de.vksi.c4j.ContractReference;
@@ -12,7 +12,7 @@ import de.vksi.c4j.Pure;
 
 @ContractReference(StelePresenterSpecContract.class)
 public interface StelePresenterSpec {
-
+	
 	void switchToSearchView();
 
 	void switchToDetailView();
@@ -31,7 +31,7 @@ public interface StelePresenterSpec {
 
 	void refreshFreeRooms();
 
-	SteleLayoutSpec getSteleLayoutView();
+	AbstractLayout getSteleLayoutView();
 
 	void addKeybordKeyToSearchString(String key);
 

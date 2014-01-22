@@ -1,5 +1,6 @@
-package com.pathfinder.view.components;
+package com.pathfinder.view;
 
+import com.pathfinder.view.SearchFieldSpecContract;
 import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;

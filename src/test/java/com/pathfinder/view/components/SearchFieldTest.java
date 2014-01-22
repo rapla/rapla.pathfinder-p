@@ -14,6 +14,8 @@ import com.pathfinder.PathfinderUI;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
+import com.pathfinder.view.SearchField;
+import com.pathfinder.view.SearchFieldSpec;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.ui.AbstractOrderedLayout;

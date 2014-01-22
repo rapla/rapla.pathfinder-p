@@ -1,6 +1,6 @@
-package com.pathfinder.view.components;
+package com.pathfinder.view;
 
-import static com.pathfinder.view.components.KeyboardId.*;
+import static com.pathfinder.view.KeyboardId.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +8,7 @@ import java.util.List;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
+import com.pathfinder.view.KeyboardSpec;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomComponent;

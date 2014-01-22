@@ -1,6 +1,6 @@
-package com.pathfinder.view.components;
+package com.pathfinder.view;
 
-import com.pathfinder.view.TranslatabelSpec;
+import com.pathfinder.view.ComponentSpecContract;
 import com.vaadin.ui.Component;
 
 import de.vksi.c4j.ContractReference;

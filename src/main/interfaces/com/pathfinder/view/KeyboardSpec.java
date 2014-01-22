@@ -1,5 +1,6 @@
-package com.pathfinder.view.components;
+package com.pathfinder.view;
 
+import com.pathfinder.view.KeyboardSpecContract;
 import com.vaadin.ui.Button.ClickListener;
 
 import de.vksi.c4j.ContractReference;

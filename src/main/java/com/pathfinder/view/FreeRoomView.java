@@ -1,9 +1,10 @@
-package com.pathfinder.view.components;
+package com.pathfinder.view;
 
 import com.pathfinder.model.FreeRoomModel;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
+import com.pathfinder.view.FreeRoomViewSpec;
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;

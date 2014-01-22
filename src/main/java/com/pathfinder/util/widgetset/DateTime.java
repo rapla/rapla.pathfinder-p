@@ -9,7 +9,7 @@ import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
 import com.pathfinder.util.widgetset.client.datetime.DateTimeServerRpc;
 import com.pathfinder.util.widgetset.client.datetime.DateTimeState;
-import com.pathfinder.view.components.DateTimeSpec;
+import com.pathfinder.view.DateTimeSpec;
 import com.vaadin.ui.AbstractComponent;
 
 /**

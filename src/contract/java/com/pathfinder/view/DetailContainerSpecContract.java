@@ -11,8 +11,6 @@ import java.util.Date;
 import com.pathfinder.model.Attribut;
 import com.pathfinder.model.EventModel;
 import com.pathfinder.model.ResourceModel;
-import com.pathfinder.view.components.ComponentSpecContract;
-import com.pathfinder.view.layout.DetailContainerSpec;
 import com.vaadin.data.util.BeanItemContainer;
 
 import de.vksi.c4j.ClassInvariant;
@@ -70,7 +68,7 @@ public class DetailContainerSpecContract extends ComponentSpecContract
 	}
 
 	@Override
-	public void updateCalenarEvents(
+	public void updateCalendarEvents(
 			BeanItemContainer<EventModel> resourceEvents,
 			Date currentCalendarDate, Date calendarEndDate) {
 		// TODO Auto-generated method stub

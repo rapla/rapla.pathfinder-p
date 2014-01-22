@@ -11,6 +11,7 @@ import org.junit.Before;
 import com.pathfinder.PathfinderUI;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
+import com.pathfinder.view.MenuBar;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HasComponents;

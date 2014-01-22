@@ -1,4 +1,4 @@
-package com.pathfinder.view.components;
+package com.pathfinder.view;
 
 /**
  * IDs of keyboard (used for identifying which key was pressed)

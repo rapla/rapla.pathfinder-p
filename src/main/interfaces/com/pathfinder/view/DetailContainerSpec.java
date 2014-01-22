@@ -1,4 +1,4 @@
-package com.pathfinder.view.layout;
+package com.pathfinder.view;
 
 import java.util.Date;
 
@@ -6,7 +6,6 @@ import com.pathfinder.model.Attribut;
 import com.pathfinder.model.EventModel;
 import com.pathfinder.model.ResourceModel;
 import com.pathfinder.view.DetailContainerSpecContract;
-import com.pathfinder.view.components.ComponentSpec;
 import com.vaadin.data.util.BeanItemContainer;
 
 import de.vksi.c4j.ContractReference;
@@ -25,6 +24,6 @@ public interface DetailContainerSpec extends ComponentSpec {
 
 	void addCalendarListener(Listener listener);
 
-	void updateCalenarEvents(BeanItemContainer<EventModel> resourceEvents,
+	void updateCalendarEvents(BeanItemContainer<EventModel> resourceEvents,
 			Date calendarStartDate, Date calendarEndDate);
 }

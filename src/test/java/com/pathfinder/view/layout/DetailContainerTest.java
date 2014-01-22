@@ -6,7 +6,7 @@ package com.pathfinder.view.layout;
 import org.junit.Assert;
 import org.junit.Before;
 
-import com.pathfinder.view.components.DetailContainer;
+import com.pathfinder.view.DetailContainer;
 
 /**
  * @author tim

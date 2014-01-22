@@ -1,4 +1,4 @@
-package com.pathfinder.view.components;
+package com.pathfinder.view;
 
 import com.pathfinder.model.FreeRoomModel;
 import com.vaadin.data.util.BeanItemContainer;

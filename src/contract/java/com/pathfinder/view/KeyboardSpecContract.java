@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.pathfinder.view.components;
+package com.pathfinder.view;
 
 import static de.vksi.c4j.Condition.postCondition;
 import static de.vksi.c4j.Condition.preCondition;

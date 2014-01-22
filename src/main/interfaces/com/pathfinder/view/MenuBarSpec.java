@@ -1,7 +1,8 @@
-package com.pathfinder.view.components;
+package com.pathfinder.view;
 
 import java.util.Locale;
 
+import com.pathfinder.view.MenuBarSpecContract;
 import com.vaadin.ui.Button.ClickListener;
 
 import de.vksi.c4j.ContractReference;

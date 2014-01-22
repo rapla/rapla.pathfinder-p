@@ -7,11 +7,11 @@ import org.junit.Assert;
 import org.junit.Before;
 
 import com.pathfinder.PathfinderUI;
-import com.pathfinder.view.components.DateTimeSpec;
-import com.pathfinder.view.components.FreeRoomViewSpec;
-import com.pathfinder.view.components.MenuBarSpec;
-import com.pathfinder.view.layout.DetailContainerSpec;
-import com.pathfinder.view.layout.SteleLayoutSpec;
+import com.pathfinder.view.DateTimeSpec;
+import com.pathfinder.view.DetailContainerSpec;
+import com.pathfinder.view.FreeRoomViewSpec;
+import com.pathfinder.view.MenuBarSpec;
+import com.vaadin.ui.AbstractLayout;
 import com.vaadin.ui.AbstractOrderedLayout;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HasComponents;
@@ -19,7 +19,7 @@ import com.vaadin.ui.UI;
 
 public class StelePresenterTest {
 	StelePresenter stelePresenter;
-	SteleLayoutSpec desktopLayout;
+	AbstractLayout desktopLayout;
 	DateTimeSpec dateTime;
 	FreeRoomViewSpec freeRoom;
 	DetailContainerSpec detailContainer;

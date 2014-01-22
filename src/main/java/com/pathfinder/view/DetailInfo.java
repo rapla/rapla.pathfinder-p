@@ -1,6 +1,7 @@
-package com.pathfinder.view.components;
+package com.pathfinder.view;
 
 import com.pathfinder.model.Attribut;
+import com.pathfinder.view.DetailInfoSpec;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Table;

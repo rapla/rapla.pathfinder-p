@@ -7,8 +7,8 @@ import static de.vksi.c4j.Condition.preCondition;
 import java.util.Locale;
 
 import com.pathfinder.model.ResourceModel;
-import com.pathfinder.view.layout.SteleLayoutSpec;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.ui.AbstractLayout;
 import com.vaadin.ui.Component.Listener;
 
 import de.vksi.c4j.ClassInvariant;
@@ -69,7 +69,7 @@ public class StelePresenterSpecContract implements StelePresenterSpec {
 	}
 
 	@Override
-	public SteleLayoutSpec getSteleLayoutView() {
+	public AbstractLayout getSteleLayoutView() {
 		if (preCondition()) {
 			// TODO: write preconditions if required
 		}

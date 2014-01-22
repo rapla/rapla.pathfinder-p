@@ -1,4 +1,4 @@
-package com.pathfinder.view.components;
+package com.pathfinder.view;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -6,6 +6,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import com.pathfinder.model.EventModel;
+import com.pathfinder.view.DetailEventsSpec;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Calendar;
 import com.vaadin.ui.CustomComponent;

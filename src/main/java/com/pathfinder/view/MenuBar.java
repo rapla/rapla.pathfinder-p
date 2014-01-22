@@ -1,4 +1,4 @@
-package com.pathfinder.view.components;
+package com.pathfinder.view;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -8,6 +8,7 @@ import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
+import com.pathfinder.view.MenuBarSpec;
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.server.Resource;
 import com.vaadin.server.ThemeResource;
