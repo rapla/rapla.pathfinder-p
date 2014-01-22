@@ -16,15 +16,15 @@
 	
 	.pathfinder {
 		background-image: url('img/background.png') !important;
-		background-color: #E0E0E0 !important;
+		background-color: #FFF !important;
 	}
 	
 	.main {
-		width: 98% !important;
+		width: 100% !important;
 		overflow: hidden !important;
 		height: 100%;
-		padding-left: 1%;
-		padding-right: 1%;
+		padding-left: 3%;
+		padding-right: 3%;
         
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -64,6 +64,13 @@
 			background-color: #E0E0E0;
 		}
 	}
+	
+	.v-scrollable.v-table-body-wrapper.v-table-body {
+		border: none !important;
+	}
+	
+	
+	
 
 	 /* Table row styling */
     
@@ -179,6 +186,32 @@
 			padding-left: 0.3%;
 		}
 	}
+	
+	.button-up, .button-down {
+		height: 4em;
+		width: 4em;
+		padding: 1.5em 1em;
+		background-color: #797979;
+		
+		.v-icon{
+			width:2em;
+			height: 1em;
+		}
+	}
+	
+	.button-down{ 
+		margin-top: 20em;
+	
+		.v-icon{
+			moz-transform:rotate(180deg);
+			-webkit-transform:rotate(180deg); 
+			-o-transform:rotate(180deg);
+			-ms-transform:rotate(180deg);
+			transform:rotate(180deg);
+		}
+	}
+	
+	
     
     /* FreeRooms Styling */
     
@@ -220,8 +253,8 @@
 	
 	.search {
 		width: 100%;
-		margin-top: 3em;
-		margin-bottom: 3em;
+		margin-top: 4em;
+		margin-bottom: 4em;
 		background-color: #e2001b;
 		
 		.v-slot {
@@ -261,7 +294,6 @@
 		.v-gridlayout {
 			
 			.languageButton {
-				margin-left: 2em;
 				background: #797979;
 				height: 60px;
 			}
