@@ -24,14 +24,37 @@ public class DetailEvents extends CustomComponent implements DetailEventsSpec {
 
 	public DetailEvents() {
 		this.buildLayout();
-		this.setCompositionRoot(calendar);
+		this.addStyling();
 		this.initDummyHanlders();
+		this.setCompositionRoot(calendar);
 	}
 
 	private void buildLayout() {
-		setSizeFull();
+		this.setSizeFull();
 		calendar.setSizeFull();
 		calendar.setHeight(600, Unit.PIXELS);
+	}
+
+	private void addStyling() {
+		this.addStyleName("detailEvents");
+	}
+
+	private void initDummyHanlders() {
+		calendar.setHandler(new DateClickHandler() {
+			@Override
+			public void dateClick(DateClickEvent event) {
+			}
+		});
+	}
+
+	@Override
+	public void setEventClickHandler(EventClickHandler eventClickHandler) {
+		calendar.setHandler(eventClickHandler);
+	}
+
+	@Override
+	public void addCalendarListener(Listener listener) {
+		calendar.addListener(listener);
 	}
 
 	@Override
@@ -70,24 +93,5 @@ public class DetailEvents extends CustomComponent implements DetailEventsSpec {
 	@Override
 	public void updateTranslations() {
 		calendar.setLocale(UI.getCurrent().getLocale());
-	}
-
-	@Override
-	public void addCalendarListener(Listener listener) {
-		calendar.addListener(listener);
-	}
-
-	@Override
-	public void setEventClickHandler(EventClickHandler eventClickHandler) {
-		calendar.setHandler(eventClickHandler);
-	}
-
-	private void initDummyHanlders() {
-		calendar.setHandler(new DateClickHandler() {
-
-			@Override
-			public void dateClick(DateClickEvent event) {
-			}
-		});
 	}
 }

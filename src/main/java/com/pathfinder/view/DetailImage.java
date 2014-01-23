@@ -42,7 +42,7 @@ public class DetailImage extends Image implements DetailImageSpec {
 	}
 
 	private void addSytling() {
-		this.setPrimaryStyleName("detail-image");
+		this.addStyleName("detailImage");
 	}
 
 	@Override
@@ -51,8 +51,7 @@ public class DetailImage extends Image implements DetailImageSpec {
 			this.setSource(new ThemeResource(IMAGE_PATH + imageUrl
 					+ IMAGE_ENDING));
 			this.setSizeFull();
-			
-			
+
 			// int code = 0;
 			//
 			// try {

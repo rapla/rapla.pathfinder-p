@@ -20,9 +20,6 @@
 	}
 	
 	.stele {
-		.menuBar {
-			margin-top: 200px;
-		}
 		width: 100% !important;
 		overflow: hidden !important;
 		height: 100%;
@@ -36,6 +33,22 @@
         -ms-user-select: none;
         -o-user-select: none;
         user-select: none;
+		
+		.menuBar {
+			margin-top: 200px;
+		}
+		
+		.detailImage{
+			margin-top: 7em;
+		}
+	
+		.detailInfo {
+			margin-top: 3em;
+		}
+		
+		.detailEvents {
+			margin-top: 3em;
+		}
 	}
 	
 	/* Global stylings */
@@ -251,9 +264,9 @@
 	
 	/* Detail image styling */
 	
-	.detail-image{
-		margin-top: 7em;
-		margin-bottom: 5em;
+	.detailImage{
+		/* Immer gleiche/richtige Bildproportionen? */
+		max-height: 700px;
 	}
 	
 	/* Individual styling */
@@ -299,9 +312,7 @@
 	/* MenuBar Styling */
 	
 	.menuBar{
-		
-			.v-gridlayout {
-			
+		.v-gridlayout {
 			.languageButton {
 				background: #797979;
 				height: 60px;
@@ -316,7 +327,6 @@
 			}
 			
 			.v-gridlayout-slot {
-				
 				.image-footer{
 					padding-top: 60px;
 				}

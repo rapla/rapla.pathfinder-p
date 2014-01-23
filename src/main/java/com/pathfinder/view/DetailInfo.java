@@ -51,6 +51,7 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 
 	private void addStyling() {
 		// TODO .actualFreeRoomsLabel.addStyleName("big-caption");
+		this.addStyleName("detailInfo");
 		detailInfoTable.addStyleName("global-table");
 	}
 
