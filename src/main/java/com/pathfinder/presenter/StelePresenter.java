@@ -45,10 +45,10 @@ import com.pathfinder.view.MenuBarSpec;
 import com.pathfinder.view.SearchField;
 import com.pathfinder.view.SearchFieldSpec;
 import com.pathfinder.view.TranslatabelSpec;
-import com.vaadin.data.Property.ValueChangeEvent;
-import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.event.FieldEvents.TextChangeEvent;
+import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.server.Page;
@@ -162,9 +162,10 @@ public class StelePresenter implements StelePresenterSpec,
 		this.mainLayout.setPrimaryStyleName("stele");
 	}
 
+	BeanFieldGroup<KeyboardModel> keyboardBinder;
+
 	private void initBindings() {
-		BeanFieldGroup<KeyboardModel> keyboardBinder = new BeanFieldGroup<KeyboardModel>(
-				KeyboardModel.class);
+		keyboardBinder = new BeanFieldGroup<KeyboardModel>(KeyboardModel.class);
 		keyboardBinder.setItemDataSource(keyboardModel);
 		keyboardBinder.bind(searchField.getSearchField(),
 				KeyboardModel.PROPERTY_SEARCHSTRING);
@@ -176,7 +177,7 @@ public class StelePresenter implements StelePresenterSpec,
 				.addAccordionTableItemClickListener(new ResourcesClickListener());
 		this.freeRoom.addTableItemClickListener(new ResourcesClickListener());
 		searchField
-				.addSearchFieldValueChangeListener(new SearchFieldValueChangeListener());
+				.addSearchFieldTextChangeListener(new SearchFieldTextChangeListener());
 		this.searchField
 				.addDeleteAllClickListener(new DeleteAllClickListener());
 		this.menuBar.addClickListenerHomeButton(new HomeButtonClickListener());
@@ -221,11 +222,19 @@ public class StelePresenter implements StelePresenterSpec,
 		}
 	}
 
-	class SearchFieldValueChangeListener implements ValueChangeListener {
+	class SearchFieldTextChangeListener implements TextChangeListener {
 		@Override
-		public void valueChange(ValueChangeEvent event) {
-			LOGGER.trace("SearchString: " + getSearchString());
-			accordionView.useFiltersForAllTables(getSearchString());
+		public void textChange(TextChangeEvent event) {
+			setSearchString(event.getText());
+			// TODO Doesn´t work yet but is the better solution in combination
+			// with a CommitHandler/CommitListener
+			// try {
+			// keyboardBinder.commit();
+			// } catch (CommitException e) {
+			// // TODO Auto-generated catch block
+			// e.printStackTrace();
+			// }
+			// System.out.println("SearchString: " + getSearchString());
 		}
 	}
 
