@@ -56,9 +56,6 @@
 		<dependency org="com.vaadin.addon.responsive" name="responsive"
 			rev="1.0.0.alpha4" />-->
 			
-		<!-- Grid AddOn - Should be replaced asap through the native Grid integrated in Vaadin 7.2 -->
-		<dependency org="com.lexaden.components" name="grid" rev="1.8.1" />
-			
 		<!-- Jackson -->	
 		<dependency org="com.fasterxml.jackson.core" name="jackson-databind" rev="2.3.1" />
 		<dependency org="com.fasterxml.jackson.core" name="jackson-annotations" rev="2.3.0" />
