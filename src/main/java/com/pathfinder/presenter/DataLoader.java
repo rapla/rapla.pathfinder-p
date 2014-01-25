@@ -333,6 +333,7 @@ public class DataLoader implements DataLoaderSpec {
 		}
 	}
 
+	// TODO Could Vaadin solve this?
 	private void scheduleListenerRemover() {
 		TimerTask task = new TimerTask() {
 			@Override

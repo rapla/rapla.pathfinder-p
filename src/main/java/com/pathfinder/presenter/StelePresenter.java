@@ -49,8 +49,6 @@ import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.event.FieldEvents.TextChangeEvent;
-import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.server.Page;
@@ -126,10 +124,10 @@ public class StelePresenter implements StelePresenterSpec,
 	}
 
 	private void setResourceData() {
-		this.setRoomContainer(dataLoader.getRoomContainer());
-		this.setCourseContainer(dataLoader.getCourseContainer());
-		this.setPersonContainer(dataLoader.getPersonContainer());
-		this.setPoiContainer(dataLoader.getPoiContainer());
+		accordionView.setRoomContainer(dataLoader.getRoomContainer());
+		accordionView.setCourseContainer(dataLoader.getCourseContainer());
+		accordionView.setPersonContainer(dataLoader.getPersonContainer());
+		accordionView.setPoiContainer(dataLoader.getPoiContainer());
 	}
 
 	private void buildLayout() {
@@ -167,28 +165,20 @@ public class StelePresenter implements StelePresenterSpec,
 	private void initBindings() {
 		BeanFieldGroup<KeyboardModel> keyboardBinder = new BeanFieldGroup<KeyboardModel>(
 				KeyboardModel.class);
-		keyboardBinder.setBuffered(false);
 		keyboardBinder.setItemDataSource(keyboardModel);
 		keyboardBinder.bind(searchField.getSearchField(),
 				KeyboardModel.PROPERTY_SEARCHSTRING);
+		keyboardBinder.setBuffered(false);
 	}
 
 	private void initListeners() {
-		//
-
-		// TODO addItemClickListener change to addAccordionItemClickListener
-		this.accordionView.addItemClickListener(new ResourcesClickListener());
-
+		this.accordionView
+				.addAccordionTableItemClickListener(new ResourcesClickListener());
 		this.freeRoom.addTableItemClickListener(new ResourcesClickListener());
-
-		// TODO: Mit Keyboard in die Suche schreiben
-		// this.desktopLayout
-		// .addSearchFieldTextChangeListener(new
-		// SearchFieldTextChangeListener());
-
+		searchField
+				.addSearchFieldValueChangeListener(new SearchFieldValueChangeListener());
 		this.searchField
 				.addDeleteAllClickListener(new DeleteAllClickListener());
-
 		this.menuBar.addClickListenerHomeButton(new HomeButtonClickListener());
 		this.menuBar
 				.addClickListenerWheelChairButton(new WheelChairButtonClickListener());
@@ -227,16 +217,7 @@ public class StelePresenter implements StelePresenterSpec,
 				resource.setType(ResourceType.ROOM.toString());
 			}
 
-			prepareForDetailView();
-		}
-	}
-
-	class SearchFieldTextChangeListener implements TextChangeListener {
-		@Override
-		public void textChange(TextChangeEvent event) {
-			LOGGER.trace("SearchString: " + getSearchString());
-			accordionView.useFiltersForAllTables(getSearchString());
-			searchField.focusSearchField();
+			prepareDetailView();
 		}
 	}
 
@@ -245,7 +226,6 @@ public class StelePresenter implements StelePresenterSpec,
 		public void valueChange(ValueChangeEvent event) {
 			LOGGER.trace("SearchString: " + getSearchString());
 			accordionView.useFiltersForAllTables(getSearchString());
-			searchField.focusSearchField();
 		}
 	}
 
@@ -306,6 +286,22 @@ public class StelePresenter implements StelePresenterSpec,
 			}
 		}
 
+		private boolean isTimeToGoHome() {
+			boolean result = false;
+
+			if (!wentBackToHomeScreen) {
+				long millisecondsSinceLastRequest = new Date().getTime()
+						- lastUserInteractionTimestamp;
+
+				if (millisecondsSinceLastRequest >= goBackHomeIntervall) {
+					lastUserInteractionTimestamp = new Date().getTime();
+					result = true;
+					wentBackToHomeScreen = true;
+				}
+			}
+			return result;
+		}
+
 	}
 
 	class CalendarListener implements Listener {
@@ -344,10 +340,10 @@ public class StelePresenter implements StelePresenterSpec,
 				addKeybordKeyToSearchString(" ");
 				break;
 			case LEFT:
-				setChangePosCounter(getChangePosCounter() - 1);
+				setPositionCounter(getPositionCounter() - 1);
 				break;
 			case RIGHT:
-				setChangePosCounter(getChangePosCounter() + 1);
+				setPositionCounter(getPositionCounter() + 1);
 				break;
 			default:
 				addKeybordKeyToSearchString(id.getLabel());
@@ -382,7 +378,7 @@ public class StelePresenter implements StelePresenterSpec,
 		public void buttonClick(ClickEvent event) {
 			if (event.getButton().getData() instanceof ResourceModel) {
 				resource = (ResourceModel) event.getButton().getData();
-				prepareForDetailView();
+				prepareDetailView();
 			}
 		}
 
@@ -415,17 +411,7 @@ public class StelePresenter implements StelePresenterSpec,
 		return uiListener;
 	}
 
-	private TimerTask getTimerTask() {
-		TimerTask timerTask = new TimerTask() {
-			@Override
-			public void run() {
-				refreshFreeRooms();
-			}
-		};
-		return timerTask;
-	}
-
-	private void prepareForDetailView() {
+	private void prepareDetailView() {
 		resourceDetails = dataLoader.getResourceDetails(resource.getId(), UI
 				.getCurrent().getLocale());
 
@@ -456,7 +442,6 @@ public class StelePresenter implements StelePresenterSpec,
 	}
 
 	private void scheduleFreeRoomsLoading() {
-
 		// Starts after specified interval and repeats in the same interval (see
 		// application.properties)
 		long loadInterval = properties
@@ -464,27 +449,20 @@ public class StelePresenter implements StelePresenterSpec,
 		new Timer().schedule(getTimerTask(), loadInterval, loadInterval);
 	}
 
+	private TimerTask getTimerTask() {
+		TimerTask timerTask = new TimerTask() {
+			@Override
+			public void run() {
+				refreshFreeRooms();
+			}
+		};
+		return timerTask;
+	}
+
 	private void goBackToHomeScreenAndRestoreDefaultSettings() {
 		switchToSearchView();
 		clearSearchString();
 		languageChanged(VaadinSession.getCurrent().getLocale());
-	}
-
-	private boolean isTimeToGoHome() {
-		boolean result = false;
-
-		if (!wentBackToHomeScreen) {
-			long millisecondsSinceLastRequest = new Date().getTime()
-					- lastUserInteractionTimestamp;
-
-			if (millisecondsSinceLastRequest >= goBackHomeIntervall) {
-				lastUserInteractionTimestamp = new Date().getTime();
-				result = true;
-				wentBackToHomeScreen = true;
-			}
-		}
-
-		return result;
 	}
 
 	@Override
@@ -521,10 +499,6 @@ public class StelePresenter implements StelePresenterSpec,
 		menuBar.replaceWheelChairButtonWithHomeButton();
 
 		// Showing
-		// for (Attribut attribut : resourceDetails.getItemIds()) {
-		// if ("resourcueurl".equals(attribut.getKey())) {
-		// }
-
 		detailInfo.removeDetails();
 		detailInfo.addDetails(resourceDetails);
 		detailImage.removeImage();
@@ -575,7 +549,7 @@ public class StelePresenter implements StelePresenterSpec,
 	}
 
 	public void addKeybordKeyToSearchString(String key) {
-		int oldCursorPosition = getChangePosCounter();
+		int oldCursorPosition = getPositionCounter();
 
 		StringBuilder newSearchString = new StringBuilder(getSearchString());
 
@@ -586,14 +560,11 @@ public class StelePresenter implements StelePresenterSpec,
 			newSearchString.append(key);
 		}
 		setSearchString(newSearchString.toString());
-
-		// TODO Remove if all works
-		searchField.focusSearchField();
-		setChangePosCounter(oldCursorPosition + 1);
+		setPositionCounter(oldCursorPosition + 1);
 	}
 
 	public void deleteKeyFromSearchString() {
-		int oldCursorPosition = getChangePosCounter();
+		int oldCursorPosition = getPositionCounter();
 
 		StringBuilder newSearchString = new StringBuilder(getSearchString());
 
@@ -602,21 +573,17 @@ public class StelePresenter implements StelePresenterSpec,
 			newSearchString.deleteCharAt(oldCursorPosition - 1);
 
 			setSearchString(newSearchString.toString());
-
-			// TODO Remove if all works
-			searchField.focusSearchField();
-			setChangePosCounter(oldCursorPosition - 1);
+			setPositionCounter(oldCursorPosition - 1);
 		} else {
-			// TODO Remove if all works
 			searchField.focusSearchField();
 		}
 	}
 
-	public int getChangePosCounter() {
+	public int getPositionCounter() {
 		return searchField.getCursorPosition();
 	}
 
-	public void setChangePosCounter(int cursorPosition) {
+	public void setPositionCounter(int cursorPosition) {
 		if (cursorPosition >= 0 && cursorPosition <= getSearchString().length())
 			searchField.setCursorPosition(cursorPosition);
 	}
@@ -639,46 +606,8 @@ public class StelePresenter implements StelePresenterSpec,
 	public void setSearchString(String value) {
 		searchField.setSearchFieldValue(value);
 		accordionView.useFiltersForAllTables(getSearchString());
+		searchField.focusSearchField();
 		LOGGER.trace("SearchString: " + this.getSearchString());
-	}
-
-	@Override
-	public void setRoomContainer(
-			BeanItemContainer<ResourceModel> beanItemContainer) {
-		accordionView.setRoomContainer(beanItemContainer);
-	}
-
-	@Override
-	public void setCourseContainer(
-			BeanItemContainer<ResourceModel> beanItemContainer) {
-		accordionView.setCourseContainer(beanItemContainer);
-	}
-
-	@Override
-	public void setPersonContainer(
-			BeanItemContainer<ResourceModel> beanItemContainer) {
-		accordionView.setPersonContainer(beanItemContainer);
-	}
-
-	@Override
-	public void setPoiContainer(
-			BeanItemContainer<ResourceModel> beanItemContainer) {
-		accordionView.setPoiContainer(beanItemContainer);
-	}
-
-	@Override
-	public boolean isTimeToGetRemoved() {
-		boolean result = false;
-
-		long tenMinutesAgo = new Date().getTime() - 10
-				* DateConstants.MINUTEINMILLIS;
-
-		long lastHeartbeat = UI.getCurrent().getLastHeartbeatTimestamp();
-
-		if (lastHeartbeat < tenMinutesAgo)
-			result = true;
-
-		return result;
 	}
 
 	private Date getFirstDayOfWeek(Date date) {
@@ -721,6 +650,21 @@ public class StelePresenter implements StelePresenterSpec,
 					resource.getId(), UI.getCurrent().getLocale()));
 		}
 		detailEvents.updateTranslations();
+	}
+
+	@Override
+	public boolean isTimeToGetRemoved() {
+		boolean result = false;
+
+		long tenMinutesAgo = new Date().getTime() - 10
+				* DateConstants.MINUTEINMILLIS;
+
+		long lastHeartbeat = UI.getCurrent().getLastHeartbeatTimestamp();
+
+		if (lastHeartbeat < tenMinutesAgo)
+			result = true;
+
+		return result;
 	}
 
 	@Override

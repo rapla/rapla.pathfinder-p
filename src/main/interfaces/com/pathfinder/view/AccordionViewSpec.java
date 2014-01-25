@@ -13,7 +13,7 @@ import com.vaadin.ui.Table;
  */
 public interface AccordionViewSpec extends ComponentSpec {
 
-	void addItemClickListener(ItemClickListener listener);
+	void addAccordionTableItemClickListener(ItemClickListener listener);
 
 	void useFiltersForAllTables(String searchString);
 

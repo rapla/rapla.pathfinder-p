@@ -6,8 +6,6 @@ import static de.vksi.c4j.Condition.preCondition;
 
 import java.util.Locale;
 
-import com.pathfinder.model.ResourceModel;
-import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.AbstractLayout;
 import com.vaadin.ui.Component.Listener;
 
@@ -22,50 +20,6 @@ public class StelePresenterSpecContract implements StelePresenterSpec {
 	@ClassInvariant
 	public void classInvariant() {
 		// TODO: write invariants if required
-	}
-
-	@Override
-	public void setRoomContainer(
-			BeanItemContainer<ResourceModel> beanItemContainer) {
-		if (preCondition()) {
-			// TODO: write preconditions if required
-		}
-		if (postCondition()) {
-			// TODO: write postconditions if required
-		}
-	}
-
-	@Override
-	public void setCourseContainer(
-			BeanItemContainer<ResourceModel> beanItemContainer) {
-		if (preCondition()) {
-			// TODO: write preconditions if required
-		}
-		if (postCondition()) {
-			// TODO: write postconditions if required
-		}
-	}
-
-	@Override
-	public void setPersonContainer(
-			BeanItemContainer<ResourceModel> beanItemContainer) {
-		if (preCondition()) {
-			// TODO: write preconditions if required
-		}
-		if (postCondition()) {
-			// TODO: write postconditions if required
-		}
-	}
-
-	@Override
-	public void setPoiContainer(
-			BeanItemContainer<ResourceModel> beanItemContainer) {
-		if (preCondition()) {
-			// TODO: write preconditions if required
-		}
-		if (postCondition()) {
-			// TODO: write postconditions if required
-		}
 	}
 
 	@Override

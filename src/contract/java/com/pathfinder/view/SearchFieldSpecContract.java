@@ -7,8 +7,8 @@ import static de.vksi.c4j.Condition.ignored;
 import static de.vksi.c4j.Condition.postCondition;
 import static de.vksi.c4j.Condition.preCondition;
 
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
-import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
@@ -35,7 +35,7 @@ public class SearchFieldSpecContract extends ComponentSpecContract implements
 	}
 
 	@Override
-	public void addSearchFieldTextChangeListener(TextChangeListener listener) {
+	public void addSearchFieldValueChangeListener(ValueChangeListener listener) {
 		if (preCondition()) {
 			assert listener != null : "Listener not null";
 			assert target.getSearchField() != null : "SearchField-Textfield not null";
@@ -102,18 +102,18 @@ public class SearchFieldSpecContract extends ComponentSpecContract implements
 	@Override
 	public void hideSearchField() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void showSearchField() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setSearchFieldValue(String newValue) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
