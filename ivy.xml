@@ -62,6 +62,9 @@
 		<dependency org="com.fasterxml.jackson.core" name="jackson-core" rev="2.3.1" />
 
 		<!-- PopupButton -->
+		<dependency org="org.vaadin.addons" name="popupbutton" rev="2.3.0" />
+		
+		<!-- MessageBox -->
 		<dependency org="de.steinwedel.vaadin.addon" name="messagebox" rev="2.0.6" />
 	</dependencies>
 </ivy-module>
