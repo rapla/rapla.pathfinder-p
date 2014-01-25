@@ -27,8 +27,12 @@ import com.pathfinder.view.AccordionView;
 import com.pathfinder.view.AccordionViewSpec;
 import com.pathfinder.view.CalendarEventComponent;
 import com.pathfinder.view.DateTimeSpec;
-import com.pathfinder.view.DetailContainer;
-import com.pathfinder.view.DetailContainerSpec;
+import com.pathfinder.view.DetailEvents;
+import com.pathfinder.view.DetailEventsSpec;
+import com.pathfinder.view.DetailImage;
+import com.pathfinder.view.DetailImageSpec;
+import com.pathfinder.view.DetailInfo;
+import com.pathfinder.view.DetailInfoSpec;
 import com.pathfinder.view.EventSelectionView;
 import com.pathfinder.view.EventSelectionViewSpec;
 import com.pathfinder.view.FreeRoomView;
@@ -83,12 +87,15 @@ public class StelePresenter implements StelePresenterSpec,
 	private final AccordionViewSpec accordionView = new AccordionView();
 	private final KeyboardSpec keyboard = new Keyboard();
 	private final SearchFieldSpec searchField = new SearchField();
+	private final DetailInfoSpec detailInfo = new DetailInfo();
+	private final DetailImageSpec detailImage = new DetailImage();
+	private final DetailEventsSpec detailEvents = new DetailEvents();
 	private final MenuBarSpec menuBar = new MenuBar();
-	private final DetailContainerSpec detailContainer = new DetailContainer();
 	private final EventSelectionViewSpec eventSelectionView = new EventSelectionView();
 
 	private final VerticalLayout mainLayout = new VerticalLayout();
 	private final VerticalLayout contentLayout = new VerticalLayout();
+	private final VerticalLayout detailLayout = new VerticalLayout();
 	private final VerticalLayout layoutNormal = new VerticalLayout();
 	private final HorizontalLayout layoutWheelChair = new HorizontalLayout();
 
@@ -100,7 +107,7 @@ public class StelePresenter implements StelePresenterSpec,
 
 	private ResourceModel resource = null;
 	private BeanItemContainer<Attribut> resourceDetails = null;
-	private BeanItemContainer<EventModel> resourceEvents;
+	private BeanItemContainer<EventModel> resourceEvents = null;
 
 	private long lastUserInteractionTimestamp;
 	private boolean wentBackToHomeScreen = true;
@@ -114,6 +121,7 @@ public class StelePresenter implements StelePresenterSpec,
 		dataLoader.addDataListener(this);
 		this.setResourceData();
 		this.buildLayout();
+		this.addStyling();
 		this.initListeners();
 		this.refreshFreeRooms();
 		this.scheduleFreeRoomsLoading();
@@ -131,19 +139,30 @@ public class StelePresenter implements StelePresenterSpec,
 		this.layoutNormal.addComponent(accordionView);
 		this.layoutNormal.addComponent(searchField);
 		this.layoutNormal.addComponent(keyboard);
+		this.layoutNormal.setSizeFull();
 
 		this.contentLayout.addComponent(freeRoom);
 		this.contentLayout.addComponent(layoutNormal);
-		this.contentLayout.addComponent(detailContainer);
 		this.contentLayout.setSizeFull();
-		// this.contentLayout.setHeight(900, Unit.PIXELS);
+
+		this.detailLayout.addComponent(detailImage);
+		this.detailLayout.addComponent(detailEvents);
+		this.detailLayout.addComponent(detailInfo);
+		this.detailImage.setSizeFull();
+		this.detailEvents.setSizeFull();
+		this.detailInfo.setSizeFull();
+		this.detailLayout.setSizeFull();
 
 		this.mainLayout.addComponent(dateTime);
 		this.mainLayout.addComponent(contentLayout);
+		this.mainLayout.addComponent(detailLayout);
+		this.detailLayout.setVisible(false);
 		this.mainLayout.addComponent(menuBar);
-		this.mainLayout.setExpandRatio(contentLayout, 1);
+		// TODO to work, you have to set all other components to sizeUndefined
+		// this.mainLayout.setExpandRatio(contentLayout, 1);
+	}
 
-		// TODO Maybe an own CustomComponent?
+	private void addStyling() {
 		this.mainLayout.setPrimaryStyleName("stele");
 	}
 
@@ -176,9 +195,8 @@ public class StelePresenter implements StelePresenterSpec,
 		}
 
 		this.dateTime.addBackToHomeListener(new BackToHomeListener());
-		this.detailContainer.addCalendarListener(new CalendarListener());
-		this.detailContainer
-				.setEventClickHandler(new CalendarEventClickHandler());
+		this.detailEvents.addCalendarListener(new CalendarListener());
+		this.detailEvents.setEventClickHandler(new CalendarEventClickHandler());
 		this.keyboard
 				.addKeyboardButtonListener(new KeyboardButtonClickListener());
 		this.eventSelectionView
@@ -206,22 +224,7 @@ public class StelePresenter implements StelePresenterSpec,
 			}
 
 			prepareForDetailView();
-
 		}
-	}
-
-	private void prepareForDetailView() {
-
-		resourceDetails = dataLoader.getResourceDetails(resource.getId(), UI
-				.getCurrent().getLocale());
-
-		calendarModel.setBeginningOfCurrentDay(new Date());
-
-		updateCalendarEvents();
-
-		LOGGER.trace(resource.getType() + " element was clicked: "
-				+ resource.getName());
-		switchToDetailView();
 	}
 
 	class SearchFieldTextChangeListener implements TextChangeListener {
@@ -381,23 +384,6 @@ public class StelePresenter implements StelePresenterSpec,
 
 	}
 
-	private void updateCalendarEvents() {
-
-		if (resource != null) {
-
-			Date firstDayOfWeek = getFirstDayOfWeek(calendarModel
-					.getBeginningOfCurrentDay());
-			Date lastDayOfWeek = getLastDayOfWeek(calendarModel
-					.getEndOfCurrentDay());
-
-			resourceEvents = dataLoader.getEvent(resource.getId(),
-					firstDayOfWeek, lastDayOfWeek, UI.getCurrent().getLocale());
-
-			detailContainer.updateCalendarEvents(resourceEvents,
-					firstDayOfWeek, lastDayOfWeek);
-		}
-	}
-
 	@Override
 	public Listener getUiListener() {
 		if (uiListener == null) {
@@ -433,6 +419,36 @@ public class StelePresenter implements StelePresenterSpec,
 			}
 		};
 		return timerTask;
+	}
+
+	private void prepareForDetailView() {
+		resourceDetails = dataLoader.getResourceDetails(resource.getId(), UI
+				.getCurrent().getLocale());
+
+		calendarModel.setBeginningOfCurrentDay(new Date());
+
+		updateCalendarEvents();
+
+		LOGGER.trace(resource.getType() + " element was clicked: "
+				+ resource.getName());
+		switchToDetailView();
+	}
+
+	private void updateCalendarEvents() {
+
+		if (resource != null) {
+
+			Date firstDayOfWeek = getFirstDayOfWeek(calendarModel
+					.getBeginningOfCurrentDay());
+			Date lastDayOfWeek = getLastDayOfWeek(calendarModel
+					.getEndOfCurrentDay());
+
+			resourceEvents = dataLoader.getEvent(resource.getId(),
+					firstDayOfWeek, lastDayOfWeek, UI.getCurrent().getLocale());
+
+			detailEvents.setEvents(resourceEvents, firstDayOfWeek,
+					lastDayOfWeek);
+		}
 	}
 
 	private void scheduleFreeRoomsLoading() {
@@ -474,8 +490,10 @@ public class StelePresenter implements StelePresenterSpec,
 		this.resourceDetails = null;
 
 		// Hiding
-		detailContainer.hideDetailContainer();
-		detailContainer.removeDetails();
+		this.detailLayout.setVisible(false);
+		detailInfo.removeDetails();
+		detailImage.removeImage();
+		this.resource = null;
 
 		// Adapting MenuBar
 		menuBar.replaceHomeButtonWithWheelChairButton();
@@ -503,9 +521,18 @@ public class StelePresenter implements StelePresenterSpec,
 		// if ("resourcueurl".equals(attribut.getKey())) {
 		// }
 
-		detailContainer.removeDetails();
-		detailContainer.addDetails(resource, resourceDetails);
-		detailContainer.showDetailContainer();
+		detailInfo.removeDetails();
+		detailInfo.addDetails(resourceDetails);
+		detailImage.removeImage();
+		if ((ResourceType.ROOM.toString()).equals(resource.getType())) {
+			for (Attribut attribut : resourceDetails.getItemIds()) {
+				if ("Raum".equals(attribut.getLabel())) {
+					detailImage.setImage(dataLoader.getDhbwEntryPoint()
+							+ attribut.getValue());
+				}
+			}
+		}
+		this.detailLayout.setVisible(true);
 	}
 
 	@Override
@@ -696,7 +723,13 @@ public class StelePresenter implements StelePresenterSpec,
 		accordionView.updateTranslations();
 		searchField.updateTranslations();
 		keyboard.updateTranslations();
-		detailContainer.updateTranslations();
 		menuBar.updateTranslations();
+
+		if (resource != null) {
+			detailInfo.removeDetails();
+			detailInfo.addDetails(dataLoader.getResourceDetails(
+					resource.getId(), UI.getCurrent().getLocale()));
+		}
+		detailEvents.updateTranslations();
 	}
 }

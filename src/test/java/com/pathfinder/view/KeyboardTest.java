@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.pathfinder.view.components;
+package com.pathfinder.view;
 
 import java.util.ArrayList;
 import java.util.Arrays;
