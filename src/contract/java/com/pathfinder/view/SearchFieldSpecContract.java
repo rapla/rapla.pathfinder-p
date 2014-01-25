@@ -110,4 +110,10 @@ public class SearchFieldSpecContract extends ComponentSpecContract implements
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void setSearchFieldValue(String newValue) {
+		// TODO Auto-generated method stub
+		
+	}
 }

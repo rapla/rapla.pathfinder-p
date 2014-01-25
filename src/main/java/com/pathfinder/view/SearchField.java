@@ -58,6 +58,10 @@ public class SearchField extends CustomComponent implements SearchFieldSpec {
 		deleteAllButton.addClickListener(listener);
 	}
 
+	public void setSearchFieldValue(String newValue) {
+		searchField.setValue(newValue);
+	}
+
 	@Override
 	public void focusSearchField() {
 		searchField.focus();

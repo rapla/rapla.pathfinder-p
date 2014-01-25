@@ -20,6 +20,8 @@ public interface SearchFieldSpec extends ComponentSpec {
 
 	void addDeleteAllClickListener(ClickListener listener);
 
+	void setSearchFieldValue(String newValue);
+
 	void focusSearchField();
 
 	int getCursorPosition();

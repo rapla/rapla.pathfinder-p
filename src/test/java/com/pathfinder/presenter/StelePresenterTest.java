@@ -8,7 +8,6 @@ import org.junit.Before;
 
 import com.pathfinder.PathfinderUI;
 import com.pathfinder.view.DateTimeSpec;
-import com.pathfinder.view.DetailContainerSpec;
 import com.pathfinder.view.FreeRoomViewSpec;
 import com.pathfinder.view.MenuBarSpec;
 import com.vaadin.ui.AbstractLayout;
@@ -22,7 +21,6 @@ public class StelePresenterTest {
 	AbstractLayout desktopLayout;
 	DateTimeSpec dateTime;
 	FreeRoomViewSpec freeRoom;
-	DetailContainerSpec detailContainer;
 	MenuBarSpec menuBar;
 
 	@Before
@@ -50,20 +48,16 @@ public class StelePresenterTest {
 					Component contentComponent = contentIterator.next();
 					if (contentComponent instanceof FreeRoomViewSpec) {
 						freeRoom = (FreeRoomViewSpec) contentComponent;
-					} else if (contentComponent instanceof DetailContainerSpec) {
-						detailContainer = (DetailContainerSpec) contentComponent;
 					}
-
 				}
 			}
-
 		}
 
 		Assert.assertTrue(dateTime != null);
 		Assert.assertTrue(freeRoom != null);
-		Assert.assertTrue(detailContainer != null);
 		Assert.assertTrue(menuBar != null);
 	}
+
 	//
 	// @Test
 	// public void addKeyboardKeyToSearchStringTest() {
@@ -148,4 +142,12 @@ public class StelePresenterTest {
 	// assertEquals("ÖTÄSM  ÜXÜ", stelePresenter.getSearchString());
 	// }
 
+	@Before
+	public void initialize() {
+		// TODO
+		// ResourceModel model = new ResourceModel("Name", "Link", "Id",
+		// new String[] { "Searchfield 1", "Searchfield 2" });
+		// detailContainer = new DetailContainer<RoomModel>(RoomModel.class,
+		// new BeanItem<RoomModel>(model), "");
+	}
 }

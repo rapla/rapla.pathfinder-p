@@ -44,6 +44,7 @@ import com.pathfinder.view.MenuBar;
 import com.pathfinder.view.MenuBarSpec;
 import com.pathfinder.view.SearchField;
 import com.pathfinder.view.SearchFieldSpec;
+import com.pathfinder.view.TranslatabelSpec;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
@@ -75,17 +76,22 @@ import com.vaadin.ui.components.calendar.CalendarComponentEvents.ForwardEvent;
  * 
  */
 public class StelePresenter implements StelePresenterSpec,
-		DataLoaderListenerSpec {
+		DataLoaderListenerSpec, TranslatabelSpec {
 	private static final Logger LOGGER = LogManager
 			.getLogger(StelePresenter.class.getName());
 	private final ApplicationPropertiesSpec properties = ApplicationProperties
 			.getInstance();
 	private final DataLoaderSpec dataLoader = DataLoader.getInstance();
 
+	private final int goBackHomeIntervall = properties
+			.getIntProperty(PropertiesKey.BACK_TO_HOME_TIMER);
+	private long lastUserInteractionTimestamp;
+	private boolean wentBackToHomeScreen = true;
+
 	private final DateTimeSpec dateTime = new DateTime();
 	private final FreeRoomViewSpec freeRoom = new FreeRoomView();
 	private final AccordionViewSpec accordionView = new AccordionView();
-	private final KeyboardSpec keyboard = new Keyboard();
+	private final KeyboardSpec keyboardView = new Keyboard();
 	private final SearchFieldSpec searchField = new SearchField();
 	private final DetailInfoSpec detailInfo = new DetailInfo();
 	private final DetailImageSpec detailImage = new DetailImage();
@@ -99,19 +105,10 @@ public class StelePresenter implements StelePresenterSpec,
 	private final VerticalLayout layoutNormal = new VerticalLayout();
 	private final HorizontalLayout layoutWheelChair = new HorizontalLayout();
 
-	private final BeanFieldGroup<KeyboardModel> keyboardBinder = new BeanFieldGroup<KeyboardModel>(
-			KeyboardModel.class);
-
-	private final int goBackHomeIntervall = properties
-			.getIntProperty(PropertiesKey.BACK_TO_HOME_TIMER);
-
+	private final KeyboardModel keyboardModel = new KeyboardModel();
 	private ResourceModel resource = null;
 	private BeanItemContainer<Attribut> resourceDetails = null;
 	private BeanItemContainer<EventModel> resourceEvents = null;
-
-	private long lastUserInteractionTimestamp;
-	private boolean wentBackToHomeScreen = true;
-
 	private CalendarModel calendarModel = new CalendarModel();
 
 	private Listener uiListener = null;
@@ -122,6 +119,7 @@ public class StelePresenter implements StelePresenterSpec,
 		this.setResourceData();
 		this.buildLayout();
 		this.addStyling();
+		this.initBindings();
 		this.initListeners();
 		this.refreshFreeRooms();
 		this.scheduleFreeRoomsLoading();
@@ -138,7 +136,7 @@ public class StelePresenter implements StelePresenterSpec,
 		// For the wheel chair button / view
 		this.layoutNormal.addComponent(accordionView);
 		this.layoutNormal.addComponent(searchField);
-		this.layoutNormal.addComponent(keyboard);
+		this.layoutNormal.addComponent(keyboardView);
 		this.layoutNormal.setSizeFull();
 
 		this.contentLayout.addComponent(freeRoom);
@@ -166,11 +164,17 @@ public class StelePresenter implements StelePresenterSpec,
 		this.mainLayout.setPrimaryStyleName("stele");
 	}
 
-	private void initListeners() {
-		this.keyboardBinder.setBuffered(false);
-		this.keyboardBinder.setItemDataSource(new KeyboardModel());
-		this.keyboardBinder.bind(searchField.getSearchField(),
+	private void initBindings() {
+		BeanFieldGroup<KeyboardModel> keyboardBinder = new BeanFieldGroup<KeyboardModel>(
+				KeyboardModel.class);
+		keyboardBinder.setBuffered(false);
+		keyboardBinder.setItemDataSource(keyboardModel);
+		keyboardBinder.bind(searchField.getSearchField(),
 				KeyboardModel.PROPERTY_SEARCHSTRING);
+	}
+
+	private void initListeners() {
+		//
 
 		// TODO addItemClickListener change to addAccordionItemClickListener
 		this.accordionView.addItemClickListener(new ResourcesClickListener());
@@ -197,7 +201,7 @@ public class StelePresenter implements StelePresenterSpec,
 		this.dateTime.addBackToHomeListener(new BackToHomeListener());
 		this.detailEvents.addCalendarListener(new CalendarListener());
 		this.detailEvents.setEventClickHandler(new CalendarEventClickHandler());
-		this.keyboard
+		this.keyboardView
 				.addKeyboardButtonListener(new KeyboardButtonClickListener());
 		this.eventSelectionView
 				.addButtonClickListener(new EventResourceSelectedListener());
@@ -502,7 +506,7 @@ public class StelePresenter implements StelePresenterSpec,
 		freeRoom.showFreeRoomView();
 		accordionView.showAccordionView();
 		searchField.showSearchField();
-		keyboard.showKeyboard();
+		keyboardView.showKeyboard();
 	}
 
 	@Override
@@ -511,7 +515,7 @@ public class StelePresenter implements StelePresenterSpec,
 		freeRoom.hideFreeRoomView();
 		accordionView.hideAccordionView();
 		searchField.hideSearchField();
-		keyboard.hideKeyboard();
+		keyboardView.hideKeyboard();
 
 		// Adapting MenuBar
 		menuBar.replaceWheelChairButtonWithHomeButton();
@@ -542,7 +546,7 @@ public class StelePresenter implements StelePresenterSpec,
 			rightSide.addComponent(accordionView);
 			rightSide.addComponent(searchField);
 
-			layoutWheelChair.addComponent(keyboard);
+			layoutWheelChair.addComponent(keyboardView);
 			layoutWheelChair.addComponent(rightSide);
 			layoutWheelChair.setSizeFull();
 			this.contentLayout.replaceComponent(layoutNormal, layoutWheelChair);
@@ -557,7 +561,7 @@ public class StelePresenter implements StelePresenterSpec,
 		if (contentLayout.getComponentIndex(layoutWheelChair) >= 0) {
 			layoutNormal.addComponent(accordionView);
 			layoutNormal.addComponent(searchField);
-			layoutNormal.addComponent(keyboard);
+			layoutNormal.addComponent(keyboardView);
 			layoutNormal.setSizeFull();
 			this.contentLayout.replaceComponent(layoutWheelChair, layoutNormal);
 			layoutWheelChair.removeAllComponents();
@@ -608,10 +612,6 @@ public class StelePresenter implements StelePresenterSpec,
 		}
 	}
 
-	public void clearSearchString() {
-		this.setSearchString("");
-	}
-
 	public int getChangePosCounter() {
 		return searchField.getCursorPosition();
 	}
@@ -626,24 +626,20 @@ public class StelePresenter implements StelePresenterSpec,
 		return searchField.getCursorPosition();
 	}
 
-	@Override
-	public String getSearchString() {
-		String returnString = (String) keyboardBinder.getItemDataSource()
-				.getItemProperty(KeyboardModel.PROPERTY_SEARCHSTRING)
-				.getValue();
-		if (returnString == null)
-			returnString = "";
-		return returnString;
+	public void clearSearchString() {
+		this.setSearchString("");
 	}
 
-	@SuppressWarnings("unchecked")
+	@Override
+	public String getSearchString() {
+		return keyboardModel.getSearchString();
+	}
+
 	@Override
 	public void setSearchString(String value) {
-		keyboardBinder.getItemDataSource()
-				.getItemProperty(KeyboardModel.PROPERTY_SEARCHSTRING)
-				.setValue(value);
-		// TODO Remove if all works
+		searchField.setSearchFieldValue(value);
 		accordionView.useFiltersForAllTables(getSearchString());
+		LOGGER.trace("SearchString: " + this.getSearchString());
 	}
 
 	@Override
@@ -671,24 +667,7 @@ public class StelePresenter implements StelePresenterSpec,
 	}
 
 	@Override
-	public void languageChanged(Locale locale) {
-		if (!UI.getCurrent().getLocale().equals(locale)) {
-			UI.getCurrent().setLocale(locale);
-			this.updateTranslations();
-			Page.getCurrent().setTitle(
-					Translator.getInstance().translate(
-							TranslationKeys.APP_TITLE));
-		}
-	}
-
-	@Override
-	public AbstractLayout getSteleLayoutView() {
-		return mainLayout;
-	}
-
-	@Override
 	public boolean isTimeToGetRemoved() {
-
 		boolean result = false;
 
 		long tenMinutesAgo = new Date().getTime() - 10
@@ -716,13 +695,24 @@ public class StelePresenter implements StelePresenterSpec,
 		return cal.getTime();
 	}
 
-	// TODO @Override
+	@Override
+	public void languageChanged(Locale locale) {
+		if (!UI.getCurrent().getLocale().equals(locale)) {
+			UI.getCurrent().setLocale(locale);
+			this.updateTranslations();
+			Page.getCurrent().setTitle(
+					Translator.getInstance().translate(
+							TranslationKeys.APP_TITLE));
+		}
+	}
+
+	@Override
 	public void updateTranslations() {
 		dateTime.updateTranslations();
 		freeRoom.updateTranslations();
 		accordionView.updateTranslations();
 		searchField.updateTranslations();
-		keyboard.updateTranslations();
+		keyboardView.updateTranslations();
 		menuBar.updateTranslations();
 
 		if (resource != null) {
@@ -731,5 +721,10 @@ public class StelePresenter implements StelePresenterSpec,
 					resource.getId(), UI.getCurrent().getLocale()));
 		}
 		detailEvents.updateTranslations();
+	}
+
+	@Override
+	public AbstractLayout getSteleLayoutView() {
+		return mainLayout;
 	}
 }
