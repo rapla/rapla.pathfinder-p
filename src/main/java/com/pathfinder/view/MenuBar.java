@@ -29,7 +29,7 @@ import com.vaadin.ui.VerticalLayout;
  */
 public class MenuBar extends CustomComponent implements MenuBarSpec {
 	private final TranslatorSpec translator = Translator.getInstance();
-	private final GridLayout layout = new GridLayout(3, 2);
+	private final GridLayout layout = new GridLayout(3, 1);
 	private final VerticalLayout popupLayout = new VerticalLayout();
 	private final PopupButton languagePopupButton = new PopupButton();
 	private final Button wheelChairButton = new Button();
