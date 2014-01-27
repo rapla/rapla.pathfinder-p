@@ -24,7 +24,13 @@
     <!-- <set-configuration-property name="devModeRedirectEnabled" value="true" /> -->
 
 
-    <inherits name="com.vaadin.addon.responsive.ResponsiveWidgetSet" />
+    
 
     
+
+    <inherits name="org.vaadin.resetbuttonfortextfield.widgetset.ResetButtonForTextFieldWidgetset" />
+
+    <inherits name="org.vaadin.hene.popupbutton.widgetset.PopupbuttonWidgetset" />
+
+    <inherits name="de.steinwedel.messagebox.WidgetSet" />
 </module>

@@ -66,5 +66,8 @@
 		
 		<!-- MessageBox -->
 		<dependency org="de.steinwedel.vaadin.addon" name="messagebox" rev="2.0.6" />
+		
+		<!-- ResetButtonForTextField -->
+		<dependency org="org.vaadin.addons" name="resetbuttonfortextfield" rev="1.1.1" />
 	</dependencies>
 </ivy-module>
