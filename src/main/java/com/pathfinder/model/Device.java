@@ -7,14 +7,15 @@ package com.pathfinder.model;
  * @author tim
  * 
  */
-public enum SteleLocation {
-	LEFT("l", "l"), RIGHT("r", "r"), MIDDLE("m", "");
+public enum Device {
+	DESKTOP("desktop", ""), MOBILE("mobile", ""), STELE_LEFT("stelel", "l"), STELE_RIGHT(
+			"steler", "r"), STELE_MIDDLE("stelem", ""), UNDEFINED("", "");
 
 	private String urlPicturePrefix;
 	private String urlParameterValue;
-	public final static String STELE_LOCATION_URL_PARAMETER = "stele";
+	public final static String DEVICE_URL_PARAMETER_NAME = "device";
 
-	private SteleLocation(String urlParameterValue, String urlPicturePrefix) {
+	private Device(String urlParameterValue, String urlPicturePrefix) {
 		this.urlParameterValue = urlParameterValue;
 		this.urlPicturePrefix = urlPicturePrefix;
 	}
@@ -27,9 +28,9 @@ public enum SteleLocation {
 		return urlParameterValue;
 	}
 
-	public static SteleLocation getSteleLocation(String urlParameterValue) {
-		SteleLocation result = MIDDLE;
-		for (SteleLocation location : values()) {
+	public static Device getDevice(String urlParameterValue) {
+		Device result = Device.UNDEFINED;
+		for (Device location : values()) {
 			if (location.getUrlParameterValue().equals(urlParameterValue)) {
 				result = location;
 				break;

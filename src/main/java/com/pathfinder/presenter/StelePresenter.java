@@ -11,13 +11,13 @@ import org.apache.logging.log4j.Logger;
 
 import com.pathfinder.model.Attribut;
 import com.pathfinder.model.CalendarModel;
+import com.pathfinder.model.Device;
 import com.pathfinder.model.EventModel;
 import com.pathfinder.model.FreeRoomModel;
 import com.pathfinder.model.KeyboardModel;
 import com.pathfinder.model.ResourceModel;
 import com.pathfinder.model.ResourceModel.ResourceType;
 import com.pathfinder.model.SessionLoggingModel;
-import com.pathfinder.model.SteleLocation;
 import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.ApplicationPropertiesSpec;
 import com.pathfinder.util.properties.PropertiesKey;
@@ -110,7 +110,7 @@ public class StelePresenter implements StelePresenterSpec,
 	private BeanItemContainer<Attribut> resourceDetails = null;
 	private BeanItemContainer<EventModel> resourceEvents = null;
 	private CalendarModel calendarModel = new CalendarModel();
-	private SteleLocation steleLocation = SteleLocation.MIDDLE;
+	private Device steleLocation = Device.STELE_MIDDLE;
 	private SessionLoggingModel sessionLoggingModel = new SessionLoggingModel();
 
 	private Listener uiListener = null;
@@ -529,7 +529,6 @@ public class StelePresenter implements StelePresenterSpec,
 				// TODO The label name depends on the "Freiraum" interface,
 				// which isn´t implemented yet
 				if ("Raum".equals(attribut.getLabel())) {
-					LOGGER.info("Stele Location: " + steleLocation);
 					detailImage.setImage(steleLocation + attribut.getValue());
 				}
 			}
@@ -698,8 +697,8 @@ public class StelePresenter implements StelePresenterSpec,
 	}
 
 	@Override
-	public void setSteleLocation(SteleLocation steleLocation) {
-		if (steleLocation != null)
+	public void setDevice(Device steleLocation) {
+		if (steleLocation != null && steleLocation != Device.UNDEFINED)
 			this.steleLocation = steleLocation;
 	}
 
