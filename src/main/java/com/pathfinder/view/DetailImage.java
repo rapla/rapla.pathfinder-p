@@ -1,5 +1,10 @@
 package com.pathfinder.view;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,6 +16,7 @@ import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Image;
+import com.vaadin.ui.UI;
 
 /**
  * Image to show in the detail view
@@ -48,29 +54,27 @@ public class DetailImage extends Image implements DetailImageSpec {
 	@Override
 	public void setImage(String imageUrl) {
 		if (!"".equals(imageUrl)) {
-			this.setSource(new ThemeResource(IMAGE_PATH + imageUrl
-					+ IMAGE_ENDING));
-			this.setSizeFull();
 
-			// int code = 0;
-			//
-			// try {
-			// URL u = new URL(imageUrl);
-			// HttpURLConnection huc = (HttpURLConnection) u.openConnection();
-			// huc.setRequestMethod("GET"); // OR huc.setRequestMethod
-			// // ("HEAD");
-			// huc.connect();
-			// code = huc.getResponseCode();
-			//
-			// if (code == 200) {
-			// this.setSource(new ExternalResource(imageUrl));
-			// this.setSizeFull();
-			// }
-			// } catch (MalformedURLException e) {
-			// LOGGER.error("Url was malformed");
-			// } catch (IOException e) {
-			// LOGGER.error("Problem to load navigation image");
-			// }
+			ThemeResource themeResource = new ThemeResource(IMAGE_PATH
+					+ imageUrl + IMAGE_ENDING);
+
+			try {
+				String serverpath = UI.getCurrent().getSession().getService()
+						.getBaseDirectory().getAbsolutePath();
+				String path = "" + IMAGE_PATH + imageUrl + IMAGE_ENDING;
+				File file = new File(serverpath + File.separator + "VAADIN"
+						+ File.separator + "themes" + File.separator
+						+ "rapla_pathfinder_p" + File.separator + path);
+				InputStream inputStream = new FileInputStream(file);
+
+				this.setSource(themeResource);
+
+			} catch (FileNotFoundException e) {
+				System.out.println("Image Default");
+				this.setSource(new ThemeResource(DEFAULT_IMAGE));
+			}
+
+			this.setSizeFull();
 		}
 	}
 
@@ -82,8 +86,6 @@ public class DetailImage extends Image implements DetailImageSpec {
 
 	@Override
 	public void updateTranslations() {
-		// TODO Should this be shown when we show a default image?
-		this.setAlternateText(translator
-				.translate(TranslationKeys.NO_DATA_AVAILABLE));
 	}
+
 }

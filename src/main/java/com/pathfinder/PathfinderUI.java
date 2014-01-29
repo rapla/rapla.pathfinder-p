@@ -107,6 +107,7 @@ public class PathfinderUI extends UI {
 
 		desktopPresenter = new StelePresenter();
 		desktopPresenter.setSteleLocation(steleLocation);
+		desktopPresenter.setUserAgent(userAgent);
 		setContent(desktopPresenter.getSteleLayoutView());
 		addListenerToAllChildComponents((HasComponents) getContent(),
 				desktopPresenter.getUiListener());

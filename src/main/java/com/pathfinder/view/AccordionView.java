@@ -260,6 +260,9 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 
 		// Update table captions
 		this.updateTableCaptions();
+
+		//
+		this.avoidEmptyTab();
 	}
 
 	private List<Filter> createFiltersForAllPropertyIds(String filterString) {
@@ -346,6 +349,18 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 				translator.translate(TranslationKeys.POI) + " ["
 						+ this.getPoiTableLength() + "]");
 		accordion.getTab(3).setCaption(accordionCaptionPois);
+	}
+
+	private void avoidEmptyTab() {
+		if (this.getRoomTableLength() > 0) {
+			this.accordion.setSelectedTab(0);
+		} else if (this.getCourseTableLength() > 0) {
+			this.accordion.setSelectedTab(1);
+		} else if (this.getPersonTableLength() > 0) {
+			this.accordion.setSelectedTab(2);
+		} else if (this.getPoiTableLength() > 0) {
+			this.accordion.setSelectedTab(3);
+		}
 	}
 
 	private int getRoomTableLength() {
