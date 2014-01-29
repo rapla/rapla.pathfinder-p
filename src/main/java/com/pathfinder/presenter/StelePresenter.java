@@ -16,6 +16,7 @@ import com.pathfinder.model.FreeRoomModel;
 import com.pathfinder.model.KeyboardModel;
 import com.pathfinder.model.ResourceModel;
 import com.pathfinder.model.ResourceModel.ResourceType;
+import com.pathfinder.model.SteleLocation;
 import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.ApplicationPropertiesSpec;
 import com.pathfinder.util.properties.PropertiesKey;
@@ -45,6 +46,7 @@ import com.pathfinder.view.MenuBarSpec;
 import com.pathfinder.view.SearchField;
 import com.pathfinder.view.SearchFieldSpec;
 import com.pathfinder.view.TranslatabelSpec;
+import com.vaadin.addon.responsive.Responsive;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
@@ -108,6 +110,7 @@ public class StelePresenter implements StelePresenterSpec,
 	private BeanItemContainer<Attribut> resourceDetails = null;
 	private BeanItemContainer<EventModel> resourceEvents = null;
 	private CalendarModel calendarModel = new CalendarModel();
+	private SteleLocation steleLocation = SteleLocation.MIDDLE;
 
 	private Listener uiListener = null;
 
@@ -514,8 +517,8 @@ public class StelePresenter implements StelePresenterSpec,
 		if ((ResourceType.ROOM.toString()).equals(resource.getType())) {
 			for (Attribut attribut : resourceDetails.getItemIds()) {
 				if ("Raum".equals(attribut.getLabel())) {
-					detailImage.setImage(dataLoader.getDhbwEntryPoint()
-							+ attribut.getValue());
+					LOGGER.info("Stele Location: " + steleLocation);
+					detailImage.setImage(steleLocation + attribut.getValue());
 				}
 			}
 		}
@@ -679,5 +682,11 @@ public class StelePresenter implements StelePresenterSpec,
 	@Override
 	public AbstractLayout getSteleLayoutView() {
 		return mainLayout;
+	}
+
+	@Override
+	public void setSteleLocation(SteleLocation steleLocation) {
+		if (steleLocation != null)
+			this.steleLocation = steleLocation;
 	}
 }

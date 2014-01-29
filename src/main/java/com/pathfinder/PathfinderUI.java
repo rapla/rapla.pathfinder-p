@@ -2,17 +2,20 @@ package com.pathfinder;
 
 import java.util.Iterator;
 import java.util.Locale;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.pathfinder.model.SteleLocation;
 import com.pathfinder.presenter.DataLoader;
 import com.pathfinder.presenter.DataLoaderSpec;
+import com.pathfinder.presenter.MobilePresenterSpec;
 import com.pathfinder.presenter.StelePresenter;
 import com.pathfinder.presenter.StelePresenterSpec;
-import com.pathfinder.presenter.MobilePresenterSpec;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
+import com.vaadin.addon.responsive.Responsive;
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
@@ -40,11 +43,16 @@ public class PathfinderUI extends UI {
 	private Page page = null;
 	private WebBrowser webBrowser = null;
 	private String userAgent = "";
-	private String dhbwEntryPoint = "";
+	private SteleLocation steleLocation;
 
 	@Override
 	protected void init(VaadinRequest request) {
-		// TODO new Responsive(this);
+
+
+		this.readUrlParameter(request.getParameterMap());
+
+
+		new Responsive(this);
 		setErrorHandler(new PathfinderErrorHandler());
 		Page.getCurrent().setTitle(
 				Translator.getInstance().translate(TranslationKeys.APP_TITLE));
@@ -52,7 +60,6 @@ public class PathfinderUI extends UI {
 		this.setUiLocale(request.getLocale());
 		this.printBrowserInfo(page, webBrowser, userAgent);
 		this.initDataloader();
-		this.setPrimaryStyleName("pathfinder");
 		this.buildLayout();
 	}
 
@@ -92,7 +99,6 @@ public class PathfinderUI extends UI {
 
 	private void initDataloader() {
 		DataLoaderSpec dataLoader = DataLoader.getInstance();
-		dataLoader.setDhbwEntryPoint(dhbwEntryPoint);
 	}
 
 	private void buildLayout() {
@@ -102,6 +108,7 @@ public class PathfinderUI extends UI {
 		// stelePresenter.getUiListener());
 
 		desktopPresenter = new StelePresenter();
+		desktopPresenter.setSteleLocation(steleLocation);
 		setContent(desktopPresenter.getSteleLayoutView());
 		addListenerToAllChildComponents((HasComponents) getContent(),
 				desktopPresenter.getUiListener());
@@ -139,5 +146,16 @@ public class PathfinderUI extends UI {
 			}
 			childComponent.addListener(listener);
 		}
+	}
+
+	private void readUrlParameter(Map<String, String[]> parameterMap) {
+		String[] parameterValue = parameterMap
+				.get(SteleLocation.STELE_LOCATION_URL_PARAMETER);
+
+		if (parameterValue != null && parameterValue.length > 0) {
+			this.steleLocation = SteleLocation
+					.getSteleLocation(parameterValue[0]);
+		}
+
 	}
 }
