@@ -526,6 +526,8 @@ public class StelePresenter implements StelePresenterSpec,
 		detailImage.removeImage();
 		if ((ResourceType.ROOM.toString()).equals(resource.getType())) {
 			for (Attribut attribut : resourceDetails.getItemIds()) {
+				// TODO The label name depends on the "Freiraum" interface,
+				// which isn´t implemented yet
 				if ("Raum".equals(attribut.getLabel())) {
 					LOGGER.info("Stele Location: " + steleLocation);
 					detailImage.setImage(steleLocation + attribut.getValue());
