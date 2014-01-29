@@ -48,9 +48,7 @@ public class PathfinderUI extends UI {
 	@Override
 	protected void init(VaadinRequest request) {
 
-
 		this.readUrlParameter(request.getParameterMap());
-
 
 		new Responsive(this);
 		setErrorHandler(new PathfinderErrorHandler());
