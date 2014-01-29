@@ -16,8 +16,6 @@ import de.vksi.c4j.Pure;
 public interface DataLoaderSpec {
 	void addDataListener(DataLoaderListenerSpec listener);
 
-	void setDhbwEntryPoint(String dhbwEntryPoint);
-
 	void reloadAllData();
 
 	@Pure
@@ -38,9 +36,6 @@ public interface DataLoaderSpec {
 
 	@Pure
 	BeanItemContainer<FreeRoomModel> getFreeResources();
-
-	@Pure
-	String getDhbwEntryPoint();
 
 	@Pure
 	BeanItemContainer<EventModel> getEvent(String resourceId, Date startDate,

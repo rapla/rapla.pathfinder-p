@@ -6,6 +6,7 @@ import static de.vksi.c4j.Condition.preCondition;
 
 import java.util.Locale;
 
+import com.pathfinder.model.SteleLocation;
 import com.vaadin.ui.AbstractLayout;
 import com.vaadin.ui.Component.Listener;
 
@@ -114,6 +115,19 @@ public class StelePresenterSpecContract implements StelePresenterSpec {
 	 */
 	@Override
 	public void languageChanged(Locale locale) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pathfinder.presenter.StelePresenterSpec#setSteleLocation(com.pathfinder
+	 * .model.SteleLocation)
+	 */
+	@Override
+	public void setSteleLocation(SteleLocation steleLocation) {
 		// TODO Auto-generated method stub
 
 	}

@@ -53,8 +53,6 @@ public class DataLoader implements DataLoaderSpec {
 	private final String BASE_URL = ApplicationProperties.getInstance()
 			.getProperty(PropertiesKey.RAPLA_BASE_URL);
 
-	private String dhbwEntryPoint = "";
-
 	private final String RESOURCES_METHOD = BASE_URL + "/getResources?";
 	private final String RESOURCE_DETAIL_METHOD = BASE_URL + "/getResource?";
 	private final String ORGANIGRAM_METHOD = BASE_URL + "/getOrganigram";
@@ -370,11 +368,6 @@ public class DataLoader implements DataLoaderSpec {
 	}
 
 	@Override
-	public void setDhbwEntryPoint(String dhbwEntryPoint) {
-		this.dhbwEntryPoint = dhbwEntryPoint;
-	}
-
-	@Override
 	public void reloadAllData() {
 		loadAllResources();
 
@@ -527,11 +520,6 @@ public class DataLoader implements DataLoaderSpec {
 
 		}
 		return attributList;
-	}
-
-	@Override
-	public String getDhbwEntryPoint() {
-		return this.dhbwEntryPoint;
 	}
 
 	public static DataLoader getInstance() {

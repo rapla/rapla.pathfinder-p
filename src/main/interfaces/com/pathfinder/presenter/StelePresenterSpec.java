@@ -2,6 +2,7 @@ package com.pathfinder.presenter;
 
 import java.util.Locale;
 
+import com.pathfinder.model.SteleLocation;
 import com.vaadin.ui.AbstractLayout;
 import com.vaadin.ui.Component.Listener;
 
@@ -10,6 +11,8 @@ import de.vksi.c4j.Pure;
 
 @ContractReference(StelePresenterSpecContract.class)
 public interface StelePresenterSpec {
+
+	void setSteleLocation(SteleLocation steleLocation);
 
 	void switchToSearchView();
 
