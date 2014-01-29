@@ -9,29 +9,114 @@
   /* TODO Can we already use Tune-Theme? */
   @include reindeer;
 	
+  
+  	// Globales Styling
 	* {
 		margin: 0;
 		padding: 0;
 	}
 	
-	.v-ui[width-range~="1080px-1080px"] {
-		background-image: url('img/background.png') !important;
+	.v-ui{
 		background-color: #FFF !important;
 	
-		.stele {			
-			width: 100% !important;
-			overflow: hidden !important;
-			height: 100%;
+		.stele{
 			padding-left: 3%;
 			padding-right: 3%;
-	        
-	        -webkit-touch-callout: none;
-	        -webkit-user-select: none;
+		
+			-webkit-user-select: none;
 	        -khtml-user-select: none;
 	        -moz-user-select: none;
 	        -ms-user-select: none;
 	        -o-user-select: none;
 	        user-select: none;
+			
+		
+			// Global Table Styling
+			.global-table {
+				
+				.v-table-header {
+					background-color: #393939;
+		   			color: #FFF;
+				}
+				
+				.v-scrollable.v-table-body-wrapper.v-table-body {
+					background-color: #E0E0E0;
+				}
+			}
+			
+			.v-scrollable.v-table-body-wrapper.v-table-body {
+				border: none !important;
+			}
+			
+			// Table Row Styling
+			.v-table-row-result-row{
+				display: block;
+			
+				.v-table-cell-content-result-row {
+					background-color: #767676;
+			       
+			       	.v-table-cell-wrapper {
+						color: #cccccc; 
+					}
+				}
+			}
+			
+			// Ressource Accordion Styling
+			.resource-accordion-item-caption {
+				background-color: #393939;
+				
+				.v-caption {
+					color: #cccccc;
+				}
+			}
+			
+			.button-up, .button-down {
+				background-color: #797979;
+			}
+			
+			.button-down{ 
+			
+				.v-icon{
+					moz-transform:rotate(180deg);
+					-webkit-transform:rotate(180deg); 
+					-o-transform:rotate(180deg);
+					-ms-transform:rotate(180deg);
+					transform:rotate(180deg);
+				}
+			}
+			
+			/* Search Field Styling */
+			
+			.search {
+				background-color: #e2001b;
+				
+				.v-slot {
+					display: block;
+					
+					.searchfield {
+						background-color: #FFFFFF;
+						border: 3px solid #e2001b;
+					}
+					
+					.searchfield-prompt {
+						color: #666666;
+					}
+				}
+			}
+		}
+	}
+	
+	
+	// Stele spezifisches Styling
+	.v-ui[width-range~="1080px-1080px"] {
+		background-image: url('img/background.png') !important;
+		
+		.stele {			
+			width: 100% !important;
+			overflow: hidden !important;
+			height: 100%;
+	        
+	        -webkit-touch-callout: none;
 	
 			.search {
 				margin-top: 4em;
@@ -69,52 +154,35 @@
 				}
 				
 				.v-table-header {
-					background-color: #393939;
 					height: 40px;
-			   		color: #FFF;
 			   		font: 1.65em Arial;
 			   		width: auto;
 				}
-				
-				.v-scrollable.v-table-body-wrapper.v-table-body {
-					background-color: #E0E0E0;
-				}
 			}
 			
-			.v-scrollable.v-table-body-wrapper.v-table-body {
-				border: none !important;
-			}
+			
 			
 			//Table Row Styling
 			.v-table-row-result-row{
 				margin-top: 2px;
-				display: block;
 			
 				.v-table-cell-content-result-row {
 					height: 40px;
-					background-color: #767676;
 					padding-left: 30px;
 			       
 			       	.v-table-cell-wrapper {
-						color: #cccccc; 
 						font: 20px Arial;
 					}
 				}
 			}
 			
-			/* Resource Accordion styling */
-			
-			.resource-accordion{
-				
-			}
+			/* Resource Accordion styling*/
 			
 			.resource-accordion-item-caption {
 				height: 40px;
-				background-color: #393939;
 				margin-top: 3px;
 				
 				.v-caption {
-					color: #cccccc;
 					font: 1.65em Arial;
 					padding-top: 0.2%;
 				}
@@ -130,7 +198,6 @@
 				height: 6em;
 				width: 6em;
 				padding: 2em 1.4em;
-				background-color: #797979;
 				
 				.v-icon{
 					width: 3em;
@@ -140,14 +207,6 @@
 			
 			.button-down{ 
 				margin-top: 16em;
-			
-				.v-icon{
-					moz-transform:rotate(180deg);
-					-webkit-transform:rotate(180deg); 
-					-o-transform:rotate(180deg);
-					-ms-transform:rotate(180deg);
-					transform:rotate(180deg);
-				}
 			}
 			
 			//Freeroom Styling
@@ -160,52 +219,6 @@
 		    	}
 		    }
 			
-			/* MenuBar Styling */
-			
-			.menuBar{
-				.v-gridlayout {
-					.languageButton {
-						background: #797979;
-						height: 60px;
-					}
-					
-					.wheelChairButton {
-						margin-right: 2em;
-					}
-					
-					.homeButton {
-						margin-right: 2em;
-					}
-					
-					.v-gridlayout-slot {
-						.image-footer{
-							padding-top: 60px;
-						}
-					}
-				}
-			}
-		    
-		    .flagImage, .v-icon {
-				height: 5em;
-			}	
-			
-			.flagImage {
-				width: 7.5em;
-				margin: 0.2em;
-			}
-			
-			.v-popupview-popup {
-				background-color: #767676;
-			}
-			
-			.v-popupbutton .v-popup-indicator {
-				background-image: url('icon/dropup_icon.png') !important;
-				background-size: 20px Auto;
-				width: 60px;
-				height:60px;
-				background-position:20px 50%;
-			}
-			
 			/* Detail image styling */
 			
 			.detailImage{
@@ -217,17 +230,13 @@
 			
 			.search {
 				width: 100%;
-				background-color: #e2001b;
 				
 				.v-slot {
-					display: block;
 					
 					.searchfield {
 						float:left;
 						width:94%;
 						height: 60px;
-						background-color: #FFFFFF;
-						border: 3px solid #e2001b;
 						font: 1.65em Arial;
 					}
 					
@@ -242,9 +251,74 @@
 							padding-top: 20%;
 						}
 					}
+				}
+			}
+			
+			.keyboard-row {
+				overflow: hidden;
+				display: block;
+				float: left;
+				width : 100%;
+				margin-left: 0.2%;
+				
+				.v-slot {
+					display: block;
+				
+					.keyboard-button {
+						float: left;
+						height: 7em;
+						width: 8.13%;
+						margin-top: 4px;
+						margin-right: 0.2%;
+						background-image: -webkit-linear-gradient(top, #666666 0%, #494949 100%);
+						background-image: -moz-linear-gradient(top, #666666 0%, #494949 100%);
+						background-image: -ms-linear-gradient(top, #666666 0%, #494949 100%);
+						
+						.keyboard-button-caption {
+							padding-left: 45%;
+							padding-top: 35%;
+							color: #FFFFFF;
+							font: 1.65em Arial;
+							display: block;
+						}
+					}
 					
-					.searchfield-prompt {
-						color: #666666;
+					.keyboard-delete {
+						float: left;
+						height: 7em;
+						width: 16.4%;
+						margin-top: 4px;
+						margin-right: 0.2%;
+						background-image: -webkit-linear-gradient(top, #666666 0%, #494949 100%);
+						background-image: -moz-linear-gradient(top, #666666 0%, #494949 100%);
+						background-image: -ms-linear-gradient(top, #666666 0%, #494949 100%);
+						
+						.keyboard-delete-caption {
+							padding-left: 38%;
+							padding-top: 17%;
+							color: #FFFFFF;
+							font: 1.65em Arial;
+							display: block;
+						}
+					}
+					
+					.keyboard-space {
+						float: left;
+						height: 7em;
+						width: 41.4%;
+						margin-top: 4px;
+						margin-right: 0.2%;
+						background-image: -webkit-linear-gradient(top, #666666 0%, #494949 100%);
+						background-image: -moz-linear-gradient(top, #666666 0%, #494949 100%);
+						background-image: -ms-linear-gradient(top, #666666 0%, #494949 100%);
+						
+						.keyboard-space-caption {
+							padding-left: 43%;
+							padding-top: 7%;
+							color: #FFFFFF;
+							font: 1.65em Arial;
+							display: block;
+						}
 					}
 				}
 			}
@@ -277,72 +351,53 @@
 	
 	/* Keyboard Styling */
 	
-	.keyboard-row {
-		overflow: hidden;
-		display: block;
-		float: left;
-		width : 100%;
-		margin-left: 0.2%;
-		
-		.v-slot {
-			display: block;
-		
-			.keyboard-button {
-				float: left;
-				height: 7em;
-				width: 8.13%;
-				margin-top: 4px;
-				margin-right: 0.2%;
-				background-image: -webkit-linear-gradient(top, #666666 0%, #494949 100%);
-				background-image: -moz-linear-gradient(top, #666666 0%, #494949 100%);
-				background-image: -ms-linear-gradient(top, #666666 0%, #494949 100%);
-				
-				.keyboard-button-caption {
-					padding-left: 45%;
-					padding-top: 35%;
-					color: #FFFFFF;
-					font: 1.65em Arial;
-					display: block;
-				}
+	
+	
+	/* MenuBar Styling */
+	
+	.menuBar{
+		.v-gridlayout {
+			.languageButton {
+				background: #797979;
+				height: 60px;
 			}
 			
-			.keyboard-delete {
-				float: left;
-				height: 7em;
-				width: 16.4%;
-				margin-top: 4px;
-				margin-right: 0.2%;
-				background-image: -webkit-linear-gradient(top, #666666 0%, #494949 100%);
-				background-image: -moz-linear-gradient(top, #666666 0%, #494949 100%);
-				background-image: -ms-linear-gradient(top, #666666 0%, #494949 100%);
-				
-				.keyboard-delete-caption {
-					padding-left: 38%;
-					padding-top: 17%;
-					color: #FFFFFF;
-					font: 1.65em Arial;
-					display: block;
-				}
+			.wheelChairButton {
+				margin-right: 2em;
 			}
 			
-			.keyboard-space {
-				float: left;
-				height: 7em;
-				width: 41.4%;
-				margin-top: 4px;
-				margin-right: 0.2%;
-				background-image: -webkit-linear-gradient(top, #666666 0%, #494949 100%);
-				background-image: -moz-linear-gradient(top, #666666 0%, #494949 100%);
-				background-image: -ms-linear-gradient(top, #666666 0%, #494949 100%);
-				
-				.keyboard-space-caption {
-					padding-left: 43%;
-					padding-top: 7%;
-					color: #FFFFFF;
-					font: 1.65em Arial;
-					display: block;
+			.homeButton {
+				margin-right: 2em;
+			}
+			
+			.v-gridlayout-slot {
+				.image-footer{
+					padding-top: 60px;
 				}
 			}
 		}
+	}
+	
+	//Flaggen Styling
+    
+    .flagImage, .v-icon {
+		height: 5em;
+	}	
+	
+	.flagImage {
+		width: 7.5em;
+		margin: 0.2em;
+	}
+	
+	.v-popupview-popup {
+		background-color: #767676;
+	}
+	
+	.v-popupbutton .v-popup-indicator {
+		background-image: url('icon/dropup_icon.png') !important;
+		background-size: 20px Auto;
+		width: 60px;
+		height:60px;
+		background-position:20px 50%;
 	}
 }
