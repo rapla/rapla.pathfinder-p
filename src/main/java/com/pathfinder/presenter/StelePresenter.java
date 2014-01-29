@@ -16,6 +16,7 @@ import com.pathfinder.model.FreeRoomModel;
 import com.pathfinder.model.KeyboardModel;
 import com.pathfinder.model.ResourceModel;
 import com.pathfinder.model.ResourceModel.ResourceType;
+import com.pathfinder.model.SessionLoggingModel;
 import com.pathfinder.model.SteleLocation;
 import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.ApplicationPropertiesSpec;
@@ -46,7 +47,6 @@ import com.pathfinder.view.MenuBarSpec;
 import com.pathfinder.view.SearchField;
 import com.pathfinder.view.SearchFieldSpec;
 import com.pathfinder.view.TranslatabelSpec;
-import com.vaadin.addon.responsive.Responsive;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
@@ -111,6 +111,7 @@ public class StelePresenter implements StelePresenterSpec,
 	private BeanItemContainer<EventModel> resourceEvents = null;
 	private CalendarModel calendarModel = new CalendarModel();
 	private SteleLocation steleLocation = SteleLocation.MIDDLE;
+	private SessionLoggingModel sessionLoggingModel = new SessionLoggingModel();
 
 	private Listener uiListener = null;
 
@@ -220,6 +221,8 @@ public class StelePresenter implements StelePresenterSpec,
 				resource.setName(freeResource.getName());
 				resource.setType(ResourceType.ROOM.toString());
 			}
+
+			sessionLoggingModel.getClickedResources().add(resource);
 
 			prepareDetailView();
 		}
@@ -408,6 +411,8 @@ public class StelePresenter implements StelePresenterSpec,
 							|| event instanceof com.vaadin.event.MouseEvents.ClickEvent
 							|| event instanceof ForwardEvent
 							|| event instanceof BackwardEvent) {
+						if (sessionLoggingModel.isBeginningOfSession())
+							sessionLoggingModel.setStartTime(new Date());
 						lastUserInteractionTimestamp = new Date().getTime();
 						wentBackToHomeScreen = false;
 						if (event.getComponent() != null)
@@ -475,6 +480,10 @@ public class StelePresenter implements StelePresenterSpec,
 		switchToSearchView();
 		clearSearchString();
 		languageChanged(VaadinSession.getCurrent().getLocale());
+		sessionLoggingModel.setEndTime(new Date(lastUserInteractionTimestamp
+				- goBackHomeIntervall));
+		// TODO: Send Session details to Rapla for logging
+		LOGGER.info("Details of Session: " + sessionLoggingModel);
 	}
 
 	@Override
@@ -606,6 +615,7 @@ public class StelePresenter implements StelePresenterSpec,
 	}
 
 	public void clearSearchString() {
+		sessionLoggingModel.getSearchStrings().add(getSearchString());
 		this.setSearchString("");
 	}
 
@@ -688,5 +698,10 @@ public class StelePresenter implements StelePresenterSpec,
 	public void setSteleLocation(SteleLocation steleLocation) {
 		if (steleLocation != null)
 			this.steleLocation = steleLocation;
+	}
+
+	@Override
+	public void setUserAgent(String userAgent) {
+		this.sessionLoggingModel.setDevice(userAgent);
 	}
 }

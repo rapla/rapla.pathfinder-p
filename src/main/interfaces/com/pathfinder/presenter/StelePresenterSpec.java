@@ -14,6 +14,8 @@ public interface StelePresenterSpec {
 
 	void setSteleLocation(SteleLocation steleLocation);
 
+	void setUserAgent(String userAgent);
+
 	void switchToSearchView();
 
 	void switchToDetailView();
