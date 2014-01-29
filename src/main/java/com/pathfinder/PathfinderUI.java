@@ -7,7 +7,7 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.pathfinder.model.SteleLocation;
+import com.pathfinder.model.Device;
 import com.pathfinder.presenter.DataLoader;
 import com.pathfinder.presenter.DataLoaderSpec;
 import com.pathfinder.presenter.MobilePresenterSpec;
@@ -37,13 +37,12 @@ public class PathfinderUI extends UI {
 			.getLogger(PathfinderUI.class.getName());
 
 	private StelePresenterSpec stelePresenter = null;
-	private StelePresenterSpec desktopPresenter = null;
 	private MobilePresenterSpec mobilePresenter = null;
 
 	private Page page = null;
 	private WebBrowser webBrowser = null;
 	private String userAgent = "";
-	private SteleLocation steleLocation;
+	private Device device = Device.UNDEFINED;
 
 	@Override
 	protected void init(VaadinRequest request) {
@@ -105,12 +104,26 @@ public class PathfinderUI extends UI {
 		// addListenerToAllChildComponents((HasComponents) getContent(),
 		// stelePresenter.getUiListener());
 
-		desktopPresenter = new StelePresenter();
-		desktopPresenter.setSteleLocation(steleLocation);
-		desktopPresenter.setUserAgent(userAgent);
-		setContent(desktopPresenter.getSteleLayoutView());
-		addListenerToAllChildComponents((HasComponents) getContent(),
-				desktopPresenter.getUiListener());
+		switch (device) {
+		case UNDEFINED:
+			// TODO: Check if mobile or not and build appropriate layout
+			buildSteleLayout();
+			break;
+
+		case STELE_LEFT:
+		case STELE_MIDDLE:
+		case STELE_RIGHT:
+			buildSteleLayout();
+			break;
+
+		case MOBILE:
+			// TODO buildMobileLayout()
+			break;
+
+		case DESKTOP:
+			// TODO buildDesktopLayout
+			break;
+		}
 
 		// TODO
 		// LOGGER.trace("Desktop application initialized");
@@ -125,6 +138,16 @@ public class PathfinderUI extends UI {
 		// addClickListener(desktopPresenter.getUiClickListener());
 		// LOGGER.trace("Desktop application initialized");
 		// }
+	}
+
+	private void buildSteleLayout() {
+
+		stelePresenter = new StelePresenter();
+		stelePresenter.setDevice(device);
+		stelePresenter.setUserAgent(userAgent);
+		setContent(stelePresenter.getSteleLayoutView());
+		addListenerToAllChildComponents((HasComponents) getContent(),
+				stelePresenter.getUiListener());
 	}
 
 	/**
@@ -149,11 +172,10 @@ public class PathfinderUI extends UI {
 
 	private void readUrlParameter(Map<String, String[]> parameterMap) {
 		String[] parameterValue = parameterMap
-				.get(SteleLocation.STELE_LOCATION_URL_PARAMETER);
+				.get(Device.DEVICE_URL_PARAMETER_NAME);
 
 		if (parameterValue != null && parameterValue.length > 0) {
-			this.steleLocation = SteleLocation
-					.getSteleLocation(parameterValue[0]);
+			this.device = Device.getDevice(parameterValue[0]);
 		}
 
 	}

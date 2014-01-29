@@ -42,7 +42,6 @@ public class SessionLoggingModel {
 	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
 		this.beginningOfSession = false;
-		clearValues();
 	}
 
 	public Date getEndTime() {
@@ -58,7 +57,7 @@ public class SessionLoggingModel {
 		return beginningOfSession;
 	}
 
-	private void clearValues() {
+	public void clearValues() {
 		this.searchStrings.clear();
 		this.clickedResources.clear();
 	}

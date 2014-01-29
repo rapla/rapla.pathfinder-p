@@ -235,19 +235,9 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 	public void useFiltersForAllTables(String filterString) {
 		/* Filter lists */
 		List<Filter> tableFilters = new ArrayList<Filter>();
-		// List<Filter> roomFilters = new ArrayList<Filter>();
-		// List<Filter> courseFilters = new ArrayList<Filter>();
-		// List<Filter> personFilters = new ArrayList<Filter>();
-		// List<Filter> poiFilters = new ArrayList<Filter>();
 
 		/* Create the filters */
 		tableFilters = createFiltersForAllPropertyIds(filterString);
-		// roomFilters = this.createFilters(visibleTableColumns, filterString);
-		// courseFilters = this.createFilters(visibleTableColumns,
-		// filterString);
-		// personFilters = this.createFilters(visibleTableColumns,
-		// filterString);
-		// poiFilters = this.createFilters(visibleTableColumns, filterString);
 
 		/* Remove the old filters */
 		this.removeAllFiltersFromContainers();
@@ -258,8 +248,11 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 		this.addFiltersToTables(tableFilters, personContainer);
 		this.addFiltersToTables(tableFilters, poiContainer);
 
-		// Update table captions
+		/* Update table captions */
 		this.updateTableCaptions();
+
+		/* Jumps to the right accordion tab */
+		this.avoidEmptyTab();
 	}
 
 	private List<Filter> createFiltersForAllPropertyIds(String filterString) {
@@ -287,11 +280,6 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 			BeanItemContainer<T> beanItemContainer) {
 		beanItemContainer.addContainerFilter(new Or(filters
 				.toArray(new Filter[] {})));
-	}
-
-	@Override
-	public void deselectClickedItem(Table table, Object itemId) {
-		table.unselect(itemId);
 	}
 
 	@Override
@@ -346,6 +334,18 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 				translator.translate(TranslationKeys.POI) + " ["
 						+ this.getPoiTableLength() + "]");
 		accordion.getTab(3).setCaption(accordionCaptionPois);
+	}
+
+	private void avoidEmptyTab() {
+		if (this.getRoomTableLength() > 0) {
+			this.accordion.setSelectedTab(0);
+		} else if (this.getCourseTableLength() > 0) {
+			this.accordion.setSelectedTab(1);
+		} else if (this.getPersonTableLength() > 0) {
+			this.accordion.setSelectedTab(2);
+		} else if (this.getPoiTableLength() > 0) {
+			this.accordion.setSelectedTab(3);
+		}
 	}
 
 	private int getRoomTableLength() {
