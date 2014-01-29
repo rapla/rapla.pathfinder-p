@@ -132,4 +132,17 @@ public class StelePresenterSpecContract implements StelePresenterSpec {
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.pathfinder.presenter.StelePresenterSpec#setUserAgent(java.lang.String
+	 * )
+	 */
+	@Override
+	public void setUserAgent(String userAgent) {
+		// TODO Auto-generated method stub
+
+	}
+
 }
