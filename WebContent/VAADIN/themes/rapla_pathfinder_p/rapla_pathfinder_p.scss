@@ -212,19 +212,19 @@
 	}
 	
 	.button-up, .button-down {
-		height: 8em;
-		width: 8em;
-		padding: 1.5em 1em;
+		height: 6em;
+		width: 6em;
+		padding: 2em 1.4em;
 		background-color: #797979;
 		
 		.v-icon{
-			width:6em;
-			height: 5em;
+			width: 3em;
+			height: 2em;
 		}
 	}
 	
 	.button-down{ 
-		margin-top: 12em;
+		margin-top: 16em;
 	
 		.v-icon{
 			moz-transform:rotate(180deg);
