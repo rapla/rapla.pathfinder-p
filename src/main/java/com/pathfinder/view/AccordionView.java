@@ -235,7 +235,7 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 	public void useFiltersForAllTables(String filterString) {
 		/* Filter lists */
 		List<Filter> tableFilters = new ArrayList<Filter>();
-		
+
 		/* Create the filters */
 		tableFilters = createFiltersForAllPropertyIds(filterString);
 
@@ -248,10 +248,10 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 		this.addFiltersToTables(tableFilters, personContainer);
 		this.addFiltersToTables(tableFilters, poiContainer);
 
-		// Update table captions
+		/* Update table captions */
 		this.updateTableCaptions();
 
-		// Jumps to the right accordion tab
+		/* Jumps to the right accordion tab */
 		this.avoidEmptyTab();
 	}
 
