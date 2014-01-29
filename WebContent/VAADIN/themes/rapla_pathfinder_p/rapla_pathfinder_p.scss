@@ -59,62 +59,221 @@
 				font-size: 30px; 
 				line-height: 30px; 
 			}
-		}
-	}
-	
-	/* Global stylings */
-	
-	/* Caption styling */
-	
-	
-	
-	/* Table styling */
-	
-	.global-table {
-		.v-table-header-wrap, .v-table-header-cell, .v-table-resizer
-		{
-			height: 40px;	
-		}
-		
-		.v-table-header {
-			background-color: #393939;
-			height: 40px;
-	   		color: #FFF;
-	   		font: 1.65em Arial;
-	   		width: auto;
-		}
-		
-		.v-scrollable.v-table-body-wrapper.v-table-body {
-			background-color: #E0E0E0;
-		}
-	}
-	
-	.v-scrollable.v-table-body-wrapper.v-table-body {
-		border: none !important;
-	}
-	
-	
-	
-
-	 /* Table row styling */
-    
-	.v-table-row-result-row{
-		margin-top: 2px;
-		display: block;
-	
-		.v-table-cell-content-result-row {
-			height: 40px;
-			background-color: #767676;
-			padding-left: 30px;
-	       
-	       	.v-table-cell-wrapper {
-				color: #cccccc; 
-				font: 20px Arial;
+			
+			//Table Styling
+			
+			.global-table {
+				.v-table-header-wrap, .v-table-header-cell, .v-table-resizer
+				{
+					height: 40px;	
+				}
+				
+				.v-table-header {
+					background-color: #393939;
+					height: 40px;
+			   		color: #FFF;
+			   		font: 1.65em Arial;
+			   		width: auto;
+				}
+				
+				.v-scrollable.v-table-body-wrapper.v-table-body {
+					background-color: #E0E0E0;
+				}
+			}
+			
+			.v-scrollable.v-table-body-wrapper.v-table-body {
+				border: none !important;
+			}
+			
+			//Table Row Styling
+			.v-table-row-result-row{
+				margin-top: 2px;
+				display: block;
+			
+				.v-table-cell-content-result-row {
+					height: 40px;
+					background-color: #767676;
+					padding-left: 30px;
+			       
+			       	.v-table-cell-wrapper {
+						color: #cccccc; 
+						font: 20px Arial;
+					}
+				}
+			}
+			
+			/* Resource Accordion styling */
+			
+			.resource-accordion{
+				
+			}
+			
+			.resource-accordion-item-caption {
+				height: 40px;
+				background-color: #393939;
+				margin-top: 3px;
+				
+				.v-caption {
+					color: #cccccc;
+					font: 1.65em Arial;
+					padding-top: 0.2%;
+				}
+				
+				img {
+					width: 30px;
+					height: 30px;
+					padding-left: 0.3%;
+				}
+			}
+			
+			.button-up, .button-down {
+				height: 6em;
+				width: 6em;
+				padding: 2em 1.4em;
+				background-color: #797979;
+				
+				.v-icon{
+					width: 3em;
+					height: 2em;
+				}
+			}
+			
+			.button-down{ 
+				margin-top: 16em;
+			
+				.v-icon{
+					moz-transform:rotate(180deg);
+					-webkit-transform:rotate(180deg); 
+					-o-transform:rotate(180deg);
+					-ms-transform:rotate(180deg);
+					transform:rotate(180deg);
+				}
+			}
+			
+			//Freeroom Styling
+			.freeroom{
+		    	margin-top: 7em;
+		    	margin-bottom: 7em;
+		    	
+		    	.v-label{
+		    		font: 20px Arial;
+		    	}
+		    }
+			
+			/* MenuBar Styling */
+			
+			.menuBar{
+				.v-gridlayout {
+					.languageButton {
+						background: #797979;
+						height: 60px;
+					}
+					
+					.wheelChairButton {
+						margin-right: 2em;
+					}
+					
+					.homeButton {
+						margin-right: 2em;
+					}
+					
+					.v-gridlayout-slot {
+						.image-footer{
+							padding-top: 60px;
+						}
+					}
+				}
+			}
+		    
+		    .flagImage, .v-icon {
+				height: 5em;
+			}	
+			
+			.flagImage {
+				width: 7.5em;
+				margin: 0.2em;
+			}
+			
+			.v-popupview-popup {
+				background-color: #767676;
+			}
+			
+			.v-popupbutton .v-popup-indicator {
+				background-image: url('icon/dropup_icon.png') !important;
+				background-size: 20px Auto;
+				width: 60px;
+				height:60px;
+				background-position:20px 50%;
+			}
+			
+			/* Detail image styling */
+			
+			.detailImage{
+				/* Immer gleiche/richtige Bildproportionen? */
+				max-height: 700px;
+			}
+			
+			/* Search Field Styling */
+			
+			.search {
+				width: 100%;
+				background-color: #e2001b;
+				
+				.v-slot {
+					display: block;
+					
+					.searchfield {
+						float:left;
+						width:94%;
+						height: 60px;
+						background-color: #FFFFFF;
+						border: 3px solid #e2001b;
+						font: 1.65em Arial;
+					}
+					
+					.delete-icon {
+						float:left;
+						width: 6%;
+						
+						img {
+							height:2.8em;
+							width:2.8em;
+							padding-left: 22%;
+							padding-top: 20%;
+						}
+					}
+					
+					.searchfield-prompt {
+						color: #666666;
+					}
+				}
 			}
 		}
 	}
 	
 	/* Individual stele styling */
+	
+	/* Datetime Styling */
+	
+	.datetime{
+		font-size: 30px;
+		color: red;
+		width: 100%;
+		position: relative;
+		top: 0%;
+		margin-top: 1%;
+	}
+	
+	.dateLabel{
+		display: inline;
+	}
+	
+	.timeLabel {
+		display: inline;
+		text-align: right;
+		float: right;
+		color: #FFF;
+	}
 	
 	/* Keyboard Styling */
 	
@@ -185,177 +344,5 @@
 				}
 			}
 		}
-	}
-    
-    /* Resource Accordion styling */
-	
-	.resource-accordion{
-		margin-top: 7em;
-	}
-	
-	.resource-accordion-item-caption {
-		height: 40px;
-		background-color: #393939;
-		margin-top: 3px;
-		
-		.v-caption {
-			color: #cccccc;
-			font: 1.65em Arial;
-			padding-top: 0.2%;
-		}
-		
-		img {
-			width: 30px;
-			height: 30px;
-			padding-left: 0.3%;
-		}
-	}
-	
-	.button-up, .button-down {
-		height: 6em;
-		width: 6em;
-		padding: 2em 1.4em;
-		background-color: #797979;
-		
-		.v-icon{
-			width: 3em;
-			height: 2em;
-		}
-	}
-	
-	.button-down{ 
-		margin-top: 16em;
-	
-		.v-icon{
-			moz-transform:rotate(180deg);
-			-webkit-transform:rotate(180deg); 
-			-o-transform:rotate(180deg);
-			-ms-transform:rotate(180deg);
-			transform:rotate(180deg);
-		}
-	}
-	
-	
-    
-    /* FreeRooms Styling */
-    
-    .freeroom{
-    	margin-top: 7em;
-    	
-    	.v-label{
-    		font: 20px Arial;
-    	}
-    }
-	
-	/* Datetime Styling */
-	
-	.datetime{
-		font-size: 30px;
-		color: red;
-		width: 100%;
-		position: relative;
-		top: 0%;
-		margin-top: 1%;
-	}
-	
-	.dateLabel{
-		display: inline;
-	}
-	
-	.timeLabel {
-		display: inline;
-		float: right;
-		color: #FFF;
-	}
-	
-	/* Detail image styling */
-	
-	.detailImage{
-		/* Immer gleiche/richtige Bildproportionen? */
-		max-height: 700px;
-	}
-	
-	/* Individual styling */
-	
-	/* Search Field Styling */
-	
-	.search {
-		width: 100%;
-		background-color: #e2001b;
-		
-		.v-slot {
-			display: block;
-			
-			.searchfield {
-				float:left;
-				width:94%;
-				height: 60px;
-				background-color: #FFFFFF;
-				border: 3px solid #e2001b;
-				font: 1.65em Arial;
-			}
-			
-			.delete-icon {
-				float:left;
-				width: 6%;
-				
-				img {
-					height:2.8em;
-					width:2.8em;
-					padding-left: 22%;
-					padding-top: 20%;
-				}
-			}
-			
-			.searchfield-prompt {
-				color: #666666;
-			}
-		}
-	}
-	
-	/* MenuBar Styling */
-	
-	.menuBar{
-		.v-gridlayout {
-			.languageButton {
-				background: #797979;
-				height: 60px;
-			}
-			
-			.wheelChairButton {
-				margin-right: 2em;
-			}
-			
-			.homeButton {
-				margin-right: 2em;
-			}
-			
-			.v-gridlayout-slot {
-				.image-footer{
-					padding-top: 60px;
-				}
-			}
-		}
-	}
-    
-    .flagImage, .v-icon {
-		height: 5em;
-	}	
-	
-	.flagImage {
-		width: 7.5em;
-		margin: 0.2em;
-	}
-	
-	.v-popupview-popup {
-		background-color: #767676;
-	}
-	
-	.v-popupbutton .v-popup-indicator {
-		background-image: url('icon/dropup_icon.png') !important;
-		background-size: 20px Auto;
-		width: 60px;
-		height:60px;
-		background-position:20px 50%;
 	}
 }
