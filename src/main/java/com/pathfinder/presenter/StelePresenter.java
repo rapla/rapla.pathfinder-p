@@ -484,6 +484,7 @@ public class StelePresenter implements StelePresenterSpec,
 				- goBackHomeIntervall));
 		// TODO: Send Session details to Rapla for logging
 		LOGGER.info("Details of Session: " + sessionLoggingModel);
+		sessionLoggingModel.clearValues();
 	}
 
 	@Override
