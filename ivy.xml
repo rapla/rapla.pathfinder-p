@@ -47,10 +47,8 @@
 			rev="1.1.1" />
 
 		<!-- Log4J 2 -->
-		<dependency org="org.apache.logging.log4j" name="log4j-api"
-			rev="2.0-beta9" />
-		<dependency org="org.apache.logging.log4j" name="log4j-core"
-			rev="2.0-beta9" />
+		<dependency org="org.apache.logging.log4j" name="log4j-api" rev="2.0-rc1" />
+		<dependency org="org.apache.logging.log4j" name="log4j-core" rev="2.0-rc1" />
 
 		<!-- Responsive addon -->
 		<dependency org="com.vaadin.addon.responsive" name="responsive"
