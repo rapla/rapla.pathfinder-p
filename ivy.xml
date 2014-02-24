@@ -56,7 +56,7 @@
 			
 		<!-- Jackson -->	
 		<dependency org="com.fasterxml.jackson.core" name="jackson-databind" rev="2.3.1" />
-		<dependency org="com.fasterxml.jackson.core" name="jackson-annotations" rev="2.3.0" />
+		<dependency org="com.fasterxml.jackson.core" name="jackson-annotations" rev="2.3.1" />
 		<dependency org="com.fasterxml.jackson.core" name="jackson-core" rev="2.3.1" />
 
 		<!-- PopupButton -->
