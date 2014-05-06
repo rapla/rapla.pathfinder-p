@@ -13,7 +13,7 @@ public class DateTimeState extends com.vaadin.shared.AbstractComponentState {
 	/**
 	 * Server-Time in Milliseconds (value of last synchronisation)
 	 */
-	private long time;
+	private double time;
 
 	/**
 	 * Format of the Date
@@ -28,7 +28,7 @@ public class DateTimeState extends com.vaadin.shared.AbstractComponentState {
 	/**
 	 * @return the time
 	 */
-	public long getTime() {
+	public double getTime() {
 		return time;
 	}
 
@@ -36,7 +36,7 @@ public class DateTimeState extends com.vaadin.shared.AbstractComponentState {
 	 * @param time
 	 *            the time to set
 	 */
-	public void setTime(long time) {
+	public void setTime(double time) {
 		this.time = time;
 	}
 

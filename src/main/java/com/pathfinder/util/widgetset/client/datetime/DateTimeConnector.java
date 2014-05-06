@@ -36,7 +36,7 @@ public class DateTimeConnector extends AbstractComponentConnector {
 
 	private final static int CHECK_IF_TIME_TO_GO_HOME_INTERVALL = 5 * 1000;
 
-	private long timeOld = 0;
+	private double timeOld = 0;
 
 	public DateTimeConnector() {
 

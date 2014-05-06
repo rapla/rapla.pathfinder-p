@@ -15,9 +15,9 @@ import com.pathfinder.presenter.StelePresenter;
 import com.pathfinder.presenter.StelePresenterSpec;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
-import com.vaadin.addon.responsive.Responsive;
 import com.vaadin.annotations.Theme;
 import com.vaadin.server.Page;
+import com.vaadin.server.Responsive;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServletRequest;
 import com.vaadin.server.WebBrowser;
@@ -49,7 +49,8 @@ public class PathfinderUI extends UI {
 
 		this.readUrlParameter(request.getParameterMap());
 
-		new Responsive(this);
+		Responsive.makeResponsive(this);
+
 		setErrorHandler(new PathfinderErrorHandler());
 		Page.getCurrent().setTitle(
 				Translator.getInstance().translate(TranslationKeys.APP_TITLE));

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!DOCTYPE ivy-module [
-	<!ENTITY vaadin.version "7.2-SNAPSHOT">
+	<!ENTITY vaadin.version "7.2.0.beta1">
 ]>
 <ivy-module version="2.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -50,8 +50,10 @@
 		<dependency org="org.apache.logging.log4j" name="log4j-core" rev="2.0-rc1" />
 
 		<!-- Responsive addon -->
+		<!--
 		<dependency org="com.vaadin.addon.responsive" name="responsive"
 			rev="1.0.0.alpha4" />
+		-->
 			
 		<!-- Jackson -->	
 		<dependency org="com.fasterxml.jackson.core" name="jackson-databind" rev="2.3.2" />

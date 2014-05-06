@@ -21,7 +21,7 @@ public class DateTimeWidget extends FlowPanel {
 	public static final String STYLENAME_TIME_LABEL = "timeLabel";
 	private Timer timer;
 	private Date time = new Date();
-	private long timeInMs;
+	private double timeInMs;
 	private DateTimeFormat dateFormatter;
 	private DateTimeFormat timeFormatter;
 	private Label dateLabel = new Label();
@@ -62,7 +62,7 @@ public class DateTimeWidget extends FlowPanel {
 	 */
 	private void updateDateTime() {
 		timeInMs += 1000;
-		time.setTime(timeInMs);
+		time.setTime((long) timeInMs);
 		updateFormatter();
 	}
 
@@ -79,7 +79,7 @@ public class DateTimeWidget extends FlowPanel {
 	 * @param timeInMs
 	 *            time in Milliseconds
 	 */
-	public void setTime(long timeInMs) {
+	public void setTime(double timeInMs) {
 		this.timeInMs = timeInMs;
 	}
 
