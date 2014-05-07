@@ -27,7 +27,7 @@
 		<dependency org="com.vaadin" name="vaadin-push" rev="&vaadin.version;" />
 
 		<!-- Servlet 3.0 API -->
-		<dependency org="javax.servlet" name="javax.servlet-api" rev="3.0.1" conf="nodeploy->default" />
+		<dependency org="javax.servlet" name="javax.servlet-api" rev="3.1.0" conf="nodeploy->default" />
 
 		<!-- Precompiled DefaultWidgetSet -->
 		<dependency org="com.vaadin" name="vaadin-client-compiled"
@@ -48,17 +48,11 @@
 		<!-- Log4J 2 -->
 		<dependency org="org.apache.logging.log4j" name="log4j-api" rev="2.0-rc1" />
 		<dependency org="org.apache.logging.log4j" name="log4j-core" rev="2.0-rc1" />
-
-		<!-- Responsive addon -->
-		<!--
-		<dependency org="com.vaadin.addon.responsive" name="responsive"
-			rev="1.0.0.alpha4" />
-		-->
 			
 		<!-- Jackson -->	
-		<dependency org="com.fasterxml.jackson.core" name="jackson-databind" rev="2.3.2" />
-		<dependency org="com.fasterxml.jackson.core" name="jackson-annotations" rev="2.3.2" />
-		<dependency org="com.fasterxml.jackson.core" name="jackson-core" rev="2.3.2" />
+		<dependency org="com.fasterxml.jackson.core" name="jackson-databind" rev="2.3.3" />
+		<dependency org="com.fasterxml.jackson.core" name="jackson-annotations" rev="2.3.3" />
+		<dependency org="com.fasterxml.jackson.core" name="jackson-core" rev="2.3.3" />
 
 		<!-- PopupButton -->
 		<dependency org="org.vaadin.addons" name="popupbutton" rev="2.3.0" />
