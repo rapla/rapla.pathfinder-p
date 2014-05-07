@@ -4,7 +4,6 @@ import com.pathfinder.model.FreeRoomModel;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
-import com.pathfinder.view.FreeRoomViewSpec;
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
@@ -27,13 +26,13 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 	private final TranslatorSpec translator = Translator.getInstance();
 
 	private final CssLayout cssLayout = new CssLayout();
-	private final Label actualFreeRoomsLabel = new Label();
+	// private final Label actualFreeRoomsLabel = new Label();
 	private final BeanItemContainer<FreeRoomModel> freeRoomContainer = new BeanItemContainer<FreeRoomModel>(
 			FreeRoomModel.class);
 	private final Object[] visibleFreeRoomTableColumns = new String[] {
 			FreeRoomModel.PROPERTY_NAME, FreeRoomModel.PROPERTY_END };
 	private String[] headerFreeRoomTableCaptions = new String[] {
-			translator.translate(TranslationKeys.ROOM),
+			translator.translate(TranslationKeys.FREE_ROOM),
 			translator.translate(TranslationKeys.FREE_TILL) };
 	private final Table freeRoomTable = new Table();
 	private final Label noRoomsLabel = new Label(
@@ -101,9 +100,9 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 	}
 
 	private void buildLayout() {
-		actualFreeRoomsLabel.setCaption(translator
-				.translate(TranslationKeys.CURRENTLY_FREE_ROOMS));
-		cssLayout.addComponent(actualFreeRoomsLabel);
+		// actualFreeRoomsLabel.setCaption(translator
+		// .translate(TranslationKeys.CURRENTLY_FREE_ROOMS));
+		// cssLayout.addComponent(actualFreeRoomsLabel);
 		cssLayout.addComponent(freeRoomTable);
 		this.setSizeFull();
 		cssLayout.setSizeFull();
@@ -111,7 +110,7 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 
 	private void addStyling() {
 		cssLayout.setPrimaryStyleName("freeroom");
-		actualFreeRoomsLabel.addStyleName("big-caption");
+		// actualFreeRoomsLabel.addStyleName("big-caption");
 		freeRoomTable.addStyleName("global-table");
 	}
 
@@ -146,12 +145,12 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 	@Override
 	public void updateTranslations() {
 		headerFreeRoomTableCaptions = new String[] {
-				translator.translate(TranslationKeys.ROOM),
+				translator.translate(TranslationKeys.FREE_ROOM),
 				translator.translate(TranslationKeys.FREE_TILL) };
 		freeRoomTable.setColumnHeaders(headerFreeRoomTableCaptions);
 		this.freeRoomTable.markAsDirtyRecursive();
-		actualFreeRoomsLabel.setCaption(translator
-				.translate(TranslationKeys.CURRENTLY_FREE_ROOMS));
+		// actualFreeRoomsLabel.setCaption(translator
+		// .translate(TranslationKeys.CURRENTLY_FREE_ROOMS));
 	}
 
 	@Override
