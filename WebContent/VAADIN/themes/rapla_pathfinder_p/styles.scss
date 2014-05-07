@@ -1,11 +1,13 @@
 @import "addons.scss";
 @import "rapla_pathfinder_p.scss";
+@import "desktop.scss";
 
 /* This file prefixes all rules with the theme name to avoid causing conflicts with other themes. */
 /* The actual styles should be defined in rapla_pathfinder_p.scss */
 .rapla_pathfinder_p {
   @include addons;
   @include rapla_pathfinder_p;
+  @include desktop;
   
   
 }

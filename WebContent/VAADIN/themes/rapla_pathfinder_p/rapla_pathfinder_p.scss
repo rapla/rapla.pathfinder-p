@@ -1,7 +1,6 @@
 /* Import the reindeer theme.*/
 /* This only allows us to use the mixins defined in it and does not add any styles by itself. */
 @import "../reindeer/reindeer.scss";
-@import "../rapla_pathfinder_p/desktop.scss";
 
 /* This contains all of your theme.*/
 /* If somebody wants to extend the theme she will include this mixin. */
@@ -9,111 +8,6 @@
   /* Include all the styles from the reindeer theme */
   /* TODO Can we already use Tune-Theme? */
   @include reindeer;
-  @include desktop;
-	
-  
-  	// Globales Styling
-	* {
-		margin: 0;
-		padding: 0;
-	}
-	
-	.v-ui{
-		background-color: #FFF !important;
-	
-		.stele{
-			padding-left: 3%;
-			padding-right: 3%;
-		
-			-webkit-user-select: none;
-	        -khtml-user-select: none;
-	        -moz-user-select: none;
-	        -ms-user-select: none;
-	        -o-user-select: none;
-	        user-select: none;
-			
-		
-			//Keyboard Display
-			
-			.keyboard{
-				display: none;
-			}
-			
-			// Global Table Styling
-			.global-table {
-				
-				.v-table-header {
-					background-color: #393939;
-		   			color: #FFF;
-				}
-				
-				.v-scrollable.v-table-body-wrapper.v-table-body {
-					background-color: #E0E0E0;
-				}
-			}
-			
-			.v-scrollable.v-table-body-wrapper.v-table-body {
-				border: none !important;
-			}
-			
-			// Table Row Styling
-			.v-table-row-result-row{
-				display: block;
-			
-				.v-table-cell-content-result-row {
-					background-color: #767676;
-			       
-			       	.v-table-cell-wrapper {
-						color: #cccccc; 
-					}
-				}
-			}
-			
-			// Ressource Accordion Styling
-			.resource-accordion-item-caption {
-				background-color: #393939;
-				
-				.v-caption {
-					color: #cccccc;
-				}
-			}
-			
-			.button-up, .button-down {
-				background-color: #797979;
-			}
-			
-			.button-down{ 
-			
-				.v-icon{
-					moz-transform:rotate(180deg);
-					-webkit-transform:rotate(180deg); 
-					-o-transform:rotate(180deg);
-					-ms-transform:rotate(180deg);
-					transform:rotate(180deg);
-				}
-			}
-			
-			/* Search Field Styling */
-			
-			.search {
-				background-color: #e2001b;
-				
-				.v-slot {
-					display: block;
-					
-					.searchfield {
-						background-color: #FFFFFF;
-						border: 3px solid #e2001b;
-					}
-					
-					.searchfield-prompt {
-						color: #666666;
-					}
-				}
-			}
-		}
-	}
-	
 	
 	// Stele spezifisches Styling
 	.v-ui[width-range~="1080px-1080px"] {
@@ -123,18 +17,78 @@
 			width: 100% !important;
 			overflow: hidden !important;
 			height: 100%;
-	        
 	        -webkit-touch-callout: none;
-	
-			.search {
-				margin-top: 4em;
-				margin-bottom: 4em; 
+	        
+	        .datetime{
+	        	display: block;
+				font-size: 30px;
+				color: red;
+				width: 100%;
+				position: relative;
+				top: 0%;
+				margin-top: 1%;
 			}
+	
+			.dateLabel{
+				display: inline;
+				float: left;
+			}
+	
+			.timeLabel {
+				display: inline;
+				text-align: right;
+				float: right;
+				color: #FFF;
+			}
+	
 		
 			.menuBar {
 				position: fixed;
 				bottom: 4%;
 				width: 96% !important;
+				
+				.v-gridlayout {
+					.languageButton {
+						background: #797979;
+						height: 60px;
+					}
+			
+					.wheelChairButton {
+						display: block;
+						margin-right: 2em;
+					}
+			
+					.homeButton {
+						margin-right: 2em;
+					}
+			
+					.v-gridlayout-slot {
+						.image-footer{
+							padding-top: 60px;
+						}
+					}
+				}		
+			}
+			
+			.flagImage, .v-icon {
+				height: 5em;
+			}	
+	
+			.flagImage {
+				width: 7.5em;
+				margin: 0.2em;
+			}
+	
+			.v-popupview-popup {
+				background-color: #767676;
+			}
+	
+			.v-popupbutton .v-popup-indicator {
+				background-image: url('icon/dropup_icon.png') !important;
+				background-size: 20px Auto;
+				width: 60px;
+				height:60px;
+				background-position:20px 50%;
 			}
 		
 			.detailImage{
@@ -206,6 +160,7 @@
 			}
 			
 			.button-up, .button-down {
+				display: block;
 				height: 6em;
 				width: 6em;
 				padding: 2em 1.4em;
@@ -241,6 +196,8 @@
 			
 			.search {
 				width: 100%;
+				margin-top: 2%;
+				margin-bottom: 2%; 
 				
 				.v-slot {
 					
@@ -327,7 +284,7 @@
 							background-image: -ms-linear-gradient(top, #666666 0%, #494949 100%);
 						
 							.keyboard-space-caption {
-								padding-left: 43%;
+								padding-left: 41%;
 								padding-top: 7%;
 								color: #FFFFFF;
 								font: 1.65em Arial;
@@ -337,85 +294,6 @@
 					}
 				}
 			}
-		}
-	}
-	/* Individual stele styling */
-	
-	/* Datetime Styling */
-	
-	.datetime{
-		font-size: 30px;
-		color: red;
-		width: 100%;
-		position: relative;
-		top: 0%;
-		margin-top: 1%;
-	}
-	
-	.dateLabel{
-		display: inline;
-	}
-	
-	.timeLabel {
-		display: inline;
-		text-align: right;
-		float: right;
-		color: #FFF;
-	}	
-	
-	/* MenuBar Styling */
-	
-	.menuBar{
-		.v-gridlayout {
-			.languageButton {
-				background: #797979;
-				height: 60px;
-			}
-			
-			.wheelChairButton {
-				margin-right: 2em;
-			}
-			
-			.homeButton {
-				margin-right: 2em;
-			}
-			
-			.v-gridlayout-slot {
-				.image-footer{
-					padding-top: 60px;
-				}
-			}
-		}
-	}
-	
-	//Flaggen Styling
-    
-    .flagImage, .v-icon {
-		height: 5em;
-	}	
-	
-	.flagImage {
-		width: 7.5em;
-		margin: 0.2em;
-	}
-	
-	.v-popupview-popup {
-		background-color: #767676;
-	}
-	
-	.v-popupbutton .v-popup-indicator {
-		background-image: url('icon/dropup_icon.png') !important;
-		background-size: 20px Auto;
-		width: 60px;
-		height:60px;
-		background-position:20px 50%;
-	}
-	
-	
-	// Desktop Styling
-	.v-ui[width-range~="1081px-5000px"] {
-		.keyboard {
-			display: none;
 		}
 	}
 }
