@@ -59,8 +59,7 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 		layout.setSizeFull();
 		layout.setVisible(false);
 		layout.addComponent(image);
-		layout.setExpandRatio(detailInfoTable, 2);
-		layout.setExpandRatio(image, 1);
+		
 
 		detailInfoTable.setVisible(false);
 	}
@@ -84,14 +83,16 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 		for (Attribut attributeItem : resourceDetails.getItemIds()) {
 			if (!"resourceurl".equals(attributeItem.getKey()))
 				if (!"bild".equals(attributeItem.getKey())) {
+					layout.setExpandRatio(detailInfoTable, 1);
 					this.detailInfoTable.addItem(attributeItem);
 					length += 1;
 				}
 			if ("bild".equals(attributeItem.getKey())) {
+				layout.setExpandRatio(detailInfoTable, 4);
+				layout.setExpandRatio(image, 1);
 				ThemeResource tr = new ThemeResource(IMAGE_PATH
 						+ attributeItem.getValue() + IMAGE_ENDING);
 				image.setSource(tr);
-				image.setWidth(33, Unit.PERCENTAGE);
 				image.markAsDirty();
 
 			}

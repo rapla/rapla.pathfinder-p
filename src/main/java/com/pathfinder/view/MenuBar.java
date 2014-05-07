@@ -71,6 +71,7 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 		for (Locale locale : flagResources.keySet()) {
 			flagImage = new Image();
 			flagImage.setPrimaryStyleName(STYLE_CLASS_FLAG_IMAGE);
+			flagImage.setHeight(60, Unit.PIXELS);
 			flagImage.setSource(flagResources.get(locale));
 			flagImages.put(locale, flagImage);
 			popupLayout.addComponent(flagImage);

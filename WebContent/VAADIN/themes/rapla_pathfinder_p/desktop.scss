@@ -185,14 +185,14 @@
 					
 					.searchfield {
 						float:left;
-						width:94%;
+						width:96.5%;
 						height: 60px;
 						font: 1.65em Arial;
 					}
 					
 					.delete-icon {
 						float:left;
-						width: 6%;
+						width: 3.5%;
 						
 						img {
 							height:2.8em;
@@ -216,13 +216,12 @@
 				background-position:20px 50%;
 			}
 			
-			.flagImage, .v-icon {
+			.v-icon {
 				height: 5em;
-			}	
-	
-			.flagImage {
-				width: 7.5em;
-				margin: 0.2em;
+			}
+			
+			img.flagImage.v-widget{
+				height: 60px;
 			}
 			
 			.menuBar {
@@ -264,6 +263,39 @@
 				width: 60px;
 				height:60px;
 				background-position:20px 50%;
+			}
+		}
+		
+		// Detail View
+		
+		.v-slot.v-slot-detailImage{
+			width: 48% !important;
+			float: left;
+			clear: none;
+			margin-right: 3%;
+		
+			.detailImage {
+				box-shadow: 0px 0px 10px #808090;
+			}
+		}
+		
+		.v-slot.v-slot-detailEvents{
+			width: 48% !important;
+			clear: none;
+			float: left;
+			
+			.v-calendar-current-time{
+				width: 100% !important;
+			}
+		}
+		
+		.detailInfo {
+			margin-top: 2%;
+			margin-bottom: 2%;
+			
+			.v-table-row-result-row {
+				background-image: none;
+				width: 100%;
 			}
 		}
 	}
