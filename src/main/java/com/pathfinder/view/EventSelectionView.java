@@ -77,9 +77,8 @@ public class EventSelectionView extends MessageBox implements
 
 	@Override
 	public void updateTranslations() {
-		title = translator.translate(TranslationKeys.BACK);
-		cancelButton.setCaption(translator
-				.translate(TranslationKeys.SELECT_RESOURCE));
+		title = translator.translate(TranslationKeys.SELECT_RESOURCE);
+		cancelButton.setCaption(translator.translate(TranslationKeys.CLOSE));
 	}
 
 }

@@ -2,8 +2,10 @@ package com.pathfinder.view;
 
 import java.util.List;
 
-import com.pathfinder.model.Attribut;
+import org.jsoup.Jsoup;
+
 import com.pathfinder.model.AttributKey;
+import com.pathfinder.model.Attribute;
 import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.ApplicationPropertiesSpec;
 import com.pathfinder.util.properties.PropertiesKey;
@@ -25,10 +27,10 @@ import com.vaadin.ui.Table.ColumnHeaderMode;
  */
 public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 	private final Object[] visibleColumns = new String[] {
-			Attribut.PROPERTY_LABEL, Attribut.PROPERTY_VALUE };
+			Attribute.PROPERTY_LABEL, Attribute.PROPERTY_VALUE };
 	private final Table detailInfoTable = new Table();
-	private final BeanItemContainer<Attribut> attributeContainer = new BeanItemContainer<Attribut>(
-			Attribut.class);
+	private final BeanItemContainer<Attribute> attributeContainer = new BeanItemContainer<Attribute>(
+			Attribute.class);
 	private final ApplicationPropertiesSpec properties = ApplicationProperties
 			.getInstance();
 
@@ -38,6 +40,10 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 			+ properties.getProperty(PropertiesKey.DEFAULT_IMAGE_NAME);
 
 	private final HorizontalLayout layout = new HorizontalLayout();
+
+	private final static String DOTS = "...";
+
+	private final static int MAX_INFO_LENGTH = 25;
 
 	private Image image = new Image();
 
@@ -81,42 +87,79 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 	}
 
 	@Override
-	public void addDetails(BeanItemContainer<Attribut> resourceDetails) {
-		int length = 0;
-		List<Attribut> attributeItems = resourceDetails.getItemIds();
-		for (Attribut attributeItem : attributeItems) {
+	public void addDetails(BeanItemContainer<Attribute> resourceDetails) {
 
-			if (skipAttribute(attributeItem, attributeItems)) {
-				continue;
+		List<Attribute> attributeItems = resourceDetails.getItemIds();
+		for (Attribute attributeItem : attributeItems) {
+
+			boolean addToTable = false;
+
+			switch (attributeItem.getKey()) {
+			case RESOURCE_URL_KEY:
+				// skip
+				break;
+			case PICTURE_NAME_KEY:
+				setPicture(attributeItem.getValue());
+				break;
+			case INFO_KEY:
+				String htmlInformation = attributeItem.getValue();
+				attributeItem.setValue(removeHtmlAndCut(htmlInformation,
+						MAX_INFO_LENGTH));
+				attributeItem.setInformation(htmlInformation);
+				attributeItem.setPerson(getName(attributeItems));
+				addToTable = true;
+				break;
+			case ROOM_NR_KEY:
+				// skip, if ressource is a room
+				if (!isRoom(attributeItem, attributeItems))
+					addToTable = true;
+				break;
+			default:
+				addToTable = true;
+				break;
 			}
 
-			if (attributeItem.getKey() != AttributKey.PICTURE_NAME_KEY) {
+			if (addToTable)
 				this.detailInfoTable.addItem(attributeItem);
-				length += 1;
-				layout.setExpandRatio(detailInfoTable, 1);
-			} else {
-				ThemeResource tr = new ThemeResource(IMAGE_PATH
-						+ attributeItem.getValue() + IMAGE_ENDING);
-				image.setSource(tr);
-				image.markAsDirty();
-				image.setWidth(20, Unit.PERCENTAGE);
-				layout.setExpandRatio(detailInfoTable, 2);
-				layout.setExpandRatio(image, 1);
-			}
+
 		}
 
-		detailInfoTable.setPageLength(length);
+		layout.setExpandRatio(detailInfoTable, 1);
+		detailInfoTable.setPageLength(detailInfoTable.getItemIds().size());
 		detailInfoTable.setVisible(true);
 		layout.setVisible(true);
 	}
 
-	private boolean skipAttribute(Attribut attribut,
-			List<Attribut> attributeList) {
+	private String removeHtmlAndCut(String textToCut, int length) {
+		String withoutHtml = Jsoup.parse(textToCut).text();
+		length = Math.min(withoutHtml.length(), length);
+		return withoutHtml.substring(0, length) + DOTS;
+	}
+
+	private String getName(List<Attribute> attributeItems) {
+		String result = null;
+		for (Attribute attribute : attributeItems) {
+			if (attribute.getKey() == AttributKey.NAME_KEY) {
+				result = attribute.getValue();
+				break;
+			}
+		}
+		return result;
+	}
+
+	private void setPicture(String name) {
+		ThemeResource tr = new ThemeResource(IMAGE_PATH + name + IMAGE_ENDING);
+		image.setSource(tr);
+		image.markAsDirty();
+		image.setWidth(20, Unit.PERCENTAGE);
+		layout.setExpandRatio(detailInfoTable, 2);
+		layout.setExpandRatio(image, 1);
+	}
+
+	private boolean isRoom(Attribute attribut, List<Attribute> attributeList) {
 		boolean result = false;
-		if (attribut.getKey() == AttributKey.RESOURCE_URL_KEY) {
-			result = true;
-		} else if (attribut.getKey() == AttributKey.ROOM_NR_KEY) {
-			for (Attribut attributItem : attributeList) {
+		if (attribut.getKey() == AttributKey.ROOM_NR_KEY) {
+			for (Attribute attributItem : attributeList) {
 				if (attributItem.getKey() == AttributKey.NAME_KEY
 						&& attribut.getValue().equals(attributItem.getValue())) {
 					result = true;

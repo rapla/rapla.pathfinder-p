@@ -7,7 +7,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.pathfinder.model.Attribut;
+import com.pathfinder.model.Attribute;
 import com.pathfinder.model.EventModel;
 import com.pathfinder.model.FreeRoomModel;
 import com.vaadin.data.util.BeanItemContainer;
@@ -84,7 +84,7 @@ public class DataLoaderTest {
 	@Test
 	public void getModelDetailsAndReadWithIterators() {
 
-		BeanItemContainer<Attribut> modelDetails = dataLoader
+		BeanItemContainer<Attribute> modelDetails = dataLoader
 				.getResourceDetails(
 						"org.rapla.entities.domain.Allocatable_1320",
 						new Locale("DE_de"));

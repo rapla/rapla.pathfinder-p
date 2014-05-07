@@ -18,4 +18,6 @@ public interface EventSelectionViewSpec extends TranslatabelSpec {
 
 	void addButtonClickListener(ClickListener listener);
 
+	void close();
+
 }

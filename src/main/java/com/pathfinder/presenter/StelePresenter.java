@@ -9,7 +9,7 @@ import java.util.TimerTask;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.pathfinder.model.Attribut;
+import com.pathfinder.model.Attribute;
 import com.pathfinder.model.CalendarModel;
 import com.pathfinder.model.Device;
 import com.pathfinder.model.EventModel;
@@ -44,6 +44,8 @@ import com.pathfinder.view.KeyboardId;
 import com.pathfinder.view.KeyboardSpec;
 import com.pathfinder.view.MenuBar;
 import com.pathfinder.view.MenuBarSpec;
+import com.pathfinder.view.PersonInformationView;
+import com.pathfinder.view.PersonInformationViewSpec;
 import com.pathfinder.view.SearchField;
 import com.pathfinder.view.SearchFieldSpec;
 import com.pathfinder.view.TranslatabelSpec;
@@ -98,6 +100,7 @@ public class StelePresenter implements StelePresenterSpec,
 	private final DetailEventsSpec detailEvents = new DetailEvents();
 	private final MenuBarSpec menuBar = new MenuBar();
 	private final EventSelectionViewSpec eventSelectionView = new EventSelectionView();
+	private final PersonInformationViewSpec personInformationView = new PersonInformationView();
 
 	private final VerticalLayout mainLayout = new VerticalLayout();
 	private final VerticalLayout contentLayout = new VerticalLayout();
@@ -107,7 +110,7 @@ public class StelePresenter implements StelePresenterSpec,
 
 	private final KeyboardModel keyboardModel = new KeyboardModel();
 	private ResourceModel resource = null;
-	private BeanItemContainer<Attribut> resourceDetails = null;
+	private BeanItemContainer<Attribute> resourceDetails = null;
 	private BeanItemContainer<EventModel> resourceEvents = null;
 	private CalendarModel calendarModel = new CalendarModel();
 	private Device steleLocation = Device.STELE_MIDDLE;
@@ -210,6 +213,7 @@ public class StelePresenter implements StelePresenterSpec,
 	}
 
 	class ResourcesClickListener implements ItemClickListener {
+
 		@Override
 		public void itemClick(ItemClickEvent event) {
 
@@ -224,9 +228,9 @@ public class StelePresenter implements StelePresenterSpec,
 				resource.setId(freeResource.getId());
 				resource.setName(freeResource.getName());
 				resource.setType(ResourceType.ROOM.toString());
-			} else if (event.getItemId() instanceof Attribut) {
+			} else if (event.getItemId() instanceof Attribute) {
 				// Resource in detail view was clicked
-				boolean showDetailView = doAttributeAction((Attribut) event
+				boolean showDetailView = doAttributeAction((Attribute) event
 						.getItemId());
 				if (!showDetailView)
 					return;
@@ -237,19 +241,17 @@ public class StelePresenter implements StelePresenterSpec,
 			prepareDetailView();
 		}
 
-		private boolean doAttributeAction(Attribut attribute) {
+		private boolean doAttributeAction(Attribute attribute) {
 			boolean showDetailView = false;
 
 			switch (attribute.getKey()) {
 			case ROOM_NR_KEY:
-				if (attribute.getValue() != null
-						&& attribute.getValue().length() > 0) {
-					resource = getRoomByName(attribute.getValue());
-					showDetailView = true;
-				}
+				resource = getRoomByName(attribute.getValue());
+				showDetailView = true;
 				break;
 			case INFO_KEY:
-
+				personInformationView.showInformation(attribute.getPerson(),
+						attribute.getInformation());
 				break;
 			default:
 			}
@@ -260,9 +262,13 @@ public class StelePresenter implements StelePresenterSpec,
 
 	private ResourceModel getRoomByName(String roomName) {
 		ResourceModel result = null;
-		for (ResourceModel model : dataLoader.getRoomContainer().getItemIds()) {
-			if (model.getName().toLowerCase().equals(roomName.toLowerCase())) {
-				result = model;
+		if (roomName != null && roomName.length() > 0) {
+			for (ResourceModel model : dataLoader.getRoomContainer()
+					.getItemIds()) {
+				if (model.getName().toLowerCase()
+						.equals(roomName.toLowerCase())) {
+					result = model;
+				}
 			}
 		}
 		return result;
@@ -521,6 +527,8 @@ public class StelePresenter implements StelePresenterSpec,
 	}
 
 	private void goBackToHomeScreenAndRestoreDefaultSettings() {
+		eventSelectionView.close();
+		personInformationView.close();
 		switchToSearchView();
 		clearSearchString();
 		languageChanged(VaadinSession.getCurrent().getLocale());
@@ -569,7 +577,7 @@ public class StelePresenter implements StelePresenterSpec,
 		detailInfo.addDetails(resourceDetails);
 		detailImage.removeImage();
 		if ((ResourceType.ROOM.toString()).equals(resource.getType())) {
-			for (Attribut attribut : resourceDetails.getItemIds()) {
+			for (Attribute attribut : resourceDetails.getItemIds()) {
 				if ("Raum".equals(attribut.getKey())) {
 					detailImage.setImage(steleLocation + attribut.getValue());
 				}
@@ -716,6 +724,8 @@ public class StelePresenter implements StelePresenterSpec,
 					resource.getId(), UI.getCurrent().getLocale()));
 		}
 		detailEvents.updateTranslations();
+		eventSelectionView.updateTranslations();
+		personInformationView.updateTranslations();
 	}
 
 	@Override

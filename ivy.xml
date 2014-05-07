@@ -62,5 +62,8 @@
 		
 		<!-- ResetButtonForTextField -->
 		<dependency org="org.vaadin.addons" name="resetbuttonfortextfield" rev="1.1.1" />
+		
+		<!-- JSoup - Helps removing html tags -->
+		<dependency org="org.jsoup" name="jsoup" rev="1.7.3"/>
 	</dependencies>
 </ivy-module>

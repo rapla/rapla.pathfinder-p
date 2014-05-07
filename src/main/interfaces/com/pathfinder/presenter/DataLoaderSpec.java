@@ -3,7 +3,7 @@ package com.pathfinder.presenter;
 import java.util.Date;
 import java.util.Locale;
 
-import com.pathfinder.model.Attribut;
+import com.pathfinder.model.Attribute;
 import com.pathfinder.model.EventModel;
 import com.pathfinder.model.FreeRoomModel;
 import com.pathfinder.model.ResourceModel;
@@ -31,7 +31,7 @@ public interface DataLoaderSpec {
 	BeanItemContainer<ResourceModel> getPoiContainer();
 
 	@Pure
-	BeanItemContainer<Attribut> getResourceDetails(String resourceId,
+	BeanItemContainer<Attribute> getResourceDetails(String resourceId,
 			Locale locale);
 
 	@Pure

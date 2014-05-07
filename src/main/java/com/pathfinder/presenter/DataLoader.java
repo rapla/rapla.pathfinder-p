@@ -28,7 +28,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pathfinder.model.Attribut;
+import com.pathfinder.model.Attribute;
 import com.pathfinder.model.Category;
 import com.pathfinder.model.EventModel;
 import com.pathfinder.model.FreeRoomModel;
@@ -464,7 +464,7 @@ public class DataLoader implements DataLoaderSpec {
 	}
 
 	@Override
-	public BeanItemContainer<Attribut> getResourceDetails(String resourceId,
+	public BeanItemContainer<Attribute> getResourceDetails(String resourceId,
 			Locale locale) {
 
 		String url = RESOURCE_DETAIL_METHOD + "resourceId=" + resourceId;
@@ -473,10 +473,10 @@ public class DataLoader implements DataLoaderSpec {
 		}
 
 		JSONObject attributMap;
-		Attribut attribut;
+		Attribute attribut;
 
-		BeanItemContainer<Attribut> attributList = new BeanItemContainer<Attribut>(
-				Attribut.class);
+		BeanItemContainer<Attribute> attributList = new BeanItemContainer<Attribute>(
+				Attribute.class);
 
 		try {
 			BufferedReader br = new BufferedReader(new InputStreamReader(
@@ -497,14 +497,14 @@ public class DataLoader implements DataLoaderSpec {
 				Iterator<String> attributeMapKeys = attributeMapSet.iterator();
 
 				while (attributeMapKeys.hasNext()) {
-					attribut = new Attribut();
+					attribut = new Attribute();
 
 					String nextKey = attributeMapKeys.next().toString();
 					attribut.setKey(nextKey);
 					attribut.setLabel((String) ((JSONObject) attributMap
-							.get(nextKey)).get(Attribut.PROPERTY_LABEL));
+							.get(nextKey)).get(Attribute.PROPERTY_LABEL));
 					attribut.setValue((String) ((JSONObject) attributMap
-							.get(nextKey)).get(Attribut.PROPERTY_VALUE));
+							.get(nextKey)).get(Attribute.PROPERTY_VALUE));
 
 					attributList.addItem(attribut);
 				}
