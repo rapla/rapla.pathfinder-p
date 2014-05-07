@@ -6,17 +6,22 @@ import org.jsoup.Jsoup;
 
 import com.pathfinder.model.AttributKey;
 import com.pathfinder.model.Attribute;
+import com.pathfinder.model.Device;
 import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.ApplicationPropertiesSpec;
 import com.pathfinder.util.properties.PropertiesKey;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.server.ThemeResource;
+import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.CellStyleGenerator;
+import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.Table.ColumnHeaderMode;
 
 /**
@@ -26,8 +31,7 @@ import com.vaadin.ui.Table.ColumnHeaderMode;
  * 
  */
 public class DetailInfo extends CustomComponent implements DetailInfoSpec {
-	private final Object[] visibleColumns = new String[] {
-			Attribute.PROPERTY_LABEL, Attribute.PROPERTY_VALUE };
+	private final Object[] visibleColumns = new String[] { Attribute.PROPERTY_LABEL };
 	private final Table detailInfoTable = new Table();
 	private final BeanItemContainer<Attribute> attributeContainer = new BeanItemContainer<Attribute>(
 			Attribute.class);
@@ -44,6 +48,8 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 	private final static String DOTS = "...";
 
 	private final static int MAX_INFO_LENGTH = 25;
+
+	private Device device = Device.UNDEFINED;
 
 	private Image image = new Image();
 
@@ -62,6 +68,15 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 		detailInfoTable.setSelectable(false);
 		detailInfoTable.setCellStyleGenerator(new CustomCellStyleGenerator());
 		detailInfoTable.setSizeFull();
+		detailInfoTable.addGeneratedColumn("htmlvalue", new ColumnGenerator() {
+			public Component generateCell(Table source, Object itemId,
+					Object columnId) {
+				String value = ((Attribute) itemId).getValue();
+				Label label = new Label(value, ContentMode.HTML);
+				label.setSizeUndefined();
+				return label;
+			}
+		});
 		layout.addComponent(detailInfoTable);
 	}
 
@@ -114,6 +129,11 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 				if (!isRoom(attributeItem, attributeItems))
 					addToTable = true;
 				break;
+			case EMAIL_KEY:
+				if (!device.isStele())
+					attributeItem.setValue(addMailTo(attributeItem.getValue()));
+				addToTable = true;
+				break;
 			default:
 				addToTable = true;
 				break;
@@ -128,6 +148,14 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 		detailInfoTable.setPageLength(detailInfoTable.getItemIds().size());
 		detailInfoTable.setVisible(true);
 		layout.setVisible(true);
+	}
+
+	private String addMailTo(String mail) {
+		String result = mail;
+		if (mail != null && mail.length() > 0) {
+			result = "<a href=\"mailto:" + mail + "\">" + mail + "</a>";
+		}
+		return result;
 	}
 
 	private String removeHtmlAndCut(String textToCut, int length) {
@@ -186,5 +214,10 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 	@Override
 	public void addInfoTableItemClickListener(ItemClickListener listener) {
 		detailInfoTable.addItemClickListener(listener);
+	}
+
+	@Override
+	public void setDevice(Device device) {
+		this.device = device;
 	}
 }

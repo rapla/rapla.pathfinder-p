@@ -750,8 +750,10 @@ public class StelePresenter implements StelePresenterSpec,
 
 	@Override
 	public void setDevice(Device steleLocation) {
-		if (steleLocation != null && steleLocation != Device.UNDEFINED)
+		if (steleLocation != null) {
 			this.steleLocation = steleLocation;
+			this.detailInfo.setDevice(steleLocation);
+		}
 	}
 
 	@Override

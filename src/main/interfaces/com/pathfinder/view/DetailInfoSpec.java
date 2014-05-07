@@ -1,6 +1,7 @@
 package com.pathfinder.view;
 
 import com.pathfinder.model.Attribute;
+import com.pathfinder.model.Device;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 
@@ -17,4 +18,6 @@ public interface DetailInfoSpec extends ComponentSpec {
 	void addDetails(BeanItemContainer<Attribute> resourceDetails);
 
 	void addInfoTableItemClickListener(ItemClickListener listener);
+
+	void setDevice(Device device);
 }
