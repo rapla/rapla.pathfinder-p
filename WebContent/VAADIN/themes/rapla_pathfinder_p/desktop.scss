@@ -24,6 +24,12 @@
 	        -ms-user-select: none;
 	        -o-user-select: none;
 	        user-select: none;
+	        
+	        .logo{
+	        	display: block;
+	        	height: 9em;
+	        	margin-top: 1%;
+	        }
 			
 			.datetime {
 				display: none;

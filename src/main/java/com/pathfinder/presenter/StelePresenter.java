@@ -54,6 +54,7 @@ import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.server.Page;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.calendar.DateConstants;
 import com.vaadin.ui.AbstractLayout;
@@ -62,6 +63,7 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component.Event;
 import com.vaadin.ui.Component.Listener;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.components.calendar.CalendarComponentEvents.BackwardEvent;
@@ -98,6 +100,7 @@ public class StelePresenter implements StelePresenterSpec,
 	private final DetailEventsSpec detailEvents = new DetailEvents();
 	private final MenuBarSpec menuBar = new MenuBar();
 	private final EventSelectionViewSpec eventSelectionView = new EventSelectionView();
+	private final Image logo = new Image();
 
 	private final VerticalLayout mainLayout = new VerticalLayout();
 	private final VerticalLayout contentLayout = new VerticalLayout();
@@ -141,6 +144,10 @@ public class StelePresenter implements StelePresenterSpec,
 		this.layoutNormal.addComponent(keyboardView);
 		this.layoutNormal.setSizeFull();
 
+		ThemeResource res = new ThemeResource("img/logo.png");
+		logo.setSource(res);
+		logo.setPrimaryStyleName("logo");
+		this.contentLayout.addComponent(logo);
 		this.contentLayout.addComponent(freeRoom);
 		this.contentLayout.addComponent(layoutNormal);
 		this.contentLayout.setSizeFull();

@@ -1,0 +1,16 @@
+@import "../reindeer/reindeer.scss";
+/*
+ * Desktop Styling
+ */
+
+@mixin mobile {
+	@include reindeer;
+	
+	.v-ui[width-range~="350px-800px"] {
+		.stele{
+			.logo{
+				display: none;
+			}
+		}
+	}
+}
