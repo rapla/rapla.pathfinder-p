@@ -95,7 +95,7 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 					image.setSource(tr);
 					image.markAsDirty();
 					image.setWidth(20, Unit.PERCENTAGE);
-					layout.setExpandRatio(detailInfoTable, 4);
+					layout.setExpandRatio(detailInfoTable, 2);
 					layout.setExpandRatio(image, 1);
 				}
 			}
