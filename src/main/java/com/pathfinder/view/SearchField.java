@@ -105,4 +105,8 @@ public class SearchField extends CustomComponent implements SearchFieldSpec {
 		searchField.setInputPrompt(translator
 				.translate(TranslationKeys.SEARCH_PROMPT));
 	}
+
+	@Override
+	public void doCleanup() {
+	}
 }

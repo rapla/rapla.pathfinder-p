@@ -33,4 +33,10 @@ public class ViewSpecContract extends AbstractComponentContract implements
 	public void updateTranslations() {
 		// Due to diversity of components, there's nothing to check here
 	}
+
+	@Override
+	public void doCleanup() {
+		// TODO Auto-generated method stub
+
+	}
 }

@@ -48,7 +48,7 @@ import com.pathfinder.view.PersonInformationView;
 import com.pathfinder.view.PersonInformationViewSpec;
 import com.pathfinder.view.SearchField;
 import com.pathfinder.view.SearchFieldSpec;
-import com.pathfinder.view.TranslatabelSpec;
+import com.pathfinder.view.TranslatableSpec;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
@@ -78,7 +78,7 @@ import com.vaadin.ui.components.calendar.CalendarComponentEvents.ForwardEvent;
  * 
  */
 public class StelePresenter implements StelePresenterSpec,
-		DataLoaderListenerSpec, TranslatabelSpec {
+		DataLoaderListenerSpec, TranslatableSpec {
 	private static final Logger LOGGER = LogManager
 			.getLogger(StelePresenter.class.getName());
 	private final ApplicationPropertiesSpec properties = ApplicationProperties
@@ -117,6 +117,8 @@ public class StelePresenter implements StelePresenterSpec,
 	private SessionLoggingModel sessionLoggingModel = new SessionLoggingModel();
 
 	private Listener uiListener = null;
+
+	private Timer freeRoomsTimer;
 
 	public StelePresenter() {
 		// Register as DataListener to get notified if data changes
@@ -309,13 +311,6 @@ public class StelePresenter implements StelePresenterSpec,
 		@Override
 		public void buttonClick(ClickEvent event) {
 			changeToWheelChairView();
-		}
-	}
-
-	class RespawnSteleLayoutTimer extends TimerTask {
-		@Override
-		public void run() {
-			switchToSearchView();
 		}
 	}
 
@@ -513,7 +508,8 @@ public class StelePresenter implements StelePresenterSpec,
 		// application.properties)
 		long loadInterval = properties
 				.getIntProperty(PropertiesKey.DATA_LOAD_INTERVAL_FREE_ROOMS);
-		new Timer().schedule(getTimerTask(), loadInterval, loadInterval);
+		freeRoomsTimer = new Timer(true);
+		freeRoomsTimer.schedule(getTimerTask(), loadInterval, loadInterval);
 	}
 
 	private TimerTask getTimerTask() {
@@ -763,7 +759,17 @@ public class StelePresenter implements StelePresenterSpec,
 
 	@Override
 	public void destroy() {
-		// TODO Auto-generated method stub
-
+		freeRoomsTimer.cancel();
+		dateTime.doCleanup();
+		freeRoom.doCleanup();
+		accordionView.doCleanup();
+		keyboardView.doCleanup();
+		searchField.doCleanup();
+		detailInfo.doCleanup();
+		detailImage.doCleanup();
+		detailEvents.doCleanup();
+		menuBar.doCleanup();
+		eventSelectionView.doCleanup();
+		personInformationView.doCleanup();
 	}
 }

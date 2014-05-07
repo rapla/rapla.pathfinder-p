@@ -377,4 +377,12 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 	public void updateTranslations() {
 		this.updateTableCaptions();
 	}
+
+	@Override
+	public void doCleanup() {
+		this.roomTable.removeAllItems();
+		this.courseTable.removeAllItems();
+		this.personTable.removeAllItems();
+		this.poiTable.removeAllItems();
+	}
 }

@@ -312,7 +312,7 @@ public class DataLoader implements DataLoaderSpec {
 		// application.properties)
 		long loadInterval = properties
 				.getIntProperty(PropertiesKey.DATA_LOAD_INTERVALL);
-		new Timer().schedule(getTimerTask(), loadInterval, loadInterval);
+		new Timer(true).schedule(getTimerTask(), loadInterval, loadInterval);
 	}
 
 	private List<JSONObject> getFreeResourcesResources(JSONObject jsonObject) {
@@ -340,10 +340,15 @@ public class DataLoader implements DataLoaderSpec {
 			}
 		};
 
-		new Timer().schedule(task, 0, 5 * 60 * 1000);
+		new Timer(true).schedule(task, 0, 5 * 60 * 1000);
 	}
 
 	private void removeDeadListener() {
+
+		System.out.println("Max-mem: " + Runtime.getRuntime().maxMemory()
+				/ (1024 * 1024));
+		System.out.println("Free-mem: " + Runtime.getRuntime().freeMemory()
+				/ (1024 * 1024));
 
 		List<DataLoaderListenerSpec> listenerToBeRemoved = new ArrayList<DataLoaderListenerSpec>();
 
@@ -356,6 +361,7 @@ public class DataLoader implements DataLoaderSpec {
 			if (listener.isTimeToGetRemoved()) {
 				listenerToBeRemoved.add(listener);
 				listener.destroy();
+				LOGGER.trace("DataLoaderListener removed");
 			}
 		}
 

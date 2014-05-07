@@ -22,4 +22,10 @@ public class ComponentSpecContract extends AbstractComponentContract implements
 		// Nothing to do here due to diversity of subcontracts
 	}
 
+	@Override
+	public void doCleanup() {
+		// TODO Auto-generated method stub
+
+	}
+
 }

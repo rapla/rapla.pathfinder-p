@@ -8,7 +8,6 @@ import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
-import com.pathfinder.view.MenuBarSpec;
 import com.vaadin.event.ShortcutAction.KeyCode;
 import com.vaadin.server.Resource;
 import com.vaadin.server.ThemeResource;
@@ -171,5 +170,11 @@ public class MenuBar extends CustomComponent implements MenuBarSpec {
 				+ UI.getCurrent().getLocale().getLanguage()
 				+ THEME_RESOURCES_SUFFIX;
 		languagePopupButton.setIcon(new ThemeResource(flagFilename));
+	}
+
+	@Override
+	public void doCleanup() {
+		flagResources.clear();
+		flagImages.clear();
 	}
 }

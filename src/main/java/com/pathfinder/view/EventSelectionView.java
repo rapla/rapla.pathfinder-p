@@ -81,4 +81,8 @@ public class EventSelectionView extends MessageBox implements
 		cancelButton.setCaption(translator.translate(TranslationKeys.CLOSE));
 	}
 
+	@Override
+	public void doCleanup() {
+	}
+
 }

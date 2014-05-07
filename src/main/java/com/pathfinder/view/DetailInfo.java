@@ -220,4 +220,11 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 	public void setDevice(Device device) {
 		this.device = device;
 	}
+
+	@Override
+	public void doCleanup() {
+		removeDetails();
+		attributeContainer.removeAllItems();
+
+	}
 }

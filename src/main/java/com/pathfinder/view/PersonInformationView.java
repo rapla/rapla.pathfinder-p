@@ -72,4 +72,8 @@ public class PersonInformationView extends MessageBox implements
 		}
 	}
 
+	@Override
+	public void doCleanup() {
+	}
+
 }
