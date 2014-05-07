@@ -91,17 +91,41 @@
 				background-position:20px 50%;
 			}
 		
-			.rapla_pathfinder_p .v-ui .v-slot.v-slot-detailImage {
-				margin-top: 7em;
+			.v-slot.v-slot-detailImage{
+				width: 100% !important;
 				float: none;
-			}
-	
-			.detailInfo {
-				margin-top: 3em;
+				clear: both;
+				margin-right: 3%;
+				margin-top: 3%;
+				margin-bottom: 3%;
+		
+				.detailImage {
+					box-shadow: 0px 0px 10px #808090;
+				}
 			}
 		
-			.detailEvents {
-				margin-top: 3em;
+			.v-slot.v-slot-detailEvents{
+				width: 100% !important;
+				clear: both;
+				float: none;
+			
+				.v-calendar-current-time{
+					width: 100% !important;
+				}
+			}
+		
+			.detailInfo {
+				margin-top: 2%;
+				margin-bottom: 2%;
+				
+				.v-table-row-result-row {
+					background-image: none;
+					width: 100%;
+				}
+				
+				.v-layout.v-expand.v-slot-global-table{
+					width: 75% !important;
+				}
 			}
 			
 			//Big Captions
@@ -185,13 +209,6 @@
 		    		font: 20px Arial;
 		    	}
 		    }
-			
-			/* Detail image styling */
-			
-			.detailImage{
-				/* Immer gleiche/richtige Bildproportionen? */
-				max-height: 700px;
-			}
 			
 			/* Search Field Styling */
 			
