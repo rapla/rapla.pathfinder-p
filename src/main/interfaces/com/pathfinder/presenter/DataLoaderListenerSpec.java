@@ -15,4 +15,6 @@ public interface DataLoaderListenerSpec {
 	void dataUpdated();
 
 	boolean isTimeToGetRemoved();
+
+	void destroy();
 }

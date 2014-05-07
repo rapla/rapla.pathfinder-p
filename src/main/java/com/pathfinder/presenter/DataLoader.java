@@ -355,6 +355,7 @@ public class DataLoader implements DataLoaderSpec {
 			DataLoaderListenerSpec listener = iterator.next();
 			if (listener.isTimeToGetRemoved()) {
 				listenerToBeRemoved.add(listener);
+				listener.destroy();
 			}
 		}
 
@@ -465,6 +466,7 @@ public class DataLoader implements DataLoaderSpec {
 	@Override
 	public BeanItemContainer<Attribut> getResourceDetails(String resourceId,
 			Locale locale) {
+
 		String url = RESOURCE_DETAIL_METHOD + "resourceId=" + resourceId;
 		if (locale != null) {
 			url += "&language=" + locale.getLanguage();
@@ -482,25 +484,30 @@ public class DataLoader implements DataLoaderSpec {
 
 			JSONObject jsonObject = (JSONObject) parser.parse(br);
 
-			attributMap = (JSONObject) ((JSONObject) jsonObject.get("result"))
-					.get("attributeMap");
+			jsonObject = (JSONObject) jsonObject.get("result");
 
-			@SuppressWarnings("unchecked")
-			Set<String> attributeMapSet = attributMap.keySet();
+			if (jsonObject == null) {
+				attributList = null;
+			} else {
+				attributMap = (JSONObject) jsonObject.get("attributeMap");
 
-			Iterator<String> attributeMapKeys = attributeMapSet.iterator();
+				@SuppressWarnings("unchecked")
+				Set<String> attributeMapSet = attributMap.keySet();
 
-			while (attributeMapKeys.hasNext()) {
-				attribut = new Attribut();
+				Iterator<String> attributeMapKeys = attributeMapSet.iterator();
 
-				String nextKey = attributeMapKeys.next().toString();
-				attribut.setKey(nextKey.toLowerCase());
-				attribut.setLabel((String) ((JSONObject) attributMap
-						.get(nextKey)).get(Attribut.PROPERTY_LABEL));
-				attribut.setValue((String) ((JSONObject) attributMap
-						.get(nextKey)).get(Attribut.PROPERTY_VALUE));
+				while (attributeMapKeys.hasNext()) {
+					attribut = new Attribut();
 
-				attributList.addItem(attribut);
+					String nextKey = attributeMapKeys.next().toString();
+					attribut.setKey(nextKey);
+					attribut.setLabel((String) ((JSONObject) attributMap
+							.get(nextKey)).get(Attribut.PROPERTY_LABEL));
+					attribut.setValue((String) ((JSONObject) attributMap
+							.get(nextKey)).get(Attribut.PROPERTY_VALUE));
+
+					attributList.addItem(attribut);
+				}
 			}
 
 		} catch (ConnectException e) {

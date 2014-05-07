@@ -1,10 +1,14 @@
 package com.pathfinder.view;
 
+import java.util.List;
+
 import com.pathfinder.model.Attribut;
+import com.pathfinder.model.AttributKey;
 import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.ApplicationPropertiesSpec;
 import com.pathfinder.util.properties.PropertiesKey;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
@@ -59,7 +63,6 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 		layout.setSizeFull();
 		layout.setVisible(false);
 		layout.addComponent(image);
-		
 
 		detailInfoTable.setVisible(false);
 	}
@@ -80,30 +83,48 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 	@Override
 	public void addDetails(BeanItemContainer<Attribut> resourceDetails) {
 		int length = 0;
-		for (Attribut attributeItem : resourceDetails.getItemIds()) {
-			if (!"resourceurl".equals(attributeItem.getKey())){
-				
-				if (!"bild".equals(attributeItem.getKey())) {
-					this.detailInfoTable.addItem(attributeItem);
-					length += 1;
-					layout.setExpandRatio(detailInfoTable, 1);
-				}
-			
-				else if ("bild".equals(attributeItem.getKey())) {
-					ThemeResource tr = new ThemeResource(IMAGE_PATH
+		List<Attribut> attributeItems = resourceDetails.getItemIds();
+		for (Attribut attributeItem : attributeItems) {
+
+			if (skipAttribute(attributeItem, attributeItems)) {
+				continue;
+			}
+
+			if (attributeItem.getKey() != AttributKey.PICTURE_NAME_KEY) {
+				this.detailInfoTable.addItem(attributeItem);
+				length += 1;
+				layout.setExpandRatio(detailInfoTable, 1);
+			} else {
+				ThemeResource tr = new ThemeResource(IMAGE_PATH
 						+ attributeItem.getValue() + IMAGE_ENDING);
-					image.setSource(tr);
-					image.markAsDirty();
-					image.setWidth(20, Unit.PERCENTAGE);
-					layout.setExpandRatio(detailInfoTable, 2);
-					layout.setExpandRatio(image, 1);
-				}
+				image.setSource(tr);
+				image.markAsDirty();
+				image.setWidth(20, Unit.PERCENTAGE);
+				layout.setExpandRatio(detailInfoTable, 2);
+				layout.setExpandRatio(image, 1);
 			}
 		}
 
 		detailInfoTable.setPageLength(length);
 		detailInfoTable.setVisible(true);
 		layout.setVisible(true);
+	}
+
+	private boolean skipAttribute(Attribut attribut,
+			List<Attribut> attributeList) {
+		boolean result = false;
+		if (attribut.getKey() == AttributKey.RESOURCE_URL_KEY) {
+			result = true;
+		} else if (attribut.getKey() == AttributKey.ROOM_NR_KEY) {
+			for (Attribut attributItem : attributeList) {
+				if (attributItem.getKey() == AttributKey.NAME_KEY
+						&& attribut.getValue().equals(attributItem.getValue())) {
+					result = true;
+					break;
+				}
+			}
+		}
+		return result;
 	}
 
 	@Override
@@ -117,5 +138,10 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 	@Override
 	public void updateTranslations() {
 		// Will be blank
+	}
+
+	@Override
+	public void addInfoTableItemClickListener(ItemClickListener listener) {
+		detailInfoTable.addItemClickListener(listener);
 	}
 }

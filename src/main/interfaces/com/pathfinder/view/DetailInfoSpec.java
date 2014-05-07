@@ -1,9 +1,8 @@
 package com.pathfinder.view;
 
-import java.util.List;
-
 import com.pathfinder.model.Attribut;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.event.ItemClickEvent.ItemClickListener;
 
 /**
  * DetailSpec
@@ -16,4 +15,6 @@ public interface DetailInfoSpec extends ComponentSpec {
 	void removeDetails();
 
 	void addDetails(BeanItemContainer<Attribut> resourceDetails);
+
+	void addInfoTableItemClickListener(ItemClickListener listener);
 }

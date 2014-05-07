@@ -200,6 +200,8 @@ public class StelePresenter implements StelePresenterSpec,
 				.addKeyboardButtonListener(new KeyboardButtonClickListener());
 		this.eventSelectionView
 				.addButtonClickListener(new EventResourceSelectedListener());
+		this.detailInfo
+				.addInfoTableItemClickListener(new ResourcesClickListener());
 	}
 
 	@Override
@@ -211,21 +213,59 @@ public class StelePresenter implements StelePresenterSpec,
 		@Override
 		public void itemClick(ItemClickEvent event) {
 
-			if (event.getItemId() instanceof ResourceModel)
+			if (event.getItemId() instanceof ResourceModel) {
+				// Resource in accordion was clicked
 				resource = (ResourceModel) event.getItemId();
-			if (event.getItemId() instanceof FreeRoomModel) {
+			} else if (event.getItemId() instanceof FreeRoomModel) {
+				// Resource in free rooms table was clicked
 				FreeRoomModel freeResource = (FreeRoomModel) event.getItemId();
 				resource = new ResourceModel();
 
 				resource.setId(freeResource.getId());
 				resource.setName(freeResource.getName());
 				resource.setType(ResourceType.ROOM.toString());
+			} else if (event.getItemId() instanceof Attribut) {
+				// Resource in detail view was clicked
+				boolean showDetailView = doAttributeAction((Attribut) event
+						.getItemId());
+				if (!showDetailView)
+					return;
 			}
 
 			sessionLoggingModel.getClickedResources().add(resource);
 
 			prepareDetailView();
 		}
+
+		private boolean doAttributeAction(Attribut attribute) {
+			boolean showDetailView = false;
+
+			switch (attribute.getKey()) {
+			case ROOM_NR_KEY:
+				if (attribute.getValue() != null
+						&& attribute.getValue().length() > 0) {
+					resource = getRoomByName(attribute.getValue());
+					showDetailView = true;
+				}
+				break;
+			case INFO_KEY:
+
+				break;
+			default:
+			}
+
+			return showDetailView;
+		}
+	}
+
+	private ResourceModel getRoomByName(String roomName) {
+		ResourceModel result = null;
+		for (ResourceModel model : dataLoader.getRoomContainer().getItemIds()) {
+			if (model.getName().toLowerCase().equals(roomName.toLowerCase())) {
+				result = model;
+			}
+		}
+		return result;
 	}
 
 	class SearchFieldTextChangeListener implements TextChangeListener {
@@ -429,16 +469,20 @@ public class StelePresenter implements StelePresenterSpec,
 	}
 
 	private void prepareDetailView() {
-		resourceDetails = dataLoader.getResourceDetails(resource.getId(), UI
-				.getCurrent().getLocale());
+		if (resource != null) {
+			resourceDetails = dataLoader.getResourceDetails(resource.getId(),
+					UI.getCurrent().getLocale());
 
-		calendarModel.setBeginningOfCurrentDay(new Date());
+			if (resourceDetails != null) {
+				calendarModel.setBeginningOfCurrentDay(new Date());
 
-		updateCalendarEvents();
+				updateCalendarEvents();
 
-		LOGGER.trace(resource.getType() + " element was clicked: "
-				+ resource.getName());
-		switchToDetailView();
+				LOGGER.trace(resource.getType() + " element was clicked: "
+						+ resource.getName());
+				switchToDetailView();
+			}
+		}
 	}
 
 	private void updateCalendarEvents() {
@@ -526,9 +570,7 @@ public class StelePresenter implements StelePresenterSpec,
 		detailImage.removeImage();
 		if ((ResourceType.ROOM.toString()).equals(resource.getType())) {
 			for (Attribut attribut : resourceDetails.getItemIds()) {
-				// TODO The label name depends on the "Freiraum" interface,
-				// which isn´t implemented yet
-				if ("Raum".equals(attribut.getLabel())) {
+				if ("Raum".equals(attribut.getKey())) {
 					detailImage.setImage(steleLocation + attribut.getValue());
 				}
 			}
@@ -705,5 +747,11 @@ public class StelePresenter implements StelePresenterSpec,
 	@Override
 	public void setUserAgent(String userAgent) {
 		this.sessionLoggingModel.setDevice(userAgent);
+	}
+
+	@Override
+	public void destroy() {
+		// TODO Auto-generated method stub
+
 	}
 }

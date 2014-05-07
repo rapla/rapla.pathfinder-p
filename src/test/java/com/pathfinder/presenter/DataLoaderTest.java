@@ -55,6 +55,10 @@ public class DataLoaderTest {
 			public boolean isTimeToGetRemoved() {
 				return true;
 			}
+
+			@Override
+			public void destroy() {
+			}
 		});
 
 		dataLoader.reloadAllData();
