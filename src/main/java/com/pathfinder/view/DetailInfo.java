@@ -81,20 +81,23 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 	public void addDetails(BeanItemContainer<Attribut> resourceDetails) {
 		int length = 0;
 		for (Attribut attributeItem : resourceDetails.getItemIds()) {
-			if (!"resourceurl".equals(attributeItem.getKey()))
+			if (!"resourceurl".equals(attributeItem.getKey())){
+				
 				if (!"bild".equals(attributeItem.getKey())) {
-					layout.setExpandRatio(detailInfoTable, 1);
 					this.detailInfoTable.addItem(attributeItem);
 					length += 1;
+					layout.setExpandRatio(detailInfoTable, 1);
 				}
-			if ("bild".equals(attributeItem.getKey())) {
-				layout.setExpandRatio(detailInfoTable, 4);
-				layout.setExpandRatio(image, 1);
-				ThemeResource tr = new ThemeResource(IMAGE_PATH
+			
+				else if ("bild".equals(attributeItem.getKey())) {
+					ThemeResource tr = new ThemeResource(IMAGE_PATH
 						+ attributeItem.getValue() + IMAGE_ENDING);
-				image.setSource(tr);
-				image.markAsDirty();
-
+					image.setSource(tr);
+					image.markAsDirty();
+					image.setWidth(20, Unit.PERCENTAGE);
+					layout.setExpandRatio(detailInfoTable, 4);
+					layout.setExpandRatio(image, 1);
+				}
 			}
 		}
 
@@ -105,6 +108,8 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 
 	@Override
 	public void removeDetails() {
+		image.setSource(null);
+		layout.setExpandRatio(image, 0);
 		detailInfoTable.removeAllItems();
 		detailInfoTable.setVisible(false);
 	}
