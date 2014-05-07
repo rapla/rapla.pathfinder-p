@@ -1,6 +1,7 @@
 /* Import the reindeer theme.*/
 /* This only allows us to use the mixins defined in it and does not add any styles by itself. */
 @import "../reindeer/reindeer.scss";
+@import "../rapla_pathfinder_p/desktop.scss";
 
 /* This contains all of your theme.*/
 /* If somebody wants to extend the theme she will include this mixin. */
@@ -8,6 +9,7 @@
   /* Include all the styles from the reindeer theme */
   /* TODO Can we already use Tune-Theme? */
   @include reindeer;
+  @include desktop;
 	
   
   	// Globales Styling
@@ -31,6 +33,12 @@
 	        user-select: none;
 			
 		
+			//Keyboard Display
+			
+			.keyboard{
+				display: none;
+			}
+			
 			// Global Table Styling
 			.global-table {
 				
@@ -124,7 +132,9 @@
 			}
 		
 			.menuBar {
-				margin-top: 200px;
+				position: fixed;
+				bottom: 4%;
+				width: 96% !important;
 			}
 		
 			.detailImage{
@@ -255,77 +265,80 @@
 				}
 			}
 			
-			.keyboard-row {
-				overflow: hidden;
+			.keyboard{
 				display: block;
-				float: left;
-				width : 100%;
-				margin-left: 0.2%;
-				
-				.v-slot {
+						
+				.keyboard-row {
+					overflow: hidden;
 					display: block;
+					float: left;
+					width : 100%;
+					margin-left: 0.2%;
 				
-					.keyboard-button {
-						float: left;
-						height: 7em;
-						width: 8.13%;
-						margin-top: 4px;
-						margin-right: 0.2%;
-						background-image: -webkit-linear-gradient(top, #666666 0%, #494949 100%);
-						background-image: -moz-linear-gradient(top, #666666 0%, #494949 100%);
-						background-image: -ms-linear-gradient(top, #666666 0%, #494949 100%);
+					.v-slot {
+						display: block;
+				
+						.keyboard-button {
+							float: left;
+							height: 7em;
+							width: 8.13%;
+							margin-top: 4px;
+							margin-right: 0.2%;
+							background-image: -webkit-linear-gradient(top, #666666 0%, #494949 100%);
+							background-image: -moz-linear-gradient(top, #666666 0%, #494949 100%);
+							background-image: -ms-linear-gradient(top, #666666 0%, #494949 100%);
 						
-						.keyboard-button-caption {
-							padding-left: 45%;
-							padding-top: 35%;
-							color: #FFFFFF;
-							font: 1.65em Arial;
-							display: block;
+							.keyboard-button-caption {
+								padding-left: 45%;
+								padding-top: 35%;
+								color: #FFFFFF;
+								font: 1.65em Arial;
+								display: block;
+							}
 						}
-					}
 					
-					.keyboard-delete {
-						float: left;
-						height: 7em;
-						width: 16.4%;
-						margin-top: 4px;
-						margin-right: 0.2%;
-						background-image: -webkit-linear-gradient(top, #666666 0%, #494949 100%);
-						background-image: -moz-linear-gradient(top, #666666 0%, #494949 100%);
-						background-image: -ms-linear-gradient(top, #666666 0%, #494949 100%);
+						.keyboard-delete {
+							float: left;
+							height: 7em;
+							width: 16.4%;
+							margin-top: 4px;
+							margin-right: 0.2%;
+							background-image: -webkit-linear-gradient(top, #666666 0%, #494949 100%);
+							background-image: -moz-linear-gradient(top, #666666 0%, #494949 100%);
+							background-image: -ms-linear-gradient(top, #666666 0%, #494949 100%);
 						
-						.keyboard-delete-caption {
-							padding-left: 38%;
-							padding-top: 17%;
-							color: #FFFFFF;
-							font: 1.65em Arial;
-							display: block;
+							.keyboard-delete-caption {
+								padding-left: 38%;
+								padding-top: 17%;
+								color: #FFFFFF;
+								font: 1.65em Arial;
+								display: block;
+							}	
 						}
-					}
 					
-					.keyboard-space {
-						float: left;
-						height: 7em;
-						width: 41.4%;
-						margin-top: 4px;
-						margin-right: 0.2%;
-						background-image: -webkit-linear-gradient(top, #666666 0%, #494949 100%);
-						background-image: -moz-linear-gradient(top, #666666 0%, #494949 100%);
-						background-image: -ms-linear-gradient(top, #666666 0%, #494949 100%);
+						.keyboard-space {
+							float: left;
+							height: 7em;
+							width: 41.4%;
+							margin-top: 4px;
+							margin-right: 0.2%;
+							background-image: -webkit-linear-gradient(top, #666666 0%, #494949 100%);
+							background-image: -moz-linear-gradient(top, #666666 0%, #494949 100%);
+							background-image: -ms-linear-gradient(top, #666666 0%, #494949 100%);
 						
-						.keyboard-space-caption {
-							padding-left: 43%;
-							padding-top: 7%;
-							color: #FFFFFF;
-							font: 1.65em Arial;
-							display: block;
+							.keyboard-space-caption {
+								padding-left: 43%;
+								padding-top: 7%;
+								color: #FFFFFF;
+								font: 1.65em Arial;
+								display: block;
+							}	
 						}
 					}
 				}
 			}
 		}
 	}
-	
 	/* Individual stele styling */
 	
 	/* Datetime Styling */
@@ -348,11 +361,7 @@
 		text-align: right;
 		float: right;
 		color: #FFF;
-	}
-	
-	/* Keyboard Styling */
-	
-	
+	}	
 	
 	/* MenuBar Styling */
 	
@@ -400,5 +409,13 @@
 		width: 60px;
 		height:60px;
 		background-position:20px 50%;
+	}
+	
+	
+	// Desktop Styling
+	.v-ui[width-range~="1081px-5000px"] {
+		.keyboard {
+			display: none;
+		}
 	}
 }

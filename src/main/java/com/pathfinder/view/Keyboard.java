@@ -38,6 +38,7 @@ public class Keyboard extends CustomComponent implements KeyboardSpec {
 	public Keyboard() {
 		buildLayout();
 		setCompositionRoot(layout);
+		this.setPrimaryStyleName("keyboard");
 	}
 
 	private void buildLayout() {
