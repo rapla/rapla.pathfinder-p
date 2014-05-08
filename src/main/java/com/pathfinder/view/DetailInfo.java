@@ -1,5 +1,6 @@
 package com.pathfinder.view;
 
+import java.io.File;
 import java.util.List;
 
 import org.jsoup.Jsoup;
@@ -7,6 +8,7 @@ import org.jsoup.Jsoup;
 import com.pathfinder.model.AttributKey;
 import com.pathfinder.model.Attribute;
 import com.pathfinder.model.Device;
+import com.pathfinder.model.ResourceType;
 import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.ApplicationPropertiesSpec;
 import com.pathfinder.util.properties.PropertiesKey;
@@ -23,6 +25,7 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.CellStyleGenerator;
 import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.Table.ColumnHeaderMode;
+import com.vaadin.ui.UI;
 
 /**
  * Defines the detail view for persons, courses, pois or rooms
@@ -40,8 +43,13 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 
 	private final String IMAGE_PATH = "img/";
 	private final String IMAGE_ENDING = ".png";
-	private final String DEFAULT_IMAGE = IMAGE_PATH
-			+ properties.getProperty(PropertiesKey.DEFAULT_IMAGE_NAME);
+	private final String RESOURCE_PATH = "/VAADIN/themes/rapla_pathfinder_p/";
+	private final String DEFAULT_IMAGE_PERSON = properties
+			.getProperty(PropertiesKey.DEFAULT_IMAGE_PERSON);
+	private final String DEFAULT_IMAGE_COURSE = properties
+			.getProperty(PropertiesKey.DEFAULT_IMAGE_COURSE);
+	private final String SERVER_PATH = UI.getCurrent().getSession()
+			.getService().getBaseDirectory().getAbsolutePath();
 
 	private final HorizontalLayout layout = new HorizontalLayout();
 
@@ -102,7 +110,8 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 	}
 
 	@Override
-	public void addDetails(BeanItemContainer<Attribute> resourceDetails) {
+	public void addDetails(BeanItemContainer<Attribute> resourceDetails,
+			ResourceType resourceType) {
 
 		List<Attribute> attributeItems = resourceDetails.getItemIds();
 		for (Attribute attributeItem : attributeItems) {
@@ -114,7 +123,7 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 				// skip
 				break;
 			case PICTURE_NAME_KEY:
-				setPicture(attributeItem.getValue());
+				setPicture(attributeItem.getValue(), resourceType);
 				break;
 			case INFO_KEY:
 				String htmlInformation = attributeItem.getValue();
@@ -126,7 +135,7 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 				break;
 			case ROOM_NR_KEY:
 				// skip, if ressource is a room
-				if (!isRoom(attributeItem, attributeItems))
+				if (resourceType != ResourceType.ROOM)
 					addToTable = true;
 				break;
 			case EMAIL_KEY:
@@ -175,27 +184,43 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 		return result;
 	}
 
-	private void setPicture(String name) {
-		ThemeResource tr = new ThemeResource(IMAGE_PATH + name + IMAGE_ENDING);
-		image.setSource(tr);
+	private void setPicture(String name, ResourceType type) {
+		boolean showImage = true;
+		ThemeResource tr;
+		String file = name + IMAGE_ENDING;
+		if (fileExists(file)) {
+			tr = new ThemeResource(IMAGE_PATH + name + IMAGE_ENDING);
+		} else {
+			String imageName;
+			if (type == ResourceType.PERSON) {
+				imageName = DEFAULT_IMAGE_PERSON;
+			} else {
+				imageName = DEFAULT_IMAGE_COURSE;
+			}
+			if (fileExists(imageName)) {
+				tr = new ThemeResource(IMAGE_PATH + imageName);
+			} else {
+				tr = null;
+				showImage = false;
+			}
+		}
+
+		if (showImage && tr != null) {
+			image.setSource(tr);
+			image.setVisible(true);
+		} else {
+			image.setVisible(false);
+		}
+
 		image.markAsDirty();
 		image.setWidth(20, Unit.PERCENTAGE);
 		layout.setExpandRatio(detailInfoTable, 2);
 		layout.setExpandRatio(image, 1);
 	}
 
-	private boolean isRoom(Attribute attribut, List<Attribute> attributeList) {
-		boolean result = false;
-		if (attribut.getKey() == AttributKey.ROOM_NR_KEY) {
-			for (Attribute attributItem : attributeList) {
-				if (attributItem.getKey() == AttributKey.NAME_KEY
-						&& attribut.getValue().equals(attributItem.getValue())) {
-					result = true;
-					break;
-				}
-			}
-		}
-		return result;
+	private boolean fileExists(String name) {
+		File file = new File(SERVER_PATH + RESOURCE_PATH + IMAGE_PATH + name);
+		return file.exists();
 	}
 
 	@Override

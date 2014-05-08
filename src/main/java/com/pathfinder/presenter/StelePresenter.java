@@ -9,6 +9,7 @@ import java.util.TimerTask;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.pathfinder.model.AttributKey;
 import com.pathfinder.model.Attribute;
 import com.pathfinder.model.CalendarModel;
 import com.pathfinder.model.Device;
@@ -16,7 +17,7 @@ import com.pathfinder.model.EventModel;
 import com.pathfinder.model.FreeRoomModel;
 import com.pathfinder.model.KeyboardModel;
 import com.pathfinder.model.ResourceModel;
-import com.pathfinder.model.ResourceModel.ResourceType;
+import com.pathfinder.model.ResourceType;
 import com.pathfinder.model.SessionLoggingModel;
 import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.ApplicationPropertiesSpec;
@@ -579,13 +580,11 @@ public class StelePresenter implements StelePresenterSpec,
 
 		// Showing
 		detailInfo.removeDetails();
-		detailInfo.addDetails(resourceDetails);
+		detailInfo.addDetails(resourceDetails, resource.getType());
 		detailImage.removeImage();
-		if ((ResourceType.ROOM.toString()).equals(resource.getType())) {
-			for (Attribute attribut : resourceDetails.getItemIds()) {
-				if ("Raum".equals(attribut.getKey())) {
-					detailImage.setImage(steleLocation + attribut.getValue());
-				}
+		for (Attribute attribut : resourceDetails.getItemIds()) {
+			if (attribut.getKey() == AttributKey.ROOM_NR_KEY) {
+				detailImage.setImage(steleLocation + attribut.getValue());
 			}
 		}
 		this.detailLayout.setVisible(true);
@@ -726,7 +725,8 @@ public class StelePresenter implements StelePresenterSpec,
 		if (resource != null) {
 			detailInfo.removeDetails();
 			detailInfo.addDetails(dataLoader.getResourceDetails(
-					resource.getId(), UI.getCurrent().getLocale()));
+					resource.getId(), UI.getCurrent().getLocale()), resource
+					.getType());
 		}
 		detailEvents.updateTranslations();
 		eventSelectionView.updateTranslations();

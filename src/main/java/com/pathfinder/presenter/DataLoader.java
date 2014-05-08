@@ -33,7 +33,7 @@ import com.pathfinder.model.Category;
 import com.pathfinder.model.EventModel;
 import com.pathfinder.model.FreeRoomModel;
 import com.pathfinder.model.ResourceModel;
-import com.pathfinder.model.ResourceModel.ResourceType;
+import com.pathfinder.model.ResourceType;
 import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.ApplicationPropertiesSpec;
 import com.pathfinder.util.properties.PropertiesKey;
@@ -344,11 +344,6 @@ public class DataLoader implements DataLoaderSpec {
 	}
 
 	private void removeDeadListener() {
-
-		System.out.println("Max-mem: " + Runtime.getRuntime().maxMemory()
-				/ (1024 * 1024));
-		System.out.println("Free-mem: " + Runtime.getRuntime().freeMemory()
-				/ (1024 * 1024));
 
 		List<DataLoaderListenerSpec> listenerToBeRemoved = new ArrayList<DataLoaderListenerSpec>();
 

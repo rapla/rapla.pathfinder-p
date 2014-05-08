@@ -1,9 +1,6 @@
 package com.pathfinder.view;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 
 import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.ApplicationPropertiesSpec;
@@ -50,28 +47,24 @@ public class DetailImage extends Image implements DetailImageSpec {
 	public void setImage(String imageUrl) {
 		if (!"".equals(imageUrl)) {
 
-			ThemeResource themeResource = new ThemeResource(IMAGE_PATH
-					+ imageUrl + IMAGE_ENDING);
+			// Check if file exists
+			String serverpath = UI.getCurrent().getSession().getService()
+					.getBaseDirectory().getAbsolutePath();
+			String path = "" + IMAGE_PATH + imageUrl + IMAGE_ENDING;
 
-			try {
-				String serverpath = UI.getCurrent().getSession().getService()
-						.getBaseDirectory().getAbsolutePath();
-				String path = "" + IMAGE_PATH + imageUrl + IMAGE_ENDING;
-				File file = new File(serverpath + File.separator + "VAADIN"
-						+ File.separator + "themes" + File.separator
-						+ "rapla_pathfinder_p" + File.separator + path);
-				InputStream inputStream = new FileInputStream(file);
+			File file = new File(serverpath + File.separator + "VAADIN"
+					+ File.separator + "themes" + File.separator
+					+ "rapla_pathfinder_p" + File.separator + path);
 
+			if (file.exists()) {
+				ThemeResource themeResource = new ThemeResource(IMAGE_PATH
+						+ imageUrl + IMAGE_ENDING);
 				this.setSource(themeResource);
-
-			} catch (FileNotFoundException e) {
-				System.out.println("Image Default");
+			} else {
 				this.setSource(new ThemeResource(DEFAULT_IMAGE));
 			}
 
 			this.setSizeFull();
-		} else {
-			removeImage();
 		}
 	}
 

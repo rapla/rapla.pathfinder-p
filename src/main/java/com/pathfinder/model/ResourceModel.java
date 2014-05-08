@@ -10,20 +10,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ResourceModel {
-	public enum ResourceType {
-		ROOM("room"), COURSE("course"), PERSON("person"), POI("poi");
-
-		private final String stringValue;
-
-		private ResourceType(final String text) {
-			this.stringValue = text;
-		}
-
-		@Override
-		public String toString() {
-			return stringValue;
-		}
-	}
 
 	public static final String PROPERTY_ID = "id";
 	public static final String PROPERTY_NAME = "name";
@@ -36,7 +22,7 @@ public class ResourceModel {
 	private String name = "";
 	private String link = "";
 	private String[] searchTerms;
-	private String type = "";
+	private ResourceType type = ResourceType.UNKNOWN;
 	private String faculty = "";
 
 	public ResourceModel(String id, String name, String link,
@@ -84,12 +70,12 @@ public class ResourceModel {
 		this.searchTerms = searchTerms;
 	}
 
-	public String getType() {
+	public ResourceType getType() {
 		return type;
 	}
 
 	public void setType(String type) {
-		this.type = type;
+		this.type = ResourceType.getResourceByString(type);
 	}
 
 	public String getFaculty() {

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.pathfinder.model.ResourceModel;
-import com.pathfinder.model.ResourceModel.ResourceType;
+import com.pathfinder.model.ResourceType;
 import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.PropertiesKey;
 import com.pathfinder.util.translation.TranslationKeys;
@@ -173,6 +173,8 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 				case POI:
 					upScrolling(poiTable);
 					break;
+				default:
+
 				}
 			} else {
 				switch (type) {
@@ -188,6 +190,7 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 				case POI:
 					downScrolling(poiTable);
 					break;
+				default:
 				}
 			}
 
