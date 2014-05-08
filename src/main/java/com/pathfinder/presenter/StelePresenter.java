@@ -56,6 +56,7 @@ import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.server.Page;
+import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.calendar.DateConstants;
@@ -151,7 +152,8 @@ public class StelePresenter implements StelePresenterSpec,
 
 		ThemeResource res = new ThemeResource("img/logo.png");
 		logo.setSource(res);
-		logo.setPrimaryStyleName("logo");
+		logo.setPrimaryStyleName("logo-dhbw");
+		logo.setHeight(11, Unit.EM);
 		this.contentLayout.addComponent(logo);
 		this.contentLayout.addComponent(freeRoom);
 		this.contentLayout.addComponent(layoutNormal);
