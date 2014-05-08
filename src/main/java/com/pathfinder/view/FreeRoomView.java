@@ -15,6 +15,7 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.CellStyleGenerator;
 import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.Table.ColumnHeaderMode;
+import com.vaadin.ui.themes.Reindeer;
 
 /**
  * Layout for the FreeRoomView
@@ -65,6 +66,7 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 				.setSortContainerPropertyId(FreeRoomModel.PROPERTY_START);
 		this.freeRoomTable.setSortAscending(true);
 		this.freeRoomTable.setSortEnabled(false);
+		this.freeRoomTable.addStyleName(Reindeer.TABLE_BORDERLESS);
 		this.freeRoomTable.setWidth(100, Unit.PERCENTAGE);
 		this.freeRoomTable
 				.setCellStyleGenerator(new CustomCellStyleGenerator());
