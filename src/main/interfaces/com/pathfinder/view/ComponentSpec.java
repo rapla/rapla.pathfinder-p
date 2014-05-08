@@ -1,6 +1,5 @@
 package com.pathfinder.view;
 
-import com.pathfinder.view.ComponentSpecContract;
 import com.vaadin.ui.Component;
 
 import de.vksi.c4j.ContractReference;
@@ -12,6 +11,6 @@ import de.vksi.c4j.ContractReference;
  * 
  */
 @ContractReference(ComponentSpecContract.class)
-public interface ComponentSpec extends TranslatabelSpec, Component {
+public interface ComponentSpec extends TranslatableSpec, DestroyableSpec, Component {
 
 }

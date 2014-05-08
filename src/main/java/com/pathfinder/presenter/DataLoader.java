@@ -28,7 +28,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pathfinder.model.Attribut;
+import com.pathfinder.model.Attribute;
 import com.pathfinder.model.Category;
 import com.pathfinder.model.EventModel;
 import com.pathfinder.model.FreeRoomModel;
@@ -312,7 +312,7 @@ public class DataLoader implements DataLoaderSpec {
 		// application.properties)
 		long loadInterval = properties
 				.getIntProperty(PropertiesKey.DATA_LOAD_INTERVALL);
-		new Timer().schedule(getTimerTask(), loadInterval, loadInterval);
+		new Timer(true).schedule(getTimerTask(), loadInterval, loadInterval);
 	}
 
 	private List<JSONObject> getFreeResourcesResources(JSONObject jsonObject) {
@@ -340,10 +340,15 @@ public class DataLoader implements DataLoaderSpec {
 			}
 		};
 
-		new Timer().schedule(task, 0, 5 * 60 * 1000);
+		new Timer(true).schedule(task, 0, 5 * 60 * 1000);
 	}
 
 	private void removeDeadListener() {
+
+		System.out.println("Max-mem: " + Runtime.getRuntime().maxMemory()
+				/ (1024 * 1024));
+		System.out.println("Free-mem: " + Runtime.getRuntime().freeMemory()
+				/ (1024 * 1024));
 
 		List<DataLoaderListenerSpec> listenerToBeRemoved = new ArrayList<DataLoaderListenerSpec>();
 
@@ -355,6 +360,8 @@ public class DataLoader implements DataLoaderSpec {
 			DataLoaderListenerSpec listener = iterator.next();
 			if (listener.isTimeToGetRemoved()) {
 				listenerToBeRemoved.add(listener);
+				listener.destroy();
+				LOGGER.trace("DataLoaderListener removed");
 			}
 		}
 
@@ -463,18 +470,19 @@ public class DataLoader implements DataLoaderSpec {
 	}
 
 	@Override
-	public BeanItemContainer<Attribut> getResourceDetails(String resourceId,
+	public BeanItemContainer<Attribute> getResourceDetails(String resourceId,
 			Locale locale) {
+
 		String url = RESOURCE_DETAIL_METHOD + "resourceId=" + resourceId;
 		if (locale != null) {
 			url += "&language=" + locale.getLanguage();
 		}
 
 		JSONObject attributMap;
-		Attribut attribut;
+		Attribute attribut;
 
-		BeanItemContainer<Attribut> attributList = new BeanItemContainer<Attribut>(
-				Attribut.class);
+		BeanItemContainer<Attribute> attributList = new BeanItemContainer<Attribute>(
+				Attribute.class);
 
 		try {
 			BufferedReader br = new BufferedReader(new InputStreamReader(
@@ -482,25 +490,30 @@ public class DataLoader implements DataLoaderSpec {
 
 			JSONObject jsonObject = (JSONObject) parser.parse(br);
 
-			attributMap = (JSONObject) ((JSONObject) jsonObject.get("result"))
-					.get("attributeMap");
+			jsonObject = (JSONObject) jsonObject.get("result");
 
-			@SuppressWarnings("unchecked")
-			Set<String> attributeMapSet = attributMap.keySet();
+			if (jsonObject == null) {
+				attributList = null;
+			} else {
+				attributMap = (JSONObject) jsonObject.get("attributeMap");
 
-			Iterator<String> attributeMapKeys = attributeMapSet.iterator();
+				@SuppressWarnings("unchecked")
+				Set<String> attributeMapSet = attributMap.keySet();
 
-			while (attributeMapKeys.hasNext()) {
-				attribut = new Attribut();
+				Iterator<String> attributeMapKeys = attributeMapSet.iterator();
 
-				String nextKey = attributeMapKeys.next().toString();
-				attribut.setKey(nextKey.toLowerCase());
-				attribut.setLabel((String) ((JSONObject) attributMap
-						.get(nextKey)).get(Attribut.PROPERTY_LABEL));
-				attribut.setValue((String) ((JSONObject) attributMap
-						.get(nextKey)).get(Attribut.PROPERTY_VALUE));
+				while (attributeMapKeys.hasNext()) {
+					attribut = new Attribute();
 
-				attributList.addItem(attribut);
+					String nextKey = attributeMapKeys.next().toString();
+					attribut.setKey(nextKey);
+					attribut.setLabel((String) ((JSONObject) attributMap
+							.get(nextKey)).get(Attribute.PROPERTY_LABEL));
+					attribut.setValue((String) ((JSONObject) attributMap
+							.get(nextKey)).get(Attribute.PROPERTY_VALUE));
+
+					attributList.addItem(attribut);
+				}
 			}
 
 		} catch (ConnectException e) {

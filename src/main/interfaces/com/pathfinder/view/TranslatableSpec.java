@@ -8,6 +8,6 @@ package com.pathfinder.view;
  * @author tim
  * 
  */
-public interface TranslatabelSpec {
+public interface TranslatableSpec {
 	void updateTranslations();
 }

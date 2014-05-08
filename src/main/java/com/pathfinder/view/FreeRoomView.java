@@ -157,4 +157,10 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 	public void addTableItemClickListener(ItemClickListener listener) {
 		this.freeRoomTable.addItemClickListener(listener);
 	}
+
+	@Override
+	public void doCleanup() {
+		freeRoomContainer.removeAllItems();
+		freeRoomTable.removeAllItems();
+	}
 }

@@ -1,16 +1,27 @@
 package com.pathfinder.view;
 
-import com.pathfinder.model.Attribut;
+import java.util.List;
+
+import org.jsoup.Jsoup;
+
+import com.pathfinder.model.AttributKey;
+import com.pathfinder.model.Attribute;
+import com.pathfinder.model.Device;
 import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.ApplicationPropertiesSpec;
 import com.pathfinder.util.properties.PropertiesKey;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.server.ThemeResource;
+import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.CellStyleGenerator;
+import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.Table.ColumnHeaderMode;
 
 /**
@@ -20,11 +31,10 @@ import com.vaadin.ui.Table.ColumnHeaderMode;
  * 
  */
 public class DetailInfo extends CustomComponent implements DetailInfoSpec {
-	private final Object[] visibleColumns = new String[] {
-			Attribut.PROPERTY_LABEL, Attribut.PROPERTY_VALUE };
+	private final Object[] visibleColumns = new String[] { Attribute.PROPERTY_LABEL };
 	private final Table detailInfoTable = new Table();
-	private final BeanItemContainer<Attribut> attributeContainer = new BeanItemContainer<Attribut>(
-			Attribut.class);
+	private final BeanItemContainer<Attribute> attributeContainer = new BeanItemContainer<Attribute>(
+			Attribute.class);
 	private final ApplicationPropertiesSpec properties = ApplicationProperties
 			.getInstance();
 
@@ -34,6 +44,12 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 			+ properties.getProperty(PropertiesKey.DEFAULT_IMAGE_NAME);
 
 	private final HorizontalLayout layout = new HorizontalLayout();
+
+	private final static String DOTS = "...";
+
+	private final static int MAX_INFO_LENGTH = 25;
+
+	private Device device = Device.UNDEFINED;
 
 	private Image image = new Image();
 
@@ -52,6 +68,15 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 		detailInfoTable.setSelectable(false);
 		detailInfoTable.setCellStyleGenerator(new CustomCellStyleGenerator());
 		detailInfoTable.setSizeFull();
+		detailInfoTable.addGeneratedColumn("htmlvalue", new ColumnGenerator() {
+			public Component generateCell(Table source, Object itemId,
+					Object columnId) {
+				String value = ((Attribute) itemId).getValue();
+				Label label = new Label(value, ContentMode.HTML);
+				label.setSizeUndefined();
+				return label;
+			}
+		});
 		layout.addComponent(detailInfoTable);
 	}
 
@@ -59,7 +84,6 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 		layout.setSizeFull();
 		layout.setVisible(false);
 		layout.addComponent(image);
-		
 
 		detailInfoTable.setVisible(false);
 	}
@@ -78,32 +102,100 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 	}
 
 	@Override
-	public void addDetails(BeanItemContainer<Attribut> resourceDetails) {
-		int length = 0;
-		for (Attribut attributeItem : resourceDetails.getItemIds()) {
-			if (!"resourceurl".equals(attributeItem.getKey())){
-				
-				if (!"bild".equals(attributeItem.getKey())) {
-					this.detailInfoTable.addItem(attributeItem);
-					length += 1;
-					layout.setExpandRatio(detailInfoTable, 1);
-				}
-			
-				else if ("bild".equals(attributeItem.getKey())) {
-					ThemeResource tr = new ThemeResource(IMAGE_PATH
-						+ attributeItem.getValue() + IMAGE_ENDING);
-					image.setSource(tr);
-					image.markAsDirty();
-					image.setWidth(20, Unit.PERCENTAGE);
-					layout.setExpandRatio(detailInfoTable, 2);
-					layout.setExpandRatio(image, 1);
+	public void addDetails(BeanItemContainer<Attribute> resourceDetails) {
+
+		List<Attribute> attributeItems = resourceDetails.getItemIds();
+		for (Attribute attributeItem : attributeItems) {
+
+			boolean addToTable = false;
+
+			switch (attributeItem.getKey()) {
+			case RESOURCE_URL_KEY:
+				// skip
+				break;
+			case PICTURE_NAME_KEY:
+				setPicture(attributeItem.getValue());
+				break;
+			case INFO_KEY:
+				String htmlInformation = attributeItem.getValue();
+				attributeItem.setValue(removeHtmlAndCut(htmlInformation,
+						MAX_INFO_LENGTH));
+				attributeItem.setInformation(htmlInformation);
+				attributeItem.setPerson(getName(attributeItems));
+				addToTable = true;
+				break;
+			case ROOM_NR_KEY:
+				// skip, if ressource is a room
+				if (!isRoom(attributeItem, attributeItems))
+					addToTable = true;
+				break;
+			case EMAIL_KEY:
+				if (!device.isStele())
+					attributeItem.setValue(addMailTo(attributeItem.getValue()));
+				addToTable = true;
+				break;
+			default:
+				addToTable = true;
+				break;
+			}
+
+			if (addToTable)
+				this.detailInfoTable.addItem(attributeItem);
+
+		}
+
+		layout.setExpandRatio(detailInfoTable, 1);
+		detailInfoTable.setPageLength(detailInfoTable.getItemIds().size());
+		detailInfoTable.setVisible(true);
+		layout.setVisible(true);
+	}
+
+	private String addMailTo(String mail) {
+		String result = mail;
+		if (mail != null && mail.length() > 0) {
+			result = "<a href=\"mailto:" + mail + "\">" + mail + "</a>";
+		}
+		return result;
+	}
+
+	private String removeHtmlAndCut(String textToCut, int length) {
+		String withoutHtml = Jsoup.parse(textToCut).text();
+		length = Math.min(withoutHtml.length(), length);
+		return withoutHtml.substring(0, length) + DOTS;
+	}
+
+	private String getName(List<Attribute> attributeItems) {
+		String result = null;
+		for (Attribute attribute : attributeItems) {
+			if (attribute.getKey() == AttributKey.NAME_KEY) {
+				result = attribute.getValue();
+				break;
+			}
+		}
+		return result;
+	}
+
+	private void setPicture(String name) {
+		ThemeResource tr = new ThemeResource(IMAGE_PATH + name + IMAGE_ENDING);
+		image.setSource(tr);
+		image.markAsDirty();
+		image.setWidth(20, Unit.PERCENTAGE);
+		layout.setExpandRatio(detailInfoTable, 2);
+		layout.setExpandRatio(image, 1);
+	}
+
+	private boolean isRoom(Attribute attribut, List<Attribute> attributeList) {
+		boolean result = false;
+		if (attribut.getKey() == AttributKey.ROOM_NR_KEY) {
+			for (Attribute attributItem : attributeList) {
+				if (attributItem.getKey() == AttributKey.NAME_KEY
+						&& attribut.getValue().equals(attributItem.getValue())) {
+					result = true;
+					break;
 				}
 			}
 		}
-
-		detailInfoTable.setPageLength(length);
-		detailInfoTable.setVisible(true);
-		layout.setVisible(true);
+		return result;
 	}
 
 	@Override
@@ -117,5 +209,22 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 	@Override
 	public void updateTranslations() {
 		// Will be blank
+	}
+
+	@Override
+	public void addInfoTableItemClickListener(ItemClickListener listener) {
+		detailInfoTable.addItemClickListener(listener);
+	}
+
+	@Override
+	public void setDevice(Device device) {
+		this.device = device;
+	}
+
+	@Override
+	public void doCleanup() {
+		removeDetails();
+		attributeContainer.removeAllItems();
+
 	}
 }

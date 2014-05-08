@@ -11,5 +11,5 @@ import de.vksi.c4j.ContractReference;
  * 
  */
 @ContractReference(ViewSpecContract.class)
-public interface ViewSpec extends TranslatabelSpec, Component {
+public interface ViewSpec extends TranslatableSpec, DestroyableSpec, Component {
 }

@@ -70,4 +70,9 @@ public class DateTime extends AbstractComponent implements DateTimeSpec {
 		this.backToHomeListener.add(listener);
 	}
 
+	@Override
+	public void doCleanup() {
+		this.backToHomeListener.clear();
+	}
+
 }

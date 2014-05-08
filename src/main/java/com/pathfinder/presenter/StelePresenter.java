@@ -9,7 +9,7 @@ import java.util.TimerTask;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.pathfinder.model.Attribut;
+import com.pathfinder.model.Attribute;
 import com.pathfinder.model.CalendarModel;
 import com.pathfinder.model.Device;
 import com.pathfinder.model.EventModel;
@@ -44,9 +44,11 @@ import com.pathfinder.view.KeyboardId;
 import com.pathfinder.view.KeyboardSpec;
 import com.pathfinder.view.MenuBar;
 import com.pathfinder.view.MenuBarSpec;
+import com.pathfinder.view.PersonInformationView;
+import com.pathfinder.view.PersonInformationViewSpec;
 import com.pathfinder.view.SearchField;
 import com.pathfinder.view.SearchFieldSpec;
-import com.pathfinder.view.TranslatabelSpec;
+import com.pathfinder.view.TranslatableSpec;
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
@@ -78,7 +80,7 @@ import com.vaadin.ui.components.calendar.CalendarComponentEvents.ForwardEvent;
  * 
  */
 public class StelePresenter implements StelePresenterSpec,
-		DataLoaderListenerSpec, TranslatabelSpec {
+		DataLoaderListenerSpec, TranslatableSpec {
 	private static final Logger LOGGER = LogManager
 			.getLogger(StelePresenter.class.getName());
 	private final ApplicationPropertiesSpec properties = ApplicationProperties
@@ -101,6 +103,7 @@ public class StelePresenter implements StelePresenterSpec,
 	private final MenuBarSpec menuBar = new MenuBar();
 	private final EventSelectionViewSpec eventSelectionView = new EventSelectionView();
 	private final Image logo = new Image();
+	private final PersonInformationViewSpec personInformationView = new PersonInformationView();
 
 	private final VerticalLayout mainLayout = new VerticalLayout();
 	private final VerticalLayout contentLayout = new VerticalLayout();
@@ -110,13 +113,15 @@ public class StelePresenter implements StelePresenterSpec,
 
 	private final KeyboardModel keyboardModel = new KeyboardModel();
 	private ResourceModel resource = null;
-	private BeanItemContainer<Attribut> resourceDetails = null;
+	private BeanItemContainer<Attribute> resourceDetails = null;
 	private BeanItemContainer<EventModel> resourceEvents = null;
 	private CalendarModel calendarModel = new CalendarModel();
 	private Device steleLocation = Device.STELE_MIDDLE;
 	private SessionLoggingModel sessionLoggingModel = new SessionLoggingModel();
 
 	private Listener uiListener = null;
+
+	private Timer freeRoomsTimer;
 
 	public StelePresenter() {
 		// Register as DataListener to get notified if data changes
@@ -207,6 +212,8 @@ public class StelePresenter implements StelePresenterSpec,
 				.addKeyboardButtonListener(new KeyboardButtonClickListener());
 		this.eventSelectionView
 				.addButtonClickListener(new EventResourceSelectedListener());
+		this.detailInfo
+				.addInfoTableItemClickListener(new ResourcesClickListener());
 	}
 
 	@Override
@@ -215,24 +222,65 @@ public class StelePresenter implements StelePresenterSpec,
 	}
 
 	class ResourcesClickListener implements ItemClickListener {
+
 		@Override
 		public void itemClick(ItemClickEvent event) {
 
-			if (event.getItemId() instanceof ResourceModel)
+			if (event.getItemId() instanceof ResourceModel) {
+				// Resource in accordion was clicked
 				resource = (ResourceModel) event.getItemId();
-			if (event.getItemId() instanceof FreeRoomModel) {
+			} else if (event.getItemId() instanceof FreeRoomModel) {
+				// Resource in free rooms table was clicked
 				FreeRoomModel freeResource = (FreeRoomModel) event.getItemId();
 				resource = new ResourceModel();
 
 				resource.setId(freeResource.getId());
 				resource.setName(freeResource.getName());
 				resource.setType(ResourceType.ROOM.toString());
+			} else if (event.getItemId() instanceof Attribute) {
+				// Resource in detail view was clicked
+				boolean showDetailView = doAttributeAction((Attribute) event
+						.getItemId());
+				if (!showDetailView)
+					return;
 			}
 
 			sessionLoggingModel.getClickedResources().add(resource);
 
 			prepareDetailView();
 		}
+
+		private boolean doAttributeAction(Attribute attribute) {
+			boolean showDetailView = false;
+
+			switch (attribute.getKey()) {
+			case ROOM_NR_KEY:
+				resource = getRoomByName(attribute.getValue());
+				showDetailView = true;
+				break;
+			case INFO_KEY:
+				personInformationView.showInformation(attribute.getPerson(),
+						attribute.getInformation());
+				break;
+			default:
+			}
+
+			return showDetailView;
+		}
+	}
+
+	private ResourceModel getRoomByName(String roomName) {
+		ResourceModel result = null;
+		if (roomName != null && roomName.length() > 0) {
+			for (ResourceModel model : dataLoader.getRoomContainer()
+					.getItemIds()) {
+				if (model.getName().toLowerCase()
+						.equals(roomName.toLowerCase())) {
+					result = model;
+				}
+			}
+		}
+		return result;
 	}
 
 	class SearchFieldTextChangeListener implements TextChangeListener {
@@ -270,13 +318,6 @@ public class StelePresenter implements StelePresenterSpec,
 		@Override
 		public void buttonClick(ClickEvent event) {
 			changeToWheelChairView();
-		}
-	}
-
-	class RespawnSteleLayoutTimer extends TimerTask {
-		@Override
-		public void run() {
-			switchToSearchView();
 		}
 	}
 
@@ -436,16 +477,20 @@ public class StelePresenter implements StelePresenterSpec,
 	}
 
 	private void prepareDetailView() {
-		resourceDetails = dataLoader.getResourceDetails(resource.getId(), UI
-				.getCurrent().getLocale());
+		if (resource != null) {
+			resourceDetails = dataLoader.getResourceDetails(resource.getId(),
+					UI.getCurrent().getLocale());
 
-		calendarModel.setBeginningOfCurrentDay(new Date());
+			if (resourceDetails != null) {
+				calendarModel.setBeginningOfCurrentDay(new Date());
 
-		updateCalendarEvents();
+				updateCalendarEvents();
 
-		LOGGER.trace(resource.getType() + " element was clicked: "
-				+ resource.getName());
-		switchToDetailView();
+				LOGGER.trace(resource.getType() + " element was clicked: "
+						+ resource.getName());
+				switchToDetailView();
+			}
+		}
 	}
 
 	private void updateCalendarEvents() {
@@ -470,7 +515,8 @@ public class StelePresenter implements StelePresenterSpec,
 		// application.properties)
 		long loadInterval = properties
 				.getIntProperty(PropertiesKey.DATA_LOAD_INTERVAL_FREE_ROOMS);
-		new Timer().schedule(getTimerTask(), loadInterval, loadInterval);
+		freeRoomsTimer = new Timer(true);
+		freeRoomsTimer.schedule(getTimerTask(), loadInterval, loadInterval);
 	}
 
 	private TimerTask getTimerTask() {
@@ -484,6 +530,8 @@ public class StelePresenter implements StelePresenterSpec,
 	}
 
 	private void goBackToHomeScreenAndRestoreDefaultSettings() {
+		eventSelectionView.close();
+		personInformationView.close();
 		switchToSearchView();
 		clearSearchString();
 		languageChanged(VaadinSession.getCurrent().getLocale());
@@ -532,10 +580,8 @@ public class StelePresenter implements StelePresenterSpec,
 		detailInfo.addDetails(resourceDetails);
 		detailImage.removeImage();
 		if ((ResourceType.ROOM.toString()).equals(resource.getType())) {
-			for (Attribut attribut : resourceDetails.getItemIds()) {
-				// TODO The label name depends on the "Freiraum" interface,
-				// which isn´t implemented yet
-				if ("Raum".equals(attribut.getLabel())) {
+			for (Attribute attribut : resourceDetails.getItemIds()) {
+				if ("Raum".equals(attribut.getKey())) {
 					detailImage.setImage(steleLocation + attribut.getValue());
 				}
 			}
@@ -681,6 +727,8 @@ public class StelePresenter implements StelePresenterSpec,
 					resource.getId(), UI.getCurrent().getLocale()));
 		}
 		detailEvents.updateTranslations();
+		eventSelectionView.updateTranslations();
+		personInformationView.updateTranslations();
 	}
 
 	@Override
@@ -705,12 +753,30 @@ public class StelePresenter implements StelePresenterSpec,
 
 	@Override
 	public void setDevice(Device steleLocation) {
-		if (steleLocation != null && steleLocation != Device.UNDEFINED)
+		if (steleLocation != null) {
 			this.steleLocation = steleLocation;
+			this.detailInfo.setDevice(steleLocation);
+		}
 	}
 
 	@Override
 	public void setUserAgent(String userAgent) {
 		this.sessionLoggingModel.setDevice(userAgent);
+	}
+
+	@Override
+	public void destroy() {
+		freeRoomsTimer.cancel();
+		dateTime.doCleanup();
+		freeRoom.doCleanup();
+		accordionView.doCleanup();
+		keyboardView.doCleanup();
+		searchField.doCleanup();
+		detailInfo.doCleanup();
+		detailImage.doCleanup();
+		detailEvents.doCleanup();
+		menuBar.doCleanup();
+		eventSelectionView.doCleanup();
+		personInformationView.doCleanup();
 	}
 }

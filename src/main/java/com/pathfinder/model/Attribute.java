@@ -6,21 +6,25 @@ package com.pathfinder.model;
  * @author alexh
  * 
  */
-public class Attribut {
+public class Attribute {
+
 	public static final String PROPERTY_KEY = "key";
 	public static final String PROPERTY_LABEL = "label";
 	public static final String PROPERTY_VALUE = "value";
 
-	private String key;
+	private AttributKey key;
 	private String label;
 	private String value;
 
-	public String getKey() {
+	private String person;
+	private String information;
+
+	public AttributKey getKey() {
 		return key;
 	}
 
 	public void setKey(String key) {
-		this.key = key;
+		this.key = AttributKey.getKey(key);
 	}
 
 	public String getLabel() {
@@ -37,6 +41,22 @@ public class Attribut {
 
 	public void setValue(String value) {
 		this.value = value;
+	}
+
+	public String getPerson() {
+		return person;
+	}
+
+	public void setPerson(String person) {
+		this.person = person;
+	}
+
+	public String getInformation() {
+		return information;
+	}
+
+	public void setInformation(String information) {
+		this.information = information;
 	}
 
 	@Override

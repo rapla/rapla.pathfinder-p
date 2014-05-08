@@ -5,9 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.ApplicationPropertiesSpec;
 import com.pathfinder.util.properties.PropertiesKey;
@@ -25,8 +22,6 @@ import com.vaadin.ui.UI;
  * 
  */
 public class DetailImage extends Image implements DetailImageSpec {
-	private static final Logger LOGGER = LogManager.getLogger(DetailImage.class
-			.getName());
 	private final TranslatorSpec translator = Translator.getInstance();
 	private final ApplicationPropertiesSpec properties = ApplicationProperties
 			.getInstance();
@@ -75,6 +70,8 @@ public class DetailImage extends Image implements DetailImageSpec {
 			}
 
 			this.setSizeFull();
+		} else {
+			removeImage();
 		}
 	}
 
@@ -86,6 +83,10 @@ public class DetailImage extends Image implements DetailImageSpec {
 
 	@Override
 	public void updateTranslations() {
+	}
+
+	@Override
+	public void doCleanup() {
 	}
 
 }

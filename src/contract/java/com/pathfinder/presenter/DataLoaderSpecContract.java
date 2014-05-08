@@ -10,7 +10,7 @@ import static de.vksi.c4j.Condition.preCondition;
 import java.util.Date;
 import java.util.Locale;
 
-import com.pathfinder.model.Attribut;
+import com.pathfinder.model.Attribute;
 import com.pathfinder.model.EventModel;
 import com.pathfinder.model.FreeRoomModel;
 import com.pathfinder.model.ResourceModel;
@@ -109,7 +109,7 @@ public class DataLoaderSpecContract implements DataLoaderSpec {
 	}
 
 	@Override
-	public BeanItemContainer<Attribut> getResourceDetails(String modelLink,
+	public BeanItemContainer<Attribute> getResourceDetails(String modelLink,
 			Locale locale) {
 		// TODO Auto-generated method stub
 		return null;

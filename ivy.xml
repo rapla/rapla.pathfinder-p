@@ -48,17 +48,11 @@
 		<!-- Log4J 2 -->
 		<dependency org="org.apache.logging.log4j" name="log4j-api" rev="2.0-rc1" />
 		<dependency org="org.apache.logging.log4j" name="log4j-core" rev="2.0-rc1" />
-
-		<!-- Responsive addon -->
-		<!--
-		<dependency org="com.vaadin.addon.responsive" name="responsive"
-			rev="1.0.0.alpha4" />
-		-->
 			
 		<!-- Jackson -->	
-		<dependency org="com.fasterxml.jackson.core" name="jackson-databind" rev="2.3.2" />
-		<dependency org="com.fasterxml.jackson.core" name="jackson-annotations" rev="2.3.2" />
-		<dependency org="com.fasterxml.jackson.core" name="jackson-core" rev="2.3.2" />
+		<dependency org="com.fasterxml.jackson.core" name="jackson-databind" rev="2.3.3" />
+		<dependency org="com.fasterxml.jackson.core" name="jackson-annotations" rev="2.3.3" />
+		<dependency org="com.fasterxml.jackson.core" name="jackson-core" rev="2.3.3" />
 
 		<!-- PopupButton -->
 		<dependency org="org.vaadin.addons" name="popupbutton" rev="2.3.0" />
@@ -68,5 +62,8 @@
 		
 		<!-- ResetButtonForTextField -->
 		<dependency org="org.vaadin.addons" name="resetbuttonfortextfield" rev="1.1.1" />
+		
+		<!-- JSoup - Helps removing html tags -->
+		<dependency org="org.jsoup" name="jsoup" rev="1.7.3"/>
 	</dependencies>
 </ivy-module>

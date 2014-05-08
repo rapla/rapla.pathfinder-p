@@ -42,4 +42,9 @@ public enum Device {
 	public String toString() {
 		return this.urlPicturePrefix;
 	}
+
+	public boolean isStele() {
+		return this == STELE_LEFT || this == STELE_MIDDLE
+				|| this == STELE_RIGHT;
+	}
 }

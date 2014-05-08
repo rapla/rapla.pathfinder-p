@@ -25,7 +25,7 @@ public class DetailEvents extends CustomComponent implements DetailEventsSpec {
 	public DetailEvents() {
 		this.buildLayout();
 		this.addStyling();
-		this.initDummyHanlders();
+		this.initDummyHandlers();
 		this.setCompositionRoot(calendar);
 	}
 
@@ -39,7 +39,7 @@ public class DetailEvents extends CustomComponent implements DetailEventsSpec {
 		this.addStyleName("detailEvents");
 	}
 
-	private void initDummyHanlders() {
+	private void initDummyHandlers() {
 		calendar.setHandler(new DateClickHandler() {
 			@Override
 			public void dateClick(DateClickEvent event) {
@@ -93,5 +93,10 @@ public class DetailEvents extends CustomComponent implements DetailEventsSpec {
 	@Override
 	public void updateTranslations() {
 		calendar.setLocale(UI.getCurrent().getLocale());
+	}
+
+	@Override
+	public void doCleanup() {
+		removeEvents();
 	}
 }

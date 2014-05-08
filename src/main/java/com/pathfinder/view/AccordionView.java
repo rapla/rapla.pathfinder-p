@@ -10,7 +10,6 @@ import com.pathfinder.util.properties.PropertiesKey;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
-import com.pathfinder.view.AccordionViewSpec;
 import com.vaadin.data.Container.Filter;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
@@ -200,9 +199,9 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 			int pageLength = table.getPageLength();
 
 			newIndex = oldIndex - pageLength;
-			// TODO Index 0 doesn´t work oO
+
 			if (newIndex <= 0) {
-				newIndex = 0;
+				newIndex = 1;
 			}
 
 			table.setCurrentPageFirstItemIndex(newIndex);
@@ -377,5 +376,13 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 	@Override
 	public void updateTranslations() {
 		this.updateTableCaptions();
+	}
+
+	@Override
+	public void doCleanup() {
+		this.roomTable.removeAllItems();
+		this.courseTable.removeAllItems();
+		this.personTable.removeAllItems();
+		this.poiTable.removeAllItems();
 	}
 }

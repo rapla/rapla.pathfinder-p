@@ -1,6 +1,48 @@
 package com.pathfinder.view;
 
-import static com.pathfinder.view.KeyboardId.*;
+import static com.pathfinder.view.KeyboardId.A;
+import static com.pathfinder.view.KeyboardId.AE;
+import static com.pathfinder.view.KeyboardId.B;
+import static com.pathfinder.view.KeyboardId.C;
+import static com.pathfinder.view.KeyboardId.D;
+import static com.pathfinder.view.KeyboardId.DELETE;
+import static com.pathfinder.view.KeyboardId.E;
+import static com.pathfinder.view.KeyboardId.EIGHT;
+import static com.pathfinder.view.KeyboardId.F;
+import static com.pathfinder.view.KeyboardId.FIVE;
+import static com.pathfinder.view.KeyboardId.FOUR;
+import static com.pathfinder.view.KeyboardId.G;
+import static com.pathfinder.view.KeyboardId.H;
+import static com.pathfinder.view.KeyboardId.I;
+import static com.pathfinder.view.KeyboardId.J;
+import static com.pathfinder.view.KeyboardId.K;
+import static com.pathfinder.view.KeyboardId.L;
+import static com.pathfinder.view.KeyboardId.LEFT;
+import static com.pathfinder.view.KeyboardId.M;
+import static com.pathfinder.view.KeyboardId.N;
+import static com.pathfinder.view.KeyboardId.NINE;
+import static com.pathfinder.view.KeyboardId.O;
+import static com.pathfinder.view.KeyboardId.OE;
+import static com.pathfinder.view.KeyboardId.ONE;
+import static com.pathfinder.view.KeyboardId.P;
+import static com.pathfinder.view.KeyboardId.Q;
+import static com.pathfinder.view.KeyboardId.R;
+import static com.pathfinder.view.KeyboardId.RIGHT;
+import static com.pathfinder.view.KeyboardId.S;
+import static com.pathfinder.view.KeyboardId.SEVEN;
+import static com.pathfinder.view.KeyboardId.SIX;
+import static com.pathfinder.view.KeyboardId.SPACE;
+import static com.pathfinder.view.KeyboardId.T;
+import static com.pathfinder.view.KeyboardId.THREE;
+import static com.pathfinder.view.KeyboardId.TWO;
+import static com.pathfinder.view.KeyboardId.U;
+import static com.pathfinder.view.KeyboardId.UE;
+import static com.pathfinder.view.KeyboardId.V;
+import static com.pathfinder.view.KeyboardId.W;
+import static com.pathfinder.view.KeyboardId.X;
+import static com.pathfinder.view.KeyboardId.Y;
+import static com.pathfinder.view.KeyboardId.Z;
+import static com.pathfinder.view.KeyboardId.ZERO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +50,6 @@ import java.util.List;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
-import com.pathfinder.view.KeyboardSpec;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CustomComponent;
@@ -134,5 +175,9 @@ public class Keyboard extends CustomComponent implements KeyboardSpec {
 		for (Button button : buttonList) {
 			button.addClickListener(listener);
 		}
+	}
+
+	@Override
+	public void doCleanup() {
 	}
 }
