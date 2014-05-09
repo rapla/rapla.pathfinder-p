@@ -41,6 +41,7 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 	private final ApplicationPropertiesSpec properties = ApplicationProperties
 			.getInstance();
 
+	private final String EMPTY_EMAIL = "leer";
 	private final String IMAGE_PATH = "img/";
 	private final String IMAGE_ENDING = ".png";
 	private final String RESOURCE_PATH = "/VAADIN/themes/rapla_pathfinder_p/";
@@ -139,9 +140,16 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 					addToTable = true;
 				break;
 			case EMAIL_KEY:
-				if (!device.isStele())
-					attributeItem.setValue(addMailTo(attributeItem.getValue()));
-				addToTable = true;
+				if ((attributeItem.getValue()).equals(EMPTY_EMAIL)
+						|| (attributeItem.getValue()).equals("")
+						|| (attributeItem.getValue()).equals(null)) {
+					addToTable = false;
+				} else {
+					if (!device.isStele())
+						attributeItem.setValue(addMailTo(attributeItem
+								.getValue()));
+					addToTable = true;
+				}
 				break;
 			default:
 				addToTable = true;
