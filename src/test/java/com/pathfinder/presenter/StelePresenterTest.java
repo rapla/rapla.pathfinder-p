@@ -29,7 +29,7 @@ public class StelePresenterTest {
 		ui.setLocale(Locale.GERMAN);
 		UI.setCurrent(ui);
 
-		mainPresenter = new MainPresenter();
+		mainPresenter = new MainPresenter(null);
 		desktopLayout = mainPresenter.getSteleLayoutView();
 
 		HasComponents rootLayout = (HasComponents) ((HasComponents) desktopLayout)

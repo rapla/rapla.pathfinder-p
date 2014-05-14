@@ -126,7 +126,11 @@ public class MainPresenter implements MainPresenterSpec,
 
 	private Timer freeRoomsTimer;
 
-	public MainPresenter() {
+	private UI ui;
+
+	public MainPresenter(UI ui) {
+
+		this.ui = ui;
 
 		// Register as DataListener to get notified if data changes
 		dataLoader.addDataListener(this);
@@ -488,7 +492,7 @@ public class MainPresenter implements MainPresenterSpec,
 	private void prepareDetailView() {
 		if (resource != null) {
 			resourceDetails = dataLoader.getResourceDetails(resource.getId(),
-					UI.getCurrent().getLocale());
+					ui.getLocale());
 
 			if (resourceDetails != null) {
 				calendarModel.setBeginningOfCurrentDay(new Date());
@@ -512,7 +516,7 @@ public class MainPresenter implements MainPresenterSpec,
 					.getEndOfCurrentDay());
 
 			resourceEvents = dataLoader.getEvent(resource.getId(),
-					firstDayOfWeek, lastDayOfWeek, UI.getCurrent().getLocale());
+					firstDayOfWeek, lastDayOfWeek, ui.getLocale());
 
 			detailEvents.setEvents(resourceEvents, firstDayOfWeek,
 					lastDayOfWeek);
@@ -722,8 +726,8 @@ public class MainPresenter implements MainPresenterSpec,
 
 	@Override
 	public void languageChanged(Locale locale) {
-		if (!UI.getCurrent().getLocale().equals(locale)) {
-			UI.getCurrent().setLocale(locale);
+		if (!ui.getLocale().equals(locale)) {
+			ui.setLocale(locale);
 			this.updateTranslations();
 			Page.getCurrent().setTitle(
 					Translator.getInstance().translate(
@@ -742,9 +746,9 @@ public class MainPresenter implements MainPresenterSpec,
 
 		if (resource != null) {
 			detailInfo.removeDetails();
-			detailInfo.addDetails(dataLoader.getResourceDetails(
-					resource.getId(), UI.getCurrent().getLocale()), resource
-					.getType());
+			detailInfo.addDetails(
+					dataLoader.getResourceDetails(resource.getId(),
+							ui.getLocale()), resource.getType());
 		}
 		detailEvents.updateTranslations();
 		eventSelectionView.updateTranslations();
@@ -758,7 +762,10 @@ public class MainPresenter implements MainPresenterSpec,
 		long tenMinutesAgo = new Date().getTime() - 10
 				* DateConstants.MINUTEINMILLIS;
 
-		long lastHeartbeat = UI.getCurrent().getLastHeartbeatTimestamp();
+		long lastHeartbeat = ui.getLastHeartbeatTimestamp();
+
+		LOGGER.info("Last heartbeat: " + new Date(lastHeartbeat).toString());
+		LOGGER.info("UI: " + ui);
 
 		if (lastHeartbeat < tenMinutesAgo)
 			result = true;

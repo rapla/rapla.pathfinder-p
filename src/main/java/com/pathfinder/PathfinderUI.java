@@ -130,7 +130,7 @@ public class PathfinderUI extends UI {
 		LOGGER.info("Using layout for the following device: "
 				+ device.getNameInLog());
 
-		mainPresenter = new MainPresenter();
+		mainPresenter = new MainPresenter(this);
 		mainPresenter.setDevice(device);
 		setContent(mainPresenter.getSteleLayoutView());
 		addListenerToAllChildComponents((HasComponents) getContent(),
