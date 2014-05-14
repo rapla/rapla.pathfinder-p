@@ -34,6 +34,7 @@ public class EventSelectionView extends MessageBox implements
 	public EventSelectionView() {
 		super(RESOURCE_FACTORY.getIcon(Icon.NONE), "", new VerticalLayout(),
 				null);
+		cancelButton.setPrimaryStyleName("pop-up-go-back-button");
 		cancelButton.addClickListener(new ButtonClickedListener());
 		title = startTitle;
 	}
@@ -45,6 +46,7 @@ public class EventSelectionView extends MessageBox implements
 		for (ResourceModel resource : resources) {
 			Button newButton = new Button(resource.getName());
 			newButton.setData(resource);
+			newButton.setPrimaryStyleName("pop-up-button");
 			newButton.addClickListener(buttonClickListener);
 			newButton.addClickListener(new ButtonClickedListener());
 			layout.addComponent(newButton);
