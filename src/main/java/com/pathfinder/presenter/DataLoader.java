@@ -532,11 +532,6 @@ public class DataLoader implements DataLoaderSpec {
 						}
 					}
 				});
-
-				for (Attribute attribute : attributes) {
-					System.out.println("Key: " + attribute.getKey());
-				}
-
 				attributList.addAll(attributes);
 
 			}
