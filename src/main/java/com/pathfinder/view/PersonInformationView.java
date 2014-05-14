@@ -32,6 +32,7 @@ public class PersonInformationView extends MessageBox implements
 	public PersonInformationView() {
 		super(RESOURCE_FACTORY.getIcon(Icon.NONE), "", new VerticalLayout(),
 				null);
+		closeButton.setPrimaryStyleName("pop-up-go-back-button");
 		closeButton.addClickListener(new ButtonClickedListener());
 	}
 
