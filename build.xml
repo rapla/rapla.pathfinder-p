@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="Pathfinder"
+	default="build" basedir=".">
+	<property name="src.dir" value="src" />
+	<property name="web.dir" value="WebContent" />
+	<property name="build.dir" value="${basedir}/build" />
+	<property name="name" value="pathfinder" />
+
+	<path id="project-classpath">
+		<fileset dir="${basedir}/lib">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${basedir}/libs">
+			<include name="*.jar" />
+		</fileset>
+		<pathelement path="${build.dir}" />
+	</path>
+
+	<target name="init-ivy">
+		<taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant">
+			<classpath>
+				<pathelement location="ivy.jar" />
+			</classpath>
+		</taskdef>
+	</target>
+
+	<target name="resolve" depends="init-ivy" description="retrieve dependencies with ivy">
+		<ivy:retrieve />
+	</target>
+
+	<target name="resources" description="copy resources">
+		<copy todir="${build.dir}/classes" flatten="true">
+			<fileset dir="${src.dir}">
+				<include name="**/*.xml" />
+				<include name="**/*.xsl" />
+				<include name="**/*.properties" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="build" depends="compile,resources"
+		description="build project, but first compile it">
+		<war destfile="build/${name}.war" needxmlfile='false'>
+			<lib dir="${basedir}/lib" />
+			<classes dir="${build.dir}/classes" />
+			<fileset dir="${web.dir}">
+				<include name="**/*.*" />
+			</fileset>
+		</war>
+	</target>
+
+	<target name="compile" depends="resolve"
+		description="Compile java files and place them in WebContents/web-inf/">
+		<mkdir dir="${build.dir}/classes" />
+		<javac destdir="${build.dir}/classes" failonerror="true">
+			<src path="${src.dir}" />
+			<exclude name="**/*Test.java" />
+			<classpath refid="project-classpath" />
+		</javac>
+	</target>
+</project>
