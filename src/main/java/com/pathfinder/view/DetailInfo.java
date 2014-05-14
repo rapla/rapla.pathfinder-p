@@ -3,8 +3,6 @@ package com.pathfinder.view;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
 
@@ -49,7 +47,6 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 
 	private final String EMPTY_EMAIL = "leer";
 	private final String IMAGE_PATH = "img/";
-	private final String IMAGE_ENDING = ".png";
 	private final String RESOURCE_PATH = "/VAADIN/themes/rapla_pathfinder_p/";
 	private final String DEFAULT_IMAGE_PERSON = properties
 			.getProperty(PropertiesKey.DEFAULT_IMAGE_PERSON);
@@ -147,30 +144,33 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 					addToTable = true;
 				break;
 			case EMAIL_KEY:
-				if ((attributeItem.getValue()).equals(EMPTY_EMAIL)
-						|| (attributeItem.getValue()).equals("")
-						|| (attributeItem.getValue()).equals(null)) {
-					addToTable = false;
-				} else {
+				if (!EMPTY_EMAIL.equals(attributeItem.getValue())) {
 					if (!device.isStele())
 						attributeItem.setValue(addMailTo(attributeItem
 								.getValue()));
 					addToTable = true;
 				}
 				break;
+			case PHONE_KEY:
+				if (!device.isStele()) {
+					attributeItem
+							.setValue(addPhoneTo(attributeItem.getValue()));
+				}
+				addToTable = true;
+				break;
 			default:
 				addToTable = true;
 				break;
 			}
 
-			if (imageExist){
+			if (imageExist) {
 				layout.setExpandRatio(image, 1);
 				layout.setExpandRatio(detailInfoTable, 5);
-			} else{
+			} else {
 				layout.setExpandRatio(image, 0);
 				layout.setExpandRatio(detailInfoTable, 1);
 			}
-			
+
 			if (addToTable)
 				this.detailInfoTable.addItem(attributeItem);
 
@@ -185,6 +185,14 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 		String result = mail;
 		if (mail != null && mail.length() > 0) {
 			result = "<a href=\"mailto:" + mail + "\">" + mail + "</a>";
+		}
+		return result;
+	}
+
+	private String addPhoneTo(String phone) {
+		String result = phone;
+		if (phone != null && phone.length() > 0) {
+			result = "<a href=\"tel:" + phone + "\">" + phone + "</a>";
 		}
 		return result;
 	}
@@ -235,7 +243,7 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 			}
 			image.setVisible(true);
 			imageExist = true;
-			
+
 		} else {
 			image.setVisible(false);
 			imageExist = false;
