@@ -1,7 +1,7 @@
 @import "addons.scss";
 @import "rapla_pathfinder_p.scss";
 @import "desktop.scss";
-@import "mobile.scss";
+@import "tablet.scss";
 
 /* This file prefixes all rules with the theme name to avoid causing conflicts with other themes. */
 /* The actual styles should be defined in rapla_pathfinder_p.scss */
@@ -9,7 +9,7 @@
   @include addons;
   @include rapla_pathfinder_p;
   @include desktop;
-  @include mobile; 
+  @include tablet; 
   
   
 }

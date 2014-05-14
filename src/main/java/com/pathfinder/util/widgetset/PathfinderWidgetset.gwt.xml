@@ -34,5 +34,5 @@
 
     <inherits name="de.steinwedel.messagebox.WidgetSet" />
 
-    <inherits name="com.vaadin.addon.responsive.ResponsiveWidgetSet" />
+    
 </module>

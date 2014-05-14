@@ -29,8 +29,11 @@
 				display: none;
 			}
 			
+			.logo-dhbw {
+				margin-bottom: 3em;
+			}
+			
 			.freeroom{
-		    	margin-top: 3em;
 		    	margin-bottom: 3em;
 		    	
 		    	.v-captiontext{
@@ -227,6 +230,7 @@
 			
 			.menuBar {
 				width: 96% !important;
+				margin-bottom: 3em;
 				
 				.v-gridlayout {
 					.languageButton {

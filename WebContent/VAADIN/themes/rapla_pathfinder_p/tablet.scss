@@ -1,0 +1,47 @@
+@import "../reindeer/reindeer.scss";
+/*
+ * Tablet Styling
+ */
+
+@mixin tablet {
+	@include reindeer;
+	
+	.v-ui[width-range~="600px-800px"]{
+		
+		height: 100%;
+		
+		.stele {
+						
+			.logo-dhbw{
+				height: 6em !important;
+				margin-top: 3em;
+			}
+			
+			.freeroom{
+				.v-table-body{
+					height: 100% !important;
+				}
+				
+				.v-table-row-result-row{
+					height: 30px;
+					
+					.v-table-cell-content{
+						padding-bottom: 0px;
+						padding-top: 0px;
+					}
+				}
+				
+				.v-table-body-wrapper.v-table-body div{
+					height: 100% !important;
+				}
+			}
+			
+			
+			
+			.v-table-row-result-row .v-table-cell-content-result-row {
+				padding-top: 0px;
+				padding-bottom: 0px;
+			}
+		}
+	}
+}
