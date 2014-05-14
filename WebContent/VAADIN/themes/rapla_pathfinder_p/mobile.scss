@@ -3,10 +3,10 @@
  * Tablet Styling
  */
 
-@mixin tablet {
+@mixin mobile {
 	@include reindeer;
 	
-	.v-ui[width-range~="700px-1200px"]{
+	.v-ui[width-range~="100px-699px"]{
 		
 		height: 100%;
 		

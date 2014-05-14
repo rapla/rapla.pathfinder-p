@@ -60,6 +60,10 @@
 					.wheelChairButton {
 						display: block;
 						margin-right: 2em;
+						
+						.v-icon {
+							height: 5em !important;
+						}
 					}
 			
 					.homeButton {
@@ -225,8 +229,8 @@
 					
 					.searchfield {
 						float:left;
-						width:94%;
-						height: 60px;
+						width:94% !important;
+						height: 60px !important;
 						font: 1.65em Arial;
 					}
 					

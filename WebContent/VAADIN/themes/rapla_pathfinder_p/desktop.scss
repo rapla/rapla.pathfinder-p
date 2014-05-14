@@ -62,18 +62,22 @@
 				background-position: 98% 50%;
 				background-size: 24px 24px;
 				background-repeat: no-repeat;
+				cursor: pointer;
 			
 				.v-table-cell-content-result-row {
 					padding-top: 5px;
 					padding-bottom: 5px;
 					padding-left: 30px;
 					border-right-color: #D3D4D5;
+					cursor: pointer;
 			       
 			       	.v-table-cell-wrapper {
 						font: 20px Arial;
+						cursor: pointer;
 						
 						.v-label{
 							font-size: 18px;
+							cursor: pointer;
 						}
 					}
 				}
@@ -105,12 +109,15 @@
 			// Table Row Styling
 			.v-table-row-result-row{
 				display: block;
+				cursor: pointer;
 			
 				.v-table-cell-content-result-row {
 					//background-color: #767676;
+					cursor: pointer;
 			       
 			       	.v-table-cell-wrapper {
-						color: #cccccc; 
+						color: #cccccc;
+						cursor: pointer; 
 					}
 				}
 			}
@@ -118,6 +125,7 @@
 			// Ressource Accordion Styling
 			.resource-accordion-item-caption {
 				background-color: #393939;
+				cursor: pointer;
 				
 				.v-caption {
 					color: #cccccc;
@@ -163,16 +171,19 @@
 			.resource-accordion-item-caption {
 				height: 40px;
 				margin-top: 3px;
+				cursor: pointer;
 				
 				.v-caption {
 					font: 1.65em Arial;
 					padding-top: 0.2%;
+					cursor: pointer;
 				}
 				
 				img {
 					width: 30px;
 					height: 30px;
 					padding-left: 0.3%;
+					cursor: pointer;
 				}
 			}
 			
@@ -301,6 +312,7 @@
 			.v-table-row-result-row {
 				background-image: none;
 				width: 100%;
+				cursor: pointer;
 			}
 		}
 	}
