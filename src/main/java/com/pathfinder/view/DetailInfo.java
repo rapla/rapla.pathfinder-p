@@ -1,6 +1,11 @@
 package com.pathfinder.view;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.List;
 
 import org.jsoup.Jsoup;
@@ -14,6 +19,7 @@ import com.pathfinder.util.properties.ApplicationPropertiesSpec;
 import com.pathfinder.util.properties.PropertiesKey;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Component;
@@ -192,12 +198,12 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 		return result;
 	}
 
-	private void setPicture(String name, ResourceType type) {
+	private void setPicture(String fileURL, ResourceType type) {
 		boolean showImage = true;
-		ThemeResource tr;
-		String file = name + IMAGE_ENDING;
-		if (fileExists(file)) {
-			tr = new ThemeResource(IMAGE_PATH + name + IMAGE_ENDING);
+		ThemeResource tr = null;
+		ExternalResource er = null;
+		if (urlExists(fileURL)) {
+			er = new ExternalResource(fileURL);
 		} else {
 			String imageName;
 			if (type == ResourceType.PERSON) {
@@ -213,9 +219,14 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 			}
 		}
 
-		if (showImage && tr != null) {
-			image.setSource(tr);
+		if (showImage) {
+			if (er != null) {
+				image.setSource(er);
+			} else if (tr != null) {
+				image.setSource(tr);
+			}
 			image.setVisible(true);
+
 		} else {
 			image.setVisible(false);
 		}
@@ -229,6 +240,25 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 	private boolean fileExists(String name) {
 		File file = new File(SERVER_PATH + RESOURCE_PATH + IMAGE_PATH + name);
 		return file.exists();
+	}
+
+	private boolean urlExists(String pictureURL) {
+		InputStream inputStream = null;
+		try {
+			inputStream = new URL(pictureURL).openStream();
+			return true;
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		} finally {
+			if (inputStream != null) {
+				try {
+					inputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return false;
 	}
 
 	@Override
