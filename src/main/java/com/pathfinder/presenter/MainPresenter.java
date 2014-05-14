@@ -596,10 +596,19 @@ public class MainPresenter implements MainPresenterSpec,
 	public void changeToWheelChairView() {
 		if (contentLayout.getComponentIndex(layoutNormal) >= 0) {
 			VerticalLayout rightSide = new VerticalLayout();
+			VerticalLayout leftSide = new VerticalLayout();
+			leftSide.setPrimaryStyleName("leftWheel");
+			rightSide.setPrimaryStyleName("rightWheel");
+			layoutWheelChair.setPrimaryStyleName("wheelchair");
 			rightSide.addComponent(accordionView);
 			rightSide.addComponent(searchField);
+			
+			freeRoom.removeStyleName("freeroom");
+			freeRoom.setPrimaryStyleName("wheelchair-freeroom");
 
-			layoutWheelChair.addComponent(keyboardView);
+			leftSide.addComponent(searchField);
+			leftSide.addComponent(keyboardView);
+			layoutWheelChair.addComponent(leftSide);
 			layoutWheelChair.addComponent(rightSide);
 			layoutWheelChair.setSizeFull();
 			this.contentLayout.replaceComponent(layoutNormal, layoutWheelChair);
@@ -615,6 +624,10 @@ public class MainPresenter implements MainPresenterSpec,
 			layoutNormal.addComponent(accordionView);
 			layoutNormal.addComponent(searchField);
 			layoutNormal.addComponent(keyboardView);
+			
+			freeRoom.removeStyleName("wheelchair-freeroom");
+			freeRoom.setPrimaryStyleName("freeroom");
+			
 			layoutNormal.setSizeFull();
 			this.contentLayout.replaceComponent(layoutWheelChair, layoutNormal);
 			layoutWheelChair.removeAllComponents();
