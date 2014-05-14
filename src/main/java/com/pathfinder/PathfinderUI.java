@@ -62,7 +62,6 @@ public class PathfinderUI extends UI {
 
 	private void getBrowserData(VaadinRequest request) {
 		// TODO set dhbwEntryPoint - read directory after pathfinder/ LA, "", RA
-		// TODO Difference between getCurrent().getPage();?
 		page = Page.getCurrent();
 		webBrowser = getPage().getWebBrowser();
 		if (request instanceof VaadinServletRequest) {
@@ -105,10 +104,6 @@ public class PathfinderUI extends UI {
 		// stelePresenter.getUiListener());
 
 		switch (device) {
-		case UNDEFINED:
-			// TODO: Check if mobile or not and build appropriate layout
-			buildSteleLayout();
-			break;
 
 		case STELE_LEFT:
 		case STELE_MIDDLE:
@@ -116,31 +111,24 @@ public class PathfinderUI extends UI {
 			buildSteleLayout();
 			break;
 
-		case MOBILE:
-			// TODO buildMobileLayout()
-			break;
-
 		case DESKTOP:
-			// TODO buildDesktopLayout
+		case MOBILE:
+		case UNDEFINED:
+			device = isMobile() ? Device.MOBILE : Device.DESKTOP;
+			buildSteleLayout();
 			break;
 		}
+	}
 
-		// TODO
-		// LOGGER.trace("Desktop application initialized");
-		// if (webBrowser.isAndroid() || webBrowser.isIOS()
-		// || webBrowser.getScreenWidth() < 768) {
-		// mobilePresenter = new MobilePresenter();
-		// setContent(mobilePresenter.getMobileLayoutView());
-		// LOGGER.trace("Mobile application initialized");
-		// } else {
-		// desktopPresenter = new DesktopPresenter();
-		// setContent(desktopPresenter.getDesktopLayoutView());
-		// addClickListener(desktopPresenter.getUiClickListener());
-		// LOGGER.trace("Desktop application initialized");
-		// }
+	private boolean isMobile() {
+		return webBrowser.isAndroid() || webBrowser.isIOS()
+				|| webBrowser.getScreenWidth() < 768;
 	}
 
 	private void buildSteleLayout() {
+
+		LOGGER.info("Using layout for the following device: "
+				+ device.getNameInLog());
 
 		mainPresenter = new MainPresenter();
 		mainPresenter.setDevice(device);

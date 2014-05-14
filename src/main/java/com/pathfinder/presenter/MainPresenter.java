@@ -119,7 +119,7 @@ public class MainPresenter implements MainPresenterSpec,
 	private BeanItemContainer<Attribute> resourceDetails = null;
 	private BeanItemContainer<EventModel> resourceEvents = null;
 	private CalendarModel calendarModel = new CalendarModel();
-	private Device steleLocation = Device.STELE_MIDDLE;
+	private Device device;
 	private SessionLoggingModel sessionLoggingModel;
 
 	private Listener uiListener = null;
@@ -362,7 +362,7 @@ public class MainPresenter implements MainPresenterSpec,
 		private boolean isTimeToGoHome() {
 			boolean result = false;
 
-			if (!wentBackToHomeScreen) {
+			if (!wentBackToHomeScreen && device.isStele()) {
 				long millisecondsSinceLastRequest = new Date().getTime()
 						- lastUserInteractionTimestamp;
 
@@ -374,7 +374,6 @@ public class MainPresenter implements MainPresenterSpec,
 			}
 			return result;
 		}
-
 	}
 
 	class CalendarListener implements Listener {
@@ -587,7 +586,7 @@ public class MainPresenter implements MainPresenterSpec,
 		detailImage.removeImage();
 		for (Attribute attribut : resourceDetails.getItemIds()) {
 			if (attribut.getKey() == AttributKey.ROOM_NR_KEY) {
-				detailImage.setImage(steleLocation + attribut.getValue());
+				detailImage.setImage(device + attribut.getValue());
 			}
 		}
 		this.detailLayout.setVisible(true);
@@ -603,10 +602,10 @@ public class MainPresenter implements MainPresenterSpec,
 			layoutWheelChair.setPrimaryStyleName("wheelchair");
 			rightSide.addComponent(accordionView);
 			rightSide.addComponent(searchField);
-			
+
 			freeRoom.removeStyleName("freeroom");
 			freeRoom.setPrimaryStyleName("wheelchair-freeroom");
-			
+
 			logo.setPrimaryStyleName("logo");
 			logo.setHeight(35, Unit.EM);
 
@@ -628,11 +627,11 @@ public class MainPresenter implements MainPresenterSpec,
 			layoutNormal.addComponent(accordionView);
 			layoutNormal.addComponent(searchField);
 			layoutNormal.addComponent(keyboardView);
-			
+
 			freeRoom.removeStyleName("wheelchair-freeroom");
 			freeRoom.setPrimaryStyleName("freeroom");
 			logo.setPrimaryStyleName("logo-dhbw");
-			
+
 			layoutNormal.setSizeFull();
 			this.contentLayout.replaceComponent(layoutWheelChair, layoutNormal);
 			layoutWheelChair.removeAllComponents();
@@ -775,7 +774,7 @@ public class MainPresenter implements MainPresenterSpec,
 	@Override
 	public void setDevice(Device steleLocation) {
 		if (steleLocation != null) {
-			this.steleLocation = steleLocation;
+			this.device = steleLocation;
 			this.detailInfo.setDevice(steleLocation);
 		}
 	}
