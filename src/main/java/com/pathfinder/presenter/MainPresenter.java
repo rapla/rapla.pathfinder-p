@@ -576,6 +576,7 @@ public class MainPresenter implements MainPresenterSpec,
 		accordionView.hideAccordionView();
 		searchField.hideSearchField();
 		keyboardView.hideKeyboard();
+		logo.setPrimaryStyleName("logo-dhbw");
 
 		// Adapting MenuBar
 		menuBar.replaceWheelChairButtonWithHomeButton();

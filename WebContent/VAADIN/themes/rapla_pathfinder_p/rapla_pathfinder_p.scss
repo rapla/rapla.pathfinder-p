@@ -164,8 +164,8 @@
 				margin-top: 2px;
 			
 				.v-table-cell-content-result-row {
-					padding-top: 5px;
-					padding-bottom: 5px;
+					padding-top: 5px !important;
+					padding-bottom: 5px !important;
 					padding-left: 30px;
 			       
 			       	.v-table-cell-wrapper {
@@ -182,7 +182,7 @@
 				
 				.v-caption {
 					font: 1.65em Arial;
-					padding-top: 0.2%;
+					padding-top: 0.2% !important;
 				}
 				
 				img {
@@ -322,7 +322,7 @@
 			}
 			
 			.wheelchair-freeroom {
-				margin-top:31em;
+				margin-top:26em;
 				
 				.freeroom{
 					margin-bottom: 1em;
@@ -337,7 +337,7 @@
 			
 				.leftWheel{
 					padding-right: 1em;
-					margin-top: 42%;
+					margin-top: 17%;
 					
 					.search .searchfield{
 						width: 90% !important;
