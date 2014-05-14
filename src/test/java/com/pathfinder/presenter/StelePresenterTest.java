@@ -17,7 +17,7 @@ import com.vaadin.ui.HasComponents;
 import com.vaadin.ui.UI;
 
 public class StelePresenterTest {
-	StelePresenter stelePresenter;
+	MainPresenter mainPresenter;
 	AbstractLayout desktopLayout;
 	DateTimeSpec dateTime;
 	FreeRoomViewSpec freeRoom;
@@ -29,8 +29,8 @@ public class StelePresenterTest {
 		ui.setLocale(Locale.GERMAN);
 		UI.setCurrent(ui);
 
-		stelePresenter = new StelePresenter();
-		desktopLayout = stelePresenter.getSteleLayoutView();
+		mainPresenter = new MainPresenter();
+		desktopLayout = mainPresenter.getSteleLayoutView();
 
 		HasComponents rootLayout = (HasComponents) ((HasComponents) desktopLayout)
 				.iterator().next();

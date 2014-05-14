@@ -127,4 +127,10 @@ public class DataLoaderSpecContract implements DataLoaderSpec {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void sendLoggingInfoToRapla(String data) {
+		// TODO Auto-generated method stub
+
+	}
 }

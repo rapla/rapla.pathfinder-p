@@ -8,16 +8,20 @@ package com.pathfinder.model;
  * 
  */
 public enum Device {
-	DESKTOP("desktop", ""), MOBILE("mobile", ""), STELE_LEFT("stelel", "l"), STELE_RIGHT(
-			"steler", "r"), STELE_MIDDLE("stelem", ""), UNDEFINED("", "");
+	DESKTOP("desktop", "", "Desktop"), MOBILE("mobile", "", "Mobile"), STELE_LEFT(
+			"stelel", "l", "SteleL"), STELE_RIGHT("steler", "r", "SteleR"), STELE_MIDDLE(
+			"stelem", "", "SteleM"), UNDEFINED("", "", "Unknown");
 
 	private String urlPicturePrefix;
 	private String urlParameterValue;
+	private String nameInLog;
 	public final static String DEVICE_URL_PARAMETER_NAME = "device";
 
-	private Device(String urlParameterValue, String urlPicturePrefix) {
+	private Device(String urlParameterValue, String urlPicturePrefix,
+			String nameInLog) {
 		this.urlParameterValue = urlParameterValue;
 		this.urlPicturePrefix = urlPicturePrefix;
+		this.nameInLog = nameInLog;
 	}
 
 	public String getUrlPicturePrefix() {
@@ -41,6 +45,10 @@ public enum Device {
 
 	public String toString() {
 		return this.urlPicturePrefix;
+	}
+
+	public String getNameInLog() {
+		return this.nameInLog;
 	}
 
 	public boolean isStele() {

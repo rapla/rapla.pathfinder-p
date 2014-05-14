@@ -7,16 +7,17 @@ import static de.vksi.c4j.Condition.preCondition;
 import java.util.Locale;
 
 import com.pathfinder.model.Device;
+import com.pathfinder.model.SessionLoggingModel;
 import com.vaadin.ui.AbstractLayout;
 import com.vaadin.ui.Component.Listener;
 
 import de.vksi.c4j.ClassInvariant;
 import de.vksi.c4j.Target;
 
-public class StelePresenterSpecContract implements StelePresenterSpec {
+public class StelePresenterSpecContract implements MainPresenterSpec {
 
 	@Target
-	private StelePresenterSpec target;
+	private MainPresenterSpec target;
 
 	@ClassInvariant
 	public void classInvariant() {
@@ -132,15 +133,8 @@ public class StelePresenterSpecContract implements StelePresenterSpec {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.pathfinder.presenter.StelePresenterSpec#setUserAgent(java.lang.String
-	 * )
-	 */
 	@Override
-	public void setUserAgent(String userAgent) {
+	public void setSessionLoggingModel(SessionLoggingModel sessionLoggingModel) {
 		// TODO Auto-generated method stub
 
 	}

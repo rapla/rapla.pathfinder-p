@@ -19,6 +19,7 @@ import com.pathfinder.model.KeyboardModel;
 import com.pathfinder.model.ResourceModel;
 import com.pathfinder.model.ResourceType;
 import com.pathfinder.model.SessionLoggingModel;
+import com.pathfinder.model.SessionLoggingModel.ClickOrigin;
 import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.ApplicationPropertiesSpec;
 import com.pathfinder.util.properties.PropertiesKey;
@@ -81,10 +82,10 @@ import com.vaadin.ui.components.calendar.CalendarComponentEvents.ForwardEvent;
  * @author alexh
  * 
  */
-public class StelePresenter implements StelePresenterSpec,
+public class MainPresenter implements MainPresenterSpec,
 		DataLoaderListenerSpec, TranslatableSpec {
 	private static final Logger LOGGER = LogManager
-			.getLogger(StelePresenter.class.getName());
+			.getLogger(MainPresenter.class.getName());
 	private final ApplicationPropertiesSpec properties = ApplicationProperties
 			.getInstance();
 	private final DataLoaderSpec dataLoader = DataLoader.getInstance();
@@ -119,13 +120,14 @@ public class StelePresenter implements StelePresenterSpec,
 	private BeanItemContainer<EventModel> resourceEvents = null;
 	private CalendarModel calendarModel = new CalendarModel();
 	private Device steleLocation = Device.STELE_MIDDLE;
-	private SessionLoggingModel sessionLoggingModel = new SessionLoggingModel();
+	private SessionLoggingModel sessionLoggingModel;
 
 	private Listener uiListener = null;
 
 	private Timer freeRoomsTimer;
 
-	public StelePresenter() {
+	public MainPresenter() {
+
 		// Register as DataListener to get notified if data changes
 		dataLoader.addDataListener(this);
 		this.setResourceData();
@@ -232,6 +234,8 @@ public class StelePresenter implements StelePresenterSpec,
 			if (event.getItemId() instanceof ResourceModel) {
 				// Resource in accordion was clicked
 				resource = (ResourceModel) event.getItemId();
+				sessionLoggingModel.sendLoggingInfoToRapla(resource,
+						ClickOrigin.SEARCH_RESULTS, getSearchString());
 			} else if (event.getItemId() instanceof FreeRoomModel) {
 				// Resource in free rooms table was clicked
 				FreeRoomModel freeResource = (FreeRoomModel) event.getItemId();
@@ -240,15 +244,18 @@ public class StelePresenter implements StelePresenterSpec,
 				resource.setId(freeResource.getId());
 				resource.setName(freeResource.getName());
 				resource.setType(ResourceType.ROOM.toString());
+				sessionLoggingModel.sendLoggingInfoToRapla(resource,
+						ClickOrigin.FREE_ROOMS, "");
 			} else if (event.getItemId() instanceof Attribute) {
 				// Resource in detail view was clicked
 				boolean showDetailView = doAttributeAction((Attribute) event
 						.getItemId());
 				if (!showDetailView)
 					return;
-			}
 
-			sessionLoggingModel.getClickedResources().add(resource);
+				sessionLoggingModel.sendLoggingInfoToRapla(resource,
+						ClickOrigin.DETAILS, "");
+			}
 
 			prepareDetailView();
 		}
@@ -444,6 +451,8 @@ public class StelePresenter implements StelePresenterSpec,
 		public void buttonClick(ClickEvent event) {
 			if (event.getButton().getData() instanceof ResourceModel) {
 				resource = (ResourceModel) event.getButton().getData();
+				sessionLoggingModel.sendLoggingInfoToRapla(resource,
+						ClickOrigin.CALENDAR, "");
 				prepareDetailView();
 			}
 		}
@@ -462,8 +471,6 @@ public class StelePresenter implements StelePresenterSpec,
 							|| event instanceof com.vaadin.event.MouseEvents.ClickEvent
 							|| event instanceof ForwardEvent
 							|| event instanceof BackwardEvent) {
-						if (sessionLoggingModel.isBeginningOfSession())
-							sessionLoggingModel.setStartTime(new Date());
 						lastUserInteractionTimestamp = new Date().getTime();
 						wentBackToHomeScreen = false;
 						if (event.getComponent() != null)
@@ -538,11 +545,6 @@ public class StelePresenter implements StelePresenterSpec,
 		switchToSearchView();
 		clearSearchString();
 		languageChanged(VaadinSession.getCurrent().getLocale());
-		sessionLoggingModel.setEndTime(new Date(lastUserInteractionTimestamp
-				- goBackHomeIntervall));
-		// TODO: Send Session details to Rapla for logging
-		LOGGER.info("Details of Session: " + sessionLoggingModel);
-		sessionLoggingModel.clearValues();
 	}
 
 	@Override
@@ -671,7 +673,6 @@ public class StelePresenter implements StelePresenterSpec,
 	}
 
 	public void clearSearchString() {
-		sessionLoggingModel.getSearchStrings().add(getSearchString());
 		this.setSearchString("");
 	}
 
@@ -762,11 +763,6 @@ public class StelePresenter implements StelePresenterSpec,
 	}
 
 	@Override
-	public void setUserAgent(String userAgent) {
-		this.sessionLoggingModel.setDevice(userAgent);
-	}
-
-	@Override
 	public void destroy() {
 		freeRoomsTimer.cancel();
 		dateTime.doCleanup();
@@ -780,5 +776,9 @@ public class StelePresenter implements StelePresenterSpec,
 		menuBar.doCleanup();
 		eventSelectionView.doCleanup();
 		personInformationView.doCleanup();
+	}
+
+	public void setSessionLoggingModel(SessionLoggingModel sessionLoggingModel) {
+		this.sessionLoggingModel = sessionLoggingModel;
 	}
 }
