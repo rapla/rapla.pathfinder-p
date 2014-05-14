@@ -605,6 +605,9 @@ public class MainPresenter implements MainPresenterSpec,
 			
 			freeRoom.removeStyleName("freeroom");
 			freeRoom.setPrimaryStyleName("wheelchair-freeroom");
+			
+			logo.setPrimaryStyleName("logo");
+			logo.setHeight(35, Unit.EM);
 
 			leftSide.addComponent(searchField);
 			leftSide.addComponent(keyboardView);
@@ -627,6 +630,7 @@ public class MainPresenter implements MainPresenterSpec,
 			
 			freeRoom.removeStyleName("wheelchair-freeroom");
 			freeRoom.setPrimaryStyleName("freeroom");
+			logo.setPrimaryStyleName("logo-dhbw");
 			
 			layoutNormal.setSizeFull();
 			this.contentLayout.replaceComponent(layoutWheelChair, layoutNormal);
