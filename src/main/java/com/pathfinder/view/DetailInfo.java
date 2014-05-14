@@ -65,6 +65,7 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 	private final static int MAX_INFO_LENGTH = 25;
 
 	private Device device = Device.UNDEFINED;
+	private boolean imageExist = false;
 
 	private Image image = new Image();
 
@@ -111,7 +112,6 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 	}
 
 	private void addStyling() {
-		// TODO .actualFreeRoomsLabel.addStyleName("big-caption");
 		this.addStyleName("detailInfo");
 		detailInfoTable.addStyleName("global-table");
 	}
@@ -121,6 +121,7 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 			ResourceType resourceType) {
 
 		List<Attribute> attributeItems = resourceDetails.getItemIds();
+		imageExist = false;
 		for (Attribute attributeItem : attributeItems) {
 
 			boolean addToTable = false;
@@ -162,12 +163,19 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 				break;
 			}
 
+			if (imageExist){
+				layout.setExpandRatio(image, 1);
+				layout.setExpandRatio(detailInfoTable, 5);
+			} else{
+				layout.setExpandRatio(image, 0);
+				layout.setExpandRatio(detailInfoTable, 1);
+			}
+			
 			if (addToTable)
 				this.detailInfoTable.addItem(attributeItem);
 
 		}
 
-		layout.setExpandRatio(detailInfoTable, 1);
 		detailInfoTable.setPageLength(detailInfoTable.getItemIds().size());
 		detailInfoTable.setVisible(true);
 		layout.setVisible(true);
@@ -226,15 +234,16 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 				image.setSource(tr);
 			}
 			image.setVisible(true);
-
+			imageExist = true;
+			
 		} else {
 			image.setVisible(false);
+			imageExist = false;
 		}
 
 		image.markAsDirty();
-		image.setWidth(20, Unit.PERCENTAGE);
-		layout.setExpandRatio(detailInfoTable, 2);
-		layout.setExpandRatio(image, 1);
+		image.setWidth(100, Unit.PERCENTAGE);
+
 	}
 
 	private boolean fileExists(String name) {

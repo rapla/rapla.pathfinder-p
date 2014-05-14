@@ -32,7 +32,7 @@ public class DetailEvents extends CustomComponent implements DetailEventsSpec {
 	private void buildLayout() {
 		this.setSizeFull();
 		calendar.setSizeFull();
-		calendar.setHeight(600, Unit.PIXELS);
+		calendar.setHeight(380, Unit.PIXELS);
 	}
 
 	private void addStyling() {
