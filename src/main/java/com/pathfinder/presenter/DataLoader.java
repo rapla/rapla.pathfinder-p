@@ -11,6 +11,8 @@ import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -29,6 +31,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pathfinder.model.AttributKey;
 import com.pathfinder.model.Attribute;
 import com.pathfinder.model.Category;
 import com.pathfinder.model.EventModel;
@@ -502,6 +505,8 @@ public class DataLoader implements DataLoaderSpec {
 
 				Iterator<String> attributeMapKeys = attributeMapSet.iterator();
 
+				List<Attribute> attributes = new ArrayList<>();
+
 				while (attributeMapKeys.hasNext()) {
 					attribut = new Attribute();
 
@@ -512,8 +517,28 @@ public class DataLoader implements DataLoaderSpec {
 					attribut.setValue((String) ((JSONObject) attributMap
 							.get(nextKey)).get(Attribute.PROPERTY_VALUE));
 
-					attributList.addItem(attribut);
+					attributes.add(attribut);
 				}
+
+				// Sort attributes; name first
+				Collections.sort(attributes, new Comparator<Attribute>() {
+
+					@Override
+					public int compare(Attribute o1, Attribute o2) {
+						if (o1.getKey() == AttributKey.NAME_KEY) {
+							return -1;
+						} else {
+							return 1;
+						}
+					}
+				});
+
+				for (Attribute attribute : attributes) {
+					System.out.println("Key: " + attribute.getKey());
+				}
+
+				attributList.addAll(attributes);
+
 			}
 
 		} catch (ConnectException e) {
@@ -613,7 +638,8 @@ public class DataLoader implements DataLoaderSpec {
 					URL url = new URL(urlString);
 					URLConnection ulrConnection = url.openConnection();
 					BufferedReader in = new BufferedReader(
-							new InputStreamReader(ulrConnection.getInputStream()));
+							new InputStreamReader(
+									ulrConnection.getInputStream()));
 					in.close();
 				} catch (Exception ex) {
 					LOGGER.error("Could not write session to server", ex);
