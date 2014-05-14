@@ -3,85 +3,71 @@
  */
 package com.pathfinder.model;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+
+import com.pathfinder.presenter.DataLoader;
 
 /**
  * @author tim
  * 
  */
 public class SessionLoggingModel {
-	private boolean beginningOfSession = true;
-	private List<String> searchStrings = new ArrayList<>();
-	private List<ResourceModel> clickedResources = new ArrayList<>();
-	private String device = "";
-	private Date startTime = new Date();
-	private Date endTime = new Date();
 
-	public List<String> getSearchStrings() {
-		return searchStrings;
+	private static int clientCount = 1000000;
+
+	private String SEPARATOR = ";";
+
+	private static DataLoader dataLoader = DataLoader.getInstance();
+
+	public enum ClickOrigin {
+		FREE_ROOMS("FreeRooms"), SEARCH_RESULTS("SearchResults"), CALENDAR(
+				"Calendar"), DETAILS("Details");
+
+		private ClickOrigin(String nameInLog) {
+			this.nameInLog = nameInLog;
+		}
+
+		private String nameInLog;
+
+		public String getNameInLog() {
+			return this.nameInLog;
+		}
 	}
 
-	public List<ResourceModel> getClickedResources() {
-		return clickedResources;
-	}
+	private String sessionId;
+	private ResourceType resourceType;
+	private String resourceName;
+	private ClickOrigin clickOrigin;
+	private String searchString;
+	private Device device;
 
-	public String getDevice() {
-		return device;
-	}
-
-	public void setDevice(String device) {
+	public SessionLoggingModel(Device device) {
+		this.sessionId = "" + new Date().getTime() + ++clientCount;
 		this.device = device;
 	}
 
-	public Date getStartTime() {
-		return startTime;
+	public void sendLoggingInfoToRapla(ResourceModel resource,
+			ClickOrigin clickOrigin, String searchString) {
+		this.resourceType = resource.getType();
+		this.resourceName = resource.getName();
+		this.clickOrigin = clickOrigin;
+		this.searchString = searchString;
+
+		dataLoader.sendLoggingInfoToRapla(getLoggingString());
 	}
 
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
-		this.beginningOfSession = false;
+	private String getLoggingString() {
+		StringBuilder result = new StringBuilder();
+		result.append(sessionId + SEPARATOR);
+		result.append(device.getNameInLog() + SEPARATOR);
+		result.append(resourceType.getNameInLog() + SEPARATOR);
+		result.append(resourceName + SEPARATOR);
+		result.append(clickOrigin.getNameInLog() + SEPARATOR);
+		result.append(searchString);
+		return removeWhiteSpaces(result.toString());
 	}
 
-	public Date getEndTime() {
-		return endTime;
-	}
-
-	public void setEndTime(Date endTime) {
-		this.endTime = endTime;
-		this.beginningOfSession = true;
-	}
-
-	public boolean isBeginningOfSession() {
-		return beginningOfSession;
-	}
-
-	public void clearValues() {
-		this.searchStrings.clear();
-		this.clickedResources.clear();
-	}
-
-	public String toString() {
-		// TODO: Remove this ugly toString method if 'real' logging is
-		// implemented ;)
-		StringBuilder stringBuilder = new StringBuilder("\n");
-		stringBuilder
-				.append("===================================================\n");
-		stringBuilder.append("Duration of Session: "
-				+ (endTime.getTime() - startTime.getTime()) + "ms \n");
-		stringBuilder.append("User agent: " + device + "\n");
-		for (String searchString : searchStrings) {
-			stringBuilder.append("Search String: " + searchString + "\n");
-		}
-		for (ResourceModel resourceModel : clickedResources) {
-			if (resourceModel != null) {
-				stringBuilder.append("Clicked Resource: "
-						+ resourceModel.getName() + "\n");
-			}
-		}
-		stringBuilder
-				.append("===================================================\n");
-		return stringBuilder.toString();
+	private String removeWhiteSpaces(String string) {
+		return string.replace(" ", "%20");
 	}
 }

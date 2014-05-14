@@ -40,4 +40,6 @@ public interface DataLoaderSpec {
 	@Pure
 	BeanItemContainer<EventModel> getEvent(String resourceId, Date startDate,
 			Date endDate, Locale locale);
+
+	void sendLoggingInfoToRapla(String data);
 }

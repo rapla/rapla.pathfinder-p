@@ -8,11 +8,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.pathfinder.model.Device;
+import com.pathfinder.model.SessionLoggingModel;
 import com.pathfinder.presenter.DataLoader;
 import com.pathfinder.presenter.DataLoaderSpec;
-import com.pathfinder.presenter.MobilePresenterSpec;
-import com.pathfinder.presenter.StelePresenter;
-import com.pathfinder.presenter.StelePresenterSpec;
+import com.pathfinder.presenter.MainPresenter;
+import com.pathfinder.presenter.MainPresenterSpec;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.vaadin.annotations.Theme;
@@ -36,8 +36,7 @@ public class PathfinderUI extends UI {
 	private static final Logger LOGGER = LogManager
 			.getLogger(PathfinderUI.class.getName());
 
-	private StelePresenterSpec stelePresenter = null;
-	private MobilePresenterSpec mobilePresenter = null;
+	private MainPresenterSpec mainPresenter = null;
 
 	private Page page = null;
 	private WebBrowser webBrowser = null;
@@ -143,12 +142,12 @@ public class PathfinderUI extends UI {
 
 	private void buildSteleLayout() {
 
-		stelePresenter = new StelePresenter();
-		stelePresenter.setDevice(device);
-		stelePresenter.setUserAgent(userAgent);
-		setContent(stelePresenter.getSteleLayoutView());
+		mainPresenter = new MainPresenter();
+		mainPresenter.setDevice(device);
+		setContent(mainPresenter.getSteleLayoutView());
 		addListenerToAllChildComponents((HasComponents) getContent(),
-				stelePresenter.getUiListener());
+				mainPresenter.getUiListener());
+		mainPresenter.setSessionLoggingModel(new SessionLoggingModel(device));
 	}
 
 	/**

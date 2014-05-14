@@ -3,6 +3,7 @@ package com.pathfinder.presenter;
 import java.util.Locale;
 
 import com.pathfinder.model.Device;
+import com.pathfinder.model.SessionLoggingModel;
 import com.vaadin.ui.AbstractLayout;
 import com.vaadin.ui.Component.Listener;
 
@@ -10,11 +11,9 @@ import de.vksi.c4j.ContractReference;
 import de.vksi.c4j.Pure;
 
 @ContractReference(StelePresenterSpecContract.class)
-public interface StelePresenterSpec {
+public interface MainPresenterSpec {
 
 	void setDevice(Device steleLocation);
-
-	void setUserAgent(String userAgent);
 
 	void switchToSearchView();
 
@@ -46,4 +45,6 @@ public interface StelePresenterSpec {
 
 	@Pure
 	Listener getUiListener();
+
+	void setSessionLoggingModel(SessionLoggingModel sessionLoggingModel);
 }

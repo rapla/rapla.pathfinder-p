@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.ConnectException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
@@ -52,6 +53,8 @@ public class DataLoader implements DataLoaderSpec {
 
 	private final String BASE_URL = ApplicationProperties.getInstance()
 			.getProperty(PropertiesKey.RAPLA_BASE_URL);
+	private final String LOGGER_BASE_URL = ApplicationProperties.getInstance()
+			.getProperty(PropertiesKey.RAPLA_LOGGER_URL);
 
 	private final String RESOURCES_METHOD = BASE_URL + "/getResources?";
 	private final String RESOURCE_DETAIL_METHOD = BASE_URL + "/getResource?";
@@ -59,6 +62,8 @@ public class DataLoader implements DataLoaderSpec {
 	private final String FREE_RESOURCES_METHOD = BASE_URL + "/getFreeResources";
 	private final String EVENTS_RESOURCE_ROOM_METHOD = BASE_URL
 			+ "/getEvents?resourceId={0}&start={1}&end={2}&language={3}";
+	private final String LOGGER_METHOD = LOGGER_BASE_URL
+			+ "/info?id=csvaccesslog&message={0}";
 
 	private final String REQUEST_PARAMETER_PERSONS = "persons";
 	private final String REQUEST_PARAMETER_ROOMS = "rooms";
@@ -590,5 +595,31 @@ public class DataLoader implements DataLoaderSpec {
 	private String encodeSpecialCharactersForUrl(String url) {
 		String result = url.replace(" ", "%20");
 		return result.replace(":", "%3A");
+	}
+
+	@Override
+	public void sendLoggingInfoToRapla(String message) {
+
+		// Replace placeholder with values
+		MessageFormat urlPlaceholder = new MessageFormat(LOGGER_METHOD);
+		final String urlString = urlPlaceholder
+				.format(new Object[] { message });
+
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+					URL url = new URL(urlString);
+					URLConnection ulrConnection = url.openConnection();
+					BufferedReader in = new BufferedReader(
+							new InputStreamReader(ulrConnection.getInputStream()));
+					in.close();
+				} catch (Exception ex) {
+					LOGGER.error("Could not write session to server", ex);
+				}
+			}
+		}).start();
+
 	}
 }

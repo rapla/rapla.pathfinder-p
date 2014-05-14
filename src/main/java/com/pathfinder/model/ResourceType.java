@@ -1,13 +1,15 @@
 package com.pathfinder.model;
 
 public enum ResourceType {
-	UNKNOWN("unknown"), ROOM("room"), COURSE("course"), PERSON("person"), POI(
-			"poi");
+	UNKNOWN("unknown", "Unknown"), ROOM("room", "Room"), COURSE("course",
+			"Course"), PERSON("person", "Person"), POI("poi", "Poi");
 
 	private final String stringValue;
+	private String nameInLog;
 
-	private ResourceType(final String text) {
+	private ResourceType(final String text, final String nameInLog) {
 		this.stringValue = text;
+		this.nameInLog = nameInLog;
 	}
 
 	@Override
@@ -21,6 +23,10 @@ public enum ResourceType {
 			result = this.stringValue.toLowerCase().equals(name.toLowerCase());
 		}
 		return result;
+	}
+
+	public String getNameInLog() {
+		return this.nameInLog;
 	}
 
 	public static ResourceType getResourceByString(String value) {

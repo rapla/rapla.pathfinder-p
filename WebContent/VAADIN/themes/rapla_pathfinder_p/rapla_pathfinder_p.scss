@@ -320,6 +320,65 @@
 					}
 				}
 			}
+			
+			.wheelchair-freeroom {
+				margin-top:900px;
+				
+				.freeroom{
+					margin-bottom: 1em;
+				}
+			}
+			
+			.wheelchair{				
+			
+				.leftWheel{
+					padding-right: 1em;
+					margin-top: 42%;
+					
+					.search .searchfield{
+						width: 90% !important;
+						height: 50px !important;
+						font: 1.0em Arial !important;
+					}
+				}
+				
+				.keyboard{
+					margin-right: 1em;
+					
+					.keyboard-row {
+						
+				
+						.v-slot {
+					
+							.keyboard-button {
+								height: 4em;
+						
+								.keyboard-button-caption {
+									padding-left: 31%;
+									padding-top: 32%;
+								}	
+							}
+					
+							.keyboard-delete {
+								height: 4em;
+							
+								.keyboard-delete-caption {
+									padding-left: 29%;
+								}		
+							}
+					
+							.keyboard-space {
+								height: 4em;
+						
+								.keyboard-space-caption {
+									padding-left: 33%;
+									padding-top: 6%;
+								}		
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 }

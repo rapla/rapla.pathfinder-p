@@ -248,13 +248,11 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 			inputStream = new URL(pictureURL).openStream();
 			return true;
 		} catch (IOException ioe) {
-			ioe.printStackTrace();
 		} finally {
 			if (inputStream != null) {
 				try {
 					inputStream.close();
 				} catch (IOException e) {
-					e.printStackTrace();
 				}
 			}
 		}
