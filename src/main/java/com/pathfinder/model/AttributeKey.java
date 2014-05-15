@@ -1,14 +1,15 @@
 package com.pathfinder.model;
 
-public enum AttributKey {
+public enum AttributeKey {
 	UNKNOWN("unkown"), NAME_KEY("name"), RESOURCE_URL_KEY("resourceURL"), ROOM_NR_KEY(
 			"raumnr"), ROOM_TYPE_KEY("raumart"), YEAR_KEY("jahrgang"), PICTURE_NAME_KEY(
 			"bild"), COURSE_OF_STUDIES_KEY("abteilung"), EMAIL_KEY("email"), PHONE_KEY(
-			"telefon"), INFO_KEY("info"), LINE_KEY("zeile");
+			"telefon"), INFO_KEY("info"), LINE_KEY("zeile"), LOCATION(
+			"location");
 
 	private String key;
 
-	private AttributKey(String key) {
+	private AttributeKey(String key) {
 		this.key = key;
 	}
 
@@ -27,9 +28,9 @@ public enum AttributKey {
 		return false;
 	}
 
-	public static AttributKey getKey(String value) {
-		AttributKey result = UNKNOWN;
-		for (AttributKey key : values()) {
+	public static AttributeKey getKey(String value) {
+		AttributeKey result = UNKNOWN;
+		for (AttributeKey key : values()) {
 			if (key.equals(value)) {
 				result = key;
 				break;

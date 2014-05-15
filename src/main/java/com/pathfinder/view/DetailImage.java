@@ -1,6 +1,7 @@
 package com.pathfinder.view;
 
-import java.io.File;
+import java.io.InputStream;
+import java.net.URL;
 
 import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.ApplicationPropertiesSpec;
@@ -8,9 +9,9 @@ import com.pathfinder.util.properties.PropertiesKey;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Image;
-import com.vaadin.ui.UI;
 
 /**
  * Image to show in the detail view
@@ -44,28 +45,43 @@ public class DetailImage extends Image implements DetailImageSpec {
 	}
 
 	@Override
-	public void setImage(String imageUrl) {
+	public void setImage(String stelePrefix, String roomName, String imageUrl) {
 		if (!"".equals(imageUrl)) {
 
-			// Check if file exists
-			String serverpath = UI.getCurrent().getSession().getService()
-					.getBaseDirectory().getAbsolutePath();
-			String path = "" + IMAGE_PATH + imageUrl + IMAGE_ENDING;
+			// Add prefix
+			String imageUrlWithPrefix = imageUrl.replace(roomName, stelePrefix
+					+ roomName);
 
-			File file = new File(serverpath + File.separator + "VAADIN"
-					+ File.separator + "themes" + File.separator
-					+ "rapla_pathfinder_p" + File.separator + path);
+			// Check if image exists
+			boolean urlExists = urlExists(imageUrlWithPrefix);
 
-			if (file.exists()) {
-				ThemeResource themeResource = new ThemeResource(IMAGE_PATH
-						+ imageUrl + IMAGE_ENDING);
-				this.setSource(themeResource);
+			if (!urlExists) {
+				// Check if image without prefix exists
+				urlExists = urlExists(imageUrl);
+				if (urlExists) {
+					imageUrlWithPrefix = imageUrl;
+				}
+			}
+
+			if (urlExists) {
+				ExternalResource resource = new ExternalResource(
+						imageUrlWithPrefix);
+				this.setSource(resource);
 			} else {
 				this.setSource(new ThemeResource(DEFAULT_IMAGE));
 			}
 
 			this.setSizeFull();
 		}
+	}
+
+	private boolean urlExists(String pictureURL) {
+		boolean result = false;
+		try (InputStream inputStream = new URL(pictureURL).openStream()) {
+			result = true;
+		} catch (Exception ex) {
+		}
+		return result;
 	}
 
 	@Override

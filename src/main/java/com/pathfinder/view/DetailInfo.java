@@ -8,8 +8,8 @@ import java.util.List;
 
 import org.jsoup.Jsoup;
 
-import com.pathfinder.model.AttributKey;
 import com.pathfinder.model.Attribute;
+import com.pathfinder.model.AttributeKey;
 import com.pathfinder.model.Device;
 import com.pathfinder.model.ResourceType;
 import com.pathfinder.util.properties.ApplicationProperties;
@@ -127,6 +127,9 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 			case RESOURCE_URL_KEY:
 				// skip
 				break;
+			case LOCATION:
+				// skip
+				break;
 			case PICTURE_NAME_KEY:
 				setPicture(attributeItem.getValue(), resourceType);
 				break;
@@ -189,9 +192,9 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 			String name = "";
 			String roomId = "";
 			for (Attribute attribute : attributeItems) {
-				if (attribute.getKey() == AttributKey.NAME_KEY) {
+				if (attribute.getKey() == AttributeKey.NAME_KEY) {
 					name = attribute.getValue();
-				} else if (attribute.getKey() == AttributKey.ROOM_NR_KEY) {
+				} else if (attribute.getKey() == AttributeKey.ROOM_NR_KEY) {
 					roomId = attribute.getValue();
 				}
 			}
@@ -228,7 +231,7 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 	private String getName(List<Attribute> attributeItems) {
 		String result = null;
 		for (Attribute attribute : attributeItems) {
-			if (attribute.getKey() == AttributKey.NAME_KEY) {
+			if (attribute.getKey() == AttributeKey.NAME_KEY) {
 				result = attribute.getValue();
 				break;
 			}

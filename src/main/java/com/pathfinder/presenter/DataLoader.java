@@ -31,7 +31,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pathfinder.model.AttributKey;
+import com.pathfinder.model.AttributeKey;
 import com.pathfinder.model.Attribute;
 import com.pathfinder.model.Category;
 import com.pathfinder.model.EventModel;
@@ -481,6 +481,7 @@ public class DataLoader implements DataLoaderSpec {
 		}
 
 		JSONObject attributMap;
+		JSONObject resourceLinks;
 		Attribute attribut;
 
 		BeanItemContainer<Attribute> attributList = new BeanItemContainer<Attribute>(
@@ -498,6 +499,7 @@ public class DataLoader implements DataLoaderSpec {
 				attributList = null;
 			} else {
 				attributMap = (JSONObject) jsonObject.get("attributeMap");
+				resourceLinks = (JSONObject) jsonObject.get("resourceLinks");
 
 				@SuppressWarnings("unchecked")
 				Set<String> attributeMapSet = attributMap.keySet();
@@ -524,7 +526,7 @@ public class DataLoader implements DataLoaderSpec {
 
 					@Override
 					public int compare(Attribute o1, Attribute o2) {
-						if (o1.getKey() == AttributKey.NAME_KEY) {
+						if (o1.getKey() == AttributeKey.NAME_KEY) {
 							return -1;
 						} else {
 							return 1;

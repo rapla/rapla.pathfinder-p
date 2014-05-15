@@ -9,7 +9,7 @@ package com.pathfinder.model;
  */
 public enum Device {
 	DESKTOP("desktop", "", "Desktop"), MOBILE("mobile", "", "Mobile"), STELE_LEFT(
-			"stelel", "l", "SteleL"), STELE_RIGHT("steler", "r", "SteleR"), STELE_MIDDLE(
+			"stelel", "L", "SteleL"), STELE_RIGHT("steler", "R", "SteleR"), STELE_MIDDLE(
 			"stelem", "", "SteleM"), UNDEFINED("", "", "Unknown");
 
 	private String urlPicturePrefix;

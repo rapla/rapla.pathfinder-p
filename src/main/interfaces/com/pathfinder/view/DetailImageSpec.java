@@ -8,7 +8,7 @@ package com.pathfinder.view;
  * 
  */
 public interface DetailImageSpec extends ComponentSpec {
-	void setImage(String url);
+	void setImage(String stelePrefix, String roomName, String url);
 
 	void removeImage();
 }

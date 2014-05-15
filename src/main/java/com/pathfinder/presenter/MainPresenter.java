@@ -9,8 +9,8 @@ import java.util.TimerTask;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.pathfinder.model.AttributKey;
 import com.pathfinder.model.Attribute;
+import com.pathfinder.model.AttributeKey;
 import com.pathfinder.model.CalendarModel;
 import com.pathfinder.model.Device;
 import com.pathfinder.model.EventModel;
@@ -580,8 +580,9 @@ public class MainPresenter implements MainPresenterSpec,
 		detailInfo.addDetails(resourceDetails, resource.getType());
 		detailImage.removeImage();
 		for (Attribute attribut : resourceDetails.getItemIds()) {
-			if (attribut.getKey() == AttributKey.ROOM_NR_KEY) {
-				detailImage.setImage(device + attribut.getValue());
+			if (attribut.getKey() == AttributeKey.LOCATION) {
+				detailImage.setImage(device.getUrlPicturePrefix(),
+						resource.getName(), attribut.getValue());
 			}
 		}
 		this.detailLayout.setVisible(true);

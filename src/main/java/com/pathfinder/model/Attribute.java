@@ -12,19 +12,19 @@ public class Attribute {
 	public static final String PROPERTY_LABEL = "label";
 	public static final String PROPERTY_VALUE = "value";
 
-	private AttributKey key;
+	private AttributeKey key;
 	private String label;
 	private String value;
 
 	private String person;
 	private String information;
 
-	public AttributKey getKey() {
+	public AttributeKey getKey() {
 		return key;
 	}
 
 	public void setKey(String key) {
-		this.key = AttributKey.getKey(key);
+		this.key = AttributeKey.getKey(key);
 	}
 
 	public String getLabel() {
