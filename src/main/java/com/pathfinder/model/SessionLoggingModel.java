@@ -48,12 +48,14 @@ public class SessionLoggingModel {
 
 	public void sendLoggingInfoToRapla(ResourceModel resource,
 			ClickOrigin clickOrigin, String searchString) {
-		this.resourceType = resource.getType();
-		this.resourceName = resource.getName();
-		this.clickOrigin = clickOrigin;
-		this.searchString = searchString;
+		if (resource != null) {
+			this.resourceType = resource.getType();
+			this.resourceName = resource.getName();
+			this.clickOrigin = clickOrigin;
+			this.searchString = searchString;
 
-		dataLoader.sendLoggingInfoToRapla(getLoggingString());
+			dataLoader.sendLoggingInfoToRapla(getLoggingString());
+		}
 	}
 
 	private String getLoggingString() {
