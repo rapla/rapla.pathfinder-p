@@ -1,0 +1,13 @@
+# Backlist for search keys; if the search string contains one of this strings, the searchfield will be cleared
+# one row per key
+http
+www
+/
+\
+?
+<
+>
+[
+]
+(
+)
