@@ -47,7 +47,8 @@ public class KeyboardModel {
 	private boolean checkIfSearchStringInBlackList(String searchString) {
 		boolean inBlackList = false;
 		for (String blackListString : BLACKLIST) {
-			if (searchString.contains(blackListString)) {
+			if (searchString.toLowerCase().contains(
+					blackListString.toLowerCase())) {
 				inBlackList = true;
 				break;
 			}
