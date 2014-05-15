@@ -19,8 +19,6 @@ import com.pathfinder.PathfinderUI;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
-import com.pathfinder.view.Keyboard;
-import com.pathfinder.view.KeyboardId;
 import com.vaadin.ui.AbstractOrderedLayout;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -92,8 +90,6 @@ public class KeyboardTest {
 			}
 		}
 	}
-
-	private KeyboardId keyboardId = null;
 
 	@Test
 	public void updateTranslationsTest() {

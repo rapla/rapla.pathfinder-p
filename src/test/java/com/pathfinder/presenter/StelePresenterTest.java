@@ -144,7 +144,6 @@ public class StelePresenterTest {
 
 	@Before
 	public void initialize() {
-		// TODO
 		// ResourceModel model = new ResourceModel("Name", "Link", "Id",
 		// new String[] { "Searchfield 1", "Searchfield 2" });
 		// detailContainer = new DetailContainer<RoomModel>(RoomModel.class,

@@ -78,7 +78,6 @@ public class SearchFieldTest {
 
 			@Override
 			public void textChange(TextChangeEvent event) {
-				// TODO Auto-generated method stub
 
 			}
 		};

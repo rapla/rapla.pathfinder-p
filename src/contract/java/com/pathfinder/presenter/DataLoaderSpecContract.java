@@ -111,26 +111,22 @@ public class DataLoaderSpecContract implements DataLoaderSpec {
 	@Override
 	public BeanItemContainer<Attribute> getResourceDetails(String modelLink,
 			Locale locale) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public BeanItemContainer<FreeRoomModel> getFreeResources() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public BeanItemContainer<EventModel> getEvent(String resourceId,
 			Date startDate, Date endDate, Locale locale) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void sendLoggingInfoToRapla(String data) {
-		// TODO Auto-generated method stub
 
 	}
 }

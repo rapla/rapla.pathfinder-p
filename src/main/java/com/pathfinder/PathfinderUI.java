@@ -10,7 +10,6 @@ import org.apache.logging.log4j.Logger;
 import com.pathfinder.model.Device;
 import com.pathfinder.model.SessionLoggingModel;
 import com.pathfinder.presenter.DataLoader;
-import com.pathfinder.presenter.DataLoaderSpec;
 import com.pathfinder.presenter.MainPresenter;
 import com.pathfinder.presenter.MainPresenterSpec;
 import com.pathfinder.util.translation.TranslationKeys;
@@ -94,7 +93,7 @@ public class PathfinderUI extends UI {
 	}
 
 	private void initDataloader() {
-		DataLoaderSpec dataLoader = DataLoader.getInstance();
+		DataLoader.getInstance();
 	}
 
 	private void buildLayout() {

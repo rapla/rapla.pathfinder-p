@@ -31,7 +31,8 @@ public class PathfinderServlet extends VaadinServlet {
 		super.servletInitialized();
 
 		this.setDefaultSystemMessages(getService());
-		// TODO This method should only be called if the client is the Stele
+		// TODO This method should only be called if the client is the Stele -->
+		// Not possible, because when at this moment there is no client
 		this.addMetaTagForIE10Mode();
 	}
 

@@ -301,15 +301,6 @@ public class MainPresenter implements MainPresenterSpec,
 		@Override
 		public void textChange(TextChangeEvent event) {
 			setSearchString(event.getText());
-			// TODO Doesn´t work yet but is the better solution in combination
-			// with a CommitHandler/CommitListener
-			// try {
-			// keyboardBinder.commit();
-			// } catch (CommitException e) {
-			// // TODO Auto-generated catch block
-			// e.printStackTrace();
-			// }
-			// System.out.println("SearchString: " + getSearchString());
 		}
 	}
 

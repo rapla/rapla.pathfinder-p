@@ -31,7 +31,6 @@ public class SearchFieldSpecContract extends ComponentSpecContract implements
 
 	@ClassInvariant
 	public void classInvariant() {
-		// TODO: write invariants if required
 	}
 
 	@Override
@@ -85,35 +84,29 @@ public class SearchFieldSpecContract extends ComponentSpecContract implements
 
 	@Override
 	public void focusSearchField() {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public int getCursorPosition() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public void setCursorPosition(int cursorPosition) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void hideSearchField() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void showSearchField() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void setSearchFieldValue(String newValue) {
-		// TODO Auto-generated method stub
 
 	}
 }

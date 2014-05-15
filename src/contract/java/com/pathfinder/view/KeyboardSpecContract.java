@@ -19,7 +19,6 @@ public class KeyboardSpecContract extends ComponentSpecContract implements
 
 	@Target
 	private KeyboardSpec target;
-	private int listenerCountBefore = -5;
 
 	@Override
 	public void addKeyboardButtonListener(ClickListener listener) {
@@ -37,14 +36,11 @@ public class KeyboardSpecContract extends ComponentSpecContract implements
 
 	@Override
 	public void hideKeyboard() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void showKeyboard() {
-		// TODO Auto-generated method stub
-
 	}
 
 }

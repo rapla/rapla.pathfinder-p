@@ -24,7 +24,6 @@ public class ComponentSpecContract extends AbstractComponentContract implements
 
 	@Override
 	public void doCleanup() {
-		// TODO Auto-generated method stub
 
 	}
 
