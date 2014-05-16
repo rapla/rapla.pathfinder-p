@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.pathfinder.model.EventModel;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.ui.Calendar;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.UI;
@@ -32,7 +33,8 @@ public class DetailEvents extends CustomComponent implements DetailEventsSpec {
 	private void buildLayout() {
 		this.setSizeFull();
 		calendar.setSizeFull();
-		calendar.setHeight(380, Unit.PIXELS);
+		calendar.setWidth(100, Unit.PERCENTAGE);
+		calendar.setHeight(100, Unit.PERCENTAGE);
 	}
 
 	private void addStyling() {

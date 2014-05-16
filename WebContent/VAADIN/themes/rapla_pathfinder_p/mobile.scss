@@ -1,12 +1,18 @@
 @import "../reindeer/reindeer.scss";
 /*
- * Tablet Styling
+ * Mobile Styling
  */
 
 @mixin mobile {
 	@include reindeer;
 	
-	.v-ui[width-range~="100px-699px"]{
+	.v-ui[width-range~="200px-699px"]{
+		
+		
+		* {
+			font-size: 30px !important;
+		}
+		
 		
 		height: 100%;
 		
@@ -14,20 +20,33 @@
 						
 			.logo-dhbw{
 				height: 6em !important;
-				margin-top: 3em;
+				margin-top: 1em;
+				margin-bottom: 1em !important;
 			}
 			
 			.resource-accordion-item-caption {
 				height: 35px;
 			}
 			
-			.searchfield {
-				height: 44px !important;
-				width: 94.5% !important;
+			
+			
+			.search {
+				.v-icon{
+					height: 1.3em !important;
+					width: 1.3em !important;
+					padding-left: 23% !important;
+					padding-top: 28% !important;
+				}
+				
+				.searchfield {
+					height: 60px !important;
+					width: 93.5% !important;
+					font-size: 24px !important;
+				}
 			}
 			
 			.v-popupbutton .v-popup-indicator {
-				height: 50px;
+				height: 60px;
 			}
 			
 			.v-icon {
@@ -35,10 +54,10 @@
 			}
 			
 			.languageButton {
-				height: 50px !important;
+				height: 60px !important;
 				
 				.v-icon {
-					height: 50px;
+					height: 60px;
 				}
 			}
 			
@@ -47,12 +66,29 @@
 			}
 			
 			.freeroom{
+			
+				margin-bottom: 1em !important;
+				
 				.v-table-body{
 					height: 100% !important;
 				}
 				
+				.v-table-header, .v-table-header-cell, .v-table-header-wrap, .v-table-cell-content{
+					height: 60px;
+					font-size: 25px !important;
+				}
+				
+				.v-table-header{
+					height: 60px;
+				}
+				
+				.v-label{
+					font-size: 30px;
+					padding-top: 7px !important;
+				}
+				
 				.v-table-row-result-row{
-					height: 30px;
+					height: 60px;
 					
 					.v-table-cell-content{
 						padding-bottom: 0px;
@@ -70,6 +106,64 @@
 			.v-table-row-result-row .v-table-cell-content-result-row {
 				padding-top: 0px;
 				padding-bottom: 0px;
+			}
+			
+			.resource-accordion-item-caption {
+				height: 60px !important;
+				
+				.v-caption {
+					height: 53px !important;
+					padding-top: 7px !important;
+				}
+			}
+			
+			.ressource-accordion-item-content {
+				.v-table-row-result-row {
+					height: 60px !important;
+				}
+			}
+			
+			.resource-accordion-item .resource-accordion-item-content tr{
+				height: 50px !important;
+			}
+			
+			.v-slot.v-slot-detailImage{
+				width: 100% !important;
+				float: none;
+				clear: both;
+		
+				.detailImage {
+					box-shadow: 0px 0px 10px #808090;
+				}
+			}
+		
+			.v-slot.v-slot-detailEvents{
+				width: 100% !important;
+				clear: both;
+				float: none;
+				margin-top: 1em;
+			
+				.v-calendar-current-time{
+					width: 100% !important;
+				}
+				
+				
+				
+				.v-calendar-header-week .v-calendar-header-day, .v-calendar-time, .v-calendar-time span{
+					font-size: 20px !important;
+				}	
+			}
+			
+			.detailInfo .v-table-body-wrapper{
+				height: auto !important;
+			}
+			
+			.homeButton .v-icon {
+				height: 50px !important;
+			}
+			
+			.menubar {
+				margin-top: 1em;
 			}
 		}
 	}
