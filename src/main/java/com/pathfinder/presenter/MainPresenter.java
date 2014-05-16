@@ -1,6 +1,5 @@
 package com.pathfinder.presenter;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Timer;
@@ -11,9 +10,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.pathfinder.model.Attribute;
 import com.pathfinder.model.AttributeKey;
-import com.pathfinder.model.CalendarModel;
 import com.pathfinder.model.Device;
-import com.pathfinder.model.EventModel;
 import com.pathfinder.model.FreeRoomModel;
 import com.pathfinder.model.KeyboardModel;
 import com.pathfinder.model.ResourceLink;
@@ -118,8 +115,6 @@ public class MainPresenter implements MainPresenterSpec,
 	private final KeyboardModel keyboardModel = new KeyboardModel();
 	private ResourceModel resource = null;
 	private BeanItemContainer<Attribute> resourceDetails = null;
-	private BeanItemContainer<EventModel> resourceEvents = null;
-	private CalendarModel calendarModel = new CalendarModel();
 	private Device device;
 	private SessionLoggingModel sessionLoggingModel;
 
@@ -180,8 +175,6 @@ public class MainPresenter implements MainPresenterSpec,
 		this.mainLayout.addComponent(detailLayout);
 		this.detailLayout.setVisible(false);
 		this.mainLayout.addComponent(menuBar);
-		// TODO to work, you have to set all other components to sizeUndefined
-		// this.mainLayout.setExpandRatio(contentLayout, 1);
 	}
 
 	private void addStyling() {
@@ -216,7 +209,7 @@ public class MainPresenter implements MainPresenterSpec,
 		}
 
 		this.dateTime.addBackToHomeListener(new BackToHomeListener());
-		this.detailEvents.addCalendarListener(new CalendarListener());
+		// this.detailEvents.addCalendarListener(new CalendarListener());
 		this.detailEvents.setEventClickHandler(new CalendarEventClickHandler());
 		this.keyboardView
 				.addKeyboardButtonListener(new KeyboardButtonClickListener());
@@ -360,28 +353,6 @@ public class MainPresenter implements MainPresenterSpec,
 		}
 	}
 
-	class CalendarListener implements Listener {
-
-		@Override
-		public void componentEvent(Event event) {
-			long sevenDays = 7 * DateConstants.DAYINMILLIS;
-			if (event instanceof ForwardEvent) {
-				long calendarDayMinusOne = calendarModel
-						.getBeginningOfCurrentDay().getTime() + sevenDays;
-				calendarModel.setBeginningOfCurrentDay(new Date(
-						calendarDayMinusOne));
-				updateCalendarEvents();
-			} else if (event instanceof BackwardEvent) {
-				long calendarDayPlusOne = calendarModel
-						.getBeginningOfCurrentDay().getTime() - sevenDays;
-				calendarModel.setBeginningOfCurrentDay(new Date(
-						calendarDayPlusOne));
-				updateCalendarEvents();
-			}
-		}
-
-	}
-
 	class KeyboardButtonClickListener implements ClickListener {
 
 		@Override
@@ -475,31 +446,11 @@ public class MainPresenter implements MainPresenterSpec,
 					ui.getLocale());
 
 			if (resourceDetails != null) {
-				calendarModel.setBeginningOfCurrentDay(new Date());
 
-				updateCalendarEvents();
+				detailEvents.setResourceModel(resource);
 
-				LOGGER.trace(resource.getType() + " element was clicked: "
-						+ resource.getName());
 				switchToDetailView();
 			}
-		}
-	}
-
-	private void updateCalendarEvents() {
-
-		if (resource != null) {
-
-			Date firstDayOfWeek = getFirstDayOfWeek(calendarModel
-					.getBeginningOfCurrentDay());
-			Date lastDayOfWeek = getLastDayOfWeek(calendarModel
-					.getEndOfCurrentDay());
-
-			resourceEvents = dataLoader.getEvent(resource.getId(),
-					firstDayOfWeek, lastDayOfWeek, ui.getLocale());
-
-			detailEvents.setEvents(resourceEvents, firstDayOfWeek,
-					lastDayOfWeek);
 		}
 	}
 
@@ -705,20 +656,6 @@ public class MainPresenter implements MainPresenterSpec,
 		LOGGER.trace("SearchString: " + this.getSearchString());
 	}
 
-	private Date getFirstDayOfWeek(Date date) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
-		return cal.getTime();
-	}
-
-	private Date getLastDayOfWeek(Date date) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		cal.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
-		return cal.getTime();
-	}
-
 	@Override
 	public void languageChanged(Locale locale) {
 		if (!ui.getLocale().equals(locale)) {
@@ -758,9 +695,6 @@ public class MainPresenter implements MainPresenterSpec,
 				* DateConstants.MINUTEINMILLIS;
 
 		long lastHeartbeat = ui.getLastHeartbeatTimestamp();
-
-		LOGGER.info("Last heartbeat: " + new Date(lastHeartbeat).toString());
-		LOGGER.info("UI: " + ui);
 
 		if (lastHeartbeat < tenMinutesAgo)
 			result = true;

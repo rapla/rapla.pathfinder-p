@@ -13,15 +13,13 @@ import org.apache.logging.log4j.Logger;
 
 import com.pathfinder.model.EventModel;
 import com.pathfinder.model.ResourceModel;
-import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.components.calendar.event.CalendarEvent;
 
 /**
  * @author tim
  * 
  */
-public class CalendarEventComponent extends CustomComponent implements
-		CalendarEvent {
+public class CalendarEventComponent implements CalendarEvent {
 
 	private static final Logger LOGGER = LogManager
 			.getLogger(CalendarEventComponent.class);
@@ -83,6 +81,16 @@ public class CalendarEventComponent extends CustomComponent implements
 
 	public EventModel getEventModel() {
 		return eventModel;
+	}
+
+	@Override
+	public String getDescription() {
+		return null;
+	}
+
+	@Override
+	public String getStyleName() {
+		return null;
 	}
 
 }
