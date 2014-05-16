@@ -1,0 +1,9 @@
+com.pathfinder
+com.pathfinder.model
+com.pathfinder.presenter
+com.pathfinder.translation
+com.pathfinder.util.properties
+com.pathfinder.util.translation
+com.pathfinder.util.widgetset
+com.pathfinder.util.widgetset.client.datetime
+com.pathfinder.view
