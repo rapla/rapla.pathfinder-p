@@ -6,11 +6,13 @@
 @mixin tablet {
 	@include reindeer;
 	
-	* {
-		font-size: 25px !important;
-	}
-	
 	.v-ui[width-range~="700px-1079px"]{
+		
+		
+		* {
+			font-size: 30px !important;
+		}
+		
 		
 		height: 100%;
 		
@@ -25,22 +27,25 @@
 				height: 35px;
 			}
 			
-			.searchfield {
-				height: 44px !important;
-				width: 94.5% !important;
-				font-size: 20px !important;
-			}
+			
 			
 			.search {
 				.v-icon{
 					height: 1.3em !important;
 					width: 1.3em !important;
-					padding-left: 10% !important;
+					padding-left: 23% !important;
+					padding-top: 28% !important;
+				}
+				
+				.searchfield {
+					height: 60px !important;
+					width: 93.5% !important;
+					font-size: 24px !important;
 				}
 			}
 			
 			.v-popupbutton .v-popup-indicator {
-				height: 50px;
+				height: 60px;
 			}
 			
 			.v-icon {
@@ -48,10 +53,10 @@
 			}
 			
 			.languageButton {
-				height: 50px !important;
+				height: 60px !important;
 				
 				.v-icon {
-					height: 50px;
+					height: 60px;
 				}
 			}
 			
@@ -68,21 +73,21 @@
 				}
 				
 				.v-table-header, .v-table-header-cell, .v-table-header-wrap, .v-table-cell-content{
-					height: 50px;
+					height: 60px;
 					font-size: 25px !important;
 				}
 				
 				.v-table-header{
-					height: 50px;
+					height: 60px;
 				}
 				
 				.v-label{
-					font-size: 25px;
+					font-size: 30px;
 					padding-top: 7px !important;
 				}
 				
 				.v-table-row-result-row{
-					height: 50px;
+					height: 60px;
 					
 					.v-table-cell-content{
 						padding-bottom: 0px;
@@ -103,17 +108,17 @@
 			}
 			
 			.resource-accordion-item-caption {
-				height: 50px !important;
+				height: 60px !important;
 				
 				.v-caption {
-					height: 43px !important;
+					height: 53px !important;
 					padding-top: 7px !important;
 				}
 			}
 			
 			.ressource-accordion-item-content {
 				.v-table-row-result-row {
-					height: 50px !important;
+					height: 60px !important;
 				}
 			}
 			
