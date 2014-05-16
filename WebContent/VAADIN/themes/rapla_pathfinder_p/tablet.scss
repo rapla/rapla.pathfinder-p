@@ -21,6 +21,7 @@
 			.logo-dhbw{
 				height: 6em !important;
 				margin-top: 1em;
+				margin-bottom: 1em !important;
 			}
 			
 			.resource-accordion-item-caption {
@@ -123,6 +124,39 @@
 			}
 			
 			.resource-accordion-item .resource-accordion-item-content tr{
+				height: 50px !important;
+			}
+			
+			.v-slot.v-slot-detailImage{
+				width: 100% !important;
+				float: none;
+				clear: both;
+		
+				.detailImage {
+					box-shadow: 0px 0px 10px #808090;
+				}
+			}
+		
+			.v-slot.v-slot-detailEvents{
+				width: 100% !important;
+				clear: both;
+				float: none;
+				margin-top: 1em;
+			
+				.v-calendar-current-time{
+					width: 100% !important;
+				}
+				
+				.v-calendar-header-week .v-calendar-header-day, .v-calendar-time, .v-calendar-time span{
+					font-size: 20px !important;
+				}	
+			}
+			
+			.detailInfo .v-table-body-wrapper{
+				height: auto !important;
+			}
+			
+			.homeButton .v-icon {
 				height: 50px !important;
 			}
 		}
