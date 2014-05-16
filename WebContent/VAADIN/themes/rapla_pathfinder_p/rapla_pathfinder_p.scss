@@ -8,6 +8,10 @@
   /* Include all the styles from the reindeer theme */
   /* TODO Can we already use Tune-Theme? */
   @include reindeer;
+  
+  	.pop-up-button.v-widget:hover, .pop-up-go-back-button.v-widget:hover {
+		background-color: #767676 !important;
+	}
 	
 	// Stele spezifisches Styling
 	.v-ui[width-range~="1080px-1080px"] {
@@ -22,7 +26,7 @@
 	        .datetime{
 	        	display: block;
 				font-size: 30px;
-				color: red;
+				color: #e2001b;
 				width: 100%;
 				position: relative;
 				top: 0%;
@@ -80,7 +84,13 @@
 			
 			.flagImage, .v-icon {
 				height: 5em;
-			}	
+			}
+			
+			.v-table-row-result-row:hover{
+				background-color: #767676 !important;
+			}
+			
+				
 	
 			.flagImage {
 				width: 7.5em;
@@ -134,6 +144,8 @@
 				.v-layout.v-expand.v-slot-global-table{
 					width: 75% !important;
 				}
+				
+				
 			}
 			
 			//Big Captions
@@ -152,7 +164,7 @@
 				
 				.v-table-header {
 					height: 40px;
-			   		font: 1.65em Arial;
+			   		font: 20px Arial;
 			   		width: auto;
 				}
 			}
@@ -215,6 +227,10 @@
 		    	
 		    	.v-label{
 		    		font: 20px Arial;
+		    	}
+		    	
+		    	.v-table-header{
+		    		font-size: 20px;
 		    	}
 		    }
 			
@@ -279,6 +295,11 @@
 								display: block;
 							}
 						}
+						
+						.keyboard-button:FOCUS{
+							background-image: none;
+							background-color: #e2001b;
+						}
 					
 						.keyboard-delete {
 							float: left;
@@ -298,6 +319,11 @@
 								display: block;
 							}	
 						}
+						
+						.keyboard-delete:FOCUS{
+							background-image: none;
+							background-color: #e2001b;
+						}
 					
 						.keyboard-space {
 							float: left;
@@ -316,6 +342,11 @@
 								font: 1.65em Arial;
 								display: block;
 							}	
+						}
+						
+						.keyboard-space:FOCUS{
+							background-image: none;
+							background-color: #e2001b;
 						}
 					}
 				}

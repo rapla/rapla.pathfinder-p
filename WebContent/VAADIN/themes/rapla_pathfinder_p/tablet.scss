@@ -6,6 +6,10 @@
 @mixin tablet {
 	@include reindeer;
 	
+	* {
+		font-size: 25px !important;
+	}
+	
 	.v-ui[width-range~="700px-1079px"]{
 		
 		height: 100%;
@@ -54,8 +58,22 @@
 					height: 100% !important;
 				}
 				
+				.v-table-header, .v-table-header-cell, .v-table-header-wrap, .v-table-cell-content{
+					height: 50px;
+					font-size: 25px !important;
+				}
+				
+				.v-table-header{
+					height: 50px;
+				}
+				
+				.v-label{
+					font-size: 25px;
+					padding-top: 7px !important;
+				}
+				
 				.v-table-row-result-row{
-					height: 30px;
+					height: 50px;
 					
 					.v-table-cell-content{
 						padding-bottom: 0px;
@@ -73,6 +91,25 @@
 			.v-table-row-result-row .v-table-cell-content-result-row {
 				padding-top: 0px;
 				padding-bottom: 0px;
+			}
+			
+			.resource-accordion-item-caption {
+				height: 50px !important;
+				
+				.v-caption {
+					height: 43px !important;
+					padding-top: 7px !important;
+				}
+			}
+			
+			.ressource-accordion-item-content {
+				.v-table-row-result-row {
+					height: 50px !important;
+				}
+			}
+			
+			.resource-accordion-item .resource-accordion-item-content tr{
+				height: 50px !important;
 			}
 		}
 	}

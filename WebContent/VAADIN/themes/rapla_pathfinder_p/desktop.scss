@@ -11,6 +11,10 @@
 		padding: 0;
 	}
 	
+	a {
+		color: #cccccc;
+	}
+	
 	/* POP-UP Styling */
 	.pop-up-button.v-widget, .pop-up-go-back-button.v-widget {
 		background-color: #767676;
@@ -64,9 +68,18 @@
 			.freeroom{
 		    	margin-bottom: 3em;
 		    	
-		    	.v-captiontext{
-		    		font: 30px Arial;
-		    		font-color: red;
+		    	.v-table-caption-container{
+		    		padding-top: 7px;
+		    		padding-left: 21px;
+		    	}
+		    	
+		    	.v-table-header-wrap{
+		    		text-transform: none !important;
+		    		
+		    		.v-table-header{
+		    			color: #cccccc !important;
+		    			text-shadow: none !important;
+		    		}
 		    	}
 		    }
 		    
