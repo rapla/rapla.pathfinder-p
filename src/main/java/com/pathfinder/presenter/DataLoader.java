@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -31,11 +31,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pathfinder.model.AttributeKey;
 import com.pathfinder.model.Attribute;
+import com.pathfinder.model.AttributeKey;
 import com.pathfinder.model.Category;
 import com.pathfinder.model.EventModel;
 import com.pathfinder.model.FreeRoomModel;
+import com.pathfinder.model.ResourceLink;
 import com.pathfinder.model.ResourceModel;
 import com.pathfinder.model.ResourceType;
 import com.pathfinder.util.properties.ApplicationProperties;
@@ -480,9 +481,8 @@ public class DataLoader implements DataLoaderSpec {
 			url += "&language=" + locale.getLanguage();
 		}
 
-		JSONObject attributMap;
-		JSONObject resourceLinks;
-		Attribute attribut;
+		Map<String, Attribute> attributMap = null;
+		Map<String, ResourceModel> resourceLinksMap = null;
 
 		BeanItemContainer<Attribute> attributList = new BeanItemContainer<Attribute>(
 				Attribute.class);
@@ -491,34 +491,48 @@ public class DataLoader implements DataLoaderSpec {
 			BufferedReader br = new BufferedReader(new InputStreamReader(
 					new URL(url).openStream()));
 
-			JSONObject jsonObject = (JSONObject) parser.parse(br);
+			ObjectMapper mapper = new ObjectMapper();
+			JsonNode rootNode = mapper.readTree(br);
 
-			jsonObject = (JSONObject) jsonObject.get("result");
+			rootNode = rootNode.path("result");
 
-			if (jsonObject == null) {
+			JsonNode node;
+
+			if (rootNode == null) {
 				attributList = null;
 			} else {
-				attributMap = (JSONObject) jsonObject.get("attributeMap");
-				resourceLinks = (JSONObject) jsonObject.get("resourceLinks");
-
-				@SuppressWarnings("unchecked")
-				Set<String> attributeMapSet = attributMap.keySet();
-
-				Iterator<String> attributeMapKeys = attributeMapSet.iterator();
+				node = rootNode.path("attributeMap");
+				attributMap = mapper.readValue(node.traverse(),
+						new TypeReference<Map<String, Attribute>>() {
+						});
 
 				List<Attribute> attributes = new ArrayList<>();
 
-				while (attributeMapKeys.hasNext()) {
-					attribut = new Attribute();
+				for (String key : attributMap.keySet()) {
+					Attribute attribute = attributMap.get(key);
+					attribute.setKey(key);
+					attributes.add(attribute);
+				}
 
-					String nextKey = attributeMapKeys.next().toString();
-					attribut.setKey(nextKey);
-					attribut.setLabel((String) ((JSONObject) attributMap
-							.get(nextKey)).get(Attribute.PROPERTY_LABEL));
-					attribut.setValue((String) ((JSONObject) attributMap
-							.get(nextKey)).get(Attribute.PROPERTY_VALUE));
+				// Add resource links
+				if (rootNode != null) {
+					node = rootNode.path("resourceLinks");
+					if (node != null) {
+						resourceLinksMap = mapper
+								.readValue(
+										node.traverse(),
+										new TypeReference<Map<String, ResourceModel>>() {
+										});
+					}
+				}
 
-					attributes.add(attribut);
+				if (resourceLinksMap != null) {
+					for (String key : resourceLinksMap.keySet()) {
+						ResourceModel resourceModel = resourceLinksMap.get(key);
+						ResourceLink resourceLink = new ResourceLink(
+								resourceModel, key);
+						attributes.add(resourceLink);
+					}
 				}
 
 				// Sort attributes; name first
@@ -544,10 +558,10 @@ public class DataLoader implements DataLoaderSpec {
 		} catch (MalformedURLException e) {
 			LOGGER.info(ERROR_MASSAGE_LOADING_RESOURCE_DETAIL + resourceId);
 			LOGGER.error(ERROR_MASSAGE_URL_NOT_READABLE, e);
-		} catch (ParseException e) {
-			LOGGER.info(ERROR_MASSAGE_LOADING_RESOURCE_DETAIL + resourceId);
-			LOGGER.error(ERROR_MASSAGE_JSON_HANDLING, e);
-			LOGGER.error(ERROR_MASSAGE_URL_NOT_READABLE, e);
+			// } catch (ParseException e) {
+			// LOGGER.info(ERROR_MASSAGE_LOADING_RESOURCE_DETAIL + resourceId);
+			// LOGGER.error(ERROR_MASSAGE_JSON_HANDLING, e);
+			// LOGGER.error(ERROR_MASSAGE_URL_NOT_READABLE, e);
 		} catch (IOException e) {
 			LOGGER.info(ERROR_MASSAGE_LOADING_RESOURCE_DETAIL + resourceId);
 			LOGGER.error(ERROR_MASSAGE_URL_NOT_READABLE, e);

@@ -142,9 +142,7 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 				addToTable = true;
 				break;
 			case ROOM_NR_KEY:
-				// skip, if ressource is a room
-				if (!isRoomType(resourceType, attributeItems))
-					addToTable = true;
+				// skip
 				break;
 			case EMAIL_KEY:
 				if (!EMPTY_EMAIL.equals(attributeItem.getValue())) {
@@ -182,28 +180,6 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 		detailInfoTable.setPageLength(detailInfoTable.getItemIds().size());
 		detailInfoTable.setVisible(true);
 		layout.setVisible(true);
-	}
-
-	private boolean isRoomType(ResourceType type, List<Attribute> attributeItems) {
-		boolean result = false;
-		if (type == ResourceType.ROOM) {
-			result = true;
-		} else if (type == ResourceType.UNKNOWN) {
-			String name = "";
-			String roomId = "";
-			for (Attribute attribute : attributeItems) {
-				if (attribute.getKey() == AttributeKey.NAME_KEY) {
-					name = attribute.getValue();
-				} else if (attribute.getKey() == AttributeKey.ROOM_NR_KEY) {
-					roomId = attribute.getValue();
-				}
-			}
-			if (name != null && roomId != null
-					&& name.toLowerCase().equals(roomId.toLowerCase())) {
-				result = true;
-			}
-		}
-		return result;
 	}
 
 	private String addMailTo(String mail) {

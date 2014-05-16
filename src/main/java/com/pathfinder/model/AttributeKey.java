@@ -5,7 +5,7 @@ public enum AttributeKey {
 			"raumnr"), ROOM_TYPE_KEY("raumart"), YEAR_KEY("jahrgang"), PICTURE_NAME_KEY(
 			"bild"), COURSE_OF_STUDIES_KEY("abteilung"), EMAIL_KEY("email"), PHONE_KEY(
 			"telefon"), INFO_KEY("info"), LINE_KEY("zeile"), LOCATION(
-			"location");
+			"location"), RESOURCE_LINK("resourceLink");
 
 	private String key;
 

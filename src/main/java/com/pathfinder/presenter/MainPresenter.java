@@ -16,6 +16,7 @@ import com.pathfinder.model.Device;
 import com.pathfinder.model.EventModel;
 import com.pathfinder.model.FreeRoomModel;
 import com.pathfinder.model.KeyboardModel;
+import com.pathfinder.model.ResourceLink;
 import com.pathfinder.model.ResourceModel;
 import com.pathfinder.model.ResourceType;
 import com.pathfinder.model.SessionLoggingModel;
@@ -268,9 +269,11 @@ public class MainPresenter implements MainPresenterSpec,
 			boolean showDetailView = false;
 
 			switch (attribute.getKey()) {
-			case ROOM_NR_KEY:
-				resource = getRoomByName(attribute.getValue());
-				showDetailView = true;
+			case RESOURCE_LINK:
+				if (attribute instanceof ResourceLink) {
+					resource = ((ResourceLink) attribute).getResourceModel();
+					showDetailView = true;
+				}
 				break;
 			case INFO_KEY:
 				personInformationView.showInformation(attribute.getPerson(),
@@ -281,20 +284,6 @@ public class MainPresenter implements MainPresenterSpec,
 
 			return showDetailView;
 		}
-	}
-
-	private ResourceModel getRoomByName(String roomName) {
-		ResourceModel result = null;
-		if (roomName != null && roomName.length() > 0) {
-			for (ResourceModel model : dataLoader.getRoomContainer()
-					.getItemIds()) {
-				if (model.getName().toLowerCase()
-						.equals(roomName.toLowerCase())) {
-					result = model;
-				}
-			}
-		}
-		return result;
 	}
 
 	class SearchFieldTextChangeListener implements TextChangeListener {
@@ -579,13 +568,25 @@ public class MainPresenter implements MainPresenterSpec,
 		detailInfo.removeDetails();
 		detailInfo.addDetails(resourceDetails, resource.getType());
 		detailImage.removeImage();
-		for (Attribute attribut : resourceDetails.getItemIds()) {
-			if (attribut.getKey() == AttributeKey.LOCATION) {
+		setImage(resourceDetails);
+		this.detailLayout.setVisible(true);
+	}
+
+	private void setImage(BeanItemContainer<Attribute> resourceDetails) {
+		for (Attribute attribute : resourceDetails.getItemIds()) {
+			if (attribute.getKey() == AttributeKey.LOCATION) {
 				detailImage.setImage(device.getUrlPicturePrefix(),
-						resource.getName(), attribut.getValue());
+						resource.getName(), attribute.getValue());
+			} else if (attribute.getKey() == AttributeKey.RESOURCE_LINK) {
+				if (attribute instanceof ResourceLink) {
+					ResourceModel resourceModel = ((ResourceLink) attribute)
+							.getResourceModel();
+					setImage(dataLoader.getResourceDetails(
+							resourceModel.getId(), ui.getLocale()));
+					break;
+				}
 			}
 		}
-		this.detailLayout.setVisible(true);
 	}
 
 	@Override
