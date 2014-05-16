@@ -36,10 +36,15 @@ import com.vaadin.ui.Table.ColumnHeaderMode;
  * 
  */
 public class AccordionView extends CustomComponent implements AccordionViewSpec {
+
+	/** To translate GUI-Components */
 	private final TranslatorSpec translator = Translator.getInstance();
 
+	/** Icon for each accordion tab */
 	private final ThemeResource orderlines = new ThemeResource(
 			"icon/orderlines.png");
+
+	/** Captions for each accordion tab */
 	private String accordionCaptionRooms = null;
 	private String accordionCaptionCourses = null;
 	private String accordionCaptionPersons = null;
@@ -91,7 +96,7 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 		table.setCellStyleGenerator(new CustomCellStyleGenerator());
 	}
 
-	class CustomCellStyleGenerator implements CellStyleGenerator {
+	private class CustomCellStyleGenerator implements CellStyleGenerator {
 		@Override
 		public String getStyle(Table source, Object itemId, Object propertyId) {
 			return "result-row";
@@ -148,7 +153,7 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 		return horizontal;
 	}
 
-	class ScrollClickListener implements ClickListener {
+	private class ScrollClickListener implements ClickListener {
 		ResourceType type;
 		boolean up;
 
@@ -388,4 +393,25 @@ public class AccordionView extends CustomComponent implements AccordionViewSpec 
 		this.personTable.removeAllItems();
 		this.poiTable.removeAllItems();
 	}
+
+	@Override
+	public Table getRoomTable() {
+		return roomTable;
+	}
+
+	@Override
+	public Table getCourseTable() {
+		return courseTable;
+	}
+
+	@Override
+	public Table getPersonTable() {
+		return personTable;
+	}
+
+	@Override
+	public Table getPoiTable() {
+		return poiTable;
+	}
+
 }

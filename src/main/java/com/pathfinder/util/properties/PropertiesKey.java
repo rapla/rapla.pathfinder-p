@@ -4,6 +4,9 @@
 package com.pathfinder.util.properties;
 
 /**
+ * Enum for each application property from property-file; the property name in
+ * property-file has to equal the string representation of the enum.
+ * 
  * @author tim
  * 
  */

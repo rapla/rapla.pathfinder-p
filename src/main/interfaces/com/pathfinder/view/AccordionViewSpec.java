@@ -3,6 +3,7 @@ package com.pathfinder.view;
 import com.pathfinder.model.ResourceModel;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
+import com.vaadin.ui.Table;
 
 /**
  * TreeStructureSpec
@@ -27,4 +28,12 @@ public interface AccordionViewSpec extends ComponentSpec {
 	void setPersonContainer(BeanItemContainer<ResourceModel> beanItemContainer);
 
 	void setPoiContainer(BeanItemContainer<ResourceModel> beanItemContainer);
+
+	Table getRoomTable();
+
+	Table getCourseTable();
+
+	Table getPersonTable();
+
+	Table getPoiTable();
 }

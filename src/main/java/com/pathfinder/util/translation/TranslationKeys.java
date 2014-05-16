@@ -4,6 +4,9 @@
 package com.pathfinder.util.translation;
 
 /**
+ * Enum for each translation in translation property file; the property name in
+ * property-file has to equal the string representation of the enum.
+ * 
  * @author tim
  * 
  */
