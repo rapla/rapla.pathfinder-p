@@ -348,11 +348,15 @@
 			.v-calendar-current-time{
 				width: 100% !important;
 			}
+			
+			.v-calendar-week-wrapper{
+				height: auto !important;
+			}
 		}
 		
 		.detailInfo {
-			margin-top: 2%;
-			margin-bottom: 2%;
+			margin-top: 4%;
+			margin-bottom: 4%;
 			
 			.v-table-row-result-row {
 				background-image: none;
