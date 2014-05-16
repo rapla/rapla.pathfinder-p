@@ -18,7 +18,7 @@
 						
 			.logo-dhbw{
 				height: 6em !important;
-				margin-top: 3em;
+				margin-top: 1em;
 			}
 			
 			.resource-accordion-item-caption {
@@ -28,6 +28,15 @@
 			.searchfield {
 				height: 44px !important;
 				width: 94.5% !important;
+				font-size: 20px !important;
+			}
+			
+			.search {
+				.v-icon{
+					height: 1.3em !important;
+					width: 1.3em !important;
+					padding-left: 10% !important;
+				}
 			}
 			
 			.v-popupbutton .v-popup-indicator {
