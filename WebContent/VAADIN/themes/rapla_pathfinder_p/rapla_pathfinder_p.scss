@@ -13,6 +13,17 @@
 		background-color: #767676 !important;
 	}
 	
+	.v-window-outerheader{
+			
+		background-image: url(img/header_popup.png) !important;
+		background-color: white !important;
+		background-size: 160% !important;
+		
+		.v-window-header{
+			color: black !important;
+		}
+	}
+	
 	// Stele spezifisches Styling
 	.v-ui[width-range~="1080px-1080px"] {
 		background-image: url('img/background.png') !important;
@@ -415,5 +426,6 @@
 				}
 			}
 		}
+		
 	}
 }
