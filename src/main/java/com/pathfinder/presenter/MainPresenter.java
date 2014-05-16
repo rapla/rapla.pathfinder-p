@@ -568,21 +568,23 @@ public class MainPresenter implements MainPresenterSpec,
 		detailInfo.removeDetails();
 		detailInfo.addDetails(resourceDetails, resource.getType());
 		detailImage.removeImage();
-		setImage(resourceDetails);
+		setImage(resourceDetails, resource.getName());
 		this.detailLayout.setVisible(true);
 	}
 
-	private void setImage(BeanItemContainer<Attribute> resourceDetails) {
+	private void setImage(BeanItemContainer<Attribute> resourceDetails,
+			String resourceName) {
 		for (Attribute attribute : resourceDetails.getItemIds()) {
 			if (attribute.getKey() == AttributeKey.LOCATION) {
 				detailImage.setImage(device.getUrlPicturePrefix(),
-						resource.getName(), attribute.getValue());
+						resourceName, attribute.getValue());
 			} else if (attribute.getKey() == AttributeKey.RESOURCE_LINK) {
 				if (attribute instanceof ResourceLink) {
 					ResourceModel resourceModel = ((ResourceLink) attribute)
 							.getResourceModel();
 					setImage(dataLoader.getResourceDetails(
-							resourceModel.getId(), ui.getLocale()));
+							resourceModel.getId(), ui.getLocale()),
+							resourceModel.getName());
 					break;
 				}
 			}

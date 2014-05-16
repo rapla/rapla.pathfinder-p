@@ -25,7 +25,6 @@ public class DetailImage extends Image implements DetailImageSpec {
 			.getInstance();
 
 	private final String IMAGE_PATH = "img/";
-	private final String IMAGE_ENDING = ".png";
 	private final String DEFAULT_IMAGE = IMAGE_PATH
 			+ properties.getProperty(PropertiesKey.DEFAULT_IMAGE_NAME);
 
