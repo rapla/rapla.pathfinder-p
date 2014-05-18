@@ -96,7 +96,7 @@
 				}
 			}
 		    
-		    .v-table-row-result-row{
+		    .v-table-row-result-row, .v-table-row-result-row-person-info{
 				margin-top: 2px;
 				background-image: url('icon/double_arrow.png');
 				background-color: #767676;
@@ -105,7 +105,7 @@
 				background-repeat: no-repeat;
 				cursor: pointer;
 			
-				.v-table-cell-content-result-row {
+				.v-table-cell-content-result-row, .v-table-cell-content-result-row-person-info{
 					padding-top: 5px;
 					padding-bottom: 5px;
 					padding-left: 30px;
@@ -123,7 +123,7 @@
 					}
 				}
 			}
-			.v-table-row-result-row:hover{
+			.v-table-row-result-row:hover, .v-table-row-result-row-person-info:hover{
 			background-color: #E2001B;
 			}
 		
@@ -151,11 +151,11 @@
 			}
 			
 			// Table Row Styling
-			.v-table-row-result-row{
+			.v-table-row-result-row, .v-table-row-result-row-person-info{
 				display: block;
 				cursor: pointer;
 			
-				.v-table-cell-content-result-row {
+				.v-table-cell-content-result-row, .v-table-cell-content-result-row-person-info {
 					//background-color: #767676;
 					cursor: pointer;
 			       
@@ -361,7 +361,10 @@
 			.v-table-row-result-row {
 				background-image: none;
 				width: 100%;
-				cursor: pointer;
+				cursor: default;
+			}
+			.v-table-row-result-row:hover{
+			background-color: #767676;
 			}
 		
 		}

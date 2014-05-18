@@ -87,7 +87,7 @@
 					padding-top: 7px !important;
 				}
 				
-				.v-table-row-result-row{
+				.v-table-row-result-row, .v-table-row-result-row-person-info{
 					height: 60px;
 					
 					.v-table-cell-content{
@@ -103,7 +103,7 @@
 			
 			
 			
-			.v-table-row-result-row .v-table-cell-content-result-row {
+			.v-table-row-result-row .v-table-cell-content-result-row, .v-table-row-result-row-person-info .v-table-cell-content-result-row-person-info  {
 				padding-top: 0px;
 				padding-bottom: 0px;
 			}
