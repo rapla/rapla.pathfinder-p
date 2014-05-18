@@ -15,6 +15,7 @@ import com.pathfinder.model.ResourceType;
 import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.ApplicationPropertiesSpec;
 import com.pathfinder.util.properties.PropertiesKey;
+import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.server.ExternalResource;
@@ -104,7 +105,12 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 	class CustomCellStyleGenerator implements CellStyleGenerator {
 		@Override
 		public String getStyle(Table source, Object itemId, Object propertyId) {
-			return "result-row";
+			switch (((Attribute) itemId).getKey()) {
+			case INFO_KEY:
+				return "result-row-person-info";
+			default:
+				return "result-row";			
+			}
 		}
 	}
 
