@@ -6,7 +6,7 @@ package com.pathfinder.model;
  * @author alexh
  * 
  */
-public class Attribute {
+public class Attribute implements AttributeSpec {
 
 	public static final String PROPERTY_KEY = "key";
 	public static final String PROPERTY_LABEL = "label";
@@ -19,42 +19,52 @@ public class Attribute {
 	private String person;
 	private String information;
 
+	@Override
 	public AttributeKey getKey() {
 		return key;
 	}
 
+	@Override
 	public void setKey(String key) {
 		this.key = AttributeKey.getKey(key);
 	}
 
+	@Override
 	public String getLabel() {
 		return label;
 	}
 
+	@Override
 	public void setLabel(String label) {
 		this.label = label;
 	}
 
+	@Override
 	public String getValue() {
 		return value;
 	}
 
+	@Override
 	public void setValue(String value) {
 		this.value = value;
 	}
 
+	@Override
 	public String getPerson() {
 		return person;
 	}
 
+	@Override
 	public void setPerson(String person) {
 		this.person = person;
 	}
 
+	@Override
 	public String getInformation() {
 		return information;
 	}
 
+	@Override
 	public void setInformation(String information) {
 		this.information = information;
 	}

@@ -9,25 +9,29 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * 
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Category {
+public class Category implements CategorySpec {
 	public static final String PROPERTY_ID = "id";
 	public static final String PROPERTY_NAME = "name";
 
 	private String name;
 	private String id;
 
+	@Override
 	public String getName() {
 		return name;
 	}
 
+	@Override
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	@Override
 	public String getId() {
 		return id;
 	}
 
+	@Override
 	public void setId(String id) {
 		this.id = id;
 	}

@@ -34,8 +34,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pathfinder.model.Attribute;
 import com.pathfinder.model.AttributeKey;
 import com.pathfinder.model.Category;
+import com.pathfinder.model.CategorySpec;
 import com.pathfinder.model.EventModel;
 import com.pathfinder.model.FreeRoomModel;
+import com.pathfinder.model.FreeRoomModelSpec;
 import com.pathfinder.model.ResourceLink;
 import com.pathfinder.model.ResourceModel;
 import com.pathfinder.model.ResourceType;
@@ -253,7 +255,7 @@ public class DataLoader implements DataLoaderSpec {
 		List<Category> categoryResult = jacksonGetOrganigram();
 
 		if (categoryResult != null)
-			for (Category faculty : categoryResult) {
+			for (CategorySpec faculty : categoryResult) {
 
 				try {
 					List<ResourceModel> courseResult = jacksonGetResources(
@@ -408,7 +410,7 @@ public class DataLoader implements DataLoaderSpec {
 	@SuppressWarnings("finally")
 	@Override
 	public synchronized BeanItemContainer<FreeRoomModel> getFreeResources() {
-		FreeRoomModel freeRoom = null;
+		FreeRoomModelSpec freeRoom = null;
 
 		BeanItemContainer<FreeRoomModel> freeRoomContainer = new BeanItemContainer<FreeRoomModel>(
 				FreeRoomModel.class);

@@ -10,6 +10,7 @@ import org.jsoup.Jsoup;
 
 import com.pathfinder.model.Attribute;
 import com.pathfinder.model.AttributeKey;
+import com.pathfinder.model.AttributeSpec;
 import com.pathfinder.model.Device;
 import com.pathfinder.model.ResourceType;
 import com.pathfinder.util.properties.ApplicationProperties;
@@ -85,7 +86,7 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 		detailInfoTable.addGeneratedColumn("htmlvalue", new ColumnGenerator() {
 			public Component generateCell(Table source, Object itemId,
 					Object columnId) {
-				String value = ((Attribute) itemId).getValue();
+				String value = ((AttributeSpec) itemId).getValue();
 				Label label = new Label(value, ContentMode.HTML);
 				label.setSizeUndefined();
 				return label;
@@ -105,7 +106,7 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 	class CustomCellStyleGenerator implements CellStyleGenerator {
 		@Override
 		public String getStyle(Table source, Object itemId, Object propertyId) {
-			switch (((Attribute) itemId).getKey()) {
+			switch (((AttributeSpec) itemId).getKey()) {
 			case INFO_KEY:
 				return "result-row-person-info";
 			default:
@@ -125,7 +126,7 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 
 		List<Attribute> attributeItems = resourceDetails.getItemIds();
 		imageExist = false;
-		for (Attribute attributeItem : attributeItems) {
+		for (AttributeSpec attributeItem : attributeItems) {
 
 			boolean addToTable = false;
 
@@ -212,7 +213,7 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 
 	private String getName(List<Attribute> attributeItems) {
 		String result = null;
-		for (Attribute attribute : attributeItems) {
+		for (AttributeSpec attribute : attributeItems) {
 			if (attribute.getKey() == AttributeKey.NAME_KEY) {
 				result = attribute.getValue();
 				break;

@@ -5,7 +5,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class EventModel {
+public class EventModel implements EventModelSpec {
 
 	private String name;
 	private String start;
@@ -17,6 +17,7 @@ public class EventModel {
 	/**
 	 * @return the name
 	 */
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -25,6 +26,7 @@ public class EventModel {
 	 * @param name
 	 *            the name to set
 	 */
+	@Override
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -32,6 +34,7 @@ public class EventModel {
 	/**
 	 * @return the start
 	 */
+	@Override
 	public String getStart() {
 		return start;
 	}
@@ -40,6 +43,7 @@ public class EventModel {
 	 * @param start
 	 *            the start to set
 	 */
+	@Override
 	public void setStart(String start) {
 		this.start = start;
 	}
@@ -47,6 +51,7 @@ public class EventModel {
 	/**
 	 * @return the startDate
 	 */
+	@Override
 	public String getStartDate() {
 		return startDate;
 	}
@@ -55,6 +60,7 @@ public class EventModel {
 	 * @param startDate
 	 *            the startDate to set
 	 */
+	@Override
 	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
@@ -62,6 +68,7 @@ public class EventModel {
 	/**
 	 * @return the end
 	 */
+	@Override
 	public String getEnd() {
 		return end;
 	}
@@ -70,6 +77,7 @@ public class EventModel {
 	 * @param end
 	 *            the end to set
 	 */
+	@Override
 	public void setEnd(String end) {
 		this.end = end;
 	}
@@ -77,6 +85,7 @@ public class EventModel {
 	/**
 	 * @return the endDate
 	 */
+	@Override
 	public String getEndDate() {
 		return endDate;
 	}
@@ -85,6 +94,7 @@ public class EventModel {
 	 * @param endDate
 	 *            the endDate to set
 	 */
+	@Override
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
@@ -92,6 +102,7 @@ public class EventModel {
 	/**
 	 * @return the resources
 	 */
+	@Override
 	public List<ResourceModel> getResources() {
 		return resources;
 	}
@@ -100,6 +111,7 @@ public class EventModel {
 	 * @param resources
 	 *            the resources to set
 	 */
+	@Override
 	public void setResources(List<ResourceModel> resources) {
 		this.resources = resources;
 	}

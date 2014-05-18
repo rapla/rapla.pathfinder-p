@@ -111,18 +111,18 @@ public class DataLoaderSpecContract implements DataLoaderSpec {
 	@Override
 	public BeanItemContainer<Attribute> getResourceDetails(String modelLink,
 			Locale locale) {
-		return null;
+		return ignored();
 	}
 
 	@Override
 	public BeanItemContainer<FreeRoomModel> getFreeResources() {
-		return null;
+		return ignored();
 	}
 
 	@Override
 	public BeanItemContainer<EventModel> getEvent(String resourceId,
 			Date startDate, Date endDate, Locale locale) {
-		return null;
+		return ignored();
 	}
 
 	@Override

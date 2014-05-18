@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.pathfinder.model.EventModel;
+import com.pathfinder.model.EventModelSpec;
 import com.pathfinder.model.ResourceModel;
 import com.pathfinder.presenter.DataLoader;
 import com.vaadin.data.Container.Indexed;
@@ -34,7 +35,7 @@ public class DetailEventProvider extends ContainerEventProvider {
 		List<CalendarEvent> result = new ArrayList<>();
 		if (container != null) {
 			CalendarEvent calendarEvent;
-			for (EventModel event : container.getItemIds()) {
+			for (EventModelSpec event : container.getItemIds()) {
 
 				calendarEvent = new CalendarEventComponent(event);
 

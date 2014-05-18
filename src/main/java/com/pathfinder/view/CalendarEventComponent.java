@@ -11,26 +11,25 @@ import java.util.Date;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.pathfinder.model.EventModel;
+import com.pathfinder.model.EventModelSpec;
 import com.pathfinder.model.ResourceModel;
-import com.vaadin.ui.components.calendar.event.CalendarEvent;
 
 /**
  * @author tim
  * 
  */
-public class CalendarEventComponent implements CalendarEvent {
+public class CalendarEventComponent implements CalendarEventComponentSpec {
 
 	private static final Logger LOGGER = LogManager
 			.getLogger(CalendarEventComponent.class);
 
-	private EventModel eventModel;
+	private EventModelSpec eventModel;
 	private Date startDate;
 	private Date endDate;
 
 	private DateFormat dateFormat = new SimpleDateFormat("dd.MM.yy HH:mm");
 
-	public CalendarEventComponent(EventModel eventModel) {
+	public CalendarEventComponent(EventModelSpec eventModel) {
 		this.eventModel = eventModel;
 		this.startDate = parseDate(eventModel.getStartDate() + " "
 				+ eventModel.getStart());
@@ -79,7 +78,8 @@ public class CalendarEventComponent implements CalendarEvent {
 		return caption;
 	}
 
-	public EventModel getEventModel() {
+	@Override
+	public EventModelSpec getEventModel() {
 		return eventModel;
 	}
 

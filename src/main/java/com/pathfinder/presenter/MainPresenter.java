@@ -10,8 +10,10 @@ import org.apache.logging.log4j.Logger;
 
 import com.pathfinder.model.Attribute;
 import com.pathfinder.model.AttributeKey;
+import com.pathfinder.model.AttributeSpec;
 import com.pathfinder.model.Device;
 import com.pathfinder.model.FreeRoomModel;
+import com.pathfinder.model.FreeRoomModelSpec;
 import com.pathfinder.model.KeyboardModel;
 import com.pathfinder.model.ResourceLink;
 import com.pathfinder.model.ResourceModel;
@@ -236,7 +238,7 @@ public class MainPresenter implements MainPresenterSpec,
 						ClickOrigin.SEARCH_RESULTS, getSearchString());
 			} else if (event.getItemId() instanceof FreeRoomModel) {
 				// Resource in free rooms table was clicked
-				FreeRoomModel freeResource = (FreeRoomModel) event.getItemId();
+				FreeRoomModelSpec freeResource = (FreeRoomModelSpec) event.getItemId();
 				resource = new ResourceModel();
 
 				resource.setId(freeResource.getId());
@@ -246,7 +248,7 @@ public class MainPresenter implements MainPresenterSpec,
 						ClickOrigin.FREE_ROOMS, "");
 			} else if (event.getItemId() instanceof Attribute) {
 				// Resource in detail view was clicked
-				boolean showDetailView = doAttributeAction((Attribute) event
+				boolean showDetailView = doAttributeAction((AttributeSpec) event
 						.getItemId());
 				if (!showDetailView)
 					return;
@@ -258,7 +260,7 @@ public class MainPresenter implements MainPresenterSpec,
 			prepareDetailView();
 		}
 
-		private boolean doAttributeAction(Attribute attribute) {
+		private boolean doAttributeAction(AttributeSpec attribute) {
 			boolean showDetailView = false;
 
 			switch (attribute.getKey()) {
@@ -525,7 +527,7 @@ public class MainPresenter implements MainPresenterSpec,
 
 	private void setImage(BeanItemContainer<Attribute> resourceDetails,
 			String resourceName) {
-		for (Attribute attribute : resourceDetails.getItemIds()) {
+		for (AttributeSpec attribute : resourceDetails.getItemIds()) {
 			if (attribute.getKey() == AttributeKey.LOCATION) {
 				detailImage.setImage(device.getUrlPicturePrefix(),
 						resourceName, attribute.getValue());

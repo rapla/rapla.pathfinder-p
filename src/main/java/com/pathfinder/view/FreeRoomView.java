@@ -1,6 +1,7 @@
 package com.pathfinder.view;
 
 import com.pathfinder.model.FreeRoomModel;
+import com.pathfinder.model.FreeRoomModelSpec;
 import com.pathfinder.util.translation.TranslationKeys;
 import com.pathfinder.util.translation.Translator;
 import com.pathfinder.util.translation.TranslatorSpec;
@@ -125,7 +126,7 @@ public class FreeRoomView extends CustomComponent implements FreeRoomViewSpec {
 			cssLayout.removeComponent(noRoomsLabel);
 			cssLayout.addComponent(freeRoomTable);
 
-			for (FreeRoomModel freeRoomItem : freeRoomContainer.getItemIds()) {
+			for (FreeRoomModelSpec freeRoomItem : freeRoomContainer.getItemIds()) {
 				this.freeRoomTable.addItem(freeRoomItem);
 			}
 		} else {

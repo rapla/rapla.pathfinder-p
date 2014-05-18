@@ -43,7 +43,7 @@ public class DataLoaderTest {
 	private boolean dataUpdated = false;
 
 	@Test
-	public void addDataListenerTest() {
+	public void addDataListenerTest() throws InterruptedException {
 		dataLoader.addDataListener(new DataLoaderListenerSpec() {
 
 			@Override
@@ -62,6 +62,8 @@ public class DataLoaderTest {
 		});
 
 		dataLoader.reloadAllData();
+
+		Thread.sleep(1000);
 
 		Assert.assertTrue(dataUpdated);
 
