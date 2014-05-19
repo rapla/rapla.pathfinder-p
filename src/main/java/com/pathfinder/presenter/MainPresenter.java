@@ -238,7 +238,8 @@ public class MainPresenter implements MainPresenterSpec,
 						ClickOrigin.SEARCH_RESULTS, getSearchString());
 			} else if (event.getItemId() instanceof FreeRoomModel) {
 				// Resource in free rooms table was clicked
-				FreeRoomModelSpec freeResource = (FreeRoomModelSpec) event.getItemId();
+				FreeRoomModelSpec freeResource = (FreeRoomModelSpec) event
+						.getItemId();
 				resource = new ResourceModel();
 
 				resource.setId(freeResource.getId());
@@ -736,4 +737,37 @@ public class MainPresenter implements MainPresenterSpec,
 	public void setSessionLoggingModel(SessionLoggingModel sessionLoggingModel) {
 		this.sessionLoggingModel = sessionLoggingModel;
 	}
+
+	public Device getDevice() {
+		return device;
+	}
+
+	public VerticalLayout getDetailLayout() {
+		return detailLayout;
+	}
+
+	public ResourceModel getResource() {
+		return resource;
+	}
+
+	public void setResource(ResourceModel resource) {
+		this.resource = resource;
+	}
+
+	public BeanItemContainer<Attribute> getResourceDetails() {
+		return resourceDetails;
+	}
+
+	public void setResourceDetails(BeanItemContainer<Attribute> resourceDetails) {
+		this.resourceDetails = resourceDetails;
+	}
+
+	public VerticalLayout getLayoutNormal() {
+		return layoutNormal;
+	}
+
+	public HorizontalLayout getLayoutWheelChair() {
+		return layoutWheelChair;
+	}
+
 }
