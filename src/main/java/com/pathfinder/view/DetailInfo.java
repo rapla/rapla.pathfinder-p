@@ -16,7 +16,6 @@ import com.pathfinder.model.ResourceType;
 import com.pathfinder.util.properties.ApplicationProperties;
 import com.pathfinder.util.properties.ApplicationPropertiesSpec;
 import com.pathfinder.util.properties.PropertiesKey;
-import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.server.ExternalResource;
@@ -54,8 +53,16 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 			.getProperty(PropertiesKey.DEFAULT_IMAGE_PERSON);
 	private final String DEFAULT_IMAGE_COURSE = properties
 			.getProperty(PropertiesKey.DEFAULT_IMAGE_COURSE);
-	private final String SERVER_PATH = UI.getCurrent().getSession()
-			.getService().getBaseDirectory().getAbsolutePath();
+	private static String SERVER_PATH;
+
+	static {
+		if (UI.getCurrent().getSession() != null) {
+			SERVER_PATH = UI.getCurrent().getSession().getService()
+					.getBaseDirectory().getAbsolutePath();
+		} else {
+			SERVER_PATH = "";
+		}
+	}
 
 	private final HorizontalLayout layout = new HorizontalLayout();
 
@@ -110,7 +117,7 @@ public class DetailInfo extends CustomComponent implements DetailInfoSpec {
 			case INFO_KEY:
 				return "result-row-person-info";
 			default:
-				return "result-row";			
+				return "result-row";
 			}
 		}
 	}
