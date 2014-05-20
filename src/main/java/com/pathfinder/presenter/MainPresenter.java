@@ -644,6 +644,7 @@ public class MainPresenter implements MainPresenterSpec,
 
 	public void clearSearchString() {
 		this.setSearchString("");
+		this.searchField.setCursorPosition(0);
 	}
 
 	@Override
