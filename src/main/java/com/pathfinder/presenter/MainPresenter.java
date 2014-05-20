@@ -118,6 +118,7 @@ public class MainPresenter implements MainPresenterSpec,
 	private ResourceModel resource = null;
 	private BeanItemContainer<Attribute> resourceDetails = null;
 	private Device device;
+	private boolean WheelChairViewActivated = false;
 	private SessionLoggingModel sessionLoggingModel;
 
 	private Listener uiListener = null;
@@ -299,8 +300,18 @@ public class MainPresenter implements MainPresenterSpec,
 	class HomeButtonClickListener implements ClickListener {
 		@Override
 		public void buttonClick(ClickEvent event) {
-			changeToNonWheelChairView();
-			switchToSearchView();
+			if (detailLayout.isVisible()) {
+				if (!WheelChairViewActivated) {
+					changeToNonWheelChairView();
+				} else {
+					changeToNonWheelChairView();
+					changeToWheelChairView();
+				}
+				switchToSearchView();
+			} else {
+				changeToNonWheelChairView();
+			}
+
 		}
 	}
 
@@ -496,14 +507,12 @@ public class MainPresenter implements MainPresenterSpec,
 		detailImage.removeImage();
 		this.resource = null;
 
-		// Adapting MenuBar
-		menuBar.replaceHomeButtonWithWheelChairButton();
-
 		// Showing
 		freeRoom.showFreeRoomView();
 		accordionView.showAccordionView();
 		searchField.showSearchField();
 		keyboardView.showKeyboard();
+
 	}
 
 	@Override
@@ -569,8 +578,9 @@ public class MainPresenter implements MainPresenterSpec,
 			layoutWheelChair.setSizeFull();
 			this.contentLayout.replaceComponent(layoutNormal, layoutWheelChair);
 			this.layoutNormal.removeAllComponents();
-		}
 
+		}
+		WheelChairViewActivated = true;
 		menuBar.replaceWheelChairButtonWithHomeButton();
 	}
 
@@ -589,7 +599,7 @@ public class MainPresenter implements MainPresenterSpec,
 			this.contentLayout.replaceComponent(layoutWheelChair, layoutNormal);
 			layoutWheelChair.removeAllComponents();
 		}
-
+		WheelChairViewActivated = false;
 		menuBar.replaceHomeButtonWithWheelChairButton();
 	}
 
@@ -644,6 +654,7 @@ public class MainPresenter implements MainPresenterSpec,
 
 	public void clearSearchString() {
 		this.setSearchString("");
+		this.searchField.setCursorPosition(0);
 	}
 
 	@Override
