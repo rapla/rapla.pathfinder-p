@@ -324,7 +324,7 @@
   </enumeration>  
   <enumeration id="34" language="java" name="com.pathfinder.model.ResourceType" project="rapla.pathfinder-p" 
     file="/rapla.pathfinder-p/src/main/java/com/pathfinder/model/ResourceType.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="963" y="496"/>    
+    <position height="-1" width="-1" x="988" y="499"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
